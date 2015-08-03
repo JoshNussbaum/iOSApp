@@ -1,0 +1,1 @@
+PODS_CLASSROOM_HERO_GTM_OAUTH_OTHER_LDFLAGS = -framework "Security" -framework "SystemConfiguration"

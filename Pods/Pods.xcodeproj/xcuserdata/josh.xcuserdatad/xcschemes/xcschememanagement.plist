@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-Classroom Hero-MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Classroom Hero-gtm-oauth.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Classroom Hero-snowshoe.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Classroom Hero.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>294E53EC0385DF89527C617A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8280F4445CD55470EDF34ACC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>840382DD73B25A52222FE26C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8816CAC28A9413CC9E0FE05B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
