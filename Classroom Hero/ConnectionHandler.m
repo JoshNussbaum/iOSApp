@@ -8,6 +8,7 @@
 
 
 #import "ConnectionHandler.h"
+#import "Utilities.h"
 
 static NSString * LOGIN_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/login/auth";
 static NSString * CREATE_ACCOUNT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/register/teacher";
@@ -39,26 +40,9 @@ static NSString *POST = @"POST";
 static NSString *PUT = @"PUT";
 static NSString *DELETE = @"DELETE";
 
-static NSInteger connectionType;
-static NSInteger LOGIN = 1;
-static NSInteger CREATE_ACCOUNT = 2;
-static NSInteger ADD_CLASS = 3;
-static NSInteger EDIT_CLASS = 4;
-static NSInteger DELETE_CLASS = 5;
-static NSInteger ADD_STUDENT = 6;
-static NSInteger EDIT_STUDENT = 7;
-static NSInteger DELETE_STUDENT = 8;
-static NSInteger ADD_CATEGORY = 9;
-static NSInteger EDIT_CATEGORY = 10;
-static NSInteger DELETE_CATEGORY = 11;
-static NSInteger ADD_ITEM = 12;
-static NSInteger EDIT_ITEM = 13;
-static NSInteger DELETE_ITEM = 14;
-static NSInteger ADD_JAR = 15;
-static NSInteger EDIT_JAR = 16;
-static NSInteger DELETE_JAR = 17;
-
 static ConnectionHandler *sharedInstance = nil;
+
+static NSInteger connectionType;
 
 
 @implementation ConnectionHandler
@@ -111,7 +95,6 @@ static ConnectionHandler *sharedInstance = nil;
 }
 
 
-
 -(void)deleteClass:(NSInteger)id{
     connectionType = DELETE_CLASS;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"class\":{\"id\":%ld,}}", (long)id];
@@ -120,8 +103,8 @@ static ConnectionHandler *sharedInstance = nil;
 }
 
 
--(void)addCategory:(NSInteger)id :(NSString *)name{
-    connectionType = ADD_CATEGORY;
+-(void)addReinforcer:(NSInteger)id :(NSString *)name{
+    connectionType = ADD_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld,\"name\":\"%@\"}}", (long)id, name];
     
     [self asynchronousWebCall:jsonRequest :ADD_CATEGORY_URL :POST];
@@ -129,7 +112,7 @@ static ConnectionHandler *sharedInstance = nil;
 
 
 -(void)editCategory:(NSInteger)id :(NSString *)name{
-    connectionType = EDIT_CATEGORY;
+    connectionType = EDIT_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld,\"name\":\"%@\"}}", (long)id, name];
     
     [self asynchronousWebCall:jsonRequest :EDIT_CATEGORY_URL :PUT];
@@ -137,7 +120,7 @@ static ConnectionHandler *sharedInstance = nil;
 
 
 -(void)deleteCategory:(NSInteger)id{
-    connectionType = DELETE_CATEGORY;
+    connectionType = DELETE_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld}}", (long)id];
     
     [self asynchronousWebCall:jsonRequest :DELETE_CATEGORY_URL :DELETE];
@@ -279,6 +262,8 @@ static ConnectionHandler *sharedInstance = nil;
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    NSLog(@"In connection did fail");
+
     if(error.code == NSURLErrorTimedOut){
     }
     else {
@@ -291,7 +276,7 @@ static ConnectionHandler *sharedInstance = nil;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    
+    NSLog(@"In connection did finish loading");
     NSError *err = nil;
     NSDictionary *jsonData = [NSJSONSerialization
                               JSONObjectWithData:responseData

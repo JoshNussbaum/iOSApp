@@ -61,7 +61,9 @@
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
     NSLog(@"In here and here is the data =>\n %@", data);
     if (data == nil){
+        [hud hide:YES];
         [self alertStatus:@"Connection error" :@"Please check your internet connection and try again."];
+        return;
     }
     if (type == 2){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
@@ -83,10 +85,9 @@
             NSString *message = [data objectForKey:@"message"];
             [self alertStatus:@"Error creating account" :message];
             [hud hide:YES];
-            
+            return;
         }
     }
-    
     else{
         [self alertStatus:@"Connection error" :@"Please check your connectivity and try again"];
     }

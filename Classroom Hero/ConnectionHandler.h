@@ -37,7 +37,7 @@
 
 -(void)deleteClass:(NSInteger)id;
 
--(void)addCategory:(NSInteger)id :(NSString *)name;
+-(void)addReinforcer:(NSInteger)id :(NSString *)name;
 
 -(void)editCategory:(NSInteger)id :(NSString *)name;
 

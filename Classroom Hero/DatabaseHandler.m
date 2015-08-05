@@ -8,6 +8,7 @@
 
 #import "DatabaseHandler.h"
 #import <sqlite3.h>
+#import "Utilities.h"
 
 
 static DatabaseHandler *sharedInstance = nil;
@@ -102,8 +103,6 @@ static sqlite3_stmt *statement = nil;
         if (sqlite3_prepare_v2(database,
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
-            NSLog(@"IN HURRR");
-            
             if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"DOPE WE ADDED A CLASS");
             sqlite3_finalize(statement);
         }
@@ -473,22 +472,17 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:@"SELECT * FROM Class where name=\"%@\"", className];
-        NSLog(@"Does class name exist query -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(database,
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
-            NSLog(@"In hereee");
             if (sqlite3_step(statement) == SQLITE_ROW)
             {
-                NSLog(@"GONNA RETURN YES");
                 sqlite3_reset(statement);
                 sqlite3_close(database);
                 return YES;
             }
             else {
-                NSLog(@"GONNA RETURN NO");
-
                 sqlite3_reset(statement);
                 sqlite3_close(database);
                 return NO;
@@ -496,8 +490,6 @@ static sqlite3_stmt *statement = nil;
             
         }
     }
-    NSLog(@"COULDNT OPEN UP");
-
     sqlite3_reset(statement);
     sqlite3_close(database);
     return NO;

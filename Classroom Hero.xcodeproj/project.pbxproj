@@ -60,6 +60,7 @@
 		03AA9A571B63399D00750758 /* teachers_coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A351B63399D00750758 /* teachers_coin.png */; };
 		03AA9A581B63399D00750758 /* treasure_chest.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A361B63399D00750758 /* treasure_chest.png */; };
 		03AA9A5B1B633B8100750758 /* ConnectionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA9A5A1B633B8100750758 /* ConnectionHandler.m */; };
+		03B3A02E1B71D0A800B42E09 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3A02D1B71D0A800B42E09 /* Utilities.m */; };
 		03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFD21B6C5A1900C451CC /* reinforcer.m */; };
 		03DCFFD51B6C63FC00C451CC /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DCFFD41B6C63FC00C451CC /* libsqlite3.dylib */; };
 		03DCFFD81B6C67F300C451CC /* item.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFD71B6C67F300C451CC /* item.m */; };
@@ -151,6 +152,8 @@
 		03AA9A361B63399D00750758 /* treasure_chest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = treasure_chest.png; sourceTree = "<group>"; };
 		03AA9A591B633B8100750758 /* ConnectionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionHandler.h; sourceTree = "<group>"; };
 		03AA9A5A1B633B8100750758 /* ConnectionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionHandler.m; sourceTree = "<group>"; };
+		03B3A02C1B71D0A800B42E09 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		03B3A02D1B71D0A800B42E09 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		03DCFFD11B6C5A1900C451CC /* reinforcer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reinforcer.h; sourceTree = "<group>"; };
 		03DCFFD21B6C5A1900C451CC /* reinforcer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = reinforcer.m; sourceTree = "<group>"; };
 		03DCFFD41B6C63FC00C451CC /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -273,6 +276,8 @@
 		03AA99E41B6333C300750758 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
+				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
 				03AA9A141B63399D00750758 /* img */,
 				03AA9A0D1B63381B00750758 /* fonts */,
 				03AA99E51B6333C300750758 /* Info.plist */,
@@ -564,6 +569,7 @@
 				038545291B6359E90053C169 /* passwordTextField.m in Sources */,
 				03A01EDA1B68A8C20037110E /* TutorialContentViewController.m in Sources */,
 				03F46FBB1B6B54C200A695B2 /* student.m in Sources */,
+				03B3A02E1B71D0A800B42E09 /* Utilities.m in Sources */,
 				03AA99E71B6333C300750758 /* main.m in Sources */,
 				03AA9A0C1B6336FE00750758 /* LoginViewController.m in Sources */,
 				03F46FB51B69CBAD00A695B2 /* DatabaseHandler.m in Sources */,

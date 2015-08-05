@@ -15,6 +15,7 @@
 @synthesize lastName;
 @synthesize email;
 @synthesize password;
+@synthesize serial;
 @synthesize classIds;
 
 static user *instance = nil;
@@ -28,6 +29,7 @@ static user *instance = nil;
             instance->lastName=@"";
             instance->email=@"";
             instance->password=@"";
+            instance->serial=@"";
             instance->classIds = [NSMutableArray array];
         }
     }

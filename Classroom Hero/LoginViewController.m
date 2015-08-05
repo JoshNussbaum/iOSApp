@@ -28,7 +28,7 @@
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
     [[DatabaseHandler getSharedInstance] doesClassNameExist:@"rekt"];
-
+    
     // Do any additional setup after loading the view.
 }
 
