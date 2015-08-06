@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "user.h"
 #import "TutorialContentViewController.h"
 
 @interface TutorialViewController : UIViewController <UIPageViewControllerDataSource>
@@ -20,5 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 - (IBAction)backClicked:(id)sender;
+
+- (IBAction)skipClicked:(id)sender;
 
 @end

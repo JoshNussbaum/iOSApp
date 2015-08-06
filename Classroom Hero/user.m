@@ -17,6 +17,7 @@
 @synthesize password;
 @synthesize serial;
 @synthesize classIds;
+@synthesize currentClassId;
 
 static user *instance = nil;
 
@@ -31,9 +32,19 @@ static user *instance = nil;
             instance->password=@"";
             instance->serial=@"";
             instance->classIds = [NSMutableArray array];
+            instance->currentClassId = 0;
         }
     }
     return instance;
+}
+
+-(void)reset{
+    self->firstName = @"";
+    self->lastName = @"";
+    self->email = @"";
+    self->password = @"";
+    self->serial = @"";
+    self->currentClassId = 0;
 }
 
 

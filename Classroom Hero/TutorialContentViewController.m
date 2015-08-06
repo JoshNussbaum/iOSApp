@@ -42,6 +42,12 @@ static int screenNumber;
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
     
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"award" ofType:@"mp3"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &success);
+
+    
     switch (self.pageIndex) {
         case 0:
             [self onPage:@"" :@"" :@"" :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
@@ -145,7 +151,7 @@ static int screenNumber;
                 NSString *gradeErrorMessage = [Utilities isNumeric:gradeNumber];
                 if ([gradeErrorMessage isEqualToString:@""]) {
                     [self activityStart:@"Validating class data..."];
-                    [webHandler addClass:currentUser.currentClassId :className :gradeNumber.integerValue :classIndex];
+                    [webHandler addClass:currentUser.id :className :gradeNumber.integerValue :classIndex];
                 }
                 else{
                     [self alertStatus:@"Error adding class" :gradeErrorMessage];
@@ -248,12 +254,15 @@ static int screenNumber;
 }
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
+    NSLog(@"In Tutorial and here is the data =>\n %@ \nand type = %d", data, type);
     if (data == nil){
         [self alertStatus:@"Connection error" :@"Please check your internet connection and try again."];
         return;
     }
     NSInteger successNumber = [[data objectForKey: @"success"]integerValue];
-    NSLog(@"In Tutorial and here is the data =>\n %@ \nand type = %d", data, type);
+    if (successNumber == 1){
+        AudioServicesPlaySystemSound(success);
+    }
     if (type == ADD_CLASS){
         if(successNumber == 1)
         {
@@ -356,13 +365,7 @@ static int screenNumber;
                 
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                     currentUser.serial = stampSerial;
-                    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"Welcome to Classroom Hero!"
-                                                                       message:@"Close this window and use your stamp or email/password to log in!"
-                                                                      delegate:self
-                                                             cancelButtonTitle:@"Return to log in"
-                                                             otherButtonTitles:nil,nil];
-                    alertView.tag = 1;
-                    [alertView show];
+                    
                 }
                 
             }

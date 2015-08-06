@@ -34,5 +34,7 @@ static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c
 
 +(user *)getInstance;
 
+-(void)reset;
+
 
 @end

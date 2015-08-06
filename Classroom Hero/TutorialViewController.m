@@ -7,8 +7,11 @@
 //
 
 #import "TutorialViewController.h"
+#import "Utilities.h"
 
-@interface TutorialViewController ()
+@interface TutorialViewController (){
+    user *currentUser;
+}
 
 @end
 
@@ -16,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    currentUser = [user getInstance];
     // Do any additional setup after loading the view.
     _pageTitles = @[@"Welcome  to  Classroom  Hero.  Swipe  left  to  begin  your  adventure", @"Create  a  class  to  get  started.  Enter  a  name  for  your  class", @"Add  some  students  to  your  class. Type  in  a student name  below", @"Create  some  Positive  Reinforcer  Categories  to  award  students  for. (On  time,  Working  hard,  etc.)", @"Create  some  market  place  items  for  students  to  spend  their  points  on", @"Finally  add  a  class  jar  for  a  class-wide  reward  achieved  over  a  longer  time.  Examples:  Pizza  Party,  Movie  Day.", @"Now  stamp  the  screen  with  your  stamp  to  register  yourself  as  a  teacher  and  begin  your  journey  with  Classroom Hero!"];
     
@@ -98,6 +102,15 @@
 - (IBAction)backClicked:(id)sender {
     [self performSegueWithIdentifier:@"tutorial_to_login" sender:self];
     
+}
+
+- (IBAction)skipClicked:(id)sender {
+    if ((currentUser.currentClassId != 0) && ![currentUser.serial isEqualToString:@""]){
+        [self performSegueWithIdentifier:@"tutorial_to_welcome" sender:nil];
+    }
+    else {
+        [Utilities alertStatus:@"Nope" :@"Not possible breh"];
+    }
 }
 
 @end

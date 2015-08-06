@@ -79,7 +79,7 @@ NSInteger DELETE_JAR = 17;
 }
 
 // Make other button titles an array
-- (UIAlertView *) constructAlertView:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSMutableArray *)otherTitles :(NSInteger)tag ;
++ (UIAlertView *) constructAlertView:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSMutableArray *)otherTitles :(NSInteger)tag ;
 {
     NSString *otherTitle1 = nil;
     NSString *otherTitle2 = nil;
@@ -94,9 +94,19 @@ NSInteger DELETE_JAR = 17;
                                                        message:message
                                                       delegate:self
                                              cancelButtonTitle:cancel
-                                             otherButtonTitles:otherTitle1 ,otherTitle2];
+                                             otherButtonTitles:otherTitle1 ,otherTitle2, nil];
     alertView.tag = tag;
     return alertView;
+}
+
++ (void)alertStatus:(NSString *)title :(NSString *)message
+{
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:self
+                                             cancelButtonTitle:@"Close"
+                                             otherButtonTitles:nil,nil];
+    [alertView show];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "Utilities.h"
 #import "MBProgressHUD.h"
 
 
@@ -21,6 +22,10 @@
 @end
 
 @implementation LoginViewController
+
+-(void)viewDidAppear:(BOOL)animated{
+    [currentUser reset];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

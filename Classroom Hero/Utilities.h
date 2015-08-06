@@ -37,7 +37,8 @@ extern NSInteger DELETE_JAR;
 
 +(bool)isValidClassroomHeroStamp:(NSString *)serial;
 
-- (UIAlertView *) constructAlertView:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSMutableArray *)otherTitles :(NSInteger)tag;
++ (UIAlertView *) constructAlertView:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSMutableArray *)otherTitles :(NSInteger)tag;
 
++ (void)alertStatus:(NSString *)title :(NSString *)message;
 
 @end

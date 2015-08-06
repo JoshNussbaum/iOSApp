@@ -61,6 +61,18 @@
 		03AA9A581B63399D00750758 /* treasure_chest.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A361B63399D00750758 /* treasure_chest.png */; };
 		03AA9A5B1B633B8100750758 /* ConnectionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA9A5A1B633B8100750758 /* ConnectionHandler.m */; };
 		03B3A02E1B71D0A800B42E09 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3A02D1B71D0A800B42E09 /* Utilities.m */; };
+		03DC9D8D1B732C7F005C7562 /* achievement.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D821B732C7F005C7562 /* achievement.wav */; };
+		03DC9D8E1B732C7F005C7562 /* award.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D831B732C7F005C7562 /* award.mp3 */; };
+		03DC9D8F1B732C7F005C7562 /* bloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D841B732C7F005C7562 /* bloop.wav */; };
+		03DC9D901B732C7F005C7562 /* coin_shake.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D851B732C7F005C7562 /* coin_shake.wav */; };
+		03DC9D911B732C7F005C7562 /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D861B732C7F005C7562 /* correct.wav */; };
+		03DC9D921B732C7F005C7562 /* jarsuccess.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D871B732C7F005C7562 /* jarsuccess.wav */; };
+		03DC9D931B732C7F005C7562 /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D881B732C7F005C7562 /* pop.wav */; };
+		03DC9D941B732C7F005C7562 /* positive.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D891B732C7F005C7562 /* positive.wav */; };
+		03DC9D951B732C7F005C7562 /* register_fail.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D8A1B732C7F005C7562 /* register_fail.wav */; };
+		03DC9D961B732C7F005C7562 /* sale.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D8B1B732C7F005C7562 /* sale.mp3 */; };
+		03DC9D971B732C7F005C7562 /* teacherstamp.wav in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D8C1B732C7F005C7562 /* teacherstamp.wav */; };
+		03DC9D991B7334F6005C7562 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D981B7334F6005C7562 /* Notes */; };
 		03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFD21B6C5A1900C451CC /* reinforcer.m */; };
 		03DCFFD51B6C63FC00C451CC /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DCFFD41B6C63FC00C451CC /* libsqlite3.dylib */; };
 		03DCFFD81B6C67F300C451CC /* item.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFD71B6C67F300C451CC /* item.m */; };
@@ -154,6 +166,18 @@
 		03AA9A5A1B633B8100750758 /* ConnectionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionHandler.m; sourceTree = "<group>"; };
 		03B3A02C1B71D0A800B42E09 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		03B3A02D1B71D0A800B42E09 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		03DC9D821B732C7F005C7562 /* achievement.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = achievement.wav; sourceTree = "<group>"; };
+		03DC9D831B732C7F005C7562 /* award.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = award.mp3; sourceTree = "<group>"; };
+		03DC9D841B732C7F005C7562 /* bloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bloop.wav; sourceTree = "<group>"; };
+		03DC9D851B732C7F005C7562 /* coin_shake.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin_shake.wav; sourceTree = "<group>"; };
+		03DC9D861B732C7F005C7562 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
+		03DC9D871B732C7F005C7562 /* jarsuccess.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jarsuccess.wav; sourceTree = "<group>"; };
+		03DC9D881B732C7F005C7562 /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
+		03DC9D891B732C7F005C7562 /* positive.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = positive.wav; sourceTree = "<group>"; };
+		03DC9D8A1B732C7F005C7562 /* register_fail.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = register_fail.wav; sourceTree = "<group>"; };
+		03DC9D8B1B732C7F005C7562 /* sale.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sale.mp3; sourceTree = "<group>"; };
+		03DC9D8C1B732C7F005C7562 /* teacherstamp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = teacherstamp.wav; sourceTree = "<group>"; };
+		03DC9D981B7334F6005C7562 /* Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 		03DCFFD11B6C5A1900C451CC /* reinforcer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reinforcer.h; sourceTree = "<group>"; };
 		03DCFFD21B6C5A1900C451CC /* reinforcer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = reinforcer.m; sourceTree = "<group>"; };
 		03DCFFD41B6C63FC00C451CC /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -252,6 +276,7 @@
 		03AA99E31B6333C300750758 /* Classroom Hero */ = {
 			isa = PBXGroup;
 			children = (
+				03DC9D981B7334F6005C7562 /* Notes */,
 				03AA99E81B6333C300750758 /* AppDelegate.h */,
 				03AA99E91B6333C300750758 /* AppDelegate.m */,
 				03AA99EE1B6333C300750758 /* Main.storyboard */,
@@ -276,6 +301,7 @@
 		03AA99E41B6333C300750758 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				03DC9D811B732C7F005C7562 /* sounds */,
 				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
 				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
 				03AA9A141B63399D00750758 /* img */,
@@ -364,6 +390,24 @@
 			);
 			name = Handlers;
 			sourceTree = "<group>";
+		};
+		03DC9D811B732C7F005C7562 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				03DC9D821B732C7F005C7562 /* achievement.wav */,
+				03DC9D831B732C7F005C7562 /* award.mp3 */,
+				03DC9D841B732C7F005C7562 /* bloop.wav */,
+				03DC9D851B732C7F005C7562 /* coin_shake.wav */,
+				03DC9D861B732C7F005C7562 /* correct.wav */,
+				03DC9D871B732C7F005C7562 /* jarsuccess.wav */,
+				03DC9D881B732C7F005C7562 /* pop.wav */,
+				03DC9D891B732C7F005C7562 /* positive.wav */,
+				03DC9D8A1B732C7F005C7562 /* register_fail.wav */,
+				03DC9D8B1B732C7F005C7562 /* sale.mp3 */,
+				03DC9D8C1B732C7F005C7562 /* teacherstamp.wav */,
+			);
+			path = sounds;
+			sourceTree = SOURCE_ROOT;
 		};
 		884D67DE316D649C30B9C4A3 /* Frameworks */ = {
 			isa = PBXGroup;
@@ -469,7 +513,9 @@
 				03AA9A391B63399D00750758 /* backgroundImg1.png in Resources */,
 				03AA9A471B63399D00750758 /* jar_progress_coins.png in Resources */,
 				03AA9A121B63381B00750758 /* AmaticSC-Regular.ttf in Resources */,
+				03DC9D8E1B732C7F005C7562 /* award.mp3 in Resources */,
 				03AA9A381B63399D00750758 /* apple hero.png in Resources */,
+				03DC9D8D1B732C7F005C7562 /* achievement.wav in Resources */,
 				03AA9A4D1B63399D00750758 /* page1.PNG in Resources */,
 				03AA9A111B63381B00750758 /* AmaticSC-Bold.ttf in Resources */,
 				03AA9A4C1B63399D00750758 /* money_sack_glow50.png in Resources */,
@@ -477,33 +523,43 @@
 				03AA9A4F1B63399D00750758 /* page3.PNG in Resources */,
 				03AA9A461B63399D00750758 /* jar_full.png in Resources */,
 				03AA9A541B63399D00750758 /* student_coin_blank.png in Resources */,
+				03DC9D901B732C7F005C7562 /* coin_shake.wav in Resources */,
 				03AA9A481B63399D00750758 /* jarcoins.png in Resources */,
 				03AA9A491B63399D00750758 /* lid.png in Resources */,
+				03DC9D971B732C7F005C7562 /* teacherstamp.wav in Resources */,
 				03AA9A501B63399D00750758 /* page4.png in Resources */,
 				03AA9A511B63399D00750758 /* page5.PNG in Resources */,
 				03AA9A3A1B63399D00750758 /* backLid.png in Resources */,
 				03AA99F01B6333C300750758 /* Main.storyboard in Resources */,
+				03DC9D961B732C7F005C7562 /* sale.mp3 in Resources */,
 				03AA9A4B1B63399D00750758 /* money_sack.png in Resources */,
 				03AA9A4A1B63399D00750758 /* login button.png in Resources */,
+				03DC9D911B732C7F005C7562 /* correct.wav in Resources */,
 				03AA9A441B63399D00750758 /* itemsIcon.png in Resources */,
 				03AA9A4E1B63399D00750758 /* page2.PNG in Resources */,
+				03DC9D8F1B732C7F005C7562 /* bloop.wav in Resources */,
+				03DC9D941B732C7F005C7562 /* positive.wav in Resources */,
 				03AA9A411B63399D00750758 /* homeIcon.png in Resources */,
 				03AA9A3B1B63399D00750758 /* ch-logo.png in Resources */,
 				03AA9A561B63399D00750758 /* teacher_coin_blank.png in Resources */,
 				03AA9A3D1B63399D00750758 /* CH_coin.png in Resources */,
+				03DC9D991B7334F6005C7562 /* Notes in Resources */,
 				03AA9A3C1B63399D00750758 /* ch-logo3.png in Resources */,
 				03AA99F51B6333C400750758 /* LaunchScreen.xib in Resources */,
 				03AA9A401B63399D00750758 /* cork.png in Resources */,
 				03AA9A3E1B63399D00750758 /* ch_coin_flare.png in Resources */,
 				03AA9A3F1B63399D00750758 /* classroom_hero_text.png in Resources */,
 				03AA9A571B63399D00750758 /* teachers_coin.png in Resources */,
+				03DC9D951B732C7F005C7562 /* register_fail.wav in Resources */,
 				03AA9A371B63399D00750758 /* app icon.png in Resources */,
+				03DC9D931B732C7F005C7562 /* pop.wav in Resources */,
 				03AA99F21B6333C300750758 /* Images.xcassets in Resources */,
 				03AA9A431B63399D00750758 /* intact_jar.png in Resources */,
 				03AA9A521B63399D00750758 /* register.png in Resources */,
 				03AA9A551B63399D00750758 /* teacher_coin.png in Resources */,
 				03AA9A131B63381B00750758 /* FontAwesome.ttf in Resources */,
 				03AA9A581B63399D00750758 /* treasure_chest.png in Resources */,
+				03DC9D921B732C7F005C7562 /* jarsuccess.wav in Resources */,
 				03AA9A531B63399D00750758 /* student_coin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

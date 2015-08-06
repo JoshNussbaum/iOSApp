@@ -67,7 +67,7 @@
     }
     if (type == 2){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        NSString *cid = [data objectForKey:@"id"];
+        NSInteger cid = [[data objectForKey:@"id"] integerValue];
 
         if([successNumber boolValue] == YES)
         {
@@ -75,8 +75,7 @@
             currentUser.lastName = self.lastNameTextField.text;
             currentUser.email = self.emailTextField.text;
             currentUser.password = self.passwordTextField.text;
-            [currentUser.classIds addObject:cid];
-            currentUser.currentClassId = cid.integerValue;
+            currentUser.id = cid;
             [hud hide:YES];
             [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
             
