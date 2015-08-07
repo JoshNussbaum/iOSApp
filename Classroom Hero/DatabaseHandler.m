@@ -96,7 +96,7 @@ static sqlite3_stmt *statement = nil;
         //            "CREATE TABLE Class (id integer primary key, name text, grade integer, schoolid integer, level integer, progress integer, nextlevel integer, hasstamps integer);"
 
         NSString *querySQL = [NSString stringWithFormat:
-                              @"REPLACE INTO Class (id, name, grade, schoolid, level, progress, nextlevel, hasstamps) VALUES (%d, \"%@\", %d, %d, %d, %d, %d, %d)", [cl getId], [cl getName], [cl getGradeNumber], [cl getSchoolId], [cl getLevel], [cl getProgress], [cl getNextLevel], [cl getHasStamps]];
+                              @"REPLACE INTO Class (id, name, grade, schoolid, level, progress, nextlevel, hasstamps) VALUES (%ld, \"%@\", %ld, %ld, %ld, %ld, %ld, %ld)", (long)[cl getId], [cl getName], (long)[cl getGradeNumber], (long)[cl getSchoolId], (long)[cl getLevel], (long)[cl getProgress], (long)[cl getNextLevel], (long)[cl getHasStamps]];
         
         NSLog(@"Add Class Query SQL -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
@@ -116,7 +116,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"REPLACE INTO Student (id, firstname, lastname, serial, lvl, lvlupamount, lvlsgained, points, pointsgained, pointsspent, progress, progressgained, timestamp) VALUES (%d, \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %d, \"%@\")", [ss getId], [ss getFirstName], [ss getLastName], [ss getSerial], [ss getLvl], [ss getLvlUpAmount], [ss getLvlsGained], [ss getPoints], [ss getPointsGained], [ss getPointsSpent], [ss getProgress], [ss getProgressGained], [ss getTimestamp]];
+                              @"REPLACE INTO Student (id, firstname, lastname, serial, lvl, lvlupamount, lvlsgained, points, pointsgained, pointsspent, progress, progressgained, timestamp) VALUES (%ld, \"%@\", \"%@\", \"%@\", %ld, %ld, %ld, %ld, %ld, %ld, %ld, %ld, \"%@\")", (long)[ss getId], [ss getFirstName], [ss getLastName], [ss getSerial], (long)[ss getLvl], (long)[ss getLvlUpAmount], (long)[ss getLvlsGained], (long)[ss getPoints], (long)[ss getPointsGained], (long)[ss getPointsSpent], (long)[ss getProgress], (long)[ss getProgressGained], [ss getTimestamp]];
         
         NSLog(@"Add Student Query SQL -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
@@ -133,7 +133,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"REPLACE INTO StudentClassMatch (sid, cid) VALUES (%d, %d)", studentId, classId];
+                              @"REPLACE INTO StudentClassMatch (sid, cid) VALUES (%ld, %ld)", (long)studentId, (long)classId];
         
         NSLog(@"Add Student to Class Query SQL -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
@@ -150,7 +150,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"REPLACE INTO Reinforcer (id, cid, name) VALUES (%d, %d, \"%@\")", [rr getId], [rr getCid], [rr getName]];
+                              @"REPLACE INTO Reinforcer (id, cid, name) VALUES (%ld, %ld, \"%@\")", (long)[rr getId], (long)[rr getCid], [rr getName]];
         
         NSLog(@"Add Reinforcer to QUERY SQL -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
@@ -169,7 +169,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"REPLACE INTO Item (id, cid, name, cost) VALUES (%d, %d, \"%@\", %d)", [ii getId], [ii getCid], [ii getName], [ii getCost]];
+                              @"REPLACE INTO Item (id, cid, name, cost) VALUES (%ld, %ld, \"%@\", %ld)", (long)[ii getId], (long)[ii getCid], [ii getName], (long)[ii getCost]];
         NSLog(@"Add Item to QUERY SQL -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
@@ -187,7 +187,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"REPLACE INTO ClassJar (id, cid, name, progress, total) VALUES (%d, %d, \"%@\", %d, %d)", [cj getId], [cj getCid], [cj getName], [cj getProgress], [cj getTotal]];
+                              @"REPLACE INTO ClassJar (id, cid, name, progress, total) VALUES (%ld, %ld, \"%@\", %ld, %ld)", (long)[cj getId], (long)[cj getCid], [cj getName], (long)[cj getProgress], (long)[cj getTotal]];
         NSLog(@"Add ClassJar to QUERY SQL -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
@@ -203,7 +203,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT * FROM Students where cid=%d", cid];
+                              @"SELECT * FROM Students where cid=%ld", (long)cid];
         const char *query_stmt = [querySQL UTF8String];
         NSMutableArray *resultArray = [[NSMutableArray alloc]init];
         if (sqlite3_prepare_v2(database,
@@ -263,7 +263,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT * FROM Students where serial='' and cid=%d", cid];
+                              @"SELECT * FROM Students where serial='' and cid=%ld", (long)cid];
         const char *query_stmt = [querySQL UTF8String];
         NSMutableArray *resultArray = [[NSMutableArray alloc]init];
         if (sqlite3_prepare_v2(database,
@@ -307,7 +307,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT * from Categories where cid=%d", cid];
+                              @"SELECT * from Categories where cid=%ld", (long)cid];
         const char *query_stmt = [querySQL UTF8String];
         NSMutableArray *resultArray = [[NSMutableArray alloc]init];
         if (sqlite3_prepare_v2(database,
@@ -341,7 +341,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT * from Items where cid=%d", cid];
+                              @"SELECT * from Items where cid=%ld", (long)cid];
         const char *query_stmt = [querySQL UTF8String];
         NSMutableArray *resultArray = [[NSMutableArray alloc]init];
         if (sqlite3_prepare_v2(database,
@@ -380,7 +380,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT * FROM ClassJar where cid=%d", cid];
+                              @"SELECT * FROM ClassJar where cid=%ld", (long)cid];
         
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,

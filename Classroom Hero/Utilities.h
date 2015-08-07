@@ -33,12 +33,10 @@ extern NSInteger DELETE_JAR;
 
 +(NSString *) isNumeric:(NSString *)input;
 
-+(NSString *)isInputValid:(NSString *)input;
++(NSString *)isInputValid:(NSString *)input :(NSString *)inputName;
 
 +(bool)isValidClassroomHeroStamp:(NSString *)serial;
 
-+ (UIAlertView *) constructAlertView:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSMutableArray *)otherTitles :(NSInteger)tag;
-
-+ (void)alertStatus:(NSString *)title :(NSString *)message;
++ (void) alertStatus:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSArray *)otherTitles :(NSInteger)tag;
 
 @end

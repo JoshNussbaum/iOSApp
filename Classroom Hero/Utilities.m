@@ -55,16 +55,16 @@ NSInteger DELETE_JAR = 17;
 
 }
 
-+(NSString *)isInputValid:(NSString *)input{
++(NSString *)isInputValid:(NSString *)input :(NSString *)inputName{
     NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~] "];
     for (NSUInteger i = 0; i < [input length]; ++i) {
         unichar uchar = [input characterAtIndex:i] ;
         if (![characterSet characterIsMember:uchar]) {
-            return [NSString stringWithFormat:@"\"%c\" is an invalid character", uchar];
+            return [NSString stringWithFormat:@"%@ may not contain the character \"%c\"", inputName, uchar];
         }
     }
     if (input.length < 1){
-        return [NSString stringWithFormat:@"\"%@\" is invalid input - must contain at least 1 character", input];
+        return [NSString stringWithFormat:@"%@ must contain at least 1 character", inputName];
     }
     return @"";
 }
@@ -79,34 +79,20 @@ NSInteger DELETE_JAR = 17;
 }
 
 // Make other button titles an array
-+ (UIAlertView *) constructAlertView:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSMutableArray *)otherTitles :(NSInteger)tag ;
++ (void) alertStatus:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSArray *)otherTitles :(NSInteger)tag
 {
-    NSString *otherTitle1 = nil;
-    NSString *otherTitle2 = nil;
 
-    if ([otherTitles count] > 0){
-        otherTitle1 = [otherTitles objectAtIndex:0];
-        if ([otherTitles count] > 1){
-            otherTitle2 = [otherTitles objectAtIndex:1];
-        }
-    }
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
                                                        message:message
                                                       delegate:self
                                              cancelButtonTitle:cancel
-                                             otherButtonTitles:otherTitle1 ,otherTitle2, nil];
+                                             otherButtonTitles:nil];
+    for (NSString *title in otherTitles){
+        [alertView addButtonWithTitle:title];
+    }
     alertView.tag = tag;
-    return alertView;
-}
-
-+ (void)alertStatus:(NSString *)title :(NSString *)message
-{
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:self
-                                             cancelButtonTitle:@"Close"
-                                             otherButtonTitles:nil,nil];
     [alertView show];
 }
+
 
 @end

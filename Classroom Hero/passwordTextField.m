@@ -40,7 +40,7 @@
     for (NSUInteger i = 0; i < [password length]; ++i) {
         unichar uchar = [password characterAtIndex:i] ;
         if (![characterSet characterIsMember:uchar]) {
-            return [NSString stringWithFormat:@"Passwords may not contain \"%c\"", uchar] ;
+            return [NSString stringWithFormat:@"Password may not contain the character \"%c\"", uchar] ;
         }
     }
     return @"" ;

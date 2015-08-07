@@ -21,7 +21,7 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     if ([emailTest evaluateWithObject:checkString] == YES){
         return @"";
-    }else return @"Email is invalid. Please check it and try again";
+    }else return @"Email is invalid. Please check that it is entered correctly and try again";
 }
 /*
 // Only override drawRect: if you perform custom drawing.

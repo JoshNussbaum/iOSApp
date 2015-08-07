@@ -8,6 +8,7 @@
 
 #import "CreateAccountViewController.h"
 #import "MBProgressHUD.h"
+#import "Utilities.h"
 
 
 @interface CreateAccountViewController (){
@@ -32,7 +33,8 @@
 
 
 - (IBAction)createAccountClicked:(id)sender {
-    //[self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
+    [self hideKeyboard];
+    [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.passwordTextField, self.confirmPasswordTextField, nil];
     errorMessage = @"";
     for (int i =0; i < [textFields count]; i++){
@@ -46,10 +48,10 @@
     if (![errorMessage isEqualToString:@""]){
         
         [hud hide:YES];
-        [self alertStatus:@"Error creating account" :errorMessage];
+        [Utilities alertStatus:@"Error creating account" :errorMessage :@"Okay" :nil :0];
     }
     else if (![self.passwordTextField.text isEqualToString:self.confirmPasswordTextField.text]){
-        [self alertStatus:@"Error creating account" :@"Passwords don't match"];
+        [Utilities alertStatus:@"Error creating account" :@"Passwords don't match" :@"Okay" :nil :0];
     }
     else {
         [self activityStart:@"Validating account..."];
@@ -62,7 +64,7 @@
     NSLog(@"In here and here is the data =>\n %@", data);
     if (data == nil){
         [hud hide:YES];
-        [self alertStatus:@"Connection error" :@"Please check your internet connection and try again."];
+        [Utilities alertStatus:@"Connection error" :@"Please check your internet connection and try again." :@"Okay" :nil :0];
         return;
     }
     if (type == 2){
@@ -82,13 +84,13 @@
         }
         else {
             NSString *message = [data objectForKey:@"message"];
-            [self alertStatus:@"Error creating account" :message];
+            [Utilities alertStatus:@"Error creating account" :message :@"Okay" :nil :0];
             [hud hide:YES];
             return;
         }
     }
     else{
-        [self alertStatus:@"Connection error" :@"Please check your connectivity and try again"];
+        [Utilities alertStatus:@"Connection error" :@"Please check your connectivity and try again" :@"Okay" :nil :0];
     }
 }
 
@@ -96,24 +98,18 @@
     [hud hide:YES];
 }
 
-- (void) alertStatus:(NSString *)title :(NSString *)message
-{
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:self
-                                             cancelButtonTitle:@"Close"
-                                             otherButtonTitles:nil,nil];
-    [alertView show];
-}
 
 - (IBAction)backClicked:(id)sender {
     [self performSegueWithIdentifier:@"account_creation_to_login" sender:self];
 }
 
-- (IBAction)backgroundTap:(id)sender {
+-(void)hideKeyboard{
     [self.view endEditing:YES];
 }
 
+- (IBAction)backgroundTap:(id)sender {
+    [self hideKeyboard];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

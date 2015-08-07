@@ -51,8 +51,12 @@
     
 }
 
-- (IBAction)backgroundTap:(id)sender {
+-(void)hideKeyboard{
     [self.view endEditing:YES];
+}
+
+- (IBAction)backgroundTap:(id)sender {
+    [self hideKeyboard];
 }
 
 
@@ -70,6 +74,7 @@
 }
 
 - (IBAction)loginClicked:(id)sender {
+    [self hideKeyboard];
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
     errorMessage = @"";
@@ -82,7 +87,7 @@
     }
     
     if (![errorMessage isEqualToString:@""]){
-        [self alertStatus:@"Error logging in" :errorMessage];
+        [Utilities alertStatus:@"Error logging in" :errorMessage :@"Okay" :nil :0];
     }
     else {
         [self activityStart:@"Logging in..."];
@@ -117,16 +122,6 @@
 
 - (IBAction)createAccountClicked:(id)sender {
     [self performSegueWithIdentifier:@"login_to_account_creation" sender:self];
-}
-
-- (void) alertStatus:(NSString *)title :(NSString *)message
-{
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:self
-                                             cancelButtonTitle:@"Close"
-                                             otherButtonTitles:nil,nil];
-    [alertView show];
 }
 
 - (IBAction)unwindToLogin:(UIStoryboardSegue *)unwindSegue
