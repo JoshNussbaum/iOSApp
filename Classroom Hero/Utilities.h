@@ -28,6 +28,7 @@ extern NSInteger DELETE_ITEM;
 extern NSInteger ADD_JAR;
 extern NSInteger EDIT_JAR;
 extern NSInteger DELETE_JAR;
+extern NSInteger GET_SCHOOLS;
 
 +(NSString *) getDate;
 

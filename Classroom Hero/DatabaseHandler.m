@@ -56,6 +56,7 @@ static sqlite3_stmt *statement = nil;
             "DROP TABLE IF EXISTS Transactions;"
             "DROP TABLE IF EXISTS StudentTimestamp;"
             "DROP TABLE IF EXISTS StudentClassMatch;"
+            "DROP TABLE IF EXISTS School;"
             "CREATE TABLE Class (id integer primary key, name text, grade integer, schoolid integer, level integer, progress integer, nextlevel integer, hasstamps integer);"
             "CREATE TABLE Student (id integer primary key, firstname text, lastname text, serial text, timestamp text, lvl integer, lvlupamount integer, lvlsgained integer, points integer, pointsgained integer, pointsspent integer, progress integer, progressgained integer);"
             "CREATE TABLE Reinforcer (id integer primary key, cid integer, name text);"
@@ -64,7 +65,8 @@ static sqlite3_stmt *statement = nil;
             "CREATE TABLE Point (id integer, cid integer, timestamp text);"
             "CREATE TABLE Transactions (id integer, iid integer, timestamp text);"
             "CREATE TABLE StudentTimestamp (id integer primary key, timestamp text);"
-            "CREATE TABLE StudentClassMatch (sid integer, cid integer);";
+            "CREATE TABLE StudentClassMatch (sid integer, cid integer);"
+            "CREATE TABLE School (id integer primary key, name text);";
             
             if (sqlite3_exec(database, create_tables, NULL, NULL, &errMsg) == SQLITE_OK)
             {
@@ -198,6 +200,36 @@ static sqlite3_stmt *statement = nil;
     sqlite3_close(database);
 }
 
+-(void)addSchools:(NSMutableArray *)schools{
+    // Set Categories
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        for (NSDictionary *school in schools)
+        {
+            // Category Attributes in Order
+            NSInteger schoolId = [school[@"id"] intValue];
+            NSString *schoolName = school[@"name"];
+            
+            NSString *querySQL = [NSString stringWithFormat:
+                                  @"Insert INTO School (id, name) VALUES (%ld,\"%@\")", (long)schoolId, schoolName];
+            const char *query_stmt = [querySQL UTF8String];
+            sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
+            if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"DOPE WE ADDED A SCHOOL");
+            sqlite3_finalize(statement);
+            
+        }
+    }
+    sqlite3_close(database);
+}
+
+
+
+
+
+
+
 -(NSMutableArray *)getStudents:(NSInteger)cid{
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
@@ -254,6 +286,8 @@ static sqlite3_stmt *statement = nil;
             return resultArray;
         }
     }
+    sqlite3_reset(statement);
+    sqlite3_close(database);
     return nil;
 }
 
@@ -299,6 +333,8 @@ static sqlite3_stmt *statement = nil;
             return resultArray;
         }
     }
+    sqlite3_reset(statement);
+    sqlite3_close(database);
     return nil;
 }
 
@@ -327,6 +363,8 @@ static sqlite3_stmt *statement = nil;
                 [resultArray addObject:rr];
                 
             }
+            sqlite3_reset(statement);
+            sqlite3_close(database);
             NSMutableArray *reversed = [[[resultArray reverseObjectEnumerator]allObjects]mutableCopy];
             return reversed;
         }
@@ -365,7 +403,8 @@ static sqlite3_stmt *statement = nil;
             sqlite3_reset(statement);
             sqlite3_close(database);
             NSMutableArray *reversed = [[[resultArray reverseObjectEnumerator]allObjects]mutableCopy];
-            return reversed;            }
+            return reversed;
+        }
     }
     sqlite3_reset(statement);
     sqlite3_close(database);
@@ -460,6 +499,37 @@ static sqlite3_stmt *statement = nil;
 }
 
 -(student *)getStudentWithID:(NSInteger)sid{
+    return nil;
+}
+
+-(NSMutableArray *)getSchools{
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        NSString *querySQL = @"SELECT * FROM School";
+        const char *query_stmt = [querySQL UTF8String];
+        NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+        if (sqlite3_prepare_v2(database,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                NSInteger id = sqlite3_column_int(statement, 0);
+                
+                NSString *name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+                
+                school *ss = [[school alloc]init:id :name];
+                
+                [resultArray addObject:ss];
+                
+            }
+            sqlite3_reset(statement);
+            sqlite3_close(database);
+            return resultArray;
+        }
+    }
+    sqlite3_reset(statement);
+    sqlite3_close(database);
     return nil;
 }
 

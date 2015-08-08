@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "user.h"
 #import "TutorialContentViewController.h"
+#import "DatabaseHandler.h"
 
-@interface TutorialViewController : UIViewController <UIPageViewControllerDataSource>
+
+@interface TutorialViewController : UIViewController <UIPageViewControllerDataSource>{
+    
+}
 
 - (IBAction)startTutorial:(id)sender;
 

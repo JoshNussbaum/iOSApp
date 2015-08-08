@@ -35,9 +35,12 @@ static NSString * DELETE_STUDENT_URL = @"http://71.202.236.201:8080/SynappWebSer
 static NSString * REWARD_STUDENT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/student/reward";
 static NSString * TRANSACTION_STUDENT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/student/transaction";
 
+static NSString * GET_SCHOOLS_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/schools/get";
+
 
 static NSString *POST = @"POST";
 static NSString *PUT = @"PUT";
+static NSString *GET = @"GET";
 static NSString *DELETE = @"DELETE";
 
 static ConnectionHandler *sharedInstance = nil;
@@ -195,6 +198,13 @@ static NSInteger connectionType;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld}}", (long)id];
     
     [self asynchronousWebCall:jsonRequest :DELETE_STUDENT_URL :DELETE];
+}
+
+-(void)getSchools{
+    connectionType = GET_SCHOOLS;
+    
+    [self asynchronousWebCall:nil :GET_SCHOOLS_URL :GET];
+    
 }
 
 

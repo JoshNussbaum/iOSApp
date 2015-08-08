@@ -17,6 +17,7 @@
     ConnectionHandler *webHandler;
     NSString *errorMessage;
     user *currentUser;
+    NSDictionary *schoolData;
 }
 
 @end
@@ -67,19 +68,25 @@
         [Utilities alertStatus:@"Connection error" :@"Please check your internet connection and try again." :@"Okay" :nil :0];
         return;
     }
-    if (type == 2){
+    if (type == CREATE_ACCOUNT){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        NSInteger cid = [[data objectForKey:@"id"] integerValue];
 
         if([successNumber boolValue] == YES)
         {
+            NSInteger cid = [[data objectForKey:@"id"] integerValue];
+
+            NSMutableArray *schools = data[@"schools"];
+            
+            [[DatabaseHandler getSharedInstance] addSchools:schools];
             currentUser.firstName = self.firstNameTextField.text;
             currentUser.lastName = self.lastNameTextField.text;
             currentUser.email = self.emailTextField.text;
             currentUser.password = self.passwordTextField.text;
             currentUser.id = cid;
             [hud hide:YES];
+            
             [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
+
             
         }
         else {
@@ -142,5 +149,16 @@
     hud.labelText = message;
     [hud show:YES];
 }
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"create_account_to_tutorial"]) {
+       
+    }
+   
+}
+
 
 @end

@@ -27,6 +27,7 @@ NSInteger DELETE_ITEM = 14;
 NSInteger ADD_JAR = 15;
 NSInteger EDIT_JAR = 16;
 NSInteger DELETE_JAR = 17;
+NSInteger GET_SCHOOLS = 18;
 
 +(NSString *) getDate
 {

@@ -17,10 +17,11 @@
 
 }
 
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property NSMutableArray *schoolData;
 @property NSUInteger pageIndex;
 @property NSString *titleText;
 
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UITextField *textField1;
 @property (strong, nonatomic) IBOutlet UITextField *textField2;
 @property (strong, nonatomic) IBOutlet UIPickerView *schoolPicker;
@@ -30,5 +31,9 @@
 - (IBAction)backgroundTap:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIImageView *chestImage;
+
+@property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
+
+-(void)setSchools;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
+#import "DatabaseHandler.h"
 #import "emailTextField.h"
 #import "passwordTextField.h"
 #import "nameTextField.h"
@@ -19,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet emailTextField *emailTextField;
 @property (strong, nonatomic) IBOutlet passwordTextField *passwordTextField;
 @property (strong, nonatomic) IBOutlet passwordTextField *confirmPasswordTextField;
+
 
 - (IBAction)createAccountClicked:(id)sender;
 - (IBAction)backClicked:(id)sender;

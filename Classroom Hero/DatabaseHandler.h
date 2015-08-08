@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "user.h"
+#import "school.h"
 #import "class.h"
 #import "student.h"
 #import "reinforcer.h"
@@ -39,6 +40,8 @@
 
 -(void)addClassJar:(classjar *)cj;
 
+-(void)addSchools:(NSMutableArray *)schools;
+
 // Read Functions
 -(NSMutableArray *)getStudents:(NSInteger)cid;
 
@@ -53,6 +56,8 @@
 -(student *)getStudentWithSerial:(NSString *)serial;
 
 -(student *)getStudentWithID:(NSInteger)sid;
+
+-(NSMutableArray *)getSchools;
 
 
 

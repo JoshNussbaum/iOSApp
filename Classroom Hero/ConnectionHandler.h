@@ -61,5 +61,6 @@
 
 -(void)deleteStudent:(NSInteger)id;
 
+-(void)getSchools;
 
 @end
