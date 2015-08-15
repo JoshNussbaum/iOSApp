@@ -35,7 +35,6 @@
 
 - (IBAction)createAccountClicked:(id)sender {
     [self hideKeyboard];
-    [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.passwordTextField, self.confirmPasswordTextField, nil];
     errorMessage = @"";
     for (int i =0; i < [textFields count]; i++){
@@ -83,6 +82,7 @@
             currentUser.email = self.emailTextField.text;
             currentUser.password = self.passwordTextField.text;
             currentUser.id = cid;
+            currentUser.accountStatus = 0;
             [hud hide:YES];
             
             [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];

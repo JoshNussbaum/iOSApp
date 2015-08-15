@@ -26,5 +26,8 @@
 - (IBAction)loginClicked:(id)sender;
 
 - (IBAction)createAccountClicked:(id)sender;
+- (IBAction)aboutClicked:(id)sender;
+- (IBAction)pricingClicked:(id)sender;
+
 
 @end

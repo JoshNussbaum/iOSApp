@@ -35,7 +35,12 @@ static int screenNumber;
     
     self.schoolPicker.delegate = self;
     
-    self.titleLabel.text = self.titleText;
+    if (self.pageIndex == 6 && currentUser.accountStatus == 3){
+        self.titleLabel.text = @"You  have  already  registered  your  a  stamp  to  your account.  Unregister  from  the  settings  menu";
+    }
+    else {
+        self.titleLabel.text = self.titleText;
+    }
     
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
@@ -464,10 +469,7 @@ static int screenNumber;
     [alertView show];
 }
 
--(void)setSchools:(NSMutableArray *)schools{
-    self.schoolData = [[NSMutableArray alloc]init];
-    self.schoolData = schools;
-}
+
 
                                    
                                    

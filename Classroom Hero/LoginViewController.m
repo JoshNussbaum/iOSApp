@@ -122,6 +122,14 @@
     [self performSegueWithIdentifier:@"login_to_account_creation" sender:self];
 }
 
+- (IBAction)aboutClicked:(id)sender {
+    [self performSegueWithIdentifier:@"login_to_about" sender:self];
+}
+
+- (IBAction)pricingClicked:(id)sender {
+    [self performSegueWithIdentifier:@"login_to_pricing" sender:self];
+}
+
 - (IBAction)unwindToLogin:(UIStoryboardSegue *)unwindSegue
 {
     

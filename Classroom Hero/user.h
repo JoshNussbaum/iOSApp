@@ -17,6 +17,7 @@ static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c
     NSString *lastName;
     NSString *email;
     NSString *password;
+    NSInteger accountStatus;
     NSString *serial;
     NSMutableArray *classIds;
     NSInteger currentClassId;
@@ -28,6 +29,7 @@ static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c
 @property(nonatomic)NSString *lastName;
 @property(nonatomic)NSString *email;
 @property(nonatomic)NSString *password;
+@property(nonatomic)NSInteger accountStatus;
 @property(nonatomic)NSString *serial;
 @property(nonatomic)NSMutableArray *classIds;
 @property(nonatomic)NSInteger currentClassId;

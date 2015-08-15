@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0339CB9C1B7C6D7B00AC0679 /* ClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0339CB9B1B7C6D7B00AC0679 /* ClassViewController.m */; };
 		033A4DA61B75B25B006E90D6 /* achievement.wav in Resources */ = {isa = PBXBuildFile; fileRef = 033A4D9B1B75B25B006E90D6 /* achievement.wav */; };
 		033A4DA71B75B25B006E90D6 /* award.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 033A4D9C1B75B25B006E90D6 /* award.mp3 */; };
 		033A4DA81B75B25B006E90D6 /* bloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 033A4D9D1B75B25B006E90D6 /* bloop.wav */; };
@@ -96,6 +97,8 @@
 
 /* Begin PBXFileReference section */
 		003C81B540498279E6B276D7 /* Pods-Classroom Hero.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Classroom Hero.release.xcconfig"; path = "Pods/Target Support Files/Pods-Classroom Hero/Pods-Classroom Hero.release.xcconfig"; sourceTree = "<group>"; };
+		0339CB9A1B7C6D7B00AC0679 /* ClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassViewController.h; sourceTree = "<group>"; };
+		0339CB9B1B7C6D7B00AC0679 /* ClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassViewController.m; sourceTree = "<group>"; };
 		033A4D9B1B75B25B006E90D6 /* achievement.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = achievement.wav; path = "Classroom Hero/sounds/achievement.wav"; sourceTree = SOURCE_ROOT; };
 		033A4D9C1B75B25B006E90D6 /* award.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = award.mp3; path = "Classroom Hero/sounds/award.mp3"; sourceTree = SOURCE_ROOT; };
 		033A4D9D1B75B25B006E90D6 /* bloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = bloop.wav; path = "Classroom Hero/sounds/bloop.wav"; sourceTree = SOURCE_ROOT; };
@@ -288,6 +291,8 @@
 				03A01ED61B68A33F0037110E /* TutorialViewController.m */,
 				03A01ED81B68A8C20037110E /* TutorialContentViewController.h */,
 				03A01ED91B68A8C20037110E /* TutorialContentViewController.m */,
+				0339CB9A1B7C6D7B00AC0679 /* ClassViewController.h */,
+				0339CB9B1B7C6D7B00AC0679 /* ClassViewController.m */,
 				038F7B311B643FCC0026F679 /* Objects */,
 				038545201B6359A30053C169 /* Textfields */,
 				03AA9A5C1B633BAF00750758 /* Handlers */,
@@ -622,6 +627,7 @@
 				03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */,
 				0385453B1B636BFF0053C169 /* nameTextField.m in Sources */,
 				03AA99EA1B6333C300750758 /* AppDelegate.m in Sources */,
+				0339CB9C1B7C6D7B00AC0679 /* ClassViewController.m in Sources */,
 				038545291B6359E90053C169 /* passwordTextField.m in Sources */,
 				03A01EDA1B68A8C20037110E /* TutorialContentViewController.m in Sources */,
 				03F46FBB1B6B54C200A695B2 /* student.m in Sources */,

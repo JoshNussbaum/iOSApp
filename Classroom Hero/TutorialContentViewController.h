@@ -34,6 +34,4 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
 
--(void)setSchools;
-
 @end
