@@ -30,7 +30,7 @@
 
 -(void)addClass:(class *)cl;
 
--(void)addStudent:(student *)ss;
+-(void)addStudent:(student *)ss :(NSInteger)cid;
 
 -(void)addStudentToClass:(NSInteger)studentId :(NSInteger)classId;
 
@@ -43,6 +43,8 @@
 -(void)addSchools:(NSMutableArray *)schools;
 
 // Read Functions
+-(NSMutableArray *)getClasses;
+
 -(NSMutableArray *)getStudents:(NSInteger)cid;
 
 -(NSMutableArray *)getUnregisteredStudents:(NSInteger)cid;

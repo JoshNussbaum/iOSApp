@@ -18,6 +18,7 @@
 }
 
 @property NSMutableArray *schoolData;
+@property NSMutableArray *classData;
 @property NSUInteger pageIndex;
 @property NSString *titleText;
 

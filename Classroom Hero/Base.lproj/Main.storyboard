@@ -399,7 +399,7 @@
                     <connections>
                         <outlet property="button" destination="YRH-Mu-eRQ" id="XX1-WL-soa"/>
                         <outlet property="chestImage" destination="mIV-wR-7QW" id="Yg1-Gv-El9"/>
-                        <outlet property="classNameLabel" destination="MeC-Cg-YdB" id="XLg-qb-upp"/>
+                        <outlet property="classNameLabel" destination="MeC-Cg-YdB" id="d2o-cr-dgp"/>
                         <outlet property="schoolPicker" destination="FeJ-HA-784" id="VYk-wp-MCx"/>
                         <outlet property="textField1" destination="hiN-uu-7lr" id="uJa-ZM-cmP"/>
                         <outlet property="textField2" destination="2MK-f8-T6z" id="vHd-z5-oFh"/>

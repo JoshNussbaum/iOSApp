@@ -11,3 +11,11 @@ account status: (on backend, first time a class is created for teacher, set stat
 2 = has stamped with a classroom hero stamp (so probably ordered stamps)
 
 3 = has stamped and registered self (UNSET THIS WHEN U UNREGISTER STAMP)
+
+
+
+
+
+
+
+trim leading and trailing white spaces for adding stuff

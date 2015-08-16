@@ -50,7 +50,6 @@ static int screenNumber;
     NSURL *pathURL = [NSURL fileURLWithPath:path];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &success);
     
-
     
     switch (self.pageIndex) {
         case 0:
@@ -61,16 +60,16 @@ static int screenNumber;
             [self.schoolPicker selectRow:floor(self.schoolData.count/2) inComponent:0 animated:YES];
             break;
         case 2:
-            [self onPage:@"Student first name" :@"Student last name" :@"Add  student" :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
+            [self onPage:@"Student first name" :@"Student last name" :@"Add  student" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 3:
-            [self onPage:@"" :@"Positive reinforcer" :@"Add  reinforcer" :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
+            [self onPage:@"" :@"Positive reinforcer" :@"Add  reinforcer" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 4:
-            [self onPage:@"Item name" :@"Item cost" :@"Add  item" :NO :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"Item name" :@"Item cost" :@"Add  item" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 5:
-            [self onPage:@"Class jar name" :@"Class jar total" :@"Add  class  jar" :NO :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"Class jar name" :@"Class jar total" :@"Add  class  jar" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 6:
             [self onPage:@"" :@"" :@"" :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
@@ -106,8 +105,35 @@ static int screenNumber;
     }
     if (picker){
         self.schoolPicker.hidden = NO;
-        self.classNameLabel.hidden = YES;
+        if (self.pageIndex != 1){
+            if (self.classData.count == 0){
+                self.schoolPicker.hidden = YES;
+                self.classNameLabel.text = @"You  must  add  a  class  first!";
+                self.classNameLabel.hidden = NO;
+            }
+            else {
+                //NSInteger row = self.classData.count - 1;
+                for (int i=0; i <self.classData.count; i++){
+                    if ([[self.classData objectAtIndex:i] getId] == currentUser.currentClassId){
+                        [self.schoolPicker selectRow:i inComponent:0 animated:YES];
+                        continue;
+                    }
+                }
 
+                self.classNameLabel.hidden = YES;
+            }
+        }
+        else {
+            if (self.schoolData.count == 0){
+                self.schoolPicker.hidden = YES;
+                self.classNameLabel.text = @"Error loading schools, try again";
+                self.classNameLabel.hidden = NO;
+            }
+            else {
+                self.classNameLabel.hidden = YES;
+            }
+
+        }
     }
     else {
         if (self.pageIndex == 0 || self.pageIndex == 6){
@@ -122,22 +148,13 @@ static int screenNumber;
             }
             self.schoolPicker.hidden = YES;
             self.classNameLabel.hidden = YES;
+
             
         }
         else {
             self.schoolPicker.hidden = YES;
-            if ([currentUser.currentClassName isEqualToString:@""]){
-                self.classNameLabel.text = @"You  must  add  a  class  first!";
-                self.classNameLabel.hidden = NO;
-            }
-            else {
-                self.classNameLabel.text = [NSString stringWithFormat:@"%@", currentUser.currentClassName];
-                self.classNameLabel.hidden = NO;
-
-            }
+     
         }
-    
-        
     }
     self.textField1.keyboardType = keyboard1Type;
     self.textField2.keyboardType = keyboard2Type;
@@ -176,6 +193,7 @@ static int screenNumber;
 }
 
 -(void)handleAction{
+    index = [self.schoolPicker selectedRowInComponent:0];
     [self hideKeyboard];
     if (self.pageIndex == 1){
         NSString *className = self.textField1.text;
@@ -202,6 +220,8 @@ static int screenNumber;
         }
     }
     else{
+        NSInteger classId = [self getClassId];
+        [currentUser setCurrentClassId:classId];
         if (currentUser.currentClassId != 0){
             if (self.pageIndex == 2){
                 NSString *firstName = self.textField1.text;
@@ -210,7 +230,7 @@ static int screenNumber;
                 if ([firstErrorMessage isEqualToString:@""]){
                     NSString *lastErrorMessage = [Utilities isInputValid:lastName :@"Last name"];
                     if ([lastErrorMessage isEqualToString:@""]) {
-                        [webHandler addStudent:currentUser.currentClassId :firstName :lastName];
+                        [webHandler addStudent:classId :firstName :lastName];
                         
                     }
                     else {
@@ -226,10 +246,10 @@ static int screenNumber;
                 NSString *reinforcerName = self.textField2.text;
                 NSString *reinforcerErrorMessage = [Utilities isInputValid:reinforcerName :@"Reinforcer name"];
                 if ([reinforcerErrorMessage isEqualToString:@""]){
-                    [webHandler addReinforcer:currentUser.currentClassId :reinforcerName];
+                    [webHandler addReinforcer:classId :reinforcerName];
                 }
                 else {
-                    [Utilities alertStatus:@"Error adding reinforcer" :reinforcerErrorMessage :@"Okay" :nil :0];
+                    [Utilities alertStatus:@"Error addclassIding reinforcer" :reinforcerErrorMessage :@"Okay" :nil :0];
                     return;
                 }
             }
@@ -242,7 +262,7 @@ static int screenNumber;
                 if ([nameErrorMessage isEqualToString:@""]){
                     NSString *costErrorMessage = [Utilities isNumeric:itemCost];
                     if ([costErrorMessage isEqualToString:@""]) {
-                        [webHandler addItem:currentUser.currentClassId :itemName :itemCost.integerValue];
+                        [webHandler addItem:classId :itemName :itemCost.integerValue];
                         
                     }
                     else {
@@ -262,7 +282,7 @@ static int screenNumber;
                 if ([nameErrorMessage isEqualToString:@""]){
                     NSString *costErrorMessage = [Utilities isNumeric:jarCost];
                     if ([costErrorMessage isEqualToString:@""]) {
-                        [webHandler addItem:currentUser.currentClassId :jarName :jarCost.integerValue];
+                        [webHandler addItem:classId :jarName :jarCost.integerValue];
                         
                     }
                     else {
@@ -306,7 +326,8 @@ static int screenNumber;
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
 
             NSInteger schoolId = index + 1;
-            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId];
+
+            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :0 :0 :10 :0];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             currentUser.currentClassId = classId;
             currentUser.currentClassName = self.textField1.text;
@@ -327,7 +348,7 @@ static int screenNumber;
         {
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
             student *newStudent = [[student alloc]init:studentId :self.textField1.text :self.textField2.text :@"" :0 :10 :0 :0 :0 :0 :0 :0 :[Utilities getDate]];
-            [[DatabaseHandler getSharedInstance] addStudent:newStudent];
+            [[DatabaseHandler getSharedInstance] addStudent:newStudent :currentUser.currentClassId];
             [hud hide:YES];
             [self setTitleAndClear:@"Great  job!  Add  another  student  now,  or  swipe  left  to  continue"];
             [self.textField1 becomeFirstResponder];
@@ -435,13 +456,27 @@ static int screenNumber;
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return self.schoolData.count;
+    
+    if (self.pageIndex > 1){
+        return self.classData.count;
+    }
+    else{
+        return self.schoolData.count;
+    }
 }
 
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *title = [[self.schoolData objectAtIndex:row] getName];
-    return title;
+    if (self.pageIndex > 1){
+        NSString *title = [[self.classData objectAtIndex:row] getName];
+        return title;
+
+    }
+    else{
+        NSString *title = [[self.schoolData objectAtIndex:row] getName];
+        return title;
+    }
+ 
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -450,13 +485,18 @@ static int screenNumber;
     
 }
 
--(NSInteger)getSchoolId{;
+-(NSInteger)getSchoolId{
     NSInteger schoolIndex = index ;
     school *ss = [self.schoolData objectAtIndex:schoolIndex];
     NSInteger schoolId = [ss getId];
-    NSString *schoolName = [ss getName];
-    NSLog(@"School name -> %@", schoolName);
     return schoolId;
+}
+
+-(NSInteger)getClassId{
+    NSInteger schoolIndex = index ;
+    school *cc = [self.classData objectAtIndex:schoolIndex];
+    NSInteger classId = [cc getId];
+    return classId;
 }
 
 - (void)alertStatus:(NSString *)title :(NSString *)message

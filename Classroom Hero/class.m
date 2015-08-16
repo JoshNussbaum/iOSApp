@@ -20,7 +20,7 @@
     return self;
 }
 
--(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_{
+-(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSInteger)hasStamps_{
     self = [super init];
     if (self)
     {
@@ -28,9 +28,9 @@
         self->name = name_;
         self->gradeNumber = gradeNumber_;
         self->schoolId = schoolId_;
-        self->level = 1;
-        self->nextLevel = 10;
-        self->progress = 0;
+        self->level = level_;
+        self->progress = progress_;
+        self->nextLevel = nextLevel_;
         self->hasStamps = 0;
     }
     return self;

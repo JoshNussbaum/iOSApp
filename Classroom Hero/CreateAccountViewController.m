@@ -42,7 +42,6 @@
         if ( ![error isEqualToString:@""] ){
             errorMessage = [errorMessage stringByAppendingString:error];
             break;
-
         }
     }
     if (![errorMessage isEqualToString:@""]){

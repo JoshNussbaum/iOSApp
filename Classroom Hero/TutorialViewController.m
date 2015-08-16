@@ -22,7 +22,7 @@
     [super viewDidLoad];
     currentUser = [user getInstance];
     // Do any additional setup after loading the view.
-    _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  navigate  this  tutorial  and  begin  your  adventure!", @"Create  a  class  to  get  started.  Enter  a  name  for  your  class  and  scroll  to  your  school.", @"Add  some  students  to  your  class.  Type  in  a  student  name  below", @"Create  some  Positive  Reinforcers  to  award  points  for.  Examples:  On  time,  Working  hard,  Setting  good  example.", @"Create  some  market  place  items  for  students  to  spend  their  points  on", @"Add  a  class  jar  for  a  class-wide  reward  achieved  over  a  longer  time.  Examples:  Pizza  Party,  Movie  Day,  Field  Trip.", @"Finally,  stamp  the  screen  to  register  yourself  as  a  teacher  and  begin  your  journey  with  Classroom  Hero!"];
+    _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  navigate  this  tutorial  and  begin  your  adventure!", @"Create  a  class  to  get  started.  Enter  a  name  for  your  class  and  scroll  to  your  school.", @"Add  some  students  to  your  selected  class.  Type  in  a  student  name  below", @"Create  some  Positive  Reinforcers  to  award  points  for.  Examples:  On  time,  Working  hard,  Setting  good  example.", @"Create  some  market  place  items  for  students  to  spend  their  points  on", @"Add  a  class  jar  for  a  class-wide  reward  achieved  over  a  longer  time.  Examples:  Pizza  Party,  Movie  Day,  Field  Trip.", @"Finally,  stamp  the  screen  to  register  yourself  as  a  teacher  and  begin  your  journey  with  Classroom  Hero!"];
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
@@ -35,7 +35,6 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,6 +77,9 @@
     tutorialContentViewController.titleText = self.pageTitles[index];
     if (index == 1){
         tutorialContentViewController.schoolData = [[DatabaseHandler getSharedInstance] getSchools];
+    }
+    if (index > 1 && index < 6){
+        tutorialContentViewController.classData = [[DatabaseHandler getSharedInstance] getClasses];
     }
     return tutorialContentViewController;
 }

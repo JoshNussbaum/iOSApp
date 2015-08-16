@@ -10,32 +10,32 @@
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-static NSString * LOGIN_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/login/auth";
-static NSString * CREATE_ACCOUNT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/register/teacher";
+static NSString * LOGIN_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/login/auth";
+static NSString * CREATE_ACCOUNT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/teacher";
 
-static NSString * ADD_CLASS_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/class/add";
-static NSString * EDIT_CLASS_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/class/edit";
-static NSString * DELETE_CLASS_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/class/delete";
+static NSString * ADD_CLASS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/add";
+static NSString * EDIT_CLASS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/edit";
+static NSString * DELETE_CLASS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/delete";
 
-static NSString * ADD_CATEGORY_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/category/add";
-static NSString * EDIT_CATEGORY_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/category/edit";
-static NSString * DELETE_CATEGORY_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/category/delete";
+static NSString * ADD_CATEGORY_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/category/add";
+static NSString * EDIT_CATEGORY_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/category/edit";
+static NSString * DELETE_CATEGORY_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/category/delete";
 
-static NSString * ADD_ITEM_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/item/add";
-static NSString * EDIT_ITEM_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/item/edit";
-static NSString * DELETE_ITEM_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/item/delete";
+static NSString * ADD_ITEM_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/item/add";
+static NSString * EDIT_ITEM_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/item/edit";
+static NSString * DELETE_ITEM_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/item/delete";
 
-static NSString * ADD_JAR_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/jar/add";
-static NSString * EDIT_JAR_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/jar/edit";
-static NSString * DELETE_JAR_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/jar/delete";
+static NSString * ADD_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/add";
+static NSString * EDIT_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/edit";
+static NSString * DELETE_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/delete";
 
-static NSString * ADD_STUDENT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/student/add";
-static NSString * EDIT_STUDENT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/student/edit";
-static NSString * DELETE_STUDENT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/student/delete";
-static NSString * REWARD_STUDENT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/student/reward";
-static NSString * TRANSACTION_STUDENT_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/student/transaction";
+static NSString * ADD_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/add";
+static NSString * EDIT_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/edit";
+static NSString * DELETE_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/delete";
+static NSString * REWARD_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/reward";
+static NSString * TRANSACTION_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/transaction";
 
-static NSString * GET_SCHOOLS_URL = @"http://71.202.236.201:8080/SynappWebServiceDemo/services/schools/get";
+static NSString * GET_SCHOOLS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/schools/get";
 
 
 static NSString *POST = @"POST";
