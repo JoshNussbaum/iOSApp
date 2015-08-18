@@ -89,6 +89,7 @@
     }
     else {
         [self activityStart:@"Logging in..."];
+        [[DatabaseHandler getSharedInstance] resetDatabase];
         [webHandler logIn:self.emailTextField.text :self.passwordTextField.text];
     }
 }
@@ -101,13 +102,33 @@
         if([successNumber boolValue] == YES)
         {
             // Set all the user stuff and query the database
+            [[DatabaseHandler getSharedInstance] login:data];
+            currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];
+            currentUser.email = self.emailTextField.text;
+            currentUser.password = self.passwordTextField.text;
+            currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
+            currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
+            currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];
             
+            if (currentUser.accountStatus == 0){
+                [self performSegueWithIdentifier:@"login_to_tutorial" sender:nil];
+            }
+            else {
+                [self performSegueWithIdentifier:@"login_to_class" sender:nil];
+            }
             [hud hide:YES];
+            
+            
+            
+            //[self performSegueWithIdentifier:@"login_to_class" sender:nil];
             
         }
         else {
+            NSString *message = [data objectForKey:@"message"];
             [hud hide:YES];
-            
+            [Utilities alertStatus:@"Error logging in" :message :@"Okay" :nil :0];
+            //+ (void) alertStatus:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSArray *)otherTitles :(NSInteger)tag
+
         }
     }
     else {

@@ -19,6 +19,7 @@
     NSInteger points;
     NSInteger pointsgained;
     NSInteger pointsspent;
+    NSInteger totalpoints;
     NSInteger progress;
     NSInteger progressgained;
     NSString *timestamp;
@@ -26,7 +27,7 @@
 
 -(id) init;
 
--(id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_;
+-(id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)totalpoints_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_;
 
 // Creation Functions
 -(void) setFirstName:(NSString *)firstName_;
@@ -59,6 +60,8 @@
 -(NSInteger)getPointsGained;
 
 -(NSInteger)getPointsSpent;
+
+-(NSInteger)getTotalPoints;
 
 -(NSInteger)getProgress;
 

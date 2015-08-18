@@ -60,7 +60,7 @@
 }
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    NSLog(@"In here and here is the data =>\n %@", data);
+    NSLog(@"In Create Account and here is the data =>\n %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatus:@"Connection error" :@"Please check your internet connection and try again." :@"Okay" :nil :0];

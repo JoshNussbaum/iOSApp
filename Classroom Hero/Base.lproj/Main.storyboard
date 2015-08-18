@@ -142,6 +142,8 @@
                         <segue destination="eKz-bu-hqG" kind="modal" identifier="login_to_account_creation" id="eYW-Ji-G0Q"/>
                         <segue destination="5nu-Qb-LKu" kind="modal" identifier="login_to_about" id="beU-Xk-gTZ"/>
                         <segue destination="JZ4-KV-3b8" kind="modal" identifier="login_to_pricing" id="RC7-LL-Vyl"/>
+                        <segue destination="FrP-gK-jVA" kind="modal" identifier="login_to_class" id="SR2-9x-ZVn"/>
+                        <segue destination="sWF-eP-1Ke" kind="modal" identifier="login_to_tutorial" id="Cat-vR-Xx3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70v-hI-odG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -323,6 +325,7 @@
                     <connections>
                         <outlet property="backButton" destination="fW2-eL-Mws" id="b7l-Tp-t4U"/>
                         <segue destination="cWe-vQ-rBv" kind="unwind" identifier="tutorial_to_login" unwindAction="unwindToLogin:" id="pBB-Km-uHj"/>
+                        <segue destination="FrP-gK-jVA" kind="modal" identifier="tutorial_skip_to_class" id="gYe-ik-tSY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AZT-xx-4lJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -405,6 +408,7 @@
                         <outlet property="textField2" destination="2MK-f8-T6z" id="vHd-z5-oFh"/>
                         <outlet property="titleLabel" destination="Hmd-q6-6z0" id="oFg-kg-q1A"/>
                         <segue destination="plT-2p-ixw" kind="unwind" identifier="tutorial_content_to_login" unwindAction="unwindToLogin:" id="IqV-yc-ykR"/>
+                        <segue destination="FrP-gK-jVA" kind="modal" identifier="tutorial_to_class" id="ewg-8k-sYO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ATz-xB-8s2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -482,10 +486,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Med-33-wzi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FML-Tl-D9H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1697" y="922"/>
+            <point key="canvasLocation" x="2605" y="922"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SBm-Z9-O0J">
@@ -496,12 +501,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="U2R-yA-zyV" kind="relationship" relationship="rootViewController" id="FDs-Hw-8zT"/>
+                        <segue destination="zUU-pV-FJ7" kind="relationship" relationship="rootViewController" id="6kg-ue-IsQ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Flx-NY-ZUB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2788" y="922"/>
+            <point key="canvasLocation" x="1586" y="922"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="T4s-j2-Csh">
@@ -615,4 +620,8 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="SR2-9x-ZVn"/>
+        <segue reference="Cat-vR-Xx3"/>
+    </inferredMetricsTieBreakers>
 </document>

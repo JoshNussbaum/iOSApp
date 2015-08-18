@@ -42,6 +42,8 @@
 
 -(void)addSchools:(NSMutableArray *)schools;
 
+-(void)login:(NSDictionary *)loginInfo;
+
 // Read Functions
 -(NSMutableArray *)getClasses;
 
@@ -64,6 +66,7 @@
 
 
 // Misc Functions
+-(void)resetDatabase;
 -(bool)doesClassNameExist:(NSString *)className;
 
 

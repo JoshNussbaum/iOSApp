@@ -286,7 +286,6 @@ static NSInteger connectionType;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"In connection did finish loading");
     NSError *err = nil;
     NSDictionary *jsonData = [NSJSONSerialization
                               JSONObjectWithData:responseData

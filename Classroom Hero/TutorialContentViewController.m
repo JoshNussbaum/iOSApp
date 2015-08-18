@@ -126,7 +126,7 @@ static int screenNumber;
         else {
             if (self.schoolData.count == 0){
                 self.schoolPicker.hidden = YES;
-                self.classNameLabel.text = @"Error loading schools, try again";
+                self.classNameLabel.text = @"Error loading schools";
                 self.classNameLabel.hidden = NO;
             }
             else {
@@ -142,7 +142,7 @@ static int screenNumber;
                     self.titleLabel.hidden = NO;
                 }
                 else {
-                    self.titleLabel.text = @"You  have  a  stamp  registered  to  your  account!  To  unregister  your  stamp,  navigate  to  the  Unregister  Teacher  Stamp  page  from  settings";
+                    self.titleLabel.text = @"You  have  a  stamp  registered  to  your  account!  Unregister  from  the  my  account  page.";
                     self.titleLabel.hidden =  NO;
                 }
             }
@@ -327,7 +327,7 @@ static int screenNumber;
 
             NSInteger schoolId = index + 1;
 
-            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :0 :0 :10 :0];
+            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :0 :0 :30 :0];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             currentUser.currentClassId = classId;
             currentUser.currentClassName = self.textField1.text;
@@ -347,7 +347,7 @@ static int screenNumber;
         if(successNumber == 1)
         {
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
-            student *newStudent = [[student alloc]init:studentId :self.textField1.text :self.textField2.text :@"" :0 :10 :0 :0 :0 :0 :0 :0 :[Utilities getDate]];
+            student *newStudent = [[student alloc]init:studentId :self.textField1.text :self.textField2.text :@"" :0 :10 :0 :0 :0 :0 :0 :0 :0 :[Utilities getDate]];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :currentUser.currentClassId];
             [hud hide:YES];
             [self setTitleAndClear:@"Great  job!  Add  another  student  now,  or  swipe  left  to  continue"];
@@ -425,7 +425,7 @@ static int screenNumber;
                 
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                     currentUser.serial = stampSerial;
-                    
+                    [self performSegueWithIdentifier:@"tutorial_to_class" sender:nil];
                 }
                 
             }
@@ -436,9 +436,6 @@ static int screenNumber;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 0) {
         return;
-    }
-    else if (alertView.tag == 1){
-        [self performSegueWithIdentifier:@"tutorial_content_to_login" sender:nil];
     }
 }
 

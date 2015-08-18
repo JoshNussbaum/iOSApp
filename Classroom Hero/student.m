@@ -29,7 +29,7 @@
 
 
 
--(id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_{
+-(id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)totalpoints_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_{
 
     self = [super init];
     if (self) {
@@ -42,6 +42,7 @@
         self->points = points_;
         self->pointsgained = pointsgained_;
         self->pointsspent = pointsspent_;
+        self->totalpoints = totalpoints_;
         self->progress = progress_;
         self->progressgained = progressgained_;
         self->serial = serial_;
@@ -111,6 +112,10 @@
 
 - (NSInteger)getPointsSpent{
     return self->pointsspent;
+}
+
+-(NSInteger)getTotalPoints{
+    return self->totalpoints;
 }
 
 - (NSInteger)getProgress{
