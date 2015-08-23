@@ -95,5 +95,23 @@ NSInteger GET_SCHOOLS = 18;
     [alertView show];
 }
 
++ (void) editAlert:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSString *)done :(NSArray *)textfields :(NSInteger)tag{
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:cancel
+                                                  otherButtonTitles:done, nil];
+    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+
+    for (NSInteger i = 0; i < textfields.count; i++){
+        [[alertView textFieldAtIndex:i] setPlaceholder:textfields[i]];
+        
+    }
+    alertView.tag = tag;
+    [alertView show];
+}
+
+
+
 
 @end

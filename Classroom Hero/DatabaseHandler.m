@@ -47,6 +47,7 @@ static sqlite3_stmt *statement = nil;
             //Create Tables
             char *errMsg;
             const char *create_tables =
+            "DROP TABLE IF EXISTS School;"
             "DROP TABLE IF EXISTS Class;"
             "DROP TABLE IF EXISTS Student;"
             "DROP TABLE IF EXISTS Reinforcer;"
@@ -56,7 +57,7 @@ static sqlite3_stmt *statement = nil;
             "DROP TABLE IF EXISTS Transactions;"
             "DROP TABLE IF EXISTS StudentTimestamp;"
             "DROP TABLE IF EXISTS StudentClassMatch;"
-            "DROP TABLE IF EXISTS School;"
+            "CREATE TABLE School (id integer primary key, name text);"
             "CREATE TABLE Class (id integer primary key, name text, grade integer, schoolid integer, level integer, progress integer, nextlevel integer, hasstamps integer);"
             "CREATE TABLE Student (id integer primary key, firstname text, lastname text, serial text, timestamp text, lvl integer, lvlupamount integer, lvlsgained integer, points integer, pointsgained integer, pointsspent integer, totalpoints integer, progress integer, progressgained integer);"
             "CREATE TABLE Reinforcer (id integer primary key, cid integer, name text);"
@@ -65,8 +66,7 @@ static sqlite3_stmt *statement = nil;
             "CREATE TABLE Point (id integer, cid integer, timestamp text);"
             "CREATE TABLE Transactions (id integer, iid integer, timestamp text);"
             "CREATE TABLE StudentTimestamp (id integer primary key, timestamp text);"
-            "CREATE TABLE StudentClassMatch (sid integer, cid integer);"
-            "CREATE TABLE School (id integer primary key, name text);";
+            "CREATE TABLE StudentClassMatch (sid integer, cid integer);";
             
             if (sqlite3_exec(database, create_tables, NULL, NULL, &errMsg) == SQLITE_OK)
             {
@@ -90,7 +90,8 @@ static sqlite3_stmt *statement = nil;
     return isSuccess;
 }
 
-// Create Functions
+#pragma mark - Create
+
 -(void) addClass:(class *)cl{
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
@@ -130,7 +131,7 @@ static sqlite3_stmt *statement = nil;
                                @"INSERT INTO StudentClassMatch (sid, cid) VALUES (%ld, %ld)", (long)[ss getId], (long)cid];
         
         NSLog(@"Add Student Query SQL -> %@", querySQL2);
-        const char *query_stmt2 = [querySQL UTF8String];
+        const char *query_stmt2 = [querySQL2 UTF8String];
         sqlite3_prepare_v2(database, query_stmt2,-1, &statement, NULL);
         if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"DOPE WE ADDED A STUDENT CLASS MATCH");
         sqlite3_finalize(statement);
@@ -233,15 +234,20 @@ static sqlite3_stmt *statement = nil;
     sqlite3_close(database);
 }
 
-
--(void) login:(NSDictionary *)loginInfo
-{
+-(void) login:(NSDictionary *)loginInfo{
+    currentUser = [user getInstance];
     NSLog(@"Login info->%@", loginInfo);
+    
     NSMutableArray *classes = [loginInfo objectForKey:@"classes"];
-    NSMutableArray *items = loginInfo[@"Items"];
-    NSMutableArray *categories = loginInfo[@"Categories"];
     NSMutableArray *schools = [loginInfo objectForKey:@"schools"];
-    NSLog(@"schools -> %@", schools);
+    
+    if (classes.count > 0){
+        currentUser.currentClassId = [[[classes objectAtIndex:0] objectForKey:@"cid"]integerValue];
+    }
+    else {
+        currentUser.currentClassId = 0;
+    }
+    
     
     [self addSchools:schools];
         
@@ -259,7 +265,6 @@ static sqlite3_stmt *statement = nil;
         class *newClass = [[class alloc] init:cid :className :grade :schoolId :level :progress :nextLevel :hasStamps];
         [self addClass:newClass];
         
-        //-(id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_;
 
         
         NSMutableArray *students = [classDictionary objectForKey:@"students"];
@@ -278,9 +283,40 @@ static sqlite3_stmt *statement = nil;
             [self addStudent:newStudent :cid];
             
         }
+        NSMutableArray *reinforcers = [classDictionary objectForKey:@"reinforcers"];
+
+        for (NSDictionary *reinforcerDictionary in reinforcers){
+            NSInteger rid = [[reinforcerDictionary objectForKey:@"rid"]integerValue ];
+            NSString *name = [reinforcerDictionary objectForKey:@"name"];
+            reinforcer *newReinforcer = [[reinforcer alloc] init:rid :cid :name];
+            [self addReinforcer:newReinforcer];
+        }
+       
+        NSMutableArray *items = [classDictionary objectForKey:@"items"];
+        for (NSDictionary *itemDictionary in items){
+            NSInteger iid = [[itemDictionary objectForKey:@"rid"]integerValue ];
+            NSInteger cid = [[itemDictionary objectForKey:@"cid"]integerValue ];
+            NSString *name = [itemDictionary objectForKey:@"name"];
+            NSInteger cost = [[itemDictionary objectForKey:@"cost"]integerValue ];
+            item *newItem = [[item alloc] init:iid :cid :name :cost];
+            [self addItem:newItem];
+        }
+        
+        NSDictionary *classJarDictionary = [classDictionary objectForKey:@"classjar"];
+        NSInteger jid = [[classJarDictionary objectForKey:@"jid"]integerValue];
+        NSString *name = [classJarDictionary objectForKey:@"name"];
+        NSInteger jarProgress = [[classJarDictionary objectForKey:@"progress"]integerValue];
+        NSInteger total = [[classJarDictionary objectForKey:@"total"]integerValue ];
+
+        classjar *newJar = [[classjar alloc]init:jid :cid :name :jarProgress :total];
+        [self addClassJar:newJar];
+        
+        
     }
 }
 
+
+#pragma mark - Read
 
 
 -(NSMutableArray *)getClasses{
@@ -295,7 +331,6 @@ static sqlite3_stmt *statement = nil;
         {
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-                
                 NSInteger id = sqlite3_column_int(statement, 0);
                 
                 NSString *name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
@@ -316,6 +351,7 @@ static sqlite3_stmt *statement = nil;
                 [resultArray addObject:cc];
                 
             }
+            NSLog(@"HERE ARE ALL THE CLASSES => %@", resultArray);
             sqlite3_reset(statement);
             sqlite3_close(database);
             return resultArray;
@@ -325,7 +361,6 @@ static sqlite3_stmt *statement = nil;
     sqlite3_close(database);
     return nil;
 }
-
 
 -(NSMutableArray *)getStudents:(NSInteger)cid{
     const char *dbpath = [databasePath UTF8String];
@@ -512,7 +547,6 @@ static sqlite3_stmt *statement = nil;
     return nil;
 }
 
-
 -(classjar *)getClassJar:(NSInteger)cid{
     const char *dbpath = [databasePath UTF8String];
     sqlite3_stmt *statement;
@@ -633,6 +667,77 @@ static sqlite3_stmt *statement = nil;
     return nil;
 }
 
+-(NSString *)getSchoolName:(NSInteger)sid{
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@" SELECT * FROM School WHERE id=%ld", (long)sid];
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(database,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                NSString *name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+                NSLog(@"FOUND SCHOOL %@", name);
+                sqlite3_reset(statement);
+                sqlite3_close(database);
+                return name;
+            }
+        }
+    }
+    sqlite3_reset(statement);
+    sqlite3_close(database);
+    return nil;
+}
+
+-(NSInteger)getNumberOfStudentsInClass:(NSInteger)cid{
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT COUNT(*) FROM StudentClassMatch WHERE cid = %ld", (long)cid];
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(database,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                NSInteger studentCount = sqlite3_column_int(statement, 0);
+                NSLog(@"Student count is %ld for class %ld", (long)studentCount, (long)cid);
+
+                sqlite3_reset(statement);
+                sqlite3_close(database);
+                return studentCount;
+            }
+        }
+    }
+    sqlite3_reset(statement);
+    sqlite3_close(database);
+    return 0;
+}
+
+-(NSMutableDictionary *)getNumberOfStudentsInClasses:(NSMutableArray *)classIds{
+    NSMutableDictionary *numberOfStudentsByClassId = [[NSMutableDictionary alloc]init];
+    for (NSNumber *classId in classIds){
+        NSLog(@"Class ID => %@", classId);
+        NSInteger cid = [classId integerValue];
+        NSLog(@"On class id %d", cid);
+        NSInteger numberOfStudents = [self getNumberOfStudentsInClass:[classId integerValue]];
+        NSNumber *numOfStudents = [NSNumber numberWithInteger:numberOfStudents];
+        [numberOfStudentsByClassId setObject:numOfStudents forKey:classId];
+        
+    }
+    NSLog(@"Here is the dictionary of student numbers by class ids : %@", numberOfStudentsByClassId);
+    return numberOfStudentsByClassId;
+}
+
+
+#pragma mark - Update
+
+-(void)editClass:(class *)updatedClass{
+    
+
+}
 
 
 // Misc Functions
@@ -754,6 +859,7 @@ static sqlite3_stmt *statement = nil;
             sqlite3_finalize(statement);
         }
     }
+    sqlite3_close(database);
 }
 
 -(bool)doesClassNameExist:(NSString *)className{
@@ -783,6 +889,27 @@ static sqlite3_stmt *statement = nil;
     sqlite3_reset(statement);
     sqlite3_close(database);
     return NO;
+}
+
+#pragma mark - Delete
+
+-(void)deleteClass:(NSInteger)cid{
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"DELETE FROM Class where id=%ld", (long)cid];
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(database,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_DONE){
+                NSLog(@"we deleted class with id %d", cid);
+            }
+            
+        }
+    }
+    sqlite3_reset(statement);
+    sqlite3_close(database);
 }
 
 

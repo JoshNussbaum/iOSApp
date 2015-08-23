@@ -63,6 +63,23 @@
 
 -(NSMutableArray *)getSchools;
 
+-(NSString *)getSchoolName:(NSInteger)sid;
+
+-(NSInteger)getNumberOfStudentsInClass:(NSInteger)cid;
+
+-(NSMutableDictionary *)getNumberOfStudentsInClasses:(NSMutableArray *)classIds;
+
+
+// Update Functions
+
+-(void)editClass:(class *)updatedClass;
+
+
+
+// Delete Functions
+
+-(void)deleteClass:(NSInteger)cid;
+
 
 
 // Misc Functions

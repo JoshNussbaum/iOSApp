@@ -19,6 +19,7 @@ static int screenNumber;
     NSInteger index;
     MBProgressHUD *hud;
     ConnectionHandler *webHandler;
+    SystemSoundID success;
 }
 
 @end
@@ -104,6 +105,7 @@ static int screenNumber;
         self.button.hidden = YES;
     }
     if (picker){
+        self.stampImage.hidden = YES;
         self.schoolPicker.hidden = NO;
         if (self.pageIndex != 1){
             if (self.classData.count == 0){
@@ -112,6 +114,8 @@ static int screenNumber;
                 self.classNameLabel.hidden = NO;
             }
             else {
+                self.pickerLabel.text= @"Class Picker";
+                self.pickerLabel.hidden = NO;
                 //NSInteger row = self.classData.count - 1;
                 for (int i=0; i <self.classData.count; i++){
                     if ([[self.classData objectAtIndex:i] getId] == currentUser.currentClassId){
@@ -125,11 +129,15 @@ static int screenNumber;
         }
         else {
             if (self.schoolData.count == 0){
+                self.pickerLabel.hidden = YES;
                 self.schoolPicker.hidden = YES;
                 self.classNameLabel.text = @"Error loading schools";
                 self.classNameLabel.hidden = NO;
             }
             else {
+                self.pickerLabel.text = @"School Picker	";
+                self.pickerLabel.hidden = NO;
+                
                 self.classNameLabel.hidden = YES;
             }
 
@@ -137,6 +145,7 @@ static int screenNumber;
     }
     else {
         if (self.pageIndex == 0 || self.pageIndex == 6){
+            self.stampImage.hidden = NO;
             if (self.pageIndex == 6){
                 if ([currentUser.serial isEqualToString:@""]){
                     self.titleLabel.hidden = NO;
@@ -146,6 +155,7 @@ static int screenNumber;
                     self.titleLabel.hidden =  NO;
                 }
             }
+            self.pickerLabel.hidden = YES;
             self.schoolPicker.hidden = YES;
             self.classNameLabel.hidden = YES;
 
@@ -220,9 +230,9 @@ static int screenNumber;
         }
     }
     else{
-        NSInteger classId = [self getClassId];
-        [currentUser setCurrentClassId:classId];
         if (currentUser.currentClassId != 0){
+            currentUser.currentClassId = [self getClassId];
+
             if (self.pageIndex == 2){
                 NSString *firstName = self.textField1.text;
                 NSString *lastName = self.textField2.text;
@@ -230,7 +240,8 @@ static int screenNumber;
                 if ([firstErrorMessage isEqualToString:@""]){
                     NSString *lastErrorMessage = [Utilities isInputValid:lastName :@"Last name"];
                     if ([lastErrorMessage isEqualToString:@""]) {
-                        [webHandler addStudent:classId :firstName :lastName];
+                        [self activityStart:@"Adding student..."];
+                        [webHandler addStudent:currentUser.currentClassId :firstName :lastName];
                         
                     }
                     else {
@@ -246,10 +257,11 @@ static int screenNumber;
                 NSString *reinforcerName = self.textField2.text;
                 NSString *reinforcerErrorMessage = [Utilities isInputValid:reinforcerName :@"Reinforcer name"];
                 if ([reinforcerErrorMessage isEqualToString:@""]){
-                    [webHandler addReinforcer:classId :reinforcerName];
+                    [self activityStart:@"Adding reinforcer..."];
+                    [webHandler addReinforcer:currentUser.currentClassId :reinforcerName];
                 }
                 else {
-                    [Utilities alertStatus:@"Error addclassIding reinforcer" :reinforcerErrorMessage :@"Okay" :nil :0];
+                    [Utilities alertStatus:@"Error adding reinforcer" :reinforcerErrorMessage :@"Okay" :nil :0];
                     return;
                 }
             }
@@ -262,7 +274,8 @@ static int screenNumber;
                 if ([nameErrorMessage isEqualToString:@""]){
                     NSString *costErrorMessage = [Utilities isNumeric:itemCost];
                     if ([costErrorMessage isEqualToString:@""]) {
-                        [webHandler addItem:classId :itemName :itemCost.integerValue];
+                        [self activityStart:@"Adding item..."];
+                        [webHandler addItem:currentUser.currentClassId :itemName :itemCost.integerValue];
                         
                     }
                     else {
@@ -282,7 +295,8 @@ static int screenNumber;
                 if ([nameErrorMessage isEqualToString:@""]){
                     NSString *costErrorMessage = [Utilities isNumeric:jarCost];
                     if ([costErrorMessage isEqualToString:@""]) {
-                        [webHandler addItem:classId :jarName :jarCost.integerValue];
+                        [self activityStart:@"Adding jar..."];
+                        [webHandler addJar:currentUser.currentClassId :jarName :jarCost.integerValue];
                         
                     }
                     else {
@@ -422,6 +436,9 @@ static int screenNumber;
         if (resultObject != NULL) {
             if ([resultObject objectForKey:@"stamp"] != nil){
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                
+                
+                /* ADD A WEB CALL HURR" */
                 
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                     currentUser.serial = stampSerial;

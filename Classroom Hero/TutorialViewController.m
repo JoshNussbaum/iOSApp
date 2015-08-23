@@ -24,7 +24,7 @@
     currentUser.serial = @"dope";
 
     // Do any additional setup after loading the view.
-    _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  navigate  this  tutorial  and  begin  your  adventure!", @"Create  a  class  to  get  started.  Enter  a  name  for  your  class  and  scroll  to  your  school.", @"Add  some  students  to  your  selected  class.  Type  in  a  student  name  below", @"Create  some  Positive  Reinforcers  to  award  points  for.  Examples:  On  time,  Working  hard,  Setting  good  example.", @"Create  some  market  place  items  for  students  to  spend  their  points  on", @"Add  a  class  jar  for  a  class-wide  reward  achieved  over  a  longer  time.  Examples:  Pizza  Party,  Movie  Day,  Field  Trip.", @"Finally,  stamp  the  screen  to  register  yourself  as  a  teacher  and  begin  your  journey  with  Classroom  Hero!"];
+    _pageTitles = @[@"Welcome  to  Classroom  Hero!   Swipe  left  to  navigate  this  tutorial  and  begin  your  adventure!", @"Add  a  class  to  get  started.   Enter  a  name  and  grade  for  your  class  and  pick  your  school", @"Add  students  to  your  selected  class.   Type  in  a  student  name  below", @"Add  positive  reinforcers  to  categorize  the  points  you  award  to  students", @"Add  market  place  items  for  students  to  spend  their  points  on", @"Add  a  class  jar  for  a  class-wide  reward  achieved  over  a  longer  time  that  you  add  points  to", @"Finally,  stamp  the  apple  to  register  your  teacher  stamp  and  begin  your  journey  with  Classroom  Hero!"];
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;

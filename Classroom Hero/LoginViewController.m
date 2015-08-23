@@ -41,7 +41,7 @@
 }
 
 
-- (void) activityStart :(NSString *)message {
+-(void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
@@ -73,6 +73,9 @@
 
 - (IBAction)loginClicked:(id)sender {
     [self hideKeyboard];
+    [self performSegueWithIdentifier:@"login_to_class" sender:nil];
+
+    /*
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
     errorMessage = @"";
@@ -92,6 +95,7 @@
         [[DatabaseHandler getSharedInstance] resetDatabase];
         [webHandler logIn:self.emailTextField.text :self.passwordTextField.text];
     }
+     */
 }
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
@@ -110,11 +114,13 @@
             currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
             currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];
             
+            self.passwordTextField.text=@"";
+        
             if (currentUser.accountStatus == 0){
                 [self performSegueWithIdentifier:@"login_to_tutorial" sender:nil];
             }
             else {
-                [self performSegueWithIdentifier:@"login_to_class" sender:nil];
+                 [self performSegueWithIdentifier:@"login_to_class" sender:nil];
             }
             [hud hide:YES];
             
@@ -126,6 +132,9 @@
         else {
             NSString *message = [data objectForKey:@"message"];
             [hud hide:YES];
+            if (!message){
+                message = @"Connection error. Please try again.";
+            }
             [Utilities alertStatus:@"Error logging in" :message :@"Okay" :nil :0];
             //+ (void) alertStatus:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSArray *)otherTitles :(NSInteger)tag
 

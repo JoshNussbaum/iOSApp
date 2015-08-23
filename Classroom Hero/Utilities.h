@@ -40,4 +40,6 @@ extern NSInteger GET_SCHOOLS;
 
 + (void) alertStatus:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSArray *)otherTitles :(NSInteger)tag;
 
++ (void) editAlert:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSString *)done :(NSArray *)textfields :(NSInteger)tag;
+
 @end

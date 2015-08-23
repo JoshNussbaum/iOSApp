@@ -101,7 +101,7 @@
 
 // Misc Functions
 -(void)printClass{
-    NSLog(@"Class ID=>%li\n, Name=>%@\n, Grade=>%ld\n", (long)self->id, self->name, (long)self->gradeNumber);
+    NSLog(@"Class ID=>%li\n, Name=>%@\n, Grade=>%ld\n School Id=>%ld\n, Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n Has Stamps=>%ld\n", (long)self->id, self->name, (long)self->gradeNumber, (long)self->schoolId, (long)self->level, (long)self->progress, (long)self->nextLevel, (long)self->hasStamps);
     
 }
 

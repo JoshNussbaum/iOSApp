@@ -12,9 +12,7 @@
 #import "DatabaseHandler.h"
 
 
-@interface TutorialViewController : UIViewController <UIPageViewControllerDataSource>{
-    
-}
+@interface TutorialViewController : UIViewController <UIPageViewControllerDataSource>
 
 - (IBAction)startTutorial:(id)sender;
 
