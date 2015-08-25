@@ -66,7 +66,7 @@ static NSInteger connectionType;
 }
 
 
--(void)logIn:(NSString *)email :(NSString *)password{
+- (void)logIn:(NSString *)email :(NSString *)password{
     connectionType = LOGIN;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"credentials\":{\"username\": \"%@\", \"password\": \"%@\"}}", email, password];
     
@@ -74,7 +74,7 @@ static NSInteger connectionType;
 }
 
 
--(void)createAccount:(NSString *)email :(NSString *)password :(NSString *)fname :(NSString *)lname{
+- (void)createAccount:(NSString *)email :(NSString *)password :(NSString *)fname :(NSString *)lname{
     connectionType = CREATE_ACCOUNT;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"email\":\"%@\",\"password\":\"%@\", \"fname\":\"%@\", \"lname\":\"%@\"}", email, password, fname, lname];
     
@@ -82,7 +82,7 @@ static NSInteger connectionType;
 }
 
 
--(void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade :(NSInteger)schoolId {
+- (void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade :(NSInteger)schoolId {
     connectionType = ADD_CLASS;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"class\":{\"id\":%ld,\"name\":\"%@\", \"grade\":%ld, \"schoolId\":%ld}}", (long)id, name, (long)grade, (long)schoolId];
     
@@ -90,7 +90,7 @@ static NSInteger connectionType;
 }
 
 
--(void)editClass:(NSInteger)id :(NSString *)name :(NSInteger)grade :(NSInteger)schoolId {
+- (void)editClass:(NSInteger)id :(NSString *)name :(NSInteger)grade :(NSInteger)schoolId {
     connectionType = EDIT_CLASS;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"class\":{\"id\":%ld,\"name\":\"%@\", \"grade\":%ld, \"schoolId\":%ld}}", (long)id, name, (long)grade, (long)schoolId];
     
@@ -98,7 +98,7 @@ static NSInteger connectionType;
 }
 
 
--(void)deleteClass:(NSInteger)id{
+- (void)deleteClass:(NSInteger)id{
     connectionType = DELETE_CLASS;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"class\":{\"id\":%ld,}}", (long)id];
     
@@ -106,7 +106,7 @@ static NSInteger connectionType;
 }
 
 
--(void)addReinforcer:(NSInteger)id :(NSString *)name{
+- (void)addReinforcer:(NSInteger)id :(NSString *)name{
     connectionType = ADD_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld,\"name\":\"%@\"}}", (long)id, name];
     
@@ -114,7 +114,7 @@ static NSInteger connectionType;
 }
 
 
--(void)editCategory:(NSInteger)id :(NSString *)name{
+- (void)editCategory:(NSInteger)id :(NSString *)name{
     connectionType = EDIT_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld,\"name\":\"%@\"}}", (long)id, name];
     
@@ -122,7 +122,7 @@ static NSInteger connectionType;
 }
 
 
--(void)deleteCategory:(NSInteger)id{
+- (void)deleteCategory:(NSInteger)id{
     connectionType = DELETE_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld}}", (long)id];
     
@@ -130,7 +130,7 @@ static NSInteger connectionType;
 }
 
 
--(void)addJar:(NSInteger)id :(NSString *)name :(NSInteger)cost{
+- (void)addJar:(NSInteger)id :(NSString *)name :(NSInteger)cost{
     connectionType = ADD_JAR;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"jar\":{\"id\":%ld,\"name\":\"%@\", \"total\":%ld}}", (long)id, name, (long)cost];
     
@@ -138,7 +138,7 @@ static NSInteger connectionType;
 }
 
 
--(void)editJar:(NSInteger)id :(NSString *)name :(NSInteger)cost{
+- (void)editJar:(NSInteger)id :(NSString *)name :(NSInteger)cost{
     connectionType = EDIT_JAR;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"jar\":{\"id\":%ld,\"name\":\"%@\", \"total\":%ld}}", (long)id, name, (long)cost];
     
@@ -146,7 +146,7 @@ static NSInteger connectionType;
 }
 
 
--(void)deleteJar:(NSInteger)id{
+- (void)deleteJar:(NSInteger)id{
     connectionType = DELETE_JAR;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"jar\":{\"id\":%ld}}", (long)id];
     
@@ -154,7 +154,7 @@ static NSInteger connectionType;
 }
 
 
--(void)addItem:(NSInteger)id :(NSString *)name :(NSInteger)cost{
+- (void)addItem:(NSInteger)id :(NSString *)name :(NSInteger)cost{
     connectionType = ADD_ITEM;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"item\":{\"id\":%ld,\"name\":\"%@\", \"cost\":%ld}}", (long)id, name, (long)cost];
     
@@ -162,7 +162,7 @@ static NSInteger connectionType;
 }
 
 
--(void)editItem:(NSInteger)id :(NSString *)name :(NSInteger)cost{
+- (void)editItem:(NSInteger)id :(NSString *)name :(NSInteger)cost{
     connectionType = EDIT_ITEM;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"item\":{\"id\":%ld,\"name\":\"%@\", \"cost\":%ld}}", (long)id, name, (long)cost];
     
@@ -170,7 +170,7 @@ static NSInteger connectionType;
 }
 
 
--(void)deleteItem:(NSInteger)id{
+- (void)deleteItem:(NSInteger)id{
     connectionType = DELETE_ITEM;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"item\":{\"id\":%ld}}", (long)id];
     
@@ -178,7 +178,7 @@ static NSInteger connectionType;
 }
 
 
--(void)addStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname{
+- (void)addStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname{
     connectionType = ADD_STUDENT;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld,\"fname\":\"%@\", \"lname\":\"%@\"}}", (long)id, fname, lname];
     
@@ -186,21 +186,21 @@ static NSInteger connectionType;
 }
 
 
--(void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname{
+- (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname{
     connectionType = EDIT_STUDENT;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld,\"fname\":\"%@\", \"lname\":\"%@\"}}", (long)id, fname, lname];
     
     [self asynchronousWebCall:jsonRequest :EDIT_STUDENT_URL :PUT];
 }
 
--(void)deleteStudent:(NSInteger)id{
+- (void)deleteStudent:(NSInteger)id{
     connectionType = DELETE_STUDENT;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld}}", (long)id];
     
     [self asynchronousWebCall:jsonRequest :DELETE_STUDENT_URL :DELETE];
 }
 
--(void)getSchools{
+- (void)getSchools{
     connectionType = GET_SCHOOLS;
     
     [self asynchronousWebCall:nil :GET_SCHOOLS_URL :GET];
@@ -209,7 +209,7 @@ static NSInteger connectionType;
 
 
 
--(NSDictionary *) synchronousWebCall:(NSString *)jsonRequest :(NSURL *)url :(NSString *)httpMethod{
+- (NSDictionary *) synchronousWebCall:(NSString *)jsonRequest :(NSURL *)url :(NSString *)httpMethod{
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:10];
@@ -240,7 +240,7 @@ static NSInteger connectionType;
     }
 }
 
--(void)asynchronousWebCall:(NSString *)jsonRequest :(NSString *)urlString :(NSString *)httpMethod{
+- (void)asynchronousWebCall:(NSString *)jsonRequest :(NSString *)urlString :(NSString *)httpMethod{
     NSLog(@"Json Request -> %@", jsonRequest );
     NSURL *url = [NSURL URLWithString:urlString];
     

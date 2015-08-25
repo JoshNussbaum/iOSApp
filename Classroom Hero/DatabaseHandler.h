@@ -26,65 +26,65 @@
 
 
 // Create Functions
--(BOOL)createDatabase;
+- (BOOL)createDatabase;
 
--(void)addClass:(class *)cl;
+- (void)addClass:(class *)cl;
 
--(void)addStudent:(student *)ss :(NSInteger)cid;
+- (void)addStudent:(student *)ss :(NSInteger)cid;
 
--(void)addStudentToClass:(NSInteger)studentId :(NSInteger)classId;
+- (void)addStudentToClass:(NSInteger)studentId :(NSInteger)classId;
 
--(void)addReinforcer:(reinforcer *)rr;
+- (void)addReinforcer:(reinforcer *)rr;
 
--(void)addItem:(item *)ii;
+- (void)addItem:(item *)ii;
 
--(void)addClassJar:(classjar *)cj;
+- (void)addClassJar:(classjar *)cj;
 
--(void)addSchools:(NSMutableArray *)schools;
+- (void)addSchools:(NSMutableArray *)schools;
 
--(void)login:(NSDictionary *)loginInfo;
+- (void)login:(NSDictionary *)loginInfo;
 
 // Read Functions
--(NSMutableArray *)getClasses;
+- (NSMutableArray *)getClasses;
 
--(NSMutableArray *)getStudents:(NSInteger)cid;
+- (NSMutableArray *)getStudents:(NSInteger)cid;
 
--(NSMutableArray *)getUnregisteredStudents:(NSInteger)cid;
+- (NSMutableArray *)getUnregisteredStudents:(NSInteger)cid;
 
--(NSMutableArray *)getReinforcers:(NSInteger)cid;
+- (NSMutableArray *)getReinforcers:(NSInteger)cid;
 
--(NSMutableArray *)getItems:(NSInteger)cid;
+- (NSMutableArray *)getItems:(NSInteger)cid;
 
--(classjar *)getClassJar:(NSInteger)cid;
+- (classjar *)getClassJar:(NSInteger)cid;
 
--(student *)getStudentWithSerial:(NSString *)serial;
+- (student *)getStudentWithSerial:(NSString *)serial;
 
--(student *)getStudentWithID:(NSInteger)sid;
+- (student *)getStudentWithID:(NSInteger)sid;
 
--(NSMutableArray *)getSchools;
+- (NSMutableArray *)getSchools;
 
--(NSString *)getSchoolName:(NSInteger)sid;
+- (NSString *)getSchoolName:(NSInteger)sid;
 
--(NSInteger)getNumberOfStudentsInClass:(NSInteger)cid;
+- (NSInteger)getNumberOfStudentsInClass:(NSInteger)cid;
 
--(NSMutableDictionary *)getNumberOfStudentsInClasses:(NSMutableArray *)classIds;
+- (NSMutableDictionary *)getNumberOfStudentsInClasses:(NSMutableArray *)classIds;
 
 
 // Update Functions
 
--(void)editClass:(class *)updatedClass;
+- (void)editClass:(class *)updatedClass;
 
 
 
 // Delete Functions
 
--(void)deleteClass:(NSInteger)cid;
+- (void)deleteClass:(NSInteger)cid;
 
 
 
 // Misc Functions
--(void)resetDatabase;
--(bool)doesClassNameExist:(NSString *)className;
+- (void)resetDatabase;
+- (bool)doesClassNameExist:(NSString *)className;
 
 
 

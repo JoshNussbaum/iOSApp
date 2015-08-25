@@ -20,10 +20,14 @@
 @property (strong, nonatomic) IBOutlet emailTextField *emailTextField;
 @property (strong, nonatomic) IBOutlet passwordTextField *passwordTextField;
 @property (strong, nonatomic) IBOutlet passwordTextField *confirmPasswordTextField;
+@property (strong, nonatomic) IBOutlet UIButton *createAccountButton;
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 
 - (IBAction)createAccountClicked:(id)sender;
 - (IBAction)backClicked:(id)sender;
 
 - (IBAction)backgroundTap:(id)sender;
+
+
 @end

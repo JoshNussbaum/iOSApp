@@ -23,32 +23,30 @@ static NSString * const classCell = @"classCell";
     ConnectionHandler *webHandler;
     class *tmpClass;
     bool addingClass;
+    bool editingClass;
 }
 
 @end
-
-
-/* Before going to add class, set addingClass,
- 
-    Then on view did appear, if addingClass is set, unset it and re-query the 
-    classes 
- 
- */
 
 @implementation ClassTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    classes = [[DatabaseHandler getSharedInstance] getClasses];
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     currentUser = [user getInstance];
-    // on load, pass all the class ids to DB function that
-    // queries the number of students per class
-    // and then returns that shit in a dictionary
-    // then, we can parse out the number of students from the dictionary
-    // when we initialize a new cell and pass that to it.
+    
+    NSShadow* shadow = [NSShadow new];
+    shadow.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    shadow.shadowColor = [Utilities CHBlueColor];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                            NSForegroundColorAttributeName: [Utilities CHBlueColor],
+                                                            NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:36.0f],
+                                                            NSShadowAttributeName: shadow
+                                                            }];
     
     
-    classes = [[DatabaseHandler getSharedInstance] getClasses];
     NSMutableArray *classIds = [[NSMutableArray alloc]init];
     for (class *class_ in classes){
         NSNumber *classId = [NSNumber numberWithInteger:[class_ getId]];
@@ -58,19 +56,12 @@ static NSString * const classCell = @"classCell";
     
     studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
     
-    NSLog(@"Student number counts by class ids -> %@", studentNumberCountsByClassIds);
-    
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
     [self.tableView addGestureRecognizer:longPressRecognizer];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     if (addingClass){
         addingClass = NO;
         classes = [[DatabaseHandler getSharedInstance]getClasses];
@@ -78,15 +69,11 @@ static NSString * const classCell = @"classCell";
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)dataReady:(NSDictionary *)data :(NSInteger)type{
+- (void)dataReady:(NSDictionary *)data :(NSInteger)type{
+    NSLog(@"In class table and heres data -> %@", data);
     if (data == nil){
         [hud hide:YES];
-        [Utilities alertStatus:@"Connection error" :@"Please check your internet connection and try again." :@"Okay" :nil :0];
+        [Utilities alertStatusNoConnection];
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
@@ -96,11 +83,13 @@ static NSString * const classCell = @"classCell";
             [[DatabaseHandler getSharedInstance] editClass:tmpClass];
             [classes replaceObjectAtIndex:index withObject:tmpClass];
             [self.tableView reloadData];
-            
+            [hud hide:YES];
+
             
         } else {
             NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatus:@"Error editing class" :message :@"Okay" :nil :0];
+            [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+
             [hud hide:YES];
             return;
         }
@@ -110,56 +99,66 @@ static NSString * const classCell = @"classCell";
     else if (type == DELETE_CLASS){
         if([successNumber boolValue] == YES)
         {
+      
             [[DatabaseHandler getSharedInstance]deleteClass:[tmpClass getId]];
-            
+            NSInteger row = [classes count] - index -1;
+
             [classes removeObjectAtIndex:index];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             NSArray *indexPaths = @[indexPath];
             [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-            [self.tableView reloadData];
+            [hud hide:YES];
             
         } else {
             NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatus:@"Error editing class" :message :@"Okay" :nil :0];
+            [Utilities alertStatusWithTitle:@"Error deleting class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
             [hud hide:YES];
             return;
         }
     }
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == [alertView cancelButtonIndex]) {
-        return;
-    }
-    NSString *newClassName = [alertView textFieldAtIndex:0].text;
-    NSString *newClassGrade = [alertView textFieldAtIndex:1].text;
-    NSString *errorTitle;
-    NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
-    
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"IN here");
     if (alertView.tag == 1){
-        errorTitle = @"Error editing class";
-    }else errorTitle = @"Error adding class";
-    
-    if (![errorMessage isEqualToString:@""]){
-        NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
-        if (![gradeErrorMessage isEqualToString:@""]){
-            NSInteger grade = newClassGrade.integerValue;
-            if (alertView.tag == 1){
+        // Edit class
+        
+        if (buttonIndex == [alertView cancelButtonIndex]) {
+            NSLog(@"Canceled");
+            editingClass = NO;
+            return;
+        }
+        NSString *newClassName = [alertView textFieldAtIndex:0].text;
+        NSString *newClassGrade = [alertView textFieldAtIndex:1].text;
+        NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
+        
+        if ([errorMessage isEqualToString:@""]){
+            NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
+            if ([gradeErrorMessage isEqualToString:@""]){
+                NSInteger grade = newClassGrade.integerValue;
                 class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];
                 [webHandler editClass:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId]];
                 tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getHasStamps]];
                 
             }
+            else {
+                [Utilities alertStatusWithTitle:@"Error editing class" message:gradeErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            }
         }
         else {
-            [Utilities alertStatus:errorTitle :gradeErrorMessage :@"Okay" :nil :0];
+            [Utilities alertStatusWithTitle:@"Error editing class" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
         }
+        editingClass = NO;
     }
-    else {
-        [Utilities alertStatus:errorTitle :errorMessage :@"Okay" :nil :0];
+    else if (alertView.tag == 2){
+        // Delete class
+        NSLog(@"About to delete this class ");
+        [tmpClass printClass];
+        [self activityStart:@"Deleting class..."];
+        [webHandler deleteClass:[tmpClass getId]];
     }
+
 }
 
 
@@ -180,23 +179,22 @@ static NSString * const classCell = @"classCell";
 }
 
 
--(void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
     
 }
 
 
--(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         tmpClass = [self getClassByIndexPath:indexPath];
-        NSLog(@"About to delete this class ");
-        [tmpClass printClass];
-        [self activityStart:@"Deleting class..."];
-        [webHandler deleteClass:[tmpClass getId]];
+
+        [Utilities alertStatusWithTitle:@"Confirm Delete" message:[NSString stringWithFormat:@"Are you sure you want to delete %@?", [tmpClass getName]]  cancel:@"Cancel"  otherTitles:@[@"Delete"] tag:2 view:self];
+        
     }
 }
 
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -207,7 +205,7 @@ static NSString * const classCell = @"classCell";
 }
 
 
--(void)viewDidLayoutSubviews{
+- (void)viewDidLayoutSubviews{
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -218,15 +216,13 @@ static NSString * const classCell = @"classCell";
 }
 
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ClassTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:classCell forIndexPath:indexPath];
     
     if (classes.count > 0){
         class *class_ = [classes objectAtIndex:classes.count - indexPath.row - 1];
         NSString *schoolName = [[DatabaseHandler getSharedInstance] getSchoolName:[class_ getSchoolId]];
-        NSLog(@"school name is %@ for class %@", schoolName, [class_ getName]);
         NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInt:[class_ getId]]]integerValue];
-        NSLog(@"Class count for %ld is %ld", (long)[class_ getId], (long)classCount);
         [cell initializeCellWithClass:class_ :classCount :schoolName];
     }
     
@@ -234,40 +230,47 @@ static NSString * const classCell = @"classCell";
 }
 
 
--(void)onLongPress:(UILongPressGestureRecognizer*)gesture{
-    
-    if (gesture.state == UIGestureRecognizerStateEnded)
-    {
-        UITableView* tableView = (UITableView*)self.view;
-        CGPoint touchPoint = [gesture locationInView:self.view];
-        NSIndexPath* row = [tableView indexPathForRowAtPoint:touchPoint];
-        if (row != nil) {
-            index =  [classes count] - row.row - 1;
-            class *selectedClass = [classes objectAtIndex:index];
-            NSLog(@"Long Press Class IS...");
-            [selectedClass printClass];
-            [Utilities editAlert:@"Edit Class" :nil :@"Cancel" :@"Done" :@[@"Class Name", @"Class Grade"] :1 ];
+- (void)onLongPress:(UILongPressGestureRecognizer*)gesture{
+    if (!editingClass){
+        if (gesture.state == UIGestureRecognizerStateBegan){
+            editingClass = YES;
+            UITableView* tableView = (UITableView*)self.view;
+            CGPoint touchPoint = [gesture locationInView:self.view];
+            NSIndexPath* row = [tableView indexPathForRowAtPoint:touchPoint];
+            if (row != nil) {
+                class *selectedClass = [self getClassByIndexPath:row];
+                NSLog(@"Long Press Class IS...");
+                NSString *gradeString = [NSString stringWithFormat:@"%d", [selectedClass getGradeNumber]];
+                [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
+            }
             
+        }
+        if (gesture.state == UIGestureRecognizerStateEnded)
+        {
+            NSLog(@"End clicking");
         }
     }
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (classes.count > 0){
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        class *selectedClass = [self getClassByIndexPath:indexPath];
-        NSLog(@"Selected Class IS...");
-        [selectedClass printClass];
-        
-        currentUser.currentClassId = [selectedClass getId];
-        currentUser.currentClassName = [selectedClass getName];
-        [self performSegueWithIdentifier:@"class_to_home" sender:nil];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"We just clicked");
+    if (!editingClass){
+        if (classes.count > 0){
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            class *selectedClass = [self getClassByIndexPath:indexPath];
+            NSLog(@"Selected Class IS...");
+            [selectedClass printClass];
+            
+            currentUser.currentClassId = [selectedClass getId];
+            currentUser.currentClassName = [selectedClass getName];
+            [self performSegueWithIdentifier:@"class_to_home" sender:nil];
+        }
     }
 }
 
 
--(void) activityStart :(NSString *)message {
+- (void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
@@ -275,19 +278,22 @@ static NSString * const classCell = @"classCell";
 }
 
 
--(IBAction)addClassClicked:(id)sender {
+- (IBAction)addClassClicked:(id)sender {
     addingClass = YES;
     [self performSegueWithIdentifier:@"class_to_add_class" sender:nil];
 }
 
-- (IBAction)unwindToClassTableView:(UIStoryboardSegue *)unwindSegue
-{
+
+- (IBAction)unwindToClassTableView:(UIStoryboardSegue *)unwindSegue{
     
 }
 
--(class *)getClassByIndexPath:(NSIndexPath *)indexPath{
-    NSInteger classIndex = [classes count] - indexPath.row - 1;
-    class *selectedClass = [classes objectAtIndex:classIndex];
+
+- (class *)getClassByIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"In get class by index path and here are the classes %@", classes);
+    NSLog(@"INDEX PATH ROW %d",indexPath.row);
+    index = [classes count] - indexPath.row - 1;
+    class *selectedClass = [classes objectAtIndex:index];
     return selectedClass;
 }
 

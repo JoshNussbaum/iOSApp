@@ -10,7 +10,11 @@
 
 @implementation classjar
 
--(id) init{
+
+#pragma mark - Constructors
+
+
+- (id) init{
     self = [super init];
     if (self){
         self->id = 0;
@@ -22,7 +26,8 @@
     return self;
 }
 
--(id)init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_ :(NSInteger)progress_ :(NSInteger)total_{
+
+- (id)init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_ :(NSInteger)progress_ :(NSInteger)total_{
     self = [super init];
     if (self){
         self->id = id_;
@@ -34,47 +39,60 @@
     return self;
 }
 
-//Creation Functions
+#pragma mark - Create
 
--(void) setId:(NSInteger)id_{
+- (void) setId:(NSInteger)id_{
     self->id = id_;
 }
 
--(void) setCid:(NSInteger)cid_{
+
+- (void) setCid:(NSInteger)cid_{
     self->cid = cid_;
 }
 
--(void) setName:(NSString *)name_{
+
+- (void) setName:(NSString *)name_{
     self->name = name_;
 }
 
--(void) setProgress:(NSInteger)progress_{
+
+- (void) setProgress:(NSInteger)progress_{
     self->progress = progress_;
 }
 
--(void) setTotal:(NSInteger)total_{
+
+- (void) setTotal:(NSInteger)total_{
     self->total = total_;
 }
 
-//Read Functions
 
--(NSInteger) getId{
+#pragma mark - Read
+
+
+- (NSInteger) getId{
     return self->id;
 }
 
--(NSInteger) getCid{
+
+- (NSInteger) getCid{
     return self->cid;
 }
--(NSString *) getName{
+
+
+- (NSString *) getName{
     return self->name;
 }
 
--(NSInteger) getProgress{
+
+- (NSInteger) getProgress{
     return self->progress;
 }
 
--(NSInteger) getTotal{
+
+- (NSInteger) getTotal{
     return self->total;
 }
+
+
 
 @end

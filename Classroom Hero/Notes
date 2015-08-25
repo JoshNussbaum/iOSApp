@@ -15,7 +15,7 @@ account status: (on backend, first time a class is created for teacher, set stat
 
 
 
-
+Prevent user from swiping while anything is being added
 
 
 trim leading and trailing white spaces for adding stuff

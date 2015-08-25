@@ -19,5 +19,7 @@
 @property (strong, nonatomic) IBOutlet numberTextField *classGradeTextField;
 - (IBAction)backgroundTap:(id)sender;
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
+@property (strong, nonatomic) IBOutlet UIButton *addClassButton;
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 @end

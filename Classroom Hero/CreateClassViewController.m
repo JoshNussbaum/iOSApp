@@ -28,39 +28,50 @@
     [super viewDidLoad];
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
-    
+    self.schoolPicker.delegate = self;
     schoolData = [[DatabaseHandler getSharedInstance] getSchools];
-    
+
     if (schoolData.count == 0){
+        self.schoolPicker.hidden = YES;
         self.errorLabel.hidden = NO;
     }
-    // Do any additional setup after loading the view.
+    else {
+        self.schoolPicker.hidden = NO;
+        [self.schoolPicker selectRow:floor(schoolData.count/2) inComponent:0 animated:YES];
+    }
+    [Utilities setTextFieldPlaceholder:self.classNameTextField :@"Class name" :[Utilities CHBlueColor]];
+    [Utilities setTextFieldPlaceholder:self.classGradeTextField :@"Class grade" :[Utilities CHBlueColor]];
+    
+    [Utilities makeRoundedButton:self.addClassButton :nil];
+    [Utilities makeRoundedButton:self.backButton :nil];
 }
 
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     return schoolData.count;
 }
 
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
+
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     return [[schoolData objectAtIndex:row] getName];
     
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     index = row;
     
 }
 
--(void)hideKeyboard{
+
+- (void)hideKeyboard{
     [self.view endEditing:YES];
 }
+
 
 - (IBAction)addClassClicked:(id)sender {
     if (schoolData.count > 0 ){
@@ -81,37 +92,46 @@
         }
         
         if (![errorMessage isEqualToString:@""]){
-            [Utilities alertStatus:@"Error adding class" :errorMessage :@"Okay" :nil :0];
+            [Utilities alertStatusWithTitle:@"Error adding class" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            return;
+
         }
-        else {
-            NSString *className = self.classNameTextField.text;
-            NSInteger classGrade = [self.classGradeTextField.text integerValue];
-            NSInteger schoolId = [self getSchoolId];
-            newClass = [[class alloc]init:0 :className :classGrade :schoolId :0 :0 :30 :0];
-            [webHandler addClass:currentUser.id :className :classGrade :schoolId];
-            
+        if (self.classGradeTextField.text.length > 3){
+            [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be 3 numbers or less"  cancel:nil otherTitles:nil tag:0 view:nil];
+            return;
+
         }
+        [self activityStart:@"Adding class..."];
+        NSString *className = self.classNameTextField.text;
+        NSInteger classGrade = [self.classGradeTextField.text integerValue];
+        NSInteger schoolId = [self getSchoolId];
+        newClass = [[class alloc]init:0 :className :classGrade :schoolId :1 :0 :30 :0];
+        [webHandler addClass:currentUser.id :className :classGrade :schoolId];
+        
     }
     else {
-        [Utilities alertStatus:@"Connection error" :@"Error loading schools, please try again" :@"Okay" :nil :0];
+        [Utilities alertStatusNoConnection];
     }
 
 }
 
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 1){
-        [self performSegueWithIdentifier:@"create_class_to_class" sender:nil];
+        self.classNameTextField.text = @"";
+        self.classGradeTextField.text = @"";
+        [self.classNameTextField becomeFirstResponder];
     }
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
-}
+}	
 
 
--(void)dataReady:(NSDictionary *)data :(NSInteger)type{
+- (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     if (data == nil){
         [hud hide:YES];
-        [Utilities alertStatus:@"Connection error" :@"Please check your internet connection and try again." :@"Okay" :nil :0];
+        [Utilities alertStatusNoConnection];
         return;
     }
     if (type == ADD_CLASS){
@@ -124,13 +144,16 @@
             NSLog(@"We just added this class");
             [newClass printClass];
             [[DatabaseHandler getSharedInstance]addClass:newClass];
+            [hud hide:YES];
 
-            [Utilities alertStatus:@"Successfully added class!" :nil :@"Okay" :nil :1];
+            [Utilities alertStatusWithTitle:@"Successfully added class!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
+            
             
             
         } else {
             NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatus:@"Error editing class" :message :@"Okay" :nil :0];
+            [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+
             [hud hide:YES];
             return;
         }
@@ -145,7 +168,7 @@
 }
 
 
--(void) activityStart :(NSString *)message {
+- (void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
@@ -153,16 +176,33 @@
     
 }
 
--(IBAction)backgroundTap:(id)sender {
+
+- (IBAction)backgroundTap:(id)sender {
     [self hideKeyboard];
 }
 
--(NSInteger)getSchoolId{
+
+- (NSInteger)getSchoolId{
     NSInteger schoolIndex = index ;
     school *ss = [schoolData objectAtIndex:schoolIndex];
     NSInteger schoolId = [ss getId];
     return schoolId;
 }
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == self.classGradeTextField) {
+        [self.view endEditing:YES];
+        return YES;
+    }
+    else if (textField == self.classNameTextField) {
+        [self.classGradeTextField becomeFirstResponder];
+        
+    }
+    return YES;
+}
+
+
 
 
 @end

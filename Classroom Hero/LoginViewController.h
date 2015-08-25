@@ -21,6 +21,10 @@
 
 @property (strong, nonatomic) IBOutlet passwordTextField *passwordTextField;
 
+@property (strong, nonatomic) IBOutlet UIButton *aboutButton;
+
+@property (strong, nonatomic) IBOutlet UIButton *pricingButton;
+
 - (IBAction)backgroundTap:(id)sender;
 
 - (IBAction)loginClicked:(id)sender;

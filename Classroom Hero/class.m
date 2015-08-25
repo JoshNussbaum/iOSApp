@@ -10,7 +10,7 @@
 
 @implementation class
 
--(id) init{
+- (id) init{
     self = [super init];
     if (self)
     {
@@ -20,7 +20,7 @@
     return self;
 }
 
--(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSInteger)hasStamps_{
+- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSInteger)hasStamps_{
     self = [super init];
     if (self)
     {
@@ -36,71 +36,83 @@
     return self;
 }
 
-// Creation Functions
 
--(void) setId:(NSInteger)id_{
+#pragma mark - Create
+
+
+- (void) setId:(NSInteger)id_{
     self->id = id_;
 }
 
 
--(void) setName:(NSString *)name_{
+- (void) setName:(NSString *)name_{
     self->name = name_;
 }
 
 
--(void) setGradeNumber:(NSInteger)gradeNumber_{
+- (void) setGradeNumber:(NSInteger)gradeNumber_{
     self->gradeNumber = gradeNumber_;
 }
 
 
--(void) setSchoolId:(NSInteger)schoolId_{
+- (void) setSchoolId:(NSInteger)schoolId_{
     self->schoolId = schoolId_;
 }
 
 
 
-// Read Functions
+#pragma mark - Read
 
--(NSInteger) getId{
+
+- (NSInteger) getId{
     return self->id;
 }
 
--(NSString *) getName{
+
+- (NSString *) getName{
     return self->name;
 }
 
--(NSInteger) getGradeNumber{
+
+- (NSInteger) getGradeNumber{
     return self->gradeNumber;
 }
 
--(NSInteger)getSchoolId{
+
+- (NSInteger)getSchoolId{
     return self->schoolId;
 }
 
--(NSInteger)getLevel{
+
+- (NSInteger)getLevel{
     return self->level;
 }
 
--(NSInteger)getProgress{
+
+- (NSInteger)getProgress{
     return self->progress;
 }
 
--(NSInteger)getNextLevel{
+
+- (NSInteger)getNextLevel{
     return self->nextLevel;
 }
 
--(NSInteger)getHasStamps{
+
+- (NSInteger)getHasStamps{
     return self->hasStamps;
 }
 
 
 
+#pragma mark - Update
 
-// Update Functions
 
 
-// Misc Functions
--(void)printClass{
+#pragma mark - Misc
+
+
+- (void)printClass{
     NSLog(@"Class ID=>%li\n, Name=>%@\n, Grade=>%ld\n School Id=>%ld\n, Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n Has Stamps=>%ld\n", (long)self->id, self->name, (long)self->gradeNumber, (long)self->schoolId, (long)self->level, (long)self->progress, (long)self->nextLevel, (long)self->hasStamps);
     
 }

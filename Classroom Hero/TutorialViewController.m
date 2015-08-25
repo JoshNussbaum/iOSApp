@@ -24,7 +24,7 @@
     currentUser.serial = @"dope";
 
     // Do any additional setup after loading the view.
-    _pageTitles = @[@"Welcome  to  Classroom  Hero!   Swipe  left  to  navigate  this  tutorial  and  begin  your  adventure!", @"Add  a  class  to  get  started.   Enter  a  name  and  grade  for  your  class  and  pick  your  school", @"Add  students  to  your  selected  class.   Type  in  a  student  name  below", @"Add  positive  reinforcers  to  categorize  the  points  you  award  to  students", @"Add  market  place  items  for  students  to  spend  their  points  on", @"Add  a  class  jar  for  a  class-wide  reward  achieved  over  a  longer  time  that  you  add  points  to", @"Finally,  stamp  the  apple  to  register  your  teacher  stamp  and  begin  your  journey  with  Classroom  Hero!"];
+    _pageTitles = @[@"Welcome  to  Classroom  Hero!   Swipe  left  to  navigate  this  tutorial  and  begin  your  adventure!", @"Add  a  class  to  get  started.   Enter  a  name  and  grade  for  your  class  and  pick  your  school", @"Add  students  to  your  selected  class.   Type  in  a  student  name  below  and  pick  your  class", @"Add  positive  reinforcers  to  categorize  the  points  you  award  to  students", @"Add  market  place  items  for  students  to  spend  their  points  on", @"Add  a  jar  that  only  your  teacher  stamp  can  add  points  to  for  a  class-wide  reward", @"Finally,  stamp  the  apple  to  register  your  teacher  stamp  and  begin  your  journey  with  Classroom  Hero!"];
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
@@ -37,16 +37,17 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
+    
+    [Utilities makeRoundedButton:self.backButton :nil];
+    [Utilities makeRoundedButton:self.startOverButton :nil];
+    [Utilities makeRoundedButton:self.skipButton :nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Page View Controller Data Source
 
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
     NSUInteger index = ((TutorialContentViewController *) viewController).pageIndex;
     
     if ((index ==0) || (index == NSNotFound)) {
@@ -58,7 +59,8 @@
     return [self viewControllerAtIndex:index];
 }
 
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     NSUInteger index = ((TutorialContentViewController *) viewController).pageIndex;
     
     if (index == NSNotFound) {
@@ -69,6 +71,7 @@
     
     return [self viewControllerAtIndex:index];
 }
+
 
 - (TutorialContentViewController *)viewControllerAtIndex:(NSUInteger)index{
     if (([self.pageTitles count] == 0) || (index >= [self.pageTitles count])){
@@ -91,15 +94,16 @@
     return [self.pageTitles count];
 }
 
+
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController{
     return 0;
 }
 
-// The number of columns of data
-- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
+
+- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
 }
+
 
 - (IBAction)startTutorial:(id)sender {
     TutorialContentViewController *initialViewController = [self viewControllerAtIndex:0];
@@ -107,17 +111,20 @@
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
 }
+
+
 - (IBAction)backClicked:(id)sender {
     [self performSegueWithIdentifier:@"tutorial_to_login" sender:self];
     
 }
+
 
 - (IBAction)skipClicked:(id)sender {
     if ((currentUser.currentClassId != 0) && ![currentUser.serial isEqualToString:@""]){
         [self performSegueWithIdentifier:@"tutorial_skip_to_class" sender:nil];
     }
     else {
-        [Utilities alertStatus:@"Slow down!" :@"You must create a class and register your stamp before proceeding" :@"Okay" :nil :1];
+        [Utilities alertStatusWithTitle:@"Slow down!" message:@"You must create a class and register your stamp before proceding" cancel:nil otherTitles:nil tag:0 view:nil];
     }
 }
 

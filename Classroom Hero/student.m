@@ -10,7 +10,11 @@
 
 @implementation student
 
--(id) init{
+
+#pragma mark - Constructors
+
+
+- (id) init{
     self = [super init];
     if (self){
         self->id = 0;
@@ -28,8 +32,7 @@
 }
 
 
-
--(id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)totalpoints_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_{
+- (id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)totalpoints_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_{
 
     self = [super init];
     if (self) {
@@ -51,99 +54,116 @@
     return self;
 }
 
-// Creation Functions
--(void) setFirstName:(NSString *)firstName_{
+
+#pragma mark - Create
+
+
+- (void) setFirstName:(NSString *)firstName_{
     self->firstName = firstName_;
 }
 
--(void) setLastName:(NSString *)lastName_{
+
+- (void) setLastName:(NSString *)lastName_{
     self->firstName = lastName_;
 }
+
 
 - (void)setSerial:(NSString *)serial_{
     self->serial = serial_;
 }
 
+
 - (void) setPoints:(NSInteger)points_{
     self->points = points_;
 }
 
+
 - (void) setPointsspent:(NSInteger)pointsspent_{
     self->pointsspent = pointsspent_;
 }
+
 
 - (void) setTimestamp:(NSString *)timestamp_{
     self->timestamp = timestamp_;
 }
 
 
-// Read Functions
+#pragma mark - Read
+
+
 - (NSInteger)getId{
     return self->id;
 }
+
 
 - (NSString *)getFirstName{
     return self->firstName;
 }
 
+
 - (NSString *)getLastName{
     return self->lastName;
 }
+
 
 - (NSInteger)getLvl{
     return self->lvl;
 }
 
+
 - (NSInteger)getLvlUpAmount{
     return self->lvlupamount;
 }
+
 
 - (NSInteger)getLvlsGained{
     return self->lvlsgained;
 }
 
+
 - (NSInteger)getPoints{
     return self->points;
 }
 
--(NSInteger)getPointsGained{
+
+- (NSInteger)getPointsGained{
     return self->pointsgained;
 }
+
 
 - (NSInteger)getPointsSpent{
     return self->pointsspent;
 }
 
--(NSInteger)getTotalPoints{
+
+- (NSInteger)getTotalPoints{
     return self->totalpoints;
 }
+
 
 - (NSInteger)getProgress{
     return self->progress;
 }
 
+
 - (NSInteger)getProgressGained{
     return self->pointsgained;
 }
 
+
 - (NSString *)getSerial{
     return self->serial;
 }
+
 
 - (NSString *)getTimestamp{
     return self->timestamp;
 }
 
 
--(void) levelUp:(NSInteger)progress :(NSInteger)lvlupamount
-{
-    self->lvl += 1;
-    self->lvlsgained +=1;
-    self->progress = self->progress - self->lvlupamount;
-    self->lvlupamount += 2;
-}
+#pragma mark - Update
 
-// Update Functions
+
 - (void) addPoints:(NSInteger)pointsGained{
     self->points += pointsGained;
     self->pointsgained += pointsGained;
@@ -156,16 +176,27 @@
     }
 }
 
--(void) addOnlyPoints:(NSInteger)pointsGained{
+
+- (void) addOnlyPoints:(NSInteger)pointsGained{
     self->points += pointsGained;
     self->pointsgained += pointsGained;
 }
 
-// Misc Functions
 
--(void) printStudent
-{
+#pragma mark - Misc
+
+
+- (void) levelUp:(NSInteger)progress :(NSInteger)lvlupamount{
+    self->lvl += 1;
+    self->lvlsgained +=1;
+    self->progress = self->progress - self->lvlupamount;
+    self->lvlupamount += 2;
+}
+
+
+- (void) printStudent{
     NSLog(@"\n Student UID => %ld,\n Student First Name => %@,\n, Student First Name => %@,\n Student Serial => %@\n, Student Points => %ld,\n Student PointsGained => %ld,\n Student Progress => %ld,\n Student Level => %ld, \n Student LevelsGained => %ld, \nStudent LevelUpAmount => %ld,\n", (long)self->id, self->firstName, self->lastName, self->serial, (long)self->points, (long)self->pointsgained, (long)self->progress, (long)self->lvl, (long)self->lvlsgained, (long)self->lvlupamount);
 }
+
 
 @end

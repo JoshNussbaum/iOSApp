@@ -18,7 +18,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *classProgressLabel;
 @property (strong, nonatomic) IBOutlet UIProgressView *progressBar;
 @property (strong, nonatomic) IBOutlet UILabel *schoolName;
+@property (strong, nonatomic) IBOutlet UILabel *gradeLabel;
 
--(void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount :(NSString *)schoolName;
+- (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount :(NSString *)schoolName;
 
 @end

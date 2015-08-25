@@ -13,7 +13,9 @@
 - (void)awakeFromNib {
     // Initialization code
 }
--(void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount :(NSString *)schoolName{
+
+
+- (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount :(NSString *)schoolName{
     self.nameLabel.text = [class_ getName];
     self.schoolName.text = schoolName;
     self.totalPointsLabel.text = [NSString stringWithFormat:@"%ld  Points", (long)[class_ getProgress]];
@@ -21,8 +23,9 @@
     if ([class_ getProgress] == 0) {
         barProgress = 0.0;
     }
+    self.gradeLabel.text = [NSString stringWithFormat:@"%d", [class_ getGradeNumber]];
     self.progressBar.progress = barProgress;
-    self.levelLabel.text = [NSString stringWithFormat:@"%ld", (long)[class_ getLevel]];
+    self.levelLabel.text = [NSString stringWithFormat:@"Lvl %d", [class_ getLevel]];
     self.numberOfStudentsLabel.text = [NSString stringWithFormat:@"%ld  Students", (long)classCount];
     }
 

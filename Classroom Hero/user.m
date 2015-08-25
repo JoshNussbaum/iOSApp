@@ -22,7 +22,7 @@
 
 static user *instance = nil;
 
-+(user *)getInstance{
++ (user *)getInstance{
     @synchronized(self){
         if(instance==nil){
             instance = [user new];
@@ -40,7 +40,7 @@ static user *instance = nil;
     return instance;
 }
 
--(void)reset{
+- (void)reset{
     self->firstName = @"";
     self->lastName = @"";
     self->email = @"";

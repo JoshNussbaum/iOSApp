@@ -29,8 +29,21 @@ NSInteger EDIT_JAR = 16;
 NSInteger DELETE_JAR = 17;
 NSInteger GET_SCHOOLS = 18;
 
-+(NSString *) getDate
-{
++ (UIColor *)CHBlueColor{
+    UIColor *CHBlueColor = [UIColor colorWithRed:116.0/255.0 green:209.0/255.0 blue:246.0/255.0 alpha:1.0] ;
+
+    return CHBlueColor;
+}
+
++ (UIColor *) CHGreenColor{
+    UIColor *CHGreenColor = [UIColor colorWithRed:96.0/255.0 green:166.0/255.0 blue:84.0/255.0 alpha:1.0] ;
+    
+    return CHGreenColor;
+}
+
+
+
++ (NSString *) getDate{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"GMT"]];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -38,8 +51,8 @@ NSInteger GET_SCHOOLS = 18;
     return dateAsString;
 }
 
-+(NSString *) isNumeric:(NSString *)input;
-{
+
++ (NSString *) isNumeric:(NSString *)input{
     NSScanner *sc = [NSScanner scannerWithString: input];
     
     if ( [sc scanFloat:NULL] && input.integerValue >= 0)
@@ -56,7 +69,8 @@ NSInteger GET_SCHOOLS = 18;
 
 }
 
-+(NSString *)isInputValid:(NSString *)input :(NSString *)inputName{
+
++ (NSString *)isInputValid:(NSString *)input :(NSString *)inputName{
     NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~] "];
     for (NSUInteger i = 0; i < [input length]; ++i) {
         unichar uchar = [input characterAtIndex:i] ;
@@ -70,7 +84,8 @@ NSInteger GET_SCHOOLS = 18;
     return @"";
 }
 
-+(bool)isValidClassroomHeroStamp:(NSString *)serial{
+
++ (bool)isValidClassroomHeroStamp:(NSString *)serial{
     if([serial hasPrefix:@"ClassroomHero"]){
         return YES;
     }
@@ -79,13 +94,70 @@ NSInteger GET_SCHOOLS = 18;
     }
 }
 
-// Make other button titles an array
-+ (void) alertStatus:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSArray *)otherTitles :(NSInteger)tag
-{
 
++ (void) editAlertText:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSString *)done :(NSString *)input :(NSInteger)tag{
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
                                                        message:message
                                                       delegate:self
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, nil];
+    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [[alertView textFieldAtIndex:0]setText:input];
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    alertView.tag = tag;
+    [alertView show];
+}
+
+
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, nil];
+    
+    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
+    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    for (NSInteger i = 0; i < textfields.count; i++){
+        NSString *placeholder = [textfields objectAtIndex:i];
+        [[alertView textFieldAtIndex:i] setText:placeholder];
+        
+    }
+    alertView.tag = tag;
+    [alertView show];
+}
+
++ (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color{
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
+                                                                                                  NSForegroundColorAttributeName : color,
+                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
+                                                                                                  }];
+    
+    textField.attributedPlaceholder = str;
+}
+
++ (void) makeRoundedButton:(UIButton *)button :(UIColor *)color{
+    button.layer.cornerRadius = 10	;
+    button.layer.borderWidth = 2;
+    button.clipsToBounds = YES;
+    if (color != nil){
+        button.layer.borderColor = color.CGColor;
+    }
+    else {
+        button.layer.borderColor = [UIColor clearColor].CGColor;
+
+    }
+}
+
++ (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view{
+    if (cancel == nil){
+        cancel = @"Cancel";
+    }
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
                                              cancelButtonTitle:cancel
                                              otherButtonTitles:nil];
     for (NSString *title in otherTitles){
@@ -95,22 +167,16 @@ NSInteger GET_SCHOOLS = 18;
     [alertView show];
 }
 
-+ (void) editAlert:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSString *)done :(NSArray *)textfields :(NSInteger)tag{
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:cancel
-                                                  otherButtonTitles:done, nil];
-    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
 
-    for (NSInteger i = 0; i < textfields.count; i++){
-        [[alertView textFieldAtIndex:i] setPlaceholder:textfields[i]];
-        
-    }
-    alertView.tag = tag;
++ (void) alertStatusNoConnection{
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"Connection Error"
+                                                       message:@"Please check your internet connection and try again"
+                                                      delegate:nil
+                                             cancelButtonTitle:@"Close"
+                                             otherButtonTitles:nil];
+    alertView.tag = 0;
     [alertView show];
 }
-
 
 
 

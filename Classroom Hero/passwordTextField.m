@@ -10,7 +10,7 @@
 
 @implementation passwordTextField
 
--(NSString *)validate{
+- (NSString *)validate{
     if (self.text.length >= 6){
         NSString *errorMessage = [self isPasswordValid:self.text];
         if ([errorMessage isEqualToString:@""]){

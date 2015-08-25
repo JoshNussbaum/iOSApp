@@ -24,13 +24,23 @@
 
 @implementation CreateAccountViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
+    
+    [Utilities setTextFieldPlaceholder:self.firstNameTextField :@"First name" :[Utilities CHGreenColor]];
+    [Utilities setTextFieldPlaceholder:self.lastNameTextField :@"Last name" :[Utilities CHGreenColor]];
+    [Utilities setTextFieldPlaceholder:self.emailTextField :@"Email" :[Utilities CHGreenColor]];
+    [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[Utilities CHGreenColor]];
+    [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[Utilities CHGreenColor]];
+    
+    [Utilities makeRoundedButton:self.createAccountButton :nil];
+    
+    [Utilities makeRoundedButton:self.backButton :nil];
 
 }
-
 
 
 - (IBAction)createAccountClicked:(id)sender {
@@ -49,10 +59,11 @@
     if (![errorMessage isEqualToString:@""]){
         
         [hud hide:YES];
-        [Utilities alertStatus:@"Error creating account" :errorMessage :@"Okay" :nil :0];
+        [Utilities alertStatusWithTitle:@"Error creating account" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
     }
     else if (![self.passwordTextField.text isEqualToString:self.confirmPasswordTextField.text]){
-        [Utilities alertStatus:@"Error creating account" :@"Passwords don't match" :@"Okay" :nil :0];
+        [Utilities alertStatusWithTitle:@"Error creating account" message:@"Passwords don't match" cancel:nil otherTitles:nil tag:0 view:nil];
+
     }
     else {
         [self activityStart:@"Validating account..."];
@@ -61,11 +72,13 @@
     }
 }
 
+
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
     NSLog(@"In Create Account and here is the data =>\n %@", data);
     if (data == nil){
         [hud hide:YES];
-        [Utilities alertStatus:@"Connection error" :@"Please check your internet connection and try again." :@"Okay" :nil :0];
+        [Utilities alertStatusNoConnection];
+        
         return;
     }
     if (type == CREATE_ACCOUNT){
@@ -92,35 +105,38 @@
         }
         else {
             NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatus:@"Error creating account" :message :@"Okay" :nil :0];
+            [Utilities alertStatusWithTitle:@"Error creating account" message:message cancel:nil otherTitles:nil tag:0 view:nil];
             [hud hide:YES];
             return;
         }
     }
     else{
-        [Utilities alertStatus:@"Connection error" :@"Please check your connectivity and try again" :@"Okay" :nil :0];
+        [Utilities alertStatusNoConnection];
     }
 }
 
--(void)createAccountSuccess:(NSDictionary *)accountInfo{
+
+- (void)createAccountSuccess:(NSDictionary *)accountInfo{
     [hud hide:YES];
 }
 
 
-- (IBAction)backClicked:(id)sender {
+- (IBAction)backClicked:(id)sender{
     [self performSegueWithIdentifier:@"account_creation_to_login" sender:self];
 }
 
--(void)hideKeyboard{
+
+- (void)hideKeyboard{
     [self.view endEditing:YES];
 }
+
 
 - (IBAction)backgroundTap:(id)sender {
     [self hideKeyboard];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
     if (textField == self.confirmPasswordTextField) {
         [self.view endEditing:YES];
         return YES;
@@ -144,22 +160,32 @@
     return YES;
 }
 
-- (void) activityStart :(NSString *)message {
+
+- (void)activityStart:(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
     [hud show:YES];
 }
 
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"create_account_to_tutorial"]) {
-       
-    }
-   
+- (void)setFirstTextField:(NSString *)placeholder{
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
+                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
+                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:25.0]
+                                                                                                  }];
+    
+    self.emailTextField.attributedPlaceholder = str;
 }
+
+
+- (void)setSecondTextField:(NSString *)placeholder{
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
+                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
+                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:25.0]
+                                                                                                  }];
+    self.passwordTextField.attributedPlaceholder = str;
+}
+
 
 
 @end

@@ -20,10 +20,14 @@
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
-@property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 - (IBAction)backClicked:(id)sender;
 
 - (IBAction)skipClicked:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UIButton *skipButton;
+@property (strong, nonatomic) IBOutlet UIButton *startOverButton;
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
+
 
 @end

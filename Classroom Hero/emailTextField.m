@@ -11,7 +11,7 @@
 @implementation emailTextField
 
 
--(NSString *) validate
+- (NSString *) validate
 {
     NSString *checkString = self.text;
     BOOL stricterFilter = NO;
