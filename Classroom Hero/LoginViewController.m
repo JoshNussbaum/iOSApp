@@ -112,7 +112,7 @@
             currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];
             currentUser.email = self.emailTextField.text;
             currentUser.password = self.passwordTextField.text;
-            currentUser.serial = [[data objectForKey:@"login"] objectForKey:@"serial"];
+            currentUser.serial = [[data objectForKey:@"login"] objectForKey:@"stamp"];
 
             currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
             currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
