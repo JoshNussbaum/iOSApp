@@ -10,9 +10,10 @@
 
 @implementation item
 
-//Constructors
 
--(id) init{
+#pragma mark - Constructors
+
+- (id) init{
     self = [super init];
     if (self){
         self->id = 0;
@@ -23,7 +24,8 @@
     return self;
 }
 
--(id)init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_ :(NSInteger)cost_{
+
+- (id)init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_ :(NSInteger)cost_{
     self = [super init];
     if (self){
         self->id = id_;
@@ -34,42 +36,54 @@
     return self;
 }
 
-//Creation Functions
 
--(void) setId:(NSInteger)id_{
+#pragma mark - Create
+
+
+- (void) setId:(NSInteger)id_{
     self->id = id_;
 }
 
--(void) setCid:(NSInteger)cid_{
+
+- (void) setCid:(NSInteger)cid_{
     self->cid = cid_;
 }
 
 
--(void) setName:(NSString *)name_{
+- (void) setName:(NSString *)name_{
     self->name = name_;
 }
 
--(void) setCost:(NSInteger)cost_{
+
+- (void) setCost:(NSInteger)cost_{
     self->cost = cost_;
 }
 
-//Read Functions
 
--(NSInteger) getId{
+#pragma mark - Read
+
+- (NSInteger) getId{
     return self->id;
 }
 
--(NSInteger) getCid{
+
+- (NSInteger) getCid{
     return self->cid;
 }
 
--(NSString *) getName{
+
+- (NSString *) getName{
     return self->name;
 }
 
 
--(NSInteger) getCost{
+- (NSInteger) getCost{
     return self->cost;
 }
+
+
+#pragma mark - Update
+
+
 
 @end

@@ -29,15 +29,43 @@ extern NSInteger ADD_JAR;
 extern NSInteger EDIT_JAR;
 extern NSInteger DELETE_JAR;
 extern NSInteger GET_SCHOOLS;
+extern NSInteger REGISTER_STAMP;
 
-+(NSString *) getDate;
++ (UIColor *) CHBlueColor;
 
-+(NSString *) isNumeric:(NSString *)input;
 
-+(NSString *)isInputValid:(NSString *)input :(NSString *)inputName;
++ (UIColor *) CHGreenColor;
 
-+(bool)isValidClassroomHeroStamp:(NSString *)serial;
 
-+ (void) alertStatus:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSArray *)otherTitles :(NSInteger)tag;
++ (NSString *) getDate;
+
+
++ (NSString *) isNumeric:(NSString *)input;
+
+
++ (NSString *)isInputValid:(NSString *)input :(NSString *)inputName;
+
+
++ (bool)isValidClassroomHeroStamp:(NSString *)serial;
+
+
++ (void) editAlertText:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSString *)done :(NSString *)input :
+(NSInteger)tag;
+
+
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
+
+
++ (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color;
+
+
++ (void) makeRoundedButton:(UIButton *)button :(UIColor *)color;
+
++ (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view;
+
++ (void) alertStatusNoConnection;
+
++ (NSString *) getRandomCompliment;
+
 
 @end

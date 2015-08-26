@@ -11,12 +11,7 @@
 #import "SnowShoeViewController.h"
 #import "ConnectionHandler.h"
 
-@interface TutorialContentViewController : SnowShoeViewController <UIPickerViewDataSource, UIPickerViewDelegate,  ConnectionHandlerDelegate>{
-    
-    SystemSoundID success;
-
-}
-
+@interface TutorialContentViewController : SnowShoeViewController <UIPickerViewDataSource, UIPickerViewDelegate,  ConnectionHandlerDelegate>
 @property NSMutableArray *schoolData;
 @property NSMutableArray *classData;
 @property NSUInteger pageIndex;
@@ -34,5 +29,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *chestImage;
 
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *stampImage;	
+@property (strong, nonatomic) IBOutlet UILabel *pickerLabel;
 
 @end

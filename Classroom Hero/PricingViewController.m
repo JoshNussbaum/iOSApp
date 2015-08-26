@@ -1,21 +1,24 @@
 //
-//  ClassViewController.m
+//  PricingViewController.m
 //  Classroom Hero
 //
-//  Created by Josh on 8/12/15.
+//  Created by Josh on 8/24/15.
 //  Copyright (c) 2015 Josh Nussbaum. All rights reserved.
 //
 
-#import "ClassViewController.h"
+#import "PricingViewController.h"
+#import "Utilities.h"
 
-@interface ClassViewController ()
+@interface PricingViewController ()
 
 @end
 
-@implementation ClassViewController
+@implementation PricingViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [Utilities makeRoundedButton:self.backButton :nil];
+
     // Do any additional setup after loading the view.
 }
 

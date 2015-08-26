@@ -11,7 +11,7 @@
 
 @implementation nameTextField
 
--(NSString *)validate{
+- (NSString *)validate{
     // check if name has anything but letters
     if (self.text.length >= 1){
         NSString *classErrorMessage = [Utilities isInputValid:self.text :@"Name"];
@@ -23,7 +23,7 @@
         }
     }
     else {
-        return @"Name must be at least one character long";
+        return @"All fields are required";
     }
 }
 /*

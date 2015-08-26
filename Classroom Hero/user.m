@@ -17,13 +17,12 @@
 @synthesize password;
 @synthesize accountStatus;
 @synthesize serial;
-@synthesize classIds;
 @synthesize currentClassId;
 @synthesize currentClassName;
 
 static user *instance = nil;
 
-+(user *)getInstance{
++ (user *)getInstance{
     @synchronized(self){
         if(instance==nil){
             instance = [user new];
@@ -34,7 +33,6 @@ static user *instance = nil;
             instance->password=@"";
             instance->accountStatus = 0;
             instance->serial=@"";
-            instance->classIds = [NSMutableArray array];
             instance->currentClassId = 0;
             instance->currentClassName=@"";
         }
@@ -42,7 +40,7 @@ static user *instance = nil;
     return instance;
 }
 
--(void)reset{
+- (void)reset{
     self->firstName = @"";
     self->lastName = @"";
     self->email = @"";

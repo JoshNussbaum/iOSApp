@@ -10,7 +10,7 @@
 
 @implementation school
 
--(id) init{
+- (id) init{
     self = [super init];
     if (self){
         self->id = 0;
@@ -19,7 +19,8 @@
     return self;
 }
 
--(id) init:(NSInteger)id_ :(NSString *)name_{
+
+- (id) init:(NSInteger)id_ :(NSString *)name_{
     self = [super init];
     if (self){
         self->id = id_;
@@ -28,20 +29,25 @@
     return self;
 }
 
--(void)setId:(NSInteger)id_{
+
+- (void)setId:(NSInteger)id_{
     self->id = id_;
 }
 
--(void)setName:(NSString *)name_{
+
+- (void)setName:(NSString *)name_{
     self->name = name_;
 }
 
--(NSInteger)getId{
+
+- (NSInteger)getId{
     return self->id;
 }
 
--(NSString *)getName{
+
+- (NSString *)getName{
     return self->name;
 }
+
 
 @end
