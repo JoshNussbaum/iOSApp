@@ -63,4 +63,6 @@
 
 - (void)getSchools;
 
+- (void)registerStamp:(NSInteger)id :(NSString *)serial;
+
 @end

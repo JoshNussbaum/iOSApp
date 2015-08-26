@@ -7,6 +7,7 @@
 //
 
 #import "PricingViewController.h"
+#import "Utilities.h"
 
 @interface PricingViewController ()
 
@@ -16,6 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [Utilities makeRoundedButton:self.backButton :nil];
+
     // Do any additional setup after loading the view.
 }
 

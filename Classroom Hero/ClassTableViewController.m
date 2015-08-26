@@ -32,16 +32,17 @@ static NSString * const classCell = @"classCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+
     classes = [[DatabaseHandler getSharedInstance] getClasses];
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     currentUser = [user getInstance];
     
     NSShadow* shadow = [NSShadow new];
     shadow.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    shadow.shadowColor = [Utilities CHBlueColor];
     
     [[UINavigationBar appearance] setTitleTextAttributes: @{
-                                                            NSForegroundColorAttributeName: [Utilities CHBlueColor],
+                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
                                                             NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:36.0f],
                                                             NSShadowAttributeName: shadow
                                                             }];
@@ -119,10 +120,8 @@ static NSString * const classCell = @"classCell";
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"IN here");
     if (alertView.tag == 1){
         // Edit class
-        
         if (buttonIndex == [alertView cancelButtonIndex]) {
             NSLog(@"Canceled");
             editingClass = NO;
@@ -240,21 +239,19 @@ static NSString * const classCell = @"classCell";
             if (row != nil) {
                 class *selectedClass = [self getClassByIndexPath:row];
                 NSLog(@"Long Press Class IS...");
-                NSString *gradeString = [NSString stringWithFormat:@"%d", [selectedClass getGradeNumber]];
+                NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
                 [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
             }
             
         }
         if (gesture.state == UIGestureRecognizerStateEnded)
         {
-            NSLog(@"End clicking");
         }
     }
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"We just clicked");
     if (!editingClass){
         if (classes.count > 0){
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -291,7 +288,7 @@ static NSString * const classCell = @"classCell";
 
 - (class *)getClassByIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"In get class by index path and here are the classes %@", classes);
-    NSLog(@"INDEX PATH ROW %d",indexPath.row);
+    NSLog(@"INDEX PATH ROW %ld",(long)indexPath.row);
     index = [classes count] - indexPath.row - 1;
     class *selectedClass = [classes objectAtIndex:index];
     return selectedClass;

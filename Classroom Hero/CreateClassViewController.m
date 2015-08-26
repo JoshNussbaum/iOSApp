@@ -42,8 +42,8 @@
     [Utilities setTextFieldPlaceholder:self.classNameTextField :@"Class name" :[Utilities CHBlueColor]];
     [Utilities setTextFieldPlaceholder:self.classGradeTextField :@"Class grade" :[Utilities CHBlueColor]];
     
-    [Utilities makeRoundedButton:self.addClassButton :nil];
-    [Utilities makeRoundedButton:self.backButton :nil];
+    [Utilities makeRoundedButton:self.addClassButton :[UIColor blackColor]];
+    [Utilities makeRoundedButton:self.backButton :[UIColor blackColor]];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{

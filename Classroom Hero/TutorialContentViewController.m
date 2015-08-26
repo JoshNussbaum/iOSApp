@@ -21,6 +21,7 @@ static int screenNumber;
     MBProgressHUD *hud;
     ConnectionHandler *webHandler;
     SystemSoundID success;
+    NSString *serial;
 }
 
 @end
@@ -36,6 +37,7 @@ static int screenNumber;
     self.textField1.attributedPlaceholder = str;
 }
 
+
 - (void)setSecondTextField:(NSString *)placeholder{
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
                                                                                                   NSForegroundColorAttributeName : [Utilities CHBlueColor],
@@ -43,6 +45,7 @@ static int screenNumber;
                                                                                                   }];
     self.textField2.attributedPlaceholder = str;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -75,7 +78,7 @@ static int screenNumber;
     
     switch (self.pageIndex) {
         case 0:
-            [self onPage:@"" :@"" :@"" :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
+            [self onPage:nil :nil :nil :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 1:
             [self onPage:@"Class name" :@"Grade number" :@"Add  class" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
@@ -85,7 +88,7 @@ static int screenNumber;
             [self onPage:@"Student first name" :@"Student last name" :@"Add  student" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 3:
-            [self onPage:@"Positive reinforcer" :@"" :@"Add  reinforcer" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
+            [self onPage:@"Positive reinforcer" :nil :@"Add  reinforcer" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 4:
             [self onPage:@"Item name" :@"Item cost" :@"Add  item" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
@@ -94,7 +97,7 @@ static int screenNumber;
             [self onPage:@"Class jar name" :@"Class jar total" :@"Add  class  jar" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 6:
-            [self onPage:@"" :@"" :@"" :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
+            [self onPage:nil :nil :nil :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             
             
         default:
@@ -104,21 +107,21 @@ static int screenNumber;
 
 
 - (void)onPage:(NSString *)oneName :(NSString *)twoName :(NSString *)buttonName :(bool)picker :(UIKeyboardType)keyboard1Type :(UIKeyboardType)keyboard2Type{
-    if (![oneName isEqualToString:@""]){
+    if (oneName){
         [self setFirstTextField:oneName];
         self.textField1.hidden = NO;
     }
     else {
        self.textField1.hidden = YES;
     }
-    if (![twoName isEqualToString:@""]){
+    if (twoName){
         [self setSecondTextField:twoName];
         self.textField2.hidden = NO;
     }
     else {
         self.textField2.hidden = YES;
     }
-    if (![buttonName isEqualToString:@""]){
+    if (buttonName){
         [self.button setTitle:buttonName forState:UIControlStateNormal];
     }
     else {
@@ -214,7 +217,8 @@ static int screenNumber;
         else {
             [self.view endEditing:YES];
         }
-    }
+    }else [self.view endEditing:YES];
+
     
     return YES;
 }
@@ -369,9 +373,12 @@ static int screenNumber;
                 
         return;
     }
+    NSString * compliment;
     NSInteger successNumber = [[data objectForKey: @"success"]integerValue];
     if (successNumber == 1 && type != GET_SCHOOLS){
         AudioServicesPlaySystemSound(success);
+        compliment = [Utilities getRandomCompliment];
+
     }
     if (type == ADD_CLASS){
         if(successNumber == 1)
@@ -385,7 +392,7 @@ static int screenNumber;
             currentUser.currentClassId = classId;
             currentUser.currentClassName = self.textField1.text;
             [hud hide:YES];
-            [self setTitleAndClear:@"Great  job!  Add  another  class  now,  or  swipe  left  to  continue"];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   class   or   swipe   left   to    continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
         else {
@@ -404,48 +411,84 @@ static int screenNumber;
             student *newStudent = [[student alloc]init:studentId :self.textField1.text :self.textField2.text :@"" :0 :10 :0 :0 :0 :0 :0 :0 :0 :[Utilities getDate]];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :currentUser.currentClassId];
             [hud hide:YES];
-            [self setTitleAndClear:@"Great  job!  Add  another  student  now,  or  swipe  left  to  continue"];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   student   or   swipe   left   to   continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
         else {
             NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error adding class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities alertStatusWithTitle:@"Error adding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
             [hud hide:YES];
         }
     }
     
     else if (type == ADD_REINFORCER){
-        NSString *reinforcerName = self.textField2.text;
-        NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
-        reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :currentUser.currentClassId :reinforcerName];
-        [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
-        [hud hide:YES];
-        [self setTitleAndClear:@"Superb!  Add  another  reinforcer  now,  or  swipe  left  to  continue"];
-        [self.textField2 becomeFirstResponder];
+        if(successNumber == 1)
+        {
+            NSString *reinforcerName = self.textField2.text;
+            NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
+            reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :currentUser.currentClassId :reinforcerName];
+            [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
+            [hud hide:YES];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   reinforcer   or   swipe   left   to   continue", compliment]];
+            [self.textField1 becomeFirstResponder];
+        }
+        else {
+            NSString *message = [data objectForKey:@"message"];
+            [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [hud hide:YES];
+        }
+        
 
     }
     else if (type == ADD_ITEM){
-        NSString *itemName = self.textField1.text;
-        NSInteger itemCost = self.textField2.text.integerValue;
-        NSInteger itemId = [[data objectForKey:@"id"] integerValue];
-        item *newItem = [[item alloc]init:itemId :currentUser.currentClassId :itemName :itemCost];
-        [[DatabaseHandler getSharedInstance] addItem:newItem];
-        [hud hide:YES];
-        [self setTitleAndClear:@"Outstanding!  Add  another  item  now,  or  swipe  left  to  continue"];
-        [self.textField1 becomeFirstResponder];
+        if (successNumber == 1){
+            NSString *itemName = self.textField1.text;
+            NSInteger itemCost = self.textField2.text.integerValue;
+            NSInteger itemId = [[data objectForKey:@"id"] integerValue];
+            item *newItem = [[item alloc]init:itemId :currentUser.currentClassId :itemName :itemCost];
+            [[DatabaseHandler getSharedInstance] addItem:newItem];
+            [hud hide:YES];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   item   or   swipe   left   to   continue", compliment]];
+            [self.textField1 becomeFirstResponder];
+            
+        }
+        else {
+            NSString *message = [data objectForKey:@"message"];
+            [Utilities alertStatusWithTitle:@"Error adding item" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [hud hide:YES];
+        }
         
     }
   
     else if (type == ADD_JAR){
-        NSString *jarName = self.textField1.text;
-        NSInteger jarTotal = self.textField2.text.integerValue;
-        NSInteger jarId = [[data objectForKey:@"id"] integerValue];
-        classjar *newJar = [[classjar alloc]init:jarId :currentUser.currentClassId :jarName :0 :jarTotal];
-        [[DatabaseHandler getSharedInstance] addClassJar:newJar];
-        [hud hide:YES];
-        [self setTitleAndClear:@"Splendid!  Add  another  jar  to  overwrite  the  one  just  added,  or  swipe  left  to  continue"];
-        [self.textField2 becomeFirstResponder];
+        if (successNumber == 1){
+            NSString *jarName = self.textField1.text;
+            NSInteger jarTotal = self.textField2.text.integerValue;
+            NSInteger jarId = [[data objectForKey:@"id"] integerValue];
+            classjar *newJar = [[classjar alloc]init:jarId :currentUser.currentClassId :jarName :0 :jarTotal];
+            [[DatabaseHandler getSharedInstance] addClassJar:newJar];
+            [hud hide:YES];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   jar   or   swipe   left   to   continue", compliment]];
+            [self.textField1 becomeFirstResponder];
+        }
+        else {
+            NSString *message = [data objectForKey:@"message"];
+            [Utilities alertStatusWithTitle:@"Error adding item" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [hud hide:YES];
+        }
         
+        
+    }
+    else if (type == REGISTER_STAMP){
+        if (successNumber == 1){
+            currentUser.serial = serial;
+            [self performSegueWithIdentifier:@"tutorial_to_class" sender:nil];
+        }
+        else {
+            NSString *message = [data objectForKey:@"message"];
+            [Utilities alertStatusWithTitle:@"Error adding stamp" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [hud hide:YES];
+        }
     }
     
     else{
@@ -483,8 +526,9 @@ static int screenNumber;
                 /* ADD A WEB CALL HURR" */
                 
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    currentUser.serial = stampSerial;
-                    [self performSegueWithIdentifier:@"tutorial_to_class" sender:nil];
+                    serial = stampSerial;
+                    [self activityStart:@"Registering stamp..."];
+                    [webHandler registerStamp:currentUser.id :stampSerial];
                 }
                 
             }
@@ -545,6 +589,7 @@ static int screenNumber;
 
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    [self.view endEditing:YES];
     index = row;
     
 }

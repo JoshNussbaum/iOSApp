@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PricingViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 @end

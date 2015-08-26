@@ -7,6 +7,7 @@
 //
 
 #import "AboutViewController.h"
+#import "Utilities.h"
 
 @interface AboutViewController ()
 
@@ -17,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [Utilities makeRoundedButton:self.backButton :nil];
 }
 
 - (void)didReceiveMemoryWarning {

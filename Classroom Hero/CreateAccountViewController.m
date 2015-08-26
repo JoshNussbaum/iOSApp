@@ -36,9 +36,9 @@
     [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[Utilities CHGreenColor]];
     [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[Utilities CHGreenColor]];
     
-    [Utilities makeRoundedButton:self.createAccountButton :nil];
+    [Utilities makeRoundedButton:self.createAccountButton :[UIColor blackColor]];
     
-    [Utilities makeRoundedButton:self.backButton :nil];
+    [Utilities makeRoundedButton:self.backButton :[UIColor blackColor]];
 
 }
 

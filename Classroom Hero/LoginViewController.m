@@ -101,7 +101,7 @@
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    //NSLog(@"In Login \n %@", data);
+    NSLog(@"In Login \n %@", data);
     if (type == 1){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
         
@@ -112,6 +112,8 @@
             currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];
             currentUser.email = self.emailTextField.text;
             currentUser.password = self.passwordTextField.text;
+            currentUser.serial = [[data objectForKey:@"login"] objectForKey:@"serial"];
+
             currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
             currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
             currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];

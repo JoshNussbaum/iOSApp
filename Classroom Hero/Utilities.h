@@ -29,6 +29,7 @@ extern NSInteger ADD_JAR;
 extern NSInteger EDIT_JAR;
 extern NSInteger DELETE_JAR;
 extern NSInteger GET_SCHOOLS;
+extern NSInteger REGISTER_STAMP;
 
 + (UIColor *) CHBlueColor;
 
@@ -63,6 +64,8 @@ extern NSInteger GET_SCHOOLS;
 + (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view;
 
 + (void) alertStatusNoConnection;
+
++ (NSString *) getRandomCompliment;
 
 
 @end

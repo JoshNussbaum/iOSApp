@@ -21,10 +21,8 @@
     NSLog(@"In view did load Tutorial View");
     [super viewDidLoad];
     currentUser = [user getInstance];
-    currentUser.serial = @"dope";
-
     // Do any additional setup after loading the view.
-    _pageTitles = @[@"Welcome  to  Classroom  Hero!   Swipe  left  to  navigate  this  tutorial  and  begin  your  adventure!", @"Add  a  class  to  get  started.   Enter  a  name  and  grade  for  your  class  and  pick  your  school", @"Add  students  to  your  selected  class.   Type  in  a  student  name  below  and  pick  your  class", @"Add  positive  reinforcers  to  categorize  the  points  you  award  to  students", @"Add  market  place  items  for  students  to  spend  their  points  on", @"Add  a  jar  that  only  your  teacher  stamp  can  add  points  to  for  a  class-wide  reward", @"Finally,  stamp  the  apple  to  register  your  teacher  stamp  and  begin  your  journey  with  Classroom  Hero!"];
+    _pageTitles = @[@"Welcome   to   Classroom   Hero!   Swipe   left   to   get   started", @"Add   a   class   that   belongs   to   your   school", @"Add   students   to   your   selected   class", @"Add   positive   reinforcers   to   categorize   points   awarded   to   students", @"Add   market   place   items   for   students   to   spend   their   points   on", @"Add   a   jar   that   only   your   teacher   stamp   can   add   points   to   for   a   class-wide   reward", @"Stamp   the   apple   to   register   your   teacher   stamp   and   begin   your   journey  with   Classroom   Hero!"];
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
@@ -120,11 +118,11 @@
 
 
 - (IBAction)skipClicked:(id)sender {
-    if ((currentUser.currentClassId != 0) && ![currentUser.serial isEqualToString:@""]){
+    if ((currentUser.currentClassId != 0)){
         [self performSegueWithIdentifier:@"tutorial_skip_to_class" sender:nil];
     }
     else {
-        [Utilities alertStatusWithTitle:@"Slow down!" message:@"You must create a class and register your stamp before proceding" cancel:nil otherTitles:nil tag:0 view:nil];
+        [Utilities alertStatusWithTitle:@"Slow down!" message:@"You must create a class before proceding" cancel:nil otherTitles:nil tag:0 view:nil];
     }
 }
 

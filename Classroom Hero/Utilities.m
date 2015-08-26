@@ -28,6 +28,7 @@ NSInteger ADD_JAR = 15;
 NSInteger EDIT_JAR = 16;
 NSInteger DELETE_JAR = 17;
 NSInteger GET_SCHOOLS = 18;
+NSInteger REGISTER_STAMP = 19;
 
 + (UIColor *)CHBlueColor{
     UIColor *CHBlueColor = [UIColor colorWithRed:116.0/255.0 green:209.0/255.0 blue:246.0/255.0 alpha:1.0] ;
@@ -139,8 +140,8 @@ NSInteger GET_SCHOOLS = 18;
 }
 
 + (void) makeRoundedButton:(UIButton *)button :(UIColor *)color{
-    button.layer.cornerRadius = 10	;
-    button.layer.borderWidth = 2;
+    button.layer.cornerRadius = 5;
+    button.layer.borderWidth = 1;
     button.clipsToBounds = YES;
     if (color != nil){
         button.layer.borderColor = color.CGColor;
@@ -176,6 +177,14 @@ NSInteger GET_SCHOOLS = 18;
                                              otherButtonTitles:nil];
     alertView.tag = 0;
     [alertView show];
+}
+
++ (NSString *) getRandomCompliment{
+    NSArray *compliments = @[@"Outstanding!",@"Splendid!",@"Marvelous!",@"Amazing!",@"Impressive!",@"Great!",@"Good   work!",@"Fine   job!",@"Magnificent!",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing!",@"Phenomenal!",@"Terrific!",@"Stupendous!",@"Peachy!",];
+    
+    NSInteger randomInteger = arc4random() % (compliments.count-1);
+    
+    return compliments[randomInteger];
 }
 
 

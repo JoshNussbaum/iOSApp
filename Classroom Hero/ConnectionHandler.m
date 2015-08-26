@@ -36,6 +36,8 @@ static NSString * const REWARD_STUDENT_URL = @"http://73.231.27.167:8080/SynappW
 static NSString * const TRANSACTION_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/transaction";
 
 static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/schools/get";
+static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/stamp";
+
 
 
 static NSString *POST = @"POST";
@@ -180,7 +182,7 @@ static NSInteger connectionType;
 
 - (void)addStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname{
     connectionType = ADD_STUDENT;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld,\"fname\":\"%@\", \"lname\":\"%@\"}}", (long)id, fname, lname];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld, \"fname\":\"%@\", \"lname\":\"%@\"}}", (long)id, fname, lname];
     
     [self asynchronousWebCall:jsonRequest :ADD_STUDENT_URL :POST];
 }
@@ -188,7 +190,7 @@ static NSInteger connectionType;
 
 - (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname{
     connectionType = EDIT_STUDENT;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld,\"fname\":\"%@\", \"lname\":\"%@\"}}", (long)id, fname, lname];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld, \"fname\":\"%@\", \"lname\":\"%@\"}}", (long)id, fname, lname];
     
     [self asynchronousWebCall:jsonRequest :EDIT_STUDENT_URL :PUT];
 }
@@ -205,6 +207,14 @@ static NSInteger connectionType;
     
     [self asynchronousWebCall:nil :GET_SCHOOLS_URL :GET];
     
+}
+
+- (void)registerStamp:(NSInteger)id :(NSString *)serial{
+    connectionType = REGISTER_STAMP;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"register\":{\"uid\":%ld, \"stamp\":\"%@\"}}", (long)id, serial];
+    
+    [self asynchronousWebCall:jsonRequest :REGISTER_STAMP_URL :POST];
 }
 
 
