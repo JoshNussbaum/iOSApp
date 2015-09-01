@@ -38,6 +38,7 @@
     
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
+    
 
     // Do any additional setup after loading the view.
 }
@@ -101,7 +102,7 @@
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    NSLog(@"In Login \n %@", data);
+    //NSLog(@"In Login \n %@", data);
     if (type == 1){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
         
@@ -117,14 +118,21 @@
             currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
             currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
             currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];
-            
+            NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance] getNumberOfUnregisteredStudentsInClass:currentUser.id];
+
             self.passwordTextField.text=@"";
         
             if (currentUser.accountStatus == 0){
                 [self performSegueWithIdentifier:@"login_to_tutorial" sender:nil];
             }
             else {
-                 [self performSegueWithIdentifier:@"login_to_class" sender:nil];
+                if (unregisteredStudents == 0){
+                    [self performSegueWithIdentifier:@"login_to_class" sender:nil];
+
+                }
+                else {
+                    [self performSegueWithIdentifier:@"login_to_register_students" sender:self];
+                }
             }
             [hud hide:YES];
             

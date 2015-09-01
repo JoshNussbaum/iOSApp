@@ -102,6 +102,7 @@
 		03AA9A581B63399D00750758 /* treasure_chest.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A361B63399D00750758 /* treasure_chest.png */; };
 		03AA9A5B1B633B8100750758 /* ConnectionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA9A5A1B633B8100750758 /* ConnectionHandler.m */; };
 		03B3A02E1B71D0A800B42E09 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3A02D1B71D0A800B42E09 /* Utilities.m */; };
+		03B421E71B9198380062A7E4 /* RegisterStudentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B421E61B9198380062A7E4 /* RegisterStudentsViewController.m */; };
 		03DC9D991B7334F6005C7562 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D981B7334F6005C7562 /* Notes */; };
 		03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFD21B6C5A1900C451CC /* reinforcer.m */; };
 		03DCFFD51B6C63FC00C451CC /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DCFFD41B6C63FC00C451CC /* libsqlite3.dylib */; };
@@ -244,6 +245,8 @@
 		03AA9A5A1B633B8100750758 /* ConnectionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionHandler.m; sourceTree = "<group>"; };
 		03B3A02C1B71D0A800B42E09 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		03B3A02D1B71D0A800B42E09 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		03B421E51B9198380062A7E4 /* RegisterStudentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterStudentsViewController.h; sourceTree = "<group>"; };
+		03B421E61B9198380062A7E4 /* RegisterStudentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterStudentsViewController.m; sourceTree = "<group>"; };
 		03DC9D981B7334F6005C7562 /* Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 		03DCFFD11B6C5A1900C451CC /* reinforcer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reinforcer.h; sourceTree = "<group>"; };
 		03DCFFD21B6C5A1900C451CC /* reinforcer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = reinforcer.m; sourceTree = "<group>"; };
@@ -423,6 +426,8 @@
 				0399AAF11B846C6500972F21 /* ClassTableViewController.m */,
 				0338556F1B8996D400173600 /* CreateClassViewController.h */,
 				033855701B8996D400173600 /* CreateClassViewController.m */,
+				03B421E51B9198380062A7E4 /* RegisterStudentsViewController.h */,
+				03B421E61B9198380062A7E4 /* RegisterStudentsViewController.m */,
 				03492CF01B8863DB0015CD78 /* HomeViewController.h */,
 				03492CF11B8863DB0015CD78 /* HomeViewController.m */,
 				036811531B8C498700690294 /* Login */,
@@ -784,6 +789,7 @@
 				033855741B89984500173600 /* numberTextField.m in Sources */,
 				03DCFFDB1B6C6C8A00C451CC /* classjar.m in Sources */,
 				0399AAF61B84731E00972F21 /* ClassTableViewCell.m in Sources */,
+				03B421E71B9198380062A7E4 /* RegisterStudentsViewController.m in Sources */,
 				038545381B636BB20053C169 /* CreateAccountViewController.m in Sources */,
 				038545261B6359DD0053C169 /* emailTextField.m in Sources */,
 				03AA9A5B1B633B8100750758 /* ConnectionHandler.m in Sources */,

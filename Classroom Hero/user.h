@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-static NSString * const snowshoe_app_key = @"d12276c2fac976865fdc";
-static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c4f995db8";
+#import "class.h"
 
 @interface user : NSObject{
     NSInteger id;
@@ -19,6 +17,7 @@ static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c
     NSString *password;
     NSInteger accountStatus;
     NSString *serial;
+    class *currentClass;
     NSInteger currentClassId;
     NSString *currentClassName;
 }
@@ -30,7 +29,7 @@ static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c
 @property(nonatomic)NSString *password;
 @property(nonatomic)NSInteger accountStatus;
 @property(nonatomic)NSString *serial;
-@property(nonatomic)NSInteger currentClassId;
+@property(nonatomic)class *currentClass;
 @property(nonatomic)NSString *currentClassName;
 
 

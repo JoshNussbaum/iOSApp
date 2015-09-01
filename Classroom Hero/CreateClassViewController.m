@@ -10,6 +10,7 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface CreateClassViewController (){
     NSInteger index;
@@ -18,7 +19,12 @@
     user *currentUser;
     ConnectionHandler *webHandler;
     class *newClass;
+    SystemSoundID success;
+
+
 }
+
+- (IBAction)infoButtonClicked:(id)sender;
 
 @end
 
@@ -30,6 +36,11 @@
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     self.schoolPicker.delegate = self;
     schoolData = [[DatabaseHandler getSharedInstance] getSchools];
+    
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"award" ofType:@"mp3"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &success);
 
     if (schoolData.count == 0){
         self.schoolPicker.hidden = YES;
@@ -139,9 +150,9 @@
         
         if([successNumber boolValue] == YES)
         {
+            AudioServicesPlaySystemSound(success);
             NSInteger cid = [[data objectForKey:@"id"] integerValue];
             [newClass setId:cid];
-            NSLog(@"We just added this class");
             [newClass printClass];
             [[DatabaseHandler getSharedInstance]addClass:newClass];
             [hud hide:YES];
@@ -204,5 +215,9 @@
 
 
 
+
+- (IBAction)infoButtonClicked:(id)sender {
+    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
+}
 
 @end

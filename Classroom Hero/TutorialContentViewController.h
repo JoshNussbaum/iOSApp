@@ -26,10 +26,10 @@
 - (IBAction)buttonClicked:(id)sender;
 - (IBAction)backgroundTap:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UIImageView *chestImage;
-
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;	
 @property (strong, nonatomic) IBOutlet UILabel *pickerLabel;
+@property (strong, nonatomic) IBOutlet UIButton *infoButton;
+- (IBAction)infoButtonClicked:(id)sender;
 
 @end

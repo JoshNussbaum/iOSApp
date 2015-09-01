@@ -19,3 +19,32 @@ Prevent user from swiping while anything is being added
 
 
 trim leading and trailing white spaces for adding stuff
+
+
+
+USER OBJECT SHOULD HAVE A CLASS OBJECT
+
+class object should have everything a class has
+
+including unregistered students
+
+
+
+
+
+ADD INFO BUTTON TO TELL USERS TO EMAIL US IF THEYRE SCHOOL DOESNT SHOW UP
+
+
+
+
+
+Use Push segues for register students and then just push to home. Then have a classes button and a home button. Classes pops to root. and Home segues to home.
+Set flag on home and register students
+
+Register students -> flag = 1 from class list and then push segue home and set home flag to 1
+                     flag = 2 from home and then pop view controller and set home flag to 2
+
+Home -> flag = 1 from class list popViewController
+     -> flag = 2 from home so push to register students and set flag to 2
+
+

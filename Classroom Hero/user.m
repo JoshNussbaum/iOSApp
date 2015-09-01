@@ -17,7 +17,7 @@
 @synthesize password;
 @synthesize accountStatus;
 @synthesize serial;
-@synthesize currentClassId;
+@synthesize currentClass;
 @synthesize currentClassName;
 
 static user *instance = nil;
@@ -33,7 +33,6 @@ static user *instance = nil;
             instance->password=@"";
             instance->accountStatus = 0;
             instance->serial=@"";
-            instance->currentClassId = 0;
             instance->currentClassName=@"";
         }
     }
@@ -47,7 +46,7 @@ static user *instance = nil;
     self->password = @"";
     self->accountStatus = 0;
     self->serial = @"";
-    self->currentClassId = 0;
+    self->currentClass = nil;
     self->currentClassName = @"";
 }
 

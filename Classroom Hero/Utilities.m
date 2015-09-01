@@ -141,7 +141,7 @@ NSInteger REGISTER_STAMP = 19;
 
 + (void) makeRoundedButton:(UIButton *)button :(UIColor *)color{
     button.layer.cornerRadius = 5;
-    button.layer.borderWidth = 1;
+    button.layer.borderWidth = .8;
     button.clipsToBounds = YES;
     if (color != nil){
         button.layer.borderColor = color.CGColor;
@@ -179,6 +179,7 @@ NSInteger REGISTER_STAMP = 19;
     [alertView show];
 }
 
+
 + (NSString *) getRandomCompliment{
     NSArray *compliments = @[@"Outstanding!",@"Splendid!",@"Marvelous!",@"Amazing!",@"Impressive!",@"Great!",@"Good   work!",@"Fine   job!",@"Magnificent!",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing!",@"Phenomenal!",@"Terrific!",@"Stupendous!",@"Peachy!",];
     
@@ -187,6 +188,19 @@ NSInteger REGISTER_STAMP = 19;
     return compliments[randomInteger];
 }
 
+
++ (void) wiggleImage:(UIImageView *)image{
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.05];
+    [animation setRepeatCount:3];
+    [animation setAutoreverses:YES];
+    [animation setFromValue:[NSValue valueWithCGPoint:
+                             CGPointMake([image center].x , [image center].y - 3)]];
+    [animation setToValue:[NSValue valueWithCGPoint:
+                           CGPointMake([image center].x , [image center].y + 3)]];
+    [[image layer] addAnimation:animation forKey:@"position"];
+}
 
 
 @end

@@ -58,13 +58,18 @@
 #pragma mark - Create
 
 
+-(void) setId:(NSInteger)id_{
+    self->id = id_;
+}
+
+
 - (void) setFirstName:(NSString *)firstName_{
     self->firstName = firstName_;
 }
 
 
 - (void) setLastName:(NSString *)lastName_{
-    self->firstName = lastName_;
+    self->lastName = lastName_;
 }
 
 
@@ -195,7 +200,7 @@
 
 
 - (void) printStudent{
-    NSLog(@"\n Student UID => %ld,\n Student First Name => %@,\n, Student First Name => %@,\n Student Serial => %@\n, Student Points => %ld,\n Student PointsGained => %ld,\n Student Progress => %ld,\n Student Level => %ld, \n Student LevelsGained => %ld, \nStudent LevelUpAmount => %ld,\n", (long)self->id, self->firstName, self->lastName, self->serial, (long)self->points, (long)self->pointsgained, (long)self->progress, (long)self->lvl, (long)self->lvlsgained, (long)self->lvlupamount);
+    NSLog(@"\n Student UID => %ld,\n Student First Name => %@,\n, Student Last Name => %@,\n Student Serial => %@\n, Student Points => %ld,\n Student PointsGained => %ld,\n Student Progress => %ld,\n Student Level => %ld, \n Student LevelsGained => %ld, \nStudent LevelUpAmount => %ld,\n", (long)self->id, self->firstName, self->lastName, self->serial, (long)self->points, (long)self->pointsgained, (long)self->progress, (long)self->lvl, (long)self->lvlsgained, (long)self->lvlupamount);
 }
 
 

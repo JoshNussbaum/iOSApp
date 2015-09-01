@@ -29,5 +29,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *startOverButton;
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
 
+- (void)setFlag:(NSInteger)flag_;
 
 @end
