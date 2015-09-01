@@ -55,7 +55,7 @@ static int screenNumber;
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
 
-    [Utilities makeRoundedButton:self.button :nil];
+    [Utilities makeRoundedButton:self.button :[UIColor blackColor]];
 
     
     self.schoolPicker.delegate = self;
@@ -69,7 +69,7 @@ static int screenNumber;
     
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
-    
+
     NSString *path = [[NSBundle mainBundle]
                       pathForResource:@"award" ofType:@"mp3"];
     NSURL *pathURL = [NSURL fileURLWithPath:path];
@@ -132,6 +132,8 @@ static int screenNumber;
         self.stampImage.hidden = YES;
         self.schoolPicker.hidden = NO;
         if (self.pageIndex != 1){
+            self.infoButton.hidden = YES;
+            self.infoButton.enabled = NO;
             if (self.classData.count == 0){
                 self.schoolPicker.hidden = YES;
                 self.classNameLabel.text = @"You  must  add  a  class  first!";
@@ -141,9 +143,8 @@ static int screenNumber;
                 titleString = [[NSMutableAttributedString alloc]initWithString:@" Select  your  class"];
                 [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
                 self.pickerLabel.hidden = NO;
-                //NSInteger row = self.classData.count - 1;
                 for (int i=0; i <self.classData.count; i++){
-                    if ([[self.classData objectAtIndex:i] getId] == currentUser.currentClassId){
+                    if ([[self.classData objectAtIndex:i] getId] == [currentUser.currentClass getId]){
                         [self.schoolPicker selectRow:i inComponent:0 animated:YES];
                         continue;
                     }
@@ -153,6 +154,8 @@ static int screenNumber;
             }
         }
         else {
+            self.infoButton.hidden = NO;
+            self.infoButton.enabled = YES;
             if (self.schoolData.count == 0){
                 self.pickerLabel.hidden = YES;
                 self.schoolPicker.hidden = YES;
@@ -266,8 +269,8 @@ static int screenNumber;
         }
     }
     else{
-        if (currentUser.currentClassId != 0){
-            currentUser.currentClassId = [self getClassId];
+        if ([currentUser.currentClass getId]  != 0){
+            currentUser.currentClass = [self getClass];
 
             if (self.pageIndex == 2){
                 NSString *firstName = self.textField1.text;
@@ -277,7 +280,7 @@ static int screenNumber;
                     NSString *lastErrorMessage = [Utilities isInputValid:lastName :@"Last name"];
                     if ([lastErrorMessage isEqualToString:@""]) {
                         [self activityStart:@"Adding student..."];
-                        [webHandler addStudent:currentUser.currentClassId :firstName :lastName];
+                        [webHandler addStudent:[currentUser.currentClass getId] :firstName :lastName];
                         
                     }
                     else {
@@ -296,7 +299,7 @@ static int screenNumber;
                 NSString *reinforcerErrorMessage = [Utilities isInputValid:reinforcerName :@"Reinforcer name"];
                 if ([reinforcerErrorMessage isEqualToString:@""]){
                     [self activityStart:@"Adding reinforcer..."];
-                    [webHandler addReinforcer:currentUser.currentClassId :reinforcerName];
+                    [webHandler addReinforcer:[currentUser.currentClass getId] :reinforcerName];
                 }
                 else {
                     [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:reinforcerErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -313,7 +316,7 @@ static int screenNumber;
                     NSString *costErrorMessage = [Utilities isNumeric:itemCost];
                     if ([costErrorMessage isEqualToString:@""]) {
                         [self activityStart:@"Adding item..."];
-                        [webHandler addItem:currentUser.currentClassId :itemName :itemCost.integerValue];
+                        [webHandler addItem:[currentUser.currentClass getId] :itemName :itemCost.integerValue];
                         
                     }
                     else {
@@ -336,7 +339,7 @@ static int screenNumber;
                     NSString *costErrorMessage = [Utilities isNumeric:jarCost];
                     if ([costErrorMessage isEqualToString:@""]) {
                         [self activityStart:@"Adding jar..."];
-                        [webHandler addJar:currentUser.currentClassId :jarName :jarCost.integerValue];
+                        [webHandler addJar:[currentUser.currentClass getId] :jarName :jarCost.integerValue];
                         
                     }
                     else {
@@ -389,8 +392,7 @@ static int screenNumber;
 
             class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :1 :0 :30 :0];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
-            currentUser.currentClassId = classId;
-            currentUser.currentClassName = self.textField1.text;
+            currentUser.currentClass = newClass;
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   class   or   swipe   left   to    continue", compliment]];
             [self.textField1 becomeFirstResponder];
@@ -409,7 +411,7 @@ static int screenNumber;
         {
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
             student *newStudent = [[student alloc]init:studentId :self.textField1.text :self.textField2.text :@"" :0 :10 :0 :0 :0 :0 :0 :0 :0 :[Utilities getDate]];
-            [[DatabaseHandler getSharedInstance] addStudent:newStudent :currentUser.currentClassId];
+            [[DatabaseHandler getSharedInstance] addStudent:newStudent :[currentUser.currentClass getId]];
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   student   or   swipe   left   to   continue", compliment]];
             [self.textField1 becomeFirstResponder];
@@ -426,7 +428,7 @@ static int screenNumber;
         {
             NSString *reinforcerName = self.textField2.text;
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
-            reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :currentUser.currentClassId :reinforcerName];
+            reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :[currentUser.currentClass getId] :reinforcerName];
             [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   reinforcer   or   swipe   left   to   continue", compliment]];
@@ -445,7 +447,7 @@ static int screenNumber;
             NSString *itemName = self.textField1.text;
             NSInteger itemCost = self.textField2.text.integerValue;
             NSInteger itemId = [[data objectForKey:@"id"] integerValue];
-            item *newItem = [[item alloc]init:itemId :currentUser.currentClassId :itemName :itemCost];
+            item *newItem = [[item alloc]init:itemId :[currentUser.currentClass getId]  :itemName :itemCost];
             [[DatabaseHandler getSharedInstance] addItem:newItem];
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   item   or   swipe   left   to   continue", compliment]];
@@ -465,7 +467,7 @@ static int screenNumber;
             NSString *jarName = self.textField1.text;
             NSInteger jarTotal = self.textField2.text.integerValue;
             NSInteger jarId = [[data objectForKey:@"id"] integerValue];
-            classjar *newJar = [[classjar alloc]init:jarId :currentUser.currentClassId :jarName :0 :jarTotal];
+            classjar *newJar = [[classjar alloc]init:jarId :[currentUser.currentClass getId]  :jarName :0 :jarTotal];
             [[DatabaseHandler getSharedInstance] addClassJar:newJar];
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   jar   or   swipe   left   to   continue", compliment]];
@@ -498,23 +500,8 @@ static int screenNumber;
 }
 
 
-- (void)wiggleImage{
-    CABasicAnimation *animation =
-    [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setDuration:0.05];
-    [animation setRepeatCount:3];
-    [animation setAutoreverses:YES];
-    [animation setFromValue:[NSValue valueWithCGPoint:
-                             CGPointMake([self.chestImage center].x , [self.chestImage center].y - 3)]];
-    [animation setToValue:[NSValue valueWithCGPoint:
-                           CGPointMake([self.chestImage center].x , [self.chestImage center].y + 3)]];
-    [[self.chestImage layer] addAnimation:animation forKey:@"position"];
-}
-
-
 - (void)stampResultDidChange:(NSString *)stampResult{
     if (self.pageIndex == 6){
-        [self wiggleImage];
         NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
         NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
@@ -538,7 +525,6 @@ static int screenNumber;
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"IN HURR");
     if (alertView.tag == 0) {
         return;
     }
@@ -603,11 +589,10 @@ static int screenNumber;
 }
 
 
-- (NSInteger)getClassId{
-    NSInteger schoolIndex = index ;
-    school *cc = [self.classData objectAtIndex:schoolIndex];
-    NSInteger classId = [cc getId];
-    return classId;
+- (class *)getClass{
+    NSInteger classIndex = index ;
+    class *cc = [self.classData objectAtIndex:classIndex];
+    return cc;
 }
 
 
@@ -621,9 +606,9 @@ static int screenNumber;
 }
 
 
+- (IBAction)infoButtonClicked:(id)sender {
+    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
+}
 
-
-                                   
-                                   
 
 @end

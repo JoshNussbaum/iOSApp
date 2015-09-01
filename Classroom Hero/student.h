@@ -30,6 +30,9 @@
 -(id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)totalpoints_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_;
 
 // Creation Functions
+
+-(void) setId:(NSInteger)id_;
+
 -(void) setFirstName:(NSString *)firstName_;
 
 -(void) setLastName:(NSString *)lastName_;

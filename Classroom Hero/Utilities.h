@@ -9,7 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+static NSString * const snowshoe_app_key = @"d12276c2fac976865fdc";
+static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c4f995db8";
+
+
+
 @interface Utilities : NSObject
+
 
 extern NSInteger LOGIN;
 extern NSInteger CREATE_ACCOUNT;
@@ -66,6 +72,8 @@ extern NSInteger REGISTER_STAMP;
 + (void) alertStatusNoConnection;
 
 + (NSString *) getRandomCompliment;
+
++ (void) wiggleImage:(UIImageView *)image;
 
 
 @end

@@ -9,6 +9,7 @@
 #import "CreateAccountViewController.h"
 #import "MBProgressHUD.h"
 #import "Utilities.h"
+#import "RegisterStudentsViewController.h"
 
 
 @interface CreateAccountViewController (){
@@ -67,6 +68,7 @@
     }
     else {
         [self activityStart:@"Validating account..."];
+        [[DatabaseHandler getSharedInstance] resetDatabase];
         [webHandler createAccount:self.emailTextField.text :self.passwordTextField.text :self.firstNameTextField.text :self.lastNameTextField.text];
         
     }
@@ -185,6 +187,17 @@
                                                                                                   }];
     self.passwordTextField.attributedPlaceholder = str;
 }
+
+
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     RegisterStudentsViewController *vc = [segue destinationViewController];
+     [vc setFlag:1];
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
 
 
 

@@ -11,6 +11,7 @@
 
 @interface TutorialViewController (){
     user *currentUser;
+    NSInteger flag;
 }
 
 @end
@@ -20,9 +21,22 @@
 - (void)viewDidLoad {
     NSLog(@"In view did load Tutorial View");
     [super viewDidLoad];
+    if (flag == 1){
+        _pageTitles = @[@"Welcome   to   Classroom   Hero!   Swipe   left   to   create  a  class  and  register  your  teacher  stamp", @"Add   a   class   that   belongs   to   your   school", @"Add   students   to   your   selected   class", @"Add   positive   reinforcers   to   categorize   points   awarded   to   students", @"Add   market   place   items   for   students   to   spend   their   points   on", @"Add   a   jar   that   only   your   teacher   stamp   can   add   points   to   for   a   class-wide   reward", @"Stamp   the   apple   to   register   your   teacher   stamp   and   begin   your   journey  with   Classroom   Hero!"];
+        self.backButton.enabled = YES;
+        self.backButton.hidden = NO;
+        [Utilities makeRoundedButton:self.backButton :nil];
+
+    }
+    if (flag == 2){
+        self.backButton.enabled = NO;
+        self.backButton.hidden = YES;
+        _pageTitles = @[@"Swipe   left   to   create   or   add   to   a   class  and  register  your  teacher  stamp", @"Add   a   class   that   belongs   to   your   school", @"Add   students   to   your   selected   class", @"Add   positive   reinforcers   to   categorize   points   awarded   to   students", @"Add   market   place   items   for   students   to   spend   their   points   on", @"Add   a   jar   that   only   your   teacher   stamp   can   add   points   to   for   a   class-wide   reward", @"Stamp   the   apple   to   register   your   teacher   stamp   and   begin   your   journey  with   Classroom   Hero!"];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
     currentUser = [user getInstance];
     // Do any additional setup after loading the view.
-    _pageTitles = @[@"Welcome   to   Classroom   Hero!   Swipe   left   to   get   started", @"Add   a   class   that   belongs   to   your   school", @"Add   students   to   your   selected   class", @"Add   positive   reinforcers   to   categorize   points   awarded   to   students", @"Add   market   place   items   for   students   to   spend   their   points   on", @"Add   a   jar   that   only   your   teacher   stamp   can   add   points   to   for   a   class-wide   reward", @"Stamp   the   apple   to   register   your   teacher   stamp   and   begin   your   journey  with   Classroom   Hero!"];
+
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
@@ -36,9 +50,9 @@
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
     
-    [Utilities makeRoundedButton:self.backButton :nil];
     [Utilities makeRoundedButton:self.startOverButton :nil];
     [Utilities makeRoundedButton:self.skipButton :nil];
+    
 }
 
 
@@ -112,18 +126,32 @@
 
 
 - (IBAction)backClicked:(id)sender {
-    [self performSegueWithIdentifier:@"tutorial_to_login" sender:self];
+    if (flag == 1){
+        [self performSegueWithIdentifier:@"tutorial_to_login" sender:self];
+    }
+    if (flag ==2){
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
     
 }
 
 
 - (IBAction)skipClicked:(id)sender {
-    if ((currentUser.currentClassId != 0)){
+    if (flag == 1){
         [self performSegueWithIdentifier:@"tutorial_skip_to_class" sender:nil];
     }
-    else {
-        [Utilities alertStatusWithTitle:@"Slow down!" message:@"You must create a class before proceding" cancel:nil otherTitles:nil tag:0 view:nil];
+    if (flag ==2){
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
+}
+
+- (void)setFlag:(NSInteger)flag_{
+    flag = flag_;
 }
 
 @end

@@ -11,6 +11,8 @@
 #import "ClassTableViewCell.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
+#import "RegisterStudentsViewController.h"
+#import "HomeViewController.h"
 
 static NSString * const classCell = @"classCell";
 
@@ -24,6 +26,7 @@ static NSString * const classCell = @"classCell";
     class *tmpClass;
     bool addingClass;
     bool editingClass;
+    NSInteger flag;
 }
 
 @end
@@ -32,21 +35,21 @@ static NSString * const classCell = @"classCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-
-    classes = [[DatabaseHandler getSharedInstance] getClasses];
+    [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
+    
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
-    currentUser = [user getInstance];
+    
     
     NSShadow* shadow = [NSShadow new];
-    shadow.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
     
     [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                             NSForegroundColorAttributeName: [UIColor whiteColor],
                                                             NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:36.0f],
                                                             NSShadowAttributeName: shadow
                                                             }];
-    
+    currentUser = [user getInstance];
+    classes = [[DatabaseHandler getSharedInstance] getClasses];
     
     NSMutableArray *classIds = [[NSMutableArray alloc]init];
     for (class *class_ in classes){
@@ -68,10 +71,24 @@ static NSString * const classCell = @"classCell";
         classes = [[DatabaseHandler getSharedInstance]getClasses];
         [self.tableView reloadData];
     }
+    if (flag == 2){
+        currentUser = [user getInstance];
+        classes = [[DatabaseHandler getSharedInstance] getClasses];
+        
+        NSMutableArray *classIds = [[NSMutableArray alloc]init];
+        for (class *class_ in classes){
+            NSNumber *classId = [NSNumber numberWithInteger:[class_ getId]];
+            [classIds addObject:classId];
+        }
+        
+        
+        studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    NSLog(@"In class table and heres data -> %@", data);
+    //NSLog(@"In class table and heres data -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -120,13 +137,12 @@ static NSString * const classCell = @"classCell";
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == [alertView cancelButtonIndex]) {
+        editingClass = NO;
+        return;
+    }
     if (alertView.tag == 1){
         // Edit class
-        if (buttonIndex == [alertView cancelButtonIndex]) {
-            NSLog(@"Canceled");
-            editingClass = NO;
-            return;
-        }
         NSString *newClassName = [alertView textFieldAtIndex:0].text;
         NSString *newClassGrade = [alertView textFieldAtIndex:1].text;
         NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
@@ -152,7 +168,6 @@ static NSString * const classCell = @"classCell";
     }
     else if (alertView.tag == 2){
         // Delete class
-        NSLog(@"About to delete this class ");
         [tmpClass printClass];
         [self activityStart:@"Deleting class..."];
         [webHandler deleteClass:[tmpClass getId]];
@@ -238,7 +253,6 @@ static NSString * const classCell = @"classCell";
             NSIndexPath* row = [tableView indexPathForRowAtPoint:touchPoint];
             if (row != nil) {
                 class *selectedClass = [self getClassByIndexPath:row];
-                NSLog(@"Long Press Class IS...");
                 NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
                 [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
             }
@@ -256,12 +270,18 @@ static NSString * const classCell = @"classCell";
         if (classes.count > 0){
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             class *selectedClass = [self getClassByIndexPath:indexPath];
-            NSLog(@"Selected Class IS...");
             [selectedClass printClass];
-            
-            currentUser.currentClassId = [selectedClass getId];
-            currentUser.currentClassName = [selectedClass getName];
-            [self performSegueWithIdentifier:@"class_to_home" sender:nil];
+            currentUser.currentClass = selectedClass;
+            NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance] getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
+            if (unregisteredStudents == 0){
+                flag = 2;
+                [self performSegueWithIdentifier:@"class_to_home" sender:nil];
+
+            }
+            else {
+                flag = 2;
+                [self performSegueWithIdentifier:@"class_to_register_students" sender:nil];
+            }
         }
     }
 }
@@ -287,11 +307,24 @@ static NSString * const classCell = @"classCell";
 
 
 - (class *)getClassByIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"In get class by index path and here are the classes %@", classes);
-    NSLog(@"INDEX PATH ROW %ld",(long)indexPath.row);
     index = [classes count] - indexPath.row - 1;
     class *selectedClass = [classes objectAtIndex:index];
     return selectedClass;
+}
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"class_to_register_students"]){
+        RegisterStudentsViewController *vc = [segue destinationViewController];
+        [vc setFlag:1];
+    }
+    else if ([segue.identifier isEqualToString:@"class_to_home"]){
+        HomeViewController *vc = [segue destinationViewController];
+        [vc setFlag:2];
+    }
+    
 }
 
 @end

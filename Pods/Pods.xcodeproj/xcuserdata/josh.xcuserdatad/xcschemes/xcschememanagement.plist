@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>JSBadgeView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Classroom Hero-JSBadgeView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Classroom Hero-MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,22 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>64A635E99F8A0C42457FC5CE</key>
+		<key>36537BD597D7F09F39C30F9C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9F94063EFB1E5CCE4F0D1B76</key>
+		<key>37DD313C64A162E46A32B570</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C3F602871EEC2FBCED5BA234</key>
+		<key>5664E2BACC7F253D97D28F33</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F6F1C28D045633D3EBFAD12E</key>
+		<key>A924EEDE6A095010914F1F80</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C359B4455809E7FAADCA50B5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E9D0370DD027E29D1FB2E96A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
