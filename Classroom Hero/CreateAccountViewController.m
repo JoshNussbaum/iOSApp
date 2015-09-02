@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import "Utilities.h"
 #import "RegisterStudentsViewController.h"
+#import "TutorialViewController.h"
 
 
 @interface CreateAccountViewController (){
@@ -186,6 +187,14 @@
                                                                                                   NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:25.0]
                                                                                                   }];
     self.passwordTextField.attributedPlaceholder = str;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"create_account_to_tutorial"]){
+        TutorialViewController *vc = [segue destinationViewController];
+        [vc setFlag:1];
+    }
+
 }
 
 
