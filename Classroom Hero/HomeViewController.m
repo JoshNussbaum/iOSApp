@@ -36,7 +36,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfStudentsInClass:[currentUser.currentClass getId]];
+    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     if (unregisteredStudents > 0){
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.registerStudentsView alignment:JSBadgeViewAlignmentTopRight];

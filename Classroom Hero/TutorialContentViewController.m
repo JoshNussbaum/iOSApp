@@ -20,7 +20,6 @@ static int screenNumber;
     NSInteger index;
     MBProgressHUD *hud;
     ConnectionHandler *webHandler;
-    SystemSoundID success;
     NSString *serial;
 }
 
@@ -70,10 +69,6 @@ static int screenNumber;
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
 
-    NSString *path = [[NSBundle mainBundle]
-                      pathForResource:@"award" ofType:@"mp3"];
-    NSURL *pathURL = [NSURL fileURLWithPath:path];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &success);
     
     
     switch (self.pageIndex) {
@@ -379,7 +374,7 @@ static int screenNumber;
     NSString * compliment;
     NSInteger successNumber = [[data objectForKey: @"success"]integerValue];
     if (successNumber == 1 && type != GET_SCHOOLS){
-        AudioServicesPlaySystemSound(success);
+        AudioServicesPlaySystemSound([Utilities getAwardSound]);
         compliment = [Utilities getRandomCompliment];
 
     }
@@ -508,10 +503,7 @@ static int screenNumber;
         if (resultObject != NULL) {
             if ([resultObject objectForKey:@"stamp"] != nil){
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                
-                
-                /* ADD A WEB CALL HURR" */
-                
+            
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                     serial = stampSerial;
                     [self activityStart:@"Registering stamp..."];
@@ -607,7 +599,7 @@ static int screenNumber;
 
 
 - (IBAction)infoButtonClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
+    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get it added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
 }
 
 

@@ -35,7 +35,9 @@ static NSString * const classCell = @"classCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
+    UIColor *CHBlueColor = [UIColor colorWithRed:85.0/255.0 green:200.0/255.0 blue:255.0/255.0 alpha:1.0] ;
+
+    [self.navigationController.navigationBar setBarTintColor:CHBlueColor];
     
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
@@ -60,8 +62,9 @@ static NSString * const classCell = @"classCell";
     
     studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
     
-    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
-    [self.tableView addGestureRecognizer:longPressRecognizer];
+    UISwipeGestureRecognizer* swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.tableView addGestureRecognizer:swipeRight];
 
 }
 
@@ -246,20 +249,15 @@ static NSString * const classCell = @"classCell";
 
 - (void)onLongPress:(UILongPressGestureRecognizer*)gesture{
     if (!editingClass){
-        if (gesture.state == UIGestureRecognizerStateBegan){
-            editingClass = YES;
-            UITableView* tableView = (UITableView*)self.view;
-            CGPoint touchPoint = [gesture locationInView:self.view];
-            NSIndexPath* row = [tableView indexPathForRowAtPoint:touchPoint];
-            if (row != nil) {
-                class *selectedClass = [self getClassByIndexPath:row];
-                NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
-                [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
-            }
-            
-        }
-        if (gesture.state == UIGestureRecognizerStateEnded)
-        {
+        NSLog(@"WE SWIPED RIGHT");
+        editingClass = YES;
+        UITableView* tableView = (UITableView*)self.view;
+        CGPoint touchPoint = [gesture locationInView:self.view];
+        NSIndexPath* row = [tableView indexPathForRowAtPoint:touchPoint];
+        if (row != nil) {
+            class *selectedClass = [self getClassByIndexPath:row];
+            NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
+            [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
         }
     }
 }

@@ -102,7 +102,7 @@
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    //NSLog(@"In Login \n %@", data);
+    NSLog(@"In Login \n %@", data);
     if (type == 1){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
         

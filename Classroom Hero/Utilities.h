@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
+
 
 static NSString * const snowshoe_app_key = @"d12276c2fac976865fdc";
 static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c4f995db8";
@@ -74,6 +76,16 @@ extern NSInteger REGISTER_STAMP;
 + (NSString *) getRandomCompliment;
 
 + (void) wiggleImage:(UIImageView *)image;
+
++ (void) failAnimation:(UIImageView *)image;
+
++ (SystemSoundID) getFailSound;
+
++ (SystemSoundID) getTheSoundOfSuccess;
+
++ (SystemSoundID) getAwardSound;
+
+
 
 
 @end

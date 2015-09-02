@@ -30,18 +30,19 @@ NSInteger DELETE_JAR = 17;
 NSInteger GET_SCHOOLS = 18;
 NSInteger REGISTER_STAMP = 19;
 
+
 + (UIColor *)CHBlueColor{
     UIColor *CHBlueColor = [UIColor colorWithRed:116.0/255.0 green:209.0/255.0 blue:246.0/255.0 alpha:1.0] ;
 
     return CHBlueColor;
 }
 
+
 + (UIColor *) CHGreenColor{
     UIColor *CHGreenColor = [UIColor colorWithRed:96.0/255.0 green:166.0/255.0 blue:84.0/255.0 alpha:1.0] ;
     
     return CHGreenColor;
 }
-
 
 
 + (NSString *) getDate{
@@ -130,6 +131,7 @@ NSInteger REGISTER_STAMP = 19;
     [alertView show];
 }
 
+
 + (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color{
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
                                                                                                   NSForegroundColorAttributeName : color,
@@ -138,6 +140,7 @@ NSInteger REGISTER_STAMP = 19;
     
     textField.attributedPlaceholder = str;
 }
+
 
 + (void) makeRoundedButton:(UIButton *)button :(UIColor *)color{
     button.layer.cornerRadius = 5;
@@ -152,9 +155,10 @@ NSInteger REGISTER_STAMP = 19;
     }
 }
 
+
 + (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view{
     if (cancel == nil){
-        cancel = @"Cancel";
+        cancel = @"Close";
     }
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
                                                        message:message
@@ -190,6 +194,7 @@ NSInteger REGISTER_STAMP = 19;
 
 
 + (void) wiggleImage:(UIImageView *)image{
+    AudioServicesPlaySystemSound([self getTheSoundOfSuccess]);
     CABasicAnimation *animation =
     [CABasicAnimation animationWithKeyPath:@"position"];
     [animation setDuration:0.05];
@@ -201,6 +206,60 @@ NSInteger REGISTER_STAMP = 19;
                            CGPointMake([image center].x , [image center].y + 3)]];
     [[image layer] addAnimation:animation forKey:@"position"];
 }
+
+
++ (void) failAnimation:(UIImageView *)image{
+    AudioServicesPlaySystemSound([self getFailSound]);
+
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.05];
+    [animation setRepeatCount:8];
+    [animation setAutoreverses:YES];
+    [animation setFromValue:[NSValue valueWithCGPoint:
+                             CGPointMake([image center].x - 15, [image center].y)]];
+    [animation setToValue:[NSValue valueWithCGPoint:
+                           CGPointMake([image center].x + 15, [image center].y)]];
+    [[image layer] addAnimation:animation forKey:@"position"];
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+}
+
+
++ (SystemSoundID) getFailSound{
+    SystemSoundID failSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"register_fail" ofType:@"wav"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &failSound);
+    return failSound;
+}
+
+
++ (SystemSoundID) getTheSoundOfSuccess{
+    SystemSoundID soundOfSuccess;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"correct" ofType:@"wav"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &soundOfSuccess);
+    return soundOfSuccess;
+}
+
+
++ (SystemSoundID) getAwardSound{
+    SystemSoundID awardSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"award" ofType:@"mp3"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &awardSound);
+    return awardSound;
+}
+
+
+
 
 
 @end

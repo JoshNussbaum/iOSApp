@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classroom Hero/ClassTableViewController.m"
-            timestampString = "462778534.183148"
+            timestampString = "462866711.078239"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
             landmarkName = "-getClassByIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -25,29 +25,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Classroom Hero/ClassTableViewController.m"
-            timestampString = "462778534.183148"
+            filePath = "Classroom Hero/DatabaseHandler.m"
+            timestampString = "462863920.034992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
-            landmarkName = "-onLongPress:"
+            startingLineNumber = "678"
+            endingLineNumber = "678"
+            landmarkName = "-getStudentIds:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Classroom Hero/DatabaseHandler.m"
-            timestampString = "462691595.440836"
+            filePath = "Classroom Hero/TutorialViewController.m"
+            timestampString = "462867198.972523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "677"
-            endingLineNumber = "677"
-            landmarkName = "-getStudentIds:"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
