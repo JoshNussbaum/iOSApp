@@ -62,7 +62,7 @@ static NSString * const classCell = @"classCell";
     
     studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
     
-    UISwipeGestureRecognizer* swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+    UISwipeGestureRecognizer* swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onSwipeRight:)];
     [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [self.tableView addGestureRecognizer:swipeRight];
 
@@ -179,6 +179,7 @@ static NSString * const classCell = @"classCell";
 }
 
 
+
 #pragma mark - Table view data source
 
 
@@ -247,9 +248,8 @@ static NSString * const classCell = @"classCell";
 }
 
 
-- (void)onLongPress:(UILongPressGestureRecognizer*)gesture{
+- (void)onSwipeRight:(UILongPressGestureRecognizer*)gesture{
     if (!editingClass){
-        NSLog(@"WE SWIPED RIGHT");
         editingClass = YES;
         UITableView* tableView = (UITableView*)self.view;
         CGPoint touchPoint = [gesture locationInView:self.view];

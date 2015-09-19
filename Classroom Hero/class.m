@@ -16,6 +16,7 @@
     {
         self->id = 0;
         self->name = @"";
+        self->nextLevel = 10;
     }
     return self;
 }
@@ -106,14 +107,27 @@
 
 
 #pragma mark - Update
+-(void) addPoints:(NSInteger)points{
+    self->progress += 1;
+    
+    if (self->progress >= self->nextLevel)
+    {
+        [self levelUp];
+    }
+}
 
+-(void) levelUp{
+    self->level++;
+    self->progress = 0;
+    self->nextLevel+= 5;
+}
 
 
 #pragma mark - Misc
 
 
 - (void)printClass{
-    NSLog(@"Class ID=>%li\n, Name=>%@\n, Grade=>%ld\n School Id=>%ld\n, Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n Has Stamps=>%ld\n", (long)self->id, self->name, (long)self->gradeNumber, (long)self->schoolId, (long)self->level, (long)self->progress, (long)self->nextLevel, (long)self->hasStamps);
+    NSLog(@"\nClass ID=>%li,\n Name=>%@,\n Grade=>%ld,\n School Id=>%ld,\n Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n Has Stamps=>%ld\n", (long)self->id, self->name, (long)self->gradeNumber, (long)self->schoolId, (long)self->level, (long)self->progress, (long)self->nextLevel, (long)self->hasStamps);
     
 }
 

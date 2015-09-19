@@ -58,6 +58,8 @@
 
 // Update Functions
 
+-(void) addPoints:(NSInteger)points;
+
 
 // Misc Functions
 -(void)printClass;

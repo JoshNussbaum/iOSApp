@@ -21,7 +21,7 @@
 
 -(id) init;
 
--(id)init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_ :(NSInteger)progress_ :(NSInteger)total_;
+-(id)initWithid:(NSInteger)id_ cid:(NSInteger)cid_ name:(NSString *)name_ progress:(NSInteger)progress_ total:(NSInteger)total_;
 
 //Creation Functions
 
@@ -46,5 +46,11 @@
 -(NSInteger) getProgress;
 
 -(NSInteger) getTotal;
+
+//Update Functions
+
+-(void) updateJar:(NSInteger)points;
+
+-(void) printJar;
 
 @end

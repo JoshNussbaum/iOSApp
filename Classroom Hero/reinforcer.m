@@ -71,5 +71,9 @@
     return self->name;
 }
 
+- (void)printReinforcer{
+    NSLog(@"Reinforcer name -> %@,\n Reinforcer Id -> %ld,\n Reinforecer CID -> %ld\n", self->name, (long)self->id , (long)self->cid);
+}
+
 
 @end

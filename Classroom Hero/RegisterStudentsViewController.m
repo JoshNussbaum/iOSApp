@@ -32,7 +32,7 @@
     unregisteredStudents = [[NSMutableArray alloc]init];
     unregisteredStudents = [[DatabaseHandler getSharedInstance]getUnregisteredStudents:[currentUser.currentClass getId]];
     
-    NSLog(@"We got %d unregistered students", unregisteredStudents.count);
+    NSLog(@"We got %lu unregistered students", (unsigned long)unregisteredStudents.count);
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
@@ -126,7 +126,7 @@
                             [self activityStart:@"Registering stamp..."];
 
                             isStamping = YES;
-                            [Utilities wiggleImage:self.stampImage];
+                            [Utilities wiggleImage:self.stampImage sound:YES];
                             student *ss = [unregisteredStudents objectAtIndex:registerIndex];
                             [ss setSerial:stampSerial];
                             [webHandler registerStamp:[ss getId] :stampSerial];
@@ -158,11 +158,12 @@
         return;
     }
     if (type == REGISTER_STAMP){
-        NSInteger count = unregisteredStudents.count ;
+        NSInteger count = unregisteredStudents.count;
         student *ss = [unregisteredStudents objectAtIndex:registerIndex];
         [[DatabaseHandler getSharedInstance] registerStudent:[ss getId] :[ss getSerial]];
         [hud hide:YES];
         [unregisteredStudents removeObjectAtIndex:registerIndex];
+        count--;
         if (count == 0) {
             self.swipeLabel.text = @"All  Students  Registered";
         }

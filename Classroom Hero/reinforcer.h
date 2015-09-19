@@ -31,5 +31,7 @@
 
 -(NSString *)getName;
 
+-(void)printReinforcer;
+
 
 @end

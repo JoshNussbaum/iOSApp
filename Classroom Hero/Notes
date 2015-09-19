@@ -8,9 +8,14 @@ account status: (on backend, first time a class is created for teacher, set stat
 
 1 = logged in and no stamps
 
-2 = has stamped with a classroom hero stamp (so probably ordered stamps)
 
-3 = has stamped and registered self (UNSET THIS WHEN U UNREGISTER STAMP)
+Class Status:
+
+0 = has not ordered stamps for this class
+
+1 = has ordered stamps
+
+2 = has registered a student with a classroom hero stamp
 
 
 
@@ -47,4 +52,12 @@ Register students -> flag = 1 from class list and then push segue home and set h
 Home -> flag = 1 from class list popViewController
      -> flag = 2 from home so push to register students and set flag to 2
 
+
+
+
+Order stamps -> Prompt number of students and present cost to the user.
+             -> If they decide to buy, prompt Mailing address
+             -> Make a web call for buying stamps
+             -> If its successful, then proceed to apple pay.
+             -> Set account status to 2
 

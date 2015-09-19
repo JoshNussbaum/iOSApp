@@ -97,7 +97,16 @@
 
 - (void)editClass:(class *)updatedClass;
 
+- (void)editReinforcer:(reinforcer *)updatedReinforcer;
+
 - (void)registerStudent:(NSInteger)sid :(NSString *)serial;
+
+- (void)updateStudent:(student *)updatedStudent;
+
+- (void)updateClassJar:(classjar *)updatedClassJar;
+
+- (void)rewardAllStudentsInClassWithid:(NSInteger)classId;
+
 
 
 // Delete Functions

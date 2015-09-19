@@ -33,11 +33,13 @@ static NSString * const ADD_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebS
 static NSString * const EDIT_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/edit";
 static NSString * const DELETE_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/delete";
 static NSString * const REWARD_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/reward";
-static NSString * const TRANSACTION_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/transaction";
+static NSString * const STUDENT_TRANSACTION_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/transaction";
 
 static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/schools/get";
 static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/stamp";
 
+static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/addPointsToClass";
+static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/fill";
 
 
 static NSString *POST = @"POST";
@@ -216,6 +218,44 @@ static NSInteger connectionType;
     
     [self asynchronousWebCall:jsonRequest :REGISTER_STAMP_URL :POST];
 }
+
+
+- (void)rewardStudentWithid:(NSInteger)id pointsEarned:(NSInteger)pointsEarned categoryId:(NSInteger)categoryId{
+    connectionType = REWARD_STUDENT;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"reward\":{\"id\":%ld, \"pointsearned\":%ld, \"categoryId\":%ld}}", (long)id, (long)pointsEarned, (long)categoryId];
+    
+    [self asynchronousWebCall:jsonRequest :REWARD_STUDENT_URL :POST];
+
+}
+
+
+- (void)rewardAllStudentsWithcid:(NSInteger)cid{
+    connectionType = REWARD_ALL_STUDENTS;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"reward\":{\"id\":%ld}}", (long)cid];
+    
+    [self asynchronousWebCall:jsonRequest :REWARD_STUDENT_URL :POST];
+}
+
+
+- (void)addToClassJar:(NSInteger)cjid{
+    connectionType = ADD_TO_JAR;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"reward\":{\"jarId\":%ld}}", (long)cjid];
+
+    [self asynchronousWebCall:jsonRequest :REWARD_ALL_STUDENTS_URL :POST];
+}
+
+
+- (void)studentTransaction:(NSInteger)sid :(NSInteger)iid :(NSInteger)cost{
+    connectionType = STUDENT_TRANSACTION;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"transaction\":{\"id\":%ld, \"sid\":%ld, \"cost\":%ld}}", (long)iid, (long)sid, (long)cost];
+    
+    [self asynchronousWebCall:jsonRequest :STUDENT_TRANSACTION_URL :POST];
+}
+
 
 
 

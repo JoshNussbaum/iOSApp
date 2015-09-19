@@ -29,6 +29,10 @@ NSInteger EDIT_JAR = 16;
 NSInteger DELETE_JAR = 17;
 NSInteger GET_SCHOOLS = 18;
 NSInteger REGISTER_STAMP = 19;
+NSInteger REWARD_STUDENT = 20;
+NSInteger REWARD_ALL_STUDENTS = 21;
+NSInteger ADD_TO_JAR = 22;
+NSInteger STUDENT_TRANSACTION = 23;
 
 
 + (UIColor *)CHBlueColor{
@@ -97,21 +101,28 @@ NSInteger REGISTER_STAMP = 19;
 }
 
 
-+ (void) editAlertText:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSString *)done :(NSString *)input :(NSInteger)tag{
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
                                                        message:message
-                                                      delegate:self
+                                                      delegate:view
                                              cancelButtonTitle:cancel
                                              otherButtonTitles:done, nil];
     [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [[alertView textFieldAtIndex:0]setText:input];
     [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:0]setPlaceholder:input];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyDone];
+
     alertView.tag = tag;
     [alertView show];
 }
 
 
 + (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
                                                        message:message
                                                       delegate:view
@@ -121,10 +132,15 @@ NSInteger REGISTER_STAMP = 19;
     [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
     [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
     [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
+    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
     [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+
     for (NSInteger i = 0; i < textfields.count; i++){
         NSString *placeholder = [textfields objectAtIndex:i];
-        [[alertView textFieldAtIndex:i] setText:placeholder];
+        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
         
     }
     alertView.tag = tag;
@@ -193,8 +209,15 @@ NSInteger REGISTER_STAMP = 19;
 }
 
 
-+ (void) wiggleImage:(UIImageView *)image{
-    AudioServicesPlaySystemSound([self getTheSoundOfSuccess]);
++ (NSString *) getRandomLoadingMessage{
+    return @"poop";
+}
+
+
++ (void) wiggleImage:(UIImageView *)image sound:(bool)sound{
+    if (sound){
+        AudioServicesPlaySystemSound([self getTheSoundOfSuccess]);
+    }
     CABasicAnimation *animation =
     [CABasicAnimation animationWithKeyPath:@"position"];
     [animation setDuration:0.05];
@@ -205,6 +228,21 @@ NSInteger REGISTER_STAMP = 19;
     [animation setToValue:[NSValue valueWithCGPoint:
                            CGPointMake([image center].x , [image center].y + 3)]];
     [[image layer] addAnimation:animation forKey:@"position"];
+}
+
+
++ (void) sackWiggle:(UIImageView *)sack{
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.07];
+    [animation setBeginTime:CACurrentMediaTime()];
+    [animation setRepeatCount:2];
+    [animation setAutoreverses:YES];
+    [animation setFromValue:[NSValue valueWithCGPoint:
+                             CGPointMake([sack center].x, [sack center].y+5)]];
+    [animation setToValue:[NSValue valueWithCGPoint:
+                           CGPointMake([sack center].x, [sack center].y-5)]];
+    [[sack layer] addAnimation:animation forKey:@"position"];
 }
 
 
@@ -258,6 +296,92 @@ NSInteger REGISTER_STAMP = 19;
     return awardSound;
 }
 
+
++ (SystemSoundID) getTeacherStampSound{
+    SystemSoundID teacherStampSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"teacherstamp" ofType:@"wav"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &teacherStampSound);
+    return teacherStampSound;
+}
+
+
++ (SystemSoundID) getLevelUpSound{
+    SystemSoundID levelUpSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"achievement" ofType:@"wav"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &levelUpSound);
+    return levelUpSound;
+}
+
+
++ (SystemSoundID) getCoinShakeSound{
+    SystemSoundID coinShakeSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"coin_shake" ofType:@"wav"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &coinShakeSound);
+    return coinShakeSound;
+}
+
+
++ (SystemSoundID) getAwardAllSound {
+    SystemSoundID awardAllSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"sale" ofType:@"mp3"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &awardAllSound);
+    return awardAllSound;
+}
+
+
++ (SystemSoundID) getJarSuccessSound{
+    SystemSoundID jarSuccessSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"jarsuccess" ofType:@"wav"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &jarSuccessSound);
+    return jarSuccessSound;
+}
+
+
++ (SystemSoundID) getCorkSound{
+    SystemSoundID corkSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"bloop" ofType:@"wav"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &corkSound);
+    return corkSound;
+}
+
+
++ (SystemSoundID) getAchievementSound{
+    SystemSoundID achievementSound;
+    NSString *path = [[NSBundle mainBundle]
+                      pathForResource:@"achievement" ofType:@"wav"];
+    NSURL *pathURL = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &achievementSound);
+    return achievementSound;
+
+}
+
+
++ (NSInteger) getRewardNumber{
+    NSInteger random = arc4random() % 100;
+    
+    if (random >= 95){
+        return 3;
+    }
+    else if (random > 70){
+        return 2;
+    }
+    else {
+        return 1;
+    }
+    
+}
 
 
 

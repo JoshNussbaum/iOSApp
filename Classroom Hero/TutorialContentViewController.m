@@ -332,12 +332,15 @@ static int screenNumber;
                 NSString *nameErrorMessage = [Utilities isInputValid:jarName :@"Jar name"];
                 if ([nameErrorMessage isEqualToString:@""]){
                     NSString *costErrorMessage = [Utilities isNumeric:jarCost];
-                    if ([costErrorMessage isEqualToString:@""]) {
+                    if ([costErrorMessage isEqualToString:@""] && [jarCost integerValue] > 0) {
                         [self activityStart:@"Adding jar..."];
                         [webHandler addJar:[currentUser.currentClass getId] :jarName :jarCost.integerValue];
                         
                     }
                     else {
+                        if (!([jarCost integerValue] > 0)){
+                            costErrorMessage = @"Jar total must be greater than 0";
+                        }
                         [Utilities alertStatusWithTitle:@"Error adding jar" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
                         return;
                     }
@@ -405,7 +408,7 @@ static int screenNumber;
         if(successNumber == 1)
         {
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
-            student *newStudent = [[student alloc]init:studentId :self.textField1.text :self.textField2.text :@"" :0 :10 :0 :0 :0 :0 :0 :0 :0 :[Utilities getDate]];
+            student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:0 progress:0 lvlupamount:5 points:0 totalpoints:0];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[currentUser.currentClass getId]];
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   student   or   swipe   left   to   continue", compliment]];
@@ -421,7 +424,7 @@ static int screenNumber;
     else if (type == ADD_REINFORCER){
         if(successNumber == 1)
         {
-            NSString *reinforcerName = self.textField2.text;
+            NSString *reinforcerName = self.textField1.text;
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
             reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :[currentUser.currentClass getId] :reinforcerName];
             [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
@@ -462,7 +465,7 @@ static int screenNumber;
             NSString *jarName = self.textField1.text;
             NSInteger jarTotal = self.textField2.text.integerValue;
             NSInteger jarId = [[data objectForKey:@"id"] integerValue];
-            classjar *newJar = [[classjar alloc]init:jarId :[currentUser.currentClass getId]  :jarName :0 :jarTotal];
+            classjar *newJar = [[classjar alloc]initWithid:jarId cid:[currentUser.currentClass getId]  name:jarName progress:0 total:jarTotal];
             [[DatabaseHandler getSharedInstance] addClassJar:newJar];
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   jar   or   swipe   left   to   continue", compliment]];

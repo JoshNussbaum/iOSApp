@@ -15,8 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *numberOfStudentsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *totalPointsLabel;
-@property (strong, nonatomic) IBOutlet UILabel *classProgressLabel;
-@property (strong, nonatomic) IBOutlet UIProgressView *progressBar;
 @property (strong, nonatomic) IBOutlet UILabel *schoolName;
 @property (strong, nonatomic) IBOutlet UILabel *gradeLabel;
 

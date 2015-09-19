@@ -38,6 +38,10 @@ extern NSInteger EDIT_JAR;
 extern NSInteger DELETE_JAR;
 extern NSInteger GET_SCHOOLS;
 extern NSInteger REGISTER_STAMP;
+extern NSInteger REWARD_STUDENT;
+extern NSInteger REWARD_ALL_STUDENTS;
+extern NSInteger ADD_TO_JAR;
+extern NSInteger STUDENT_TRANSACTION;
 
 + (UIColor *) CHBlueColor;
 
@@ -57,8 +61,8 @@ extern NSInteger REGISTER_STAMP;
 + (bool)isValidClassroomHeroStamp:(NSString *)serial;
 
 
-+ (void) editAlertText:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSString *)done :(NSString *)input :
-(NSInteger)tag;
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
+
 
 
 + (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
@@ -69,15 +73,26 @@ extern NSInteger REGISTER_STAMP;
 
 + (void) makeRoundedButton:(UIButton *)button :(UIColor *)color;
 
+
 + (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view;
+
 
 + (void) alertStatusNoConnection;
 
+
 + (NSString *) getRandomCompliment;
 
-+ (void) wiggleImage:(UIImageView *)image;
++ (NSString *) getRandomLoadingMessage;
+
+
++ (void) wiggleImage:(UIImageView *)image sound:(bool)sound;
+
+
++ (void) sackWiggle:(UIImageView *)sack;
+
 
 + (void) failAnimation:(UIImageView *)image;
+
 
 + (SystemSoundID) getFailSound;
 
@@ -85,6 +100,23 @@ extern NSInteger REGISTER_STAMP;
 
 + (SystemSoundID) getAwardSound;
 
++ (SystemSoundID) getTeacherStampSound;
+
++ (SystemSoundID) getLevelUpSound;
+
++ (SystemSoundID) getCoinShakeSound;
+
++ (SystemSoundID) getAwardAllSound;
+
++ (SystemSoundID) getJarSuccessSound;
+
++ (SystemSoundID) getCorkSound;
+
++ (SystemSoundID) getAchievementSound;
+
+
+
++ (NSInteger) getRewardNumber;
 
 
 

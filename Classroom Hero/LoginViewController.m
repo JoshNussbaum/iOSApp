@@ -26,6 +26,8 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [currentUser reset];
+    self.emailTextField.text = @"test@test.test";
+    self.passwordTextField.text = @"Punkzor";
 }
 
 
@@ -38,7 +40,6 @@
     
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
-    
 
     // Do any additional setup after loading the view.
 }
@@ -138,7 +139,6 @@
             
             
             
-            //[self performSegueWithIdentifier:@"login_to_class" sender:nil];
             
         }
         else {
@@ -152,7 +152,7 @@
         }
     }
     else {
-        //[self alertStatus:@"Connection error" :@"Please check your connectivity and try again"];
+        [Utilities alertStatusNoConnection];
     }
  
     
