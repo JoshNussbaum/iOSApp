@@ -33,6 +33,10 @@ NSInteger REWARD_STUDENT = 20;
 NSInteger REWARD_ALL_STUDENTS = 21;
 NSInteger ADD_TO_JAR = 22;
 NSInteger STUDENT_TRANSACTION = 23;
+NSInteger ORDER_RECRUIT = 24;
+NSInteger ORDER_HEROIC = 25;
+NSInteger ORDER_LEGENDARY = 26;
+NSInteger ORDER_HERO = 27;
 
 
 + (UIColor *)CHBlueColor{
@@ -46,6 +50,13 @@ NSInteger STUDENT_TRANSACTION = 23;
     UIColor *CHGreenColor = [UIColor colorWithRed:96.0/255.0 green:166.0/255.0 blue:84.0/255.0 alpha:1.0] ;
     
     return CHGreenColor;
+}
+
+
++ (UIColor *) CHRedColor{
+    UIColor *CHRedColor = [UIColor colorWithRed:243.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:0.75];
+    
+    return CHRedColor;
 }
 
 
@@ -101,14 +112,14 @@ NSInteger STUDENT_TRANSACTION = 23;
 }
 
 
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view{
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view{
     if (!cancel) cancel = @"Close";
     if (!done) done = @"Done";
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
                                                        message:message
                                                       delegate:view
                                              cancelButtonTitle:cancel
-                                             otherButtonTitles:done, nil];
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
     [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
@@ -120,14 +131,14 @@ NSInteger STUDENT_TRANSACTION = 23;
 }
 
 
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
     if (!cancel) cancel = @"Close";
     if (!done) done = @"Done";
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
                                                        message:message
                                                       delegate:view
                                              cancelButtonTitle:cancel
-                                             otherButtonTitles:done, nil];
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
     
     [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
     [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
@@ -229,6 +240,7 @@ NSInteger STUDENT_TRANSACTION = 23;
                            CGPointMake([image center].x , [image center].y + 3)]];
     [[image layer] addAnimation:animation forKey:@"position"];
 }
+
 
 
 + (void) sackWiggle:(UIImageView *)sack{

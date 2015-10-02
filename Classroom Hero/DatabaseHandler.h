@@ -57,6 +57,12 @@
 - (NSMutableArray *)getClasses;
 
 
+- (class *) getClass:(NSInteger)classId;
+
+
+- (class *)getClassWithstudentId:(NSInteger)studentId;
+
+
 - (NSMutableArray *)getStudents:(NSInteger)cid;
 
 
@@ -87,10 +93,11 @@
 - (NSMutableDictionary *)getNumberOfStudentsInClasses:(NSMutableArray *)classIds;
 
 
--(NSMutableArray *)getUnregisteredStudents:(NSInteger)cid;
+- (NSMutableArray *)getUnregisteredStudents:(NSInteger)cid;
 
 
 - (NSInteger)getNumberOfUnregisteredStudentsInClass:(NSInteger)cid;
+
 
 
 // Update Functions
@@ -98,6 +105,8 @@
 - (void)editClass:(class *)updatedClass;
 
 - (void)editReinforcer:(reinforcer *)updatedReinforcer;
+
+- (void)editItem:(item *)updatedItem;
 
 - (void)registerStudent:(NSInteger)sid :(NSString *)serial;
 
@@ -113,15 +122,28 @@
 
 - (void)deleteClass:(NSInteger)cid;
 
+
+- (void)deleteStudent:(NSInteger)sid;
+
+
+- (void)deleteReinforcer:(NSInteger)rid;
+
+
+- (void)deleteItem:(NSInteger)iid;
+
+
 - (void)resetDatabase;
 
 
 
 // Misc Functions
--(bool) isSerialRegistered:(NSString *)serial;
+- (bool) isValidStamp:(NSString *)serial :(NSInteger)schoolId;
+
+
+- (bool) isSerialRegistered:(NSString *)serial;
+
 
 - (bool)doesClassNameExist:(NSString *)className;
-
 
 
 @end

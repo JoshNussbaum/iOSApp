@@ -11,7 +11,7 @@
 #import "ClassJarViewController.h"
 #import "MarketViewController.h"
 #import "MBProgressHUD.h"
-
+#import "StudentsTableViewController.h"
 
 @interface AwardViewController (){
     NSMutableArray *reinforcerData;
@@ -113,9 +113,11 @@
     if (!reinforcerData || [reinforcerData count] == 0) {
         self.categoryPicker.hidden = YES;
         self.reinforcerLabel.text=@"Add  reinforcers  above";
+        self.editReinforcerButton.hidden = YES;
+
     }
     else {
-
+        self.editReinforcerButton.hidden = NO;
     }
 
 }
@@ -129,6 +131,8 @@
 - (void)setReinforcerName{
     index = [self.categoryPicker selectedRowInComponent:0];
     currentReinforcer = [reinforcerData objectAtIndex:index];
+    NSLog(@"At row -> %ld we have \n ", (long)index);
+    [currentReinforcer printReinforcer];
     self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
 }
 
@@ -139,7 +143,7 @@
 
 
 - (IBAction)addReinforcerClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Add Reinforcer" message:nil cancel:nil done:nil input:@"Reinforcer name" tag:2 view:self];
+    [Utilities editAlertTextWithtitle:@"Add Reinforcer" message:nil cancel:nil  done:nil delete:NO input:@"Reinforcer name" tag:2 view:self];
 }
 
 
@@ -147,7 +151,7 @@
     if (reinforcerData.count > 0){
         index = [self.categoryPicker selectedRowInComponent:0];
         currentReinforcer = [reinforcerData objectAtIndex:index];
-        [Utilities editAlertTextWithtitle:@"Edit Reinforcer" message:nil cancel:nil done:nil input:[currentReinforcer getName] tag:1 view:self];
+        [Utilities editAlertTextWithtitle:@"Edit Reinforcer" message:nil cancel:nil done:nil delete:YES input:[currentReinforcer getName] tag:1 view:self];
     }
     
 }
@@ -161,25 +165,32 @@
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
     if (alertView.tag == 1){
-        NSString *newReinforcerName = [alertView textFieldAtIndex:0].text;
-        
-        NSString *errorMessage = [Utilities isInputValid:newReinforcerName :@"Reinforcer Name"];
-        
-        if ([errorMessage isEqualToString:@""]){
-            [self activityStart:@"Editing Reinforcer..."];
-            [currentReinforcer setName:newReinforcerName];
-            [webHandler editCategory:[currentReinforcer getId] :newReinforcerName];
+        NSLog(@"BUTTON INDEX -> %ld", (long)buttonIndex );
+        if (buttonIndex == 1){
+            NSString *newReinforcerName = [alertView textFieldAtIndex:0].text;
+            
+            NSString *errorMessage = [Utilities isInputValid:newReinforcerName :@"Reinforcer Name"];
+            
+            if ([errorMessage isEqualToString:@""]){
+                [self activityStart:@"Editing Reinforcer..."];
+                [currentReinforcer setName:newReinforcerName];
+                [webHandler editCategory:[currentReinforcer getId] :newReinforcerName];
+            }
+            else {
+                [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            }
             
         }
-        else {
-            [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+        else if (buttonIndex == 2){
+            NSString *deleteMessage = [NSString stringWithFormat:@"Really delete %@?", [currentReinforcer getName]];
+            NSLog(@"Here is the delete message -> %@", deleteMessage);
+            [Utilities alertStatusWithTitle:@"Confirm delete" message:deleteMessage cancel:@"Cancel" otherTitles:@[@"Delete"] tag:3 view:self];
         }
-       
+
     }
     else if (alertView.tag == 2){
         tmpName = [alertView textFieldAtIndex:0].text;
@@ -194,6 +205,9 @@
         else {
             [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
         }
+    }
+    else if (alertView.tag == 3){
+        [webHandler deleteCategory:[currentReinforcer getId]];
     }
     
 }
@@ -247,6 +261,10 @@
             [self setReinforcerName];
 
             [hud hide:YES];
+            self.editReinforcerButton.hidden = NO;
+            self.categoryPicker.hidden = NO;
+            
+
 
         }
         else {
@@ -256,6 +274,23 @@
             [hud hide:YES];
             return;
         }
+    }
+    else if (type == DELETE_REINFORCER){
+        if([successNumber boolValue] == YES){
+            [[DatabaseHandler getSharedInstance]deleteReinforcer:[currentReinforcer getId]];
+            [reinforcerData removeObjectAtIndex:index];
+            [self.categoryPicker reloadAllComponents];
+            
+            if (!reinforcerData || [reinforcerData count] == 0) {
+                self.categoryPicker.hidden = YES;
+                self.reinforcerLabel.text=@"Add  reinforcers  above";
+                self.editReinforcerButton.hidden = YES;
+            }
+            else {
+                [self setReinforcerName];
+            }
+        }
+
     }
     else if (type == REWARD_STUDENT){
         if([successNumber boolValue] == YES)
@@ -283,14 +318,15 @@
     }
     else if (type == REWARD_ALL_STUDENTS){
         if ([successNumber boolValue] == YES){
-            NSLog(@"Success monica");
+            AudioServicesPlaySystemSound(teacherStamp);
+            [[DatabaseHandler getSharedInstance] rewardAllStudentsInClassWithid:[currentUser.currentClass getId]];
+            [self awardAllStudents];
         }
     }
 }
 
 
-
--(void) awardAllStudents{
+- (void)awardAllStudents{
     awardRect = CGRectMake(self.stampImage.frame.origin.x, self.stampImage.frame.origin.y, self.stampImage.frame.size.width, self.stampImage .frame.size.height);
     self.nameLabel.text = @"+1 All Students";
     self.nameLabel.hidden = NO;
@@ -327,6 +363,7 @@
     });
 }
 
+
 - (void)rewardStudent{
     
 }
@@ -337,7 +374,7 @@
     NSString *studentName = [[currentStudent getFirstName] stringByAppendingString:[NSString stringWithFormat:@" %@",[currentStudent getLastName]]];
     self.nameLabel.text = studentName;
     self.nameLabel.hidden = NO;
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld", [currentStudent getPoints]];
+    self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[currentStudent getPoints]];
     self.pointsLabel.hidden = NO;
     
     self.levelBar.progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
@@ -361,29 +398,33 @@
                 isStamping = YES;
                 [Utilities wiggleImage:self.stampImage sound:NO];
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    if ([stampSerial isEqualToString:currentUser.serial]){
-                        [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
-                        [self awardAllStudents];
-                    }
-                    else if ([[DatabaseHandler getSharedInstance] isSerialRegistered:stampSerial]){
-                        currentStudent = [[DatabaseHandler getSharedInstance]getStudentWithSerial:stampSerial];
-                        [self displayStudent];
-                        pointsAwarded = [Utilities getRewardNumber];
-                        NSLog(@"Points awarded -> %ld", (long)pointsAwarded);
-                        [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsAwarded categoryId:[currentReinforcer getId]];
+                if (currentUser.accountStatus > 0){
+                    if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                        if ([stampSerial isEqualToString:currentUser.serial]){
+                            [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
+                        }
+                        else if ([[DatabaseHandler getSharedInstance] isValidStamp:stampSerial :[currentUser.currentClass getSchoolId]]){
+                            currentStudent = [[DatabaseHandler getSharedInstance]getStudentWithSerial:stampSerial];
+                            [self displayStudent];
+                            pointsAwarded = [Utilities getRewardNumber];
+                            NSLog(@"Points awarded -> %ld", (long)pointsAwarded);
+                            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsAwarded categoryId:[currentReinforcer getId]];
+                        }
+                        else {
+                            NSLog(@"Fail stamp");
+                            [Utilities failAnimation:self.stampImage];
+                            isStamping = NO;
+                        }
                     }
                     else {
-                        NSLog(@"Fail stamp");
-                        [Utilities failAnimation:self.stampImage];
+                        [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];
                         isStamping = NO;
                     }
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];
-                    isStamping = NO;
+                    [Utilities alertStatusWithTitle:@"Error awarding points" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
                 }
+       
             }
             else {
                 AudioServicesPlaySystemSound(failSound);
@@ -701,8 +742,8 @@
 
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     
-    currentReinforcer = [reinforcerData objectAtIndex:row];
-    return [currentReinforcer getName];
+    reinforcer *tmpReinforcer = [reinforcerData objectAtIndex:row];
+    return [tmpReinforcer getName];
 }
 
 
@@ -711,8 +752,6 @@
     // The parameter named row and component represents what was selected.
     [self setReinforcerName];
 }
-
-
 
 
 - (IBAction)homeClicked:(id)sender {
@@ -735,6 +774,17 @@
 }
 
 
+- (IBAction)swipeDown:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
+}
+
+
 - (IBAction)unwindToAward:(UIStoryboardSegue *)unwindSegue {
     
 }
@@ -747,6 +797,5 @@
     [hud show:YES];
     
 }
-
 
 @end

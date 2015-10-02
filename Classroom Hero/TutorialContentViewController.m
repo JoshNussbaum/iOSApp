@@ -198,7 +198,7 @@ static int screenNumber;
 }
 
 
-- (void) activityStart :(NSString *)message{
+- (void)activityStart :(NSString *)message{
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
@@ -388,7 +388,7 @@ static int screenNumber;
 
             NSInteger schoolId = index + 1;
 
-            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :1 :0 :30 :0];
+            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :1 :0 :30];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             currentUser.currentClass = newClass;
             [hud hide:YES];
@@ -408,7 +408,7 @@ static int screenNumber;
         if(successNumber == 1)
         {
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
-            student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:0 progress:0 lvlupamount:5 points:0 totalpoints:0];
+            student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[currentUser.currentClass getId]];
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   student   or   swipe   left   to   continue", compliment]];

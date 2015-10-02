@@ -82,6 +82,10 @@
 }
 
 
+- (void) printItem{
+    NSLog(@"\n Item id -> %ld,\n Item cid -> %ld,\n Item name -> %@,\n Item cost -> %ld", (long)self->id, (long)self->cid, self->name, (long)self->cost);
+}
+
 #pragma mark - Update
 
 

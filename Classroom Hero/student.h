@@ -63,6 +63,8 @@
 
 -(void)addOnlyPoints:(NSInteger)pointsGained;
 
+-(void)updatePoints:(NSInteger)newPoints;
+
 // Misc Functions
 -(void) printStudent;
 

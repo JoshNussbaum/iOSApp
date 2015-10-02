@@ -10,6 +10,7 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
+#import "StudentsTableViewController.h"
 
 @interface ClassJarViewController (){
     user *currentUser;
@@ -120,12 +121,12 @@
 }
 - (IBAction)editJarClicked:(id)sender {
     if (currentClassJar){
-        [Utilities editAlertTextWithtitle:@"Edit Class Jar" message:nil cancel:nil done:nil textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
+        [Utilities editAlertTextWithtitle:@"Edit Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
     }
 }
 
 - (IBAction)addJarClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Add Class Jar" message:nil cancel:nil done:nil textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
+    [Utilities editAlertTextWithtitle:@"Add Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -213,8 +214,7 @@
 
                     if ([stampSerial isEqualToString:currentUser.serial] && ([currentClassJar getTotal] != 0))
                     {
-                        AudioServicesPlaySystemSound([Utilities getTeacherStampSound]);
-                        [webHandler addToClassJar:currentPoints];
+                        [webHandler addToClassJar:[currentClassJar getId] :currentPoints];
 
                         /*
                         NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys: currentUser.jarName, @"added", nil];
@@ -388,4 +388,13 @@
 }
 
 
+- (IBAction)swipeDown:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
+}
 @end

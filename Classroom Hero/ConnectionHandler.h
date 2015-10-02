@@ -72,7 +72,7 @@
 - (void)addStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname;
 
 
-- (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname;
+- (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname :(NSString *)serial;
 
 
 - (void)deleteStudent:(NSInteger)id;
@@ -90,10 +90,13 @@
 - (void)rewardAllStudentsWithcid:(NSInteger)cid;
 
 
-- (void)addToClassJar:(NSInteger)cjid;
+- (void)addToClassJar:(NSInteger)cjid :(NSInteger)points;
 
 
-- (void)studentTransaction:(NSInteger)sid :(NSInteger)iid :(NSInteger)cost;
+- (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost;
+
+
+- (void)orderStampsWithid:(NSInteger)id packageId:(NSInteger)packageId :(NSInteger)stamps :(NSInteger)schoolId;
 
 
 @end

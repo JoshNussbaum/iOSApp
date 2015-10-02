@@ -16,12 +16,11 @@
     NSInteger level;
     NSInteger progress;
     NSInteger nextLevel;
-    NSInteger hasStamps;
 }
 
 -(id) init;
 
--(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSInteger)hasStamps_;
+-(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_;
 
 // Creation Functions
 
@@ -51,8 +50,6 @@
 -(NSInteger) getProgress;
 
 -(NSInteger) getNextLevel;
-
--(NSInteger) getHasStamps;
 
 
 

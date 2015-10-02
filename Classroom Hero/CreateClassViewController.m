@@ -108,7 +108,7 @@
         NSString *className = self.classNameTextField.text;
         NSInteger classGrade = [self.classGradeTextField.text integerValue];
         NSInteger schoolId = [self getSchoolId];
-        newClass = [[class alloc]init:0 :className :classGrade :schoolId :1 :0 :30 :0];
+        newClass = [[class alloc]init:0 :className :classGrade :schoolId :1 :0 :30];
         [webHandler addClass:currentUser.id :className :classGrade :schoolId];
         
     }
@@ -148,7 +148,8 @@
             [newClass printClass];
             [[DatabaseHandler getSharedInstance]addClass:newClass];
             [hud hide:YES];
-
+            self.classNameTextField.text = @"";
+            self.classGradeTextField.text = @"";
             [Utilities alertStatusWithTitle:@"Successfully added class!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
             
             

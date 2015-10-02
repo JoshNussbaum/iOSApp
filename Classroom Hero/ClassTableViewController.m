@@ -35,6 +35,9 @@ static NSString * const classCell = @"classCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.tableView setBounces:NO];
+    
     UIColor *CHBlueColor = [UIColor colorWithRed:85.0/255.0 green:200.0/255.0 blue:255.0/255.0 alpha:1.0] ;
 
     [self.navigationController.navigationBar setBarTintColor:CHBlueColor];
@@ -157,7 +160,7 @@ static NSString * const classCell = @"classCell";
                 class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];
                 [webHandler editClass:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId]];
-                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getHasStamps]];
+                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel]];
                 
             }
             else {
@@ -240,7 +243,7 @@ static NSString * const classCell = @"classCell";
     if (classes.count > 0){
         class *class_ = [classes objectAtIndex:classes.count - indexPath.row - 1];
         NSString *schoolName = [[DatabaseHandler getSharedInstance] getSchoolName:[class_ getSchoolId]];
-        NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInt:[class_ getId]]]integerValue];
+        NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInteger:[class_ getId]]]integerValue];
         [cell initializeCellWithClass:class_ :classCount :schoolName];
     }
     
@@ -257,7 +260,7 @@ static NSString * const classCell = @"classCell";
         if (row != nil) {
             class *selectedClass = [self getClassByIndexPath:row];
             NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
-            [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
+            [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
         }
     }
 }

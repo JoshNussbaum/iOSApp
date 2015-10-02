@@ -21,7 +21,7 @@
     return self;
 }
 
-- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSInteger)hasStamps_{
+- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_{
     self = [super init];
     if (self)
     {
@@ -32,7 +32,6 @@
         self->level = level_;
         self->progress = progress_;
         self->nextLevel = nextLevel_;
-        self->hasStamps = 0;
     }
     return self;
 }
@@ -100,10 +99,6 @@
 }
 
 
-- (NSInteger)getHasStamps{
-    return self->hasStamps;
-}
-
 
 
 #pragma mark - Update
@@ -127,7 +122,7 @@
 
 
 - (void)printClass{
-    NSLog(@"\nClass ID=>%li,\n Name=>%@,\n Grade=>%ld,\n School Id=>%ld,\n Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n Has Stamps=>%ld\n", (long)self->id, self->name, (long)self->gradeNumber, (long)self->schoolId, (long)self->level, (long)self->progress, (long)self->nextLevel, (long)self->hasStamps);
+    NSLog(@"\nClass ID=>%li,\n Name=>%@,\n Grade=>%ld,\n School Id=>%ld,\n Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n", (long)self->id, self->name, (long)self->gradeNumber, (long)self->schoolId, (long)self->level, (long)self->progress, (long)self->nextLevel);
     
 }
 

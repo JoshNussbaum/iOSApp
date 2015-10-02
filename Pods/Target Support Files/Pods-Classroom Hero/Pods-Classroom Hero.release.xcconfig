@@ -1,6 +1,6 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/JSBadgeView" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/gtm-oauth" "${PODS_ROOT}/Headers/Public/snowshoe"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/JSBadgeView" -isystem "${PODS_ROOT}/Headers/Public/MBProgressHUD" -isystem "${PODS_ROOT}/Headers/Public/gtm-oauth" -isystem "${PODS_ROOT}/Headers/Public/snowshoe"
-OTHER_LDFLAGS = -ObjC -l"Pods-Classroom Hero-JSBadgeView" -l"Pods-Classroom Hero-MBProgressHUD" -l"Pods-Classroom Hero-gtm-oauth" -l"Pods-Classroom Hero-snowshoe" -framework "CoreGraphics" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BBBadgeBarButtonItem" "${PODS_ROOT}/Headers/Public/JSBadgeView" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/gtm-oauth" "${PODS_ROOT}/Headers/Public/snowshoe"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/BBBadgeBarButtonItem" -isystem "${PODS_ROOT}/Headers/Public/JSBadgeView" -isystem "${PODS_ROOT}/Headers/Public/MBProgressHUD" -isystem "${PODS_ROOT}/Headers/Public/gtm-oauth" -isystem "${PODS_ROOT}/Headers/Public/snowshoe"
+OTHER_LDFLAGS = -ObjC -l"Pods-Classroom Hero-BBBadgeBarButtonItem" -l"Pods-Classroom Hero-JSBadgeView" -l"Pods-Classroom Hero-MBProgressHUD" -l"Pods-Classroom Hero-gtm-oauth" -l"Pods-Classroom Hero-snowshoe" -framework "CoreGraphics" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration"
 OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
 PODS_ROOT = ${SRCROOT}/Pods

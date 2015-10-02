@@ -5,6 +5,7 @@ target 'Classroom Hero' do
 pod 'snowshoe', '~> 1.11'
 pod 'MBProgressHUD', '~> 0.9.1'
 pod 'JSBadgeView'
+pod 'BBBadgeBarButtonItem'
 
 end
 

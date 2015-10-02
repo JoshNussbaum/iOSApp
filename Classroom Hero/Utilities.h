@@ -42,11 +42,18 @@ extern NSInteger REWARD_STUDENT;
 extern NSInteger REWARD_ALL_STUDENTS;
 extern NSInteger ADD_TO_JAR;
 extern NSInteger STUDENT_TRANSACTION;
+extern NSInteger ORDER_RECRUIT;
+extern NSInteger ORDER_HEROIC;
+extern NSInteger ORDER_LEGENDARY;
+extern NSInteger ORDER_HERO;
 
 + (UIColor *) CHBlueColor;
 
 
 + (UIColor *) CHGreenColor;
+
+
++ (UIColor *) CHRedColor;
 
 
 + (NSString *) getDate;
@@ -61,11 +68,10 @@ extern NSInteger STUDENT_TRANSACTION;
 + (bool)isValidClassroomHeroStamp:(NSString *)serial;
 
 
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
 
 
-
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
 
 
 + (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color;
@@ -81,6 +87,7 @@ extern NSInteger STUDENT_TRANSACTION;
 
 
 + (NSString *) getRandomCompliment;
+
 
 + (NSString *) getRandomLoadingMessage;
 

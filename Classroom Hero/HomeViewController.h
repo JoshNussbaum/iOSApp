@@ -21,29 +21,40 @@
 @property (strong, nonatomic) IBOutlet UILabel *schoolNameLabel;
 @property (strong, nonatomic) IBOutlet UIButton *classesButton;
 @property (strong, nonatomic) IBOutlet UIButton *settingsButton;
+@property (strong, nonatomic) IBOutlet UIProgressView *classLevelProgressBar;
+@property (strong, nonatomic) IBOutlet UIProgressView *jarProgressBar;
 
-- (IBAction)tutorialClicked:(id)sender;
 
-- (IBAction)registerStudentsClicked:(id)sender;
-- (IBAction)classesClicked:(id)sender;
-- (IBAction)orderStampsClicked:(id)sender;
+// Class Stats
+@property (strong, nonatomic) IBOutlet UILabel *classTotalStampsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *classAvgLevelLabel;
+@property (strong, nonatomic) IBOutlet UILabel *classAvgPointsLabel;
+
+@property (strong, nonatomic) IBOutlet UILabel *schoolTotalStampsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *schoolAvgLevelLabel;
+@property (strong, nonatomic) IBOutlet UILabel *schoolAvgPointsLabel;
+
+
+@property (strong, nonatomic) IBOutlet UIView *classTotalStampsView;
+@property (strong, nonatomic) IBOutlet UIView *classAvgLevelView;
+@property (strong, nonatomic) IBOutlet UIView *classAvgPointsView;
+
+@property (strong, nonatomic) IBOutlet UIView *schoolTotalStampsView;
+@property (strong, nonatomic) IBOutlet UIView *schoolAvgLevelView;
+@property (strong, nonatomic) IBOutlet UIView *schoolAvgPointsView;
+
+
 
 - (void)setFlag:(NSInteger)flag_;
-
-
+- (IBAction)swipeDown:(id)sender;
+- (IBAction)tutorialClicked:(id)sender;
+- (IBAction)registerStudentsClicked:(id)sender;
+- (IBAction)classesClicked:(id)sender;
 - (IBAction)awardClicked:(id)sender;
 - (IBAction)classJarClicked:(id)sender;
 - (IBAction)marketClicked:(id)sender;
+- (IBAction)settingsClicked:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UIView *avgPointsView;
-@property (strong, nonatomic) IBOutlet UIView *highestLvlView;
-@property (strong, nonatomic) IBOutlet UIView *mostUsedCategoryView;
-@property (strong, nonatomic) IBOutlet UIView *loewstLevelView;
-@property (strong, nonatomic) IBOutlet UIView *mostSoldItemView;
-@property (strong, nonatomic) IBOutlet UIView *biggestSpenderView;
-@property (strong, nonatomic) IBOutlet UIButton *orderStampsButton;
-@property (strong, nonatomic) IBOutlet UILabel *classStatsLabel;
-@property (strong, nonatomic) IBOutlet UIProgressView *classLevelProgressBar;
-@property (strong, nonatomic) IBOutlet UIProgressView *jarProgressBar;
+@property (strong, nonatomic) IBOutlet UIButton *testbutton;
 
 @end

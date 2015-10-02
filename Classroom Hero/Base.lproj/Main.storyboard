@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="VM1-vP-cnk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="VM1-vP-cnk">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="AmaticSC-Bold.ttf">
+            <string>AmaticSC-Bold</string>
+            <string>AmaticSC-Bold</string>
             <string>AmaticSC-Bold</string>
             <string>AmaticSC-Bold</string>
             <string>AmaticSC-Bold</string>
@@ -492,7 +494,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aM9-9Z-Adq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3571" y="-1862"/>
+            <point key="canvasLocation" x="4402" y="-3302"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="udQ-uD-4xn">
@@ -535,7 +537,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4u1-HU-15l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4445" y="-1862"/>
+            <point key="canvasLocation" x="5276" y="-3302"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="kCy-GR-UHZ">
@@ -578,7 +580,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u9q-a0-4N6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5383" y="-1862"/>
+            <point key="canvasLocation" x="6214" y="-3302"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="bUP-gt-Ja1">
@@ -683,7 +685,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="classCell" rowHeight="150" id="19w-rb-Agj" customClass="ClassTableViewCell">
-                                <rect key="frame" x="0.0" y="86" width="768" height="150"/>
+                                <rect key="frame" x="0.0" y="22" width="768" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="19w-rb-Agj" id="srO-EL-heQ">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="149"/>
@@ -1002,20 +1004,591 @@
             </objects>
             <point key="canvasLocation" x="4402" y="2186"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="dTU-Uw-cXe">
+        <!--Student List-->
+        <scene sceneID="Q00-IN-WCw">
             <objects>
-                <viewController id="GvB-wg-9sc" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fJi-Wo-lTz">
+                <tableViewController storyboardIdentifier="StudentsTableViewController" id="QoO-vK-vKM" customClass="StudentsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="Rmz-BI-oEn">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentCell" rowHeight="50" id="Ol1-p7-Otr" customClass="StudentTableViewCell">
+                                <rect key="frame" x="0.0" y="86" width="768" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ol1-p7-Otr" id="8tS-fJ-Cpu">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="49"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cnE-aH-h98">
+                                            <rect key="frame" x="630" y="14" width="125" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ByS-dE-Aab">
+                                            <rect key="frame" x="8" y="14" width="456" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level 3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vo9-bO-O3T">
+                                            <rect key="frame" x="506" y="14" width="104" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="levelLabel" destination="vo9-bO-O3T" id="spB-s1-3ic"/>
+                                    <outlet property="nameLabel" destination="ByS-dE-Aab" id="W1m-RL-ihp"/>
+                                    <outlet property="pointsLabel" destination="cnE-aH-h98" id="lvF-rO-jlt"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="QoO-vK-vKM" id="aaf-l7-gI4"/>
+                            <outlet property="delegate" destination="QoO-vK-vKM" id="r9B-dV-DFo"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Student List" id="h9O-tv-xg5">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="jKO-9W-RPq">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2xO-MT-fwe">
+                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backClicked:" destination="QoO-vK-vKM" eventType="touchUpInside" id="7iQ-Jh-vwR"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="XV7-6h-L4P">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Lby-K0-REy">
+                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Add Student">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addStudentClicked:" destination="QoO-vK-vKM" eventType="touchUpInside" id="M20-Bh-E0O"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <segue destination="Xxy-ye-LqB" kind="push" identifier="student_segue" id="Xgu-86-ZF3"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bg6-AO-vSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5339" y="2186"/>
+        </scene>
+        <!--Hero Page-->
+        <scene sceneID="T1K-z5-mPF">
+            <objects>
+                <viewController id="Xxy-ye-LqB" customClass="StudentViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XsU-bi-HCf">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hh3-92-U36">
+                                <rect key="frame" x="32" y="64" width="704" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="37"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" id="ekY-nA-TJ0">
+                                <rect key="frame" x="129" y="483" width="510" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </progressView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ch-logo.png" id="yBO-3B-Uif">
+                                <rect key="frame" x="201" y="514" width="367" height="366"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lcs-xr-9EI">
+                                <rect key="frame" x="375" y="319" width="186" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stamp  to  register" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jIG-N1-I5E">
+                                <rect key="frame" x="285" y="942" width="213" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="money_sack.png" id="dql-nu-kcC">
+                                <rect key="frame" x="273" y="294" width="80" height="79"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lzG-h5-HRM">
+                                <rect key="frame" x="221" y="927" width="340" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
+                                <state key="normal" title="Unregister Student">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="studentButtonClicked:" destination="Xxy-ye-LqB" eventType="touchUpInside" id="zHF-Q7-kMN"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x1X-cM-A2A">
+                                <rect key="frame" x="291" y="227" width="186" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress: 5 / 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dcj-3g-ao1">
+                                <rect key="frame" x="230" y="409" width="308" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="6aH-pT-RFP"/>
+                    <navigationItem key="navigationItem" title="Hero Page" id="RQz-w6-CM3">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="tJE-mh-8MV">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SLP-4j-f9N">
+                                <rect key="frame" x="20" y="2" width="170" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backClicked:" destination="Xxy-ye-LqB" eventType="touchUpInside" id="p5e-0f-lwX"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="156-ON-2Kk">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="e96-Dn-8gD">
+                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Edit Student">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="editStudentClicked:" destination="Xxy-ye-LqB" eventType="touchUpInside" id="lTT-D6-bkR"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="levelBar" destination="ekY-nA-TJ0" id="xpw-ys-3AR"/>
+                        <outlet property="levelLabel" destination="x1X-cM-A2A" id="bms-Os-FZJ"/>
+                        <outlet property="nameLabel" destination="Hh3-92-U36" id="t1x-zT-4w7"/>
+                        <outlet property="pointsLabel" destination="Lcs-xr-9EI" id="xHb-VV-RA2"/>
+                        <outlet property="progressLabel" destination="Dcj-3g-ao1" id="Bw1-h9-Wox"/>
+                        <outlet property="stampImage" destination="yBO-3B-Uif" id="bOO-WT-UoC"/>
+                        <outlet property="stampToRegisterLabel" destination="jIG-N1-I5E" id="o8p-HJ-gYJ"/>
+                        <outlet property="studentButton" destination="lzG-h5-HRM" id="vVw-gF-Aoy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gfW-Vd-zfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5339" y="3375"/>
+        </scene>
+        <!--Order Stamps-->
+        <scene sceneID="vKg-oq-SPD">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="qjs-mU-BOe" customClass="OrderStampsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Qm-hj-PhO">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="yLy-xa-0rK">
+                                <rect key="frame" x="288" y="537" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stamps" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AJ6-kh-slr">
+                                <rect key="frame" x="410" y="532" width="94" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vBe-6t-0O7">
+                                <rect key="frame" x="64" y="144" width="122" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Recruit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="recruitClicked:" destination="qjs-mU-BOe" eventType="touchUpInside" id="Snh-7l-gMv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="c9t-7p-HOB">
+                                <rect key="frame" x="582" y="147" width="122" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Legendary">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="legendaryClicked:" destination="qjs-mU-BOe" eventType="touchUpInside" id="h4v-cv-KgL"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40 stamps $40/year  " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZAc-52-obc">
+                                <rect key="frame" x="58" y="194" width="135" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120 stamps $96/year  " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nnl-1s-SSq">
+                                <rect key="frame" x="311" y="194" width="146" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500 stamps $350/year  " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ygB-i9-laN">
+                                <rect key="frame" x="569" y="194" width="148" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9ZD-bm-hbn">
+                                <rect key="frame" x="323" y="144" width="122" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Heroic">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="heroicClicked:" destination="qjs-mU-BOe" eventType="touchUpInside" id="MJW-98-Yfl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="erE-8y-2Bt">
+                                <rect key="frame" x="312" y="698" width="145" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Place order">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="orderClicked:" destination="qjs-mU-BOe" eventType="touchUpInside" id="Zvo-8B-gwe"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter  any  number  of  stamps  and  we'll  calculate  the  cost  for  you" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VYt-vh-WqY">
+                                <rect key="frame" x="178" y="357" width="413" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0/year" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fMY-cp-PEs">
+                                <rect key="frame" x="217" y="624" width="335" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.35686274509999999" green="0.62352941179999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="dTC-5F-ftW" appends="YES" id="jFh-RT-9XS"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" title="Order Stamps" id="WjA-L6-q5D">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="bri-93-knT">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZyE-1j-pD4">
+                                <rect key="frame" x="20" y="2" width="170" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backClicked:" destination="qjs-mU-BOe" eventType="touchUpInside" id="bkZ-fq-cG9"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Ly2-ah-v6x">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zqP-Vh-FIM">
+                                <rect key="frame" x="578" y="2" width="170" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Help">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="costLabel" destination="fMY-cp-PEs" id="ysm-zs-mg2"/>
+                        <outlet property="heroicButton" destination="9ZD-bm-hbn" id="ySf-9i-28G"/>
+                        <outlet property="legendaryButton" destination="c9t-7p-HOB" id="6cx-sY-Vy0"/>
+                        <outlet property="placeOrderButton" destination="erE-8y-2Bt" id="fCx-Wp-hKd"/>
+                        <outlet property="recruitButton" destination="vBe-6t-0O7" id="RPw-tE-8vw"/>
+                        <outlet property="stampsTextfield" destination="yLy-xa-0rK" id="tou-pJ-lV9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YCz-ps-2HZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="dTC-5F-ftW">
+                    <connections>
+                        <action selector="backgroundTap:" destination="qjs-mU-BOe" id="5rg-xo-SfJ"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="4402" y="-360"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="dTU-Uw-cXe">
+            <objects>
+                <viewController id="GvB-wg-9sc" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fJi-Wo-lTz">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="91n-4v-DLN">
+                                <rect key="frame" x="223" y="140" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Order  Stamps">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="orderStampsClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="V9V-xE-LOw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="I5v-qN-Tv3">
+                                <rect key="frame" x="223" y="300" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Register Teacher Stamp">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="registerTeacherStampClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="7u9-Mc-BFL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eNA-9i-dCY">
+                                <rect key="frame" x="223" y="460" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Activity Monitor">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="orderStampsClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="9vg-yb-y7E"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="6aH-pT-RFP">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="WIQ-xX-jxP">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="z85-NA-hUS">
+                                <rect key="frame" x="20" y="2" width="170" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="emm-5s-sHp"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="wJd-ui-rAJ">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Oal-QT-Ddq">
+                                <rect key="frame" x="578" y="2" width="170" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Edit Teacher">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="editTeacherClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="UVR-rh-Si7"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <segue destination="wCL-Ew-G6Q" kind="push" identifier="settings_to_edit_teacher" id="OcY-xD-2cG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="activityMonitorButton" destination="eNA-9i-dCY" id="o8f-Kj-TNS"/>
+                        <outlet property="orderStampsButton" destination="91n-4v-DLN" id="3q0-H9-c34"/>
+                        <outlet property="registerTeacherStamp" destination="I5v-qN-Tv3" id="fJn-QY-fyj"/>
+                        <segue destination="qjs-mU-BOe" kind="push" identifier="settings_to_order_stamps" id="fOv-1p-Wtg"/>
+                        <segue destination="PzN-nE-apu" kind="push" id="kmt-xD-cxB"/>
+                        <segue destination="b3C-b7-3Rv" kind="push" id="Ak6-Q7-dvZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QVK-Ro-vZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5339" y="-360"/>
+        </scene>
+        <!--Edit Teacher-->
+        <scene sceneID="nIf-vc-m5J">
+            <objects>
+                <viewController id="wCL-Ew-G6Q" customClass="EditTeacherViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aTs-pJ-FOQ">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First name" minimumFontSize="17" id="Hq6-0w-VXW">
+                                <rect key="frame" x="167" y="172" width="435" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mPW-jD-jVJ">
+                                <rect key="frame" x="298" y="104" width="172" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last name" minimumFontSize="17" id="f01-K8-clh">
+                                <rect key="frame" x="167" y="246" width="435" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Current password" minimumFontSize="17" id="aNw-hp-T4w">
+                                <rect key="frame" x="167" y="526" width="435" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yp5-Yw-3r7">
+                                <rect key="frame" x="298" y="445" width="172" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New password" minimumFontSize="17" id="0rL-fG-8cZ">
+                                <rect key="frame" x="167" y="594" width="435" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="435-lk-IRA">
+                                <rect key="frame" x="319" y="753" width="131" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Edit password">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <view contentMode="scaleToFill" id="Sye-eY-AYQ">
+                                <rect key="frame" x="0.0" y="403" width="768" height="3"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm new password" minimumFontSize="17" id="Caf-De-bou">
+                                <rect key="frame" x="167" y="669" width="435" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xti-oO-LFy">
+                                <rect key="frame" x="338" y="322" width="93" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Edit name">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.35686274509999999" green="0.62352941179999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.35686274509999999" green="0.62352941179999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="7Kf-UY-9Z1" appends="YES" id="7GU-Rf-UVL"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Teacher" id="ju9-80-CLg">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="0Hy-vl-r80">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GEn-nl-Nbt">
+                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backClicked:" destination="wCL-Ew-G6Q" eventType="touchUpInside" id="sgr-Pb-6YM"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="editNameButton" destination="Xti-oO-LFy" id="8wE-PW-Wfp"/>
+                        <outlet property="editPasswordButton" destination="435-lk-IRA" id="c6e-mO-A7S"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hZZ-j0-3gL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="7Kf-UY-9Z1">
+                    <connections>
+                        <action selector="backgroundTap:" destination="wCL-Ew-G6Q" id="eM1-bk-cfH"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="4402" y="-1636"/>
+        </scene>
+        <!--Register Teacher Stamp-->
+        <scene sceneID="wND-dv-xS4">
+            <objects>
+                <viewController id="PzN-nE-apu" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qlD-Y8-0fr">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Register Teacher Stamp" id="9Ez-BF-2y1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xzX-3f-fcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5339" y="-1636"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="T4s-j2-Csh">
@@ -1065,15 +1638,15 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Nv9-Qi-9f2">
                                         <rect key="frame" x="20" y="0.0" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="homeIconPressed.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="homeIcon.png">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="M2O-nc-KmX">
                                         <rect key="frame" x="198" y="3" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="CH_coin.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="ch_coin_flare.png">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="awardClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="Cpa-1c-sCn"/>
@@ -1082,8 +1655,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZYl-Sm-SD1">
                                         <rect key="frame" x="386" y="-20" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="intact_jar.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="jar_full.png">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="classJarClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="HJL-Ay-MZG"/>
@@ -1093,7 +1666,7 @@
                                         <rect key="frame" x="590" y="3" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="money_sack.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="marketClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="K6J-Io-O1p"/>
@@ -1159,14 +1732,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class  Stats" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I6o-nz-kjF">
-                                <rect key="frame" x="252" y="571" width="265" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </label>
                             <view contentMode="scaleToFill" id="OJH-pe-l3K">
                                 <rect key="frame" x="476" y="270" width="232" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1200,38 +1765,60 @@
                                     <action selector="tutorialClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="vtL-ta-5bp"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class  Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EQ0-z4-kEE">
+                                <rect key="frame" x="29" y="394" width="294" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q9b-4G-Sw5">
+                                <rect key="frame" x="0.0" y="235" width="371" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class Stats" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I6o-nz-kjF">
+                                <rect key="frame" x="252" y="560" width="265" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
                             <view contentMode="scaleToFill" id="pw5-bK-UKq">
-                                <rect key="frame" x="309" y="652" width="150" height="125"/>
+                                <rect key="frame" x="309" y="629" width="150" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOST USED CATEGORY" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5o-NN-7QH">
-                                        <rect key="frame" x="5" y="8" width="140" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kody Anderson" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hGs-lu-Fw1">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hGs-lu-Fw1">
                                         <rect key="frame" x="5" y="57" width="140" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AVG. LEVEL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5o-NN-7QH">
+                                        <rect key="frame" x="5" y="8" width="140" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.35744888559999999" green="0.62174610640000005" blue="0.31387021659999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="bJV-dX-2Hs">
-                                <rect key="frame" x="539" y="652" width="150" height="125"/>
+                                <rect key="frame" x="539" y="629" width="150" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOST SOLD ITEM" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZdY-u4-QM3">
-                                        <rect key="frame" x="5" y="8" width="140" height="50"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AVG. POINTS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZdY-u4-QM3">
+                                        <rect key="frame" x="-7" y="8" width="164" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kody Anderson" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z5d-5Q-Qio">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z5d-5Q-Qio">
                                         <rect key="frame" x="5" y="57" width="140" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
@@ -1241,17 +1828,17 @@
                                 <color key="backgroundColor" red="0.35744888559999999" green="0.62174610640000005" blue="0.31387021659999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="5m8-Oy-IAD">
-                                <rect key="frame" x="309" y="822" width="150" height="125"/>
+                                <rect key="frame" x="309" y="865" width="150" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOWEST LVL STUDENT" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zNf-xw-7Tl">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AVG. LEVEL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zNf-xw-7Tl">
                                         <rect key="frame" x="5" y="8" width="140" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kody Anderson" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jej-mW-wCM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jej-mW-wCM">
                                         <rect key="frame" x="5" y="57" width="140" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
@@ -1261,17 +1848,17 @@
                                 <color key="backgroundColor" red="0.35744888559999999" green="0.62174610640000005" blue="0.31387021659999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="JY6-Si-OTD">
-                                <rect key="frame" x="539" y="822" width="150" height="125"/>
+                                <rect key="frame" x="539" y="865" width="150" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BIGGEST SPENDER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7zB-3X-T3K">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AVG. POINTS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7zB-3X-T3K">
                                         <rect key="frame" x="5" y="8" width="140" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kody Anderson" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9lQ-xR-DXM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9lQ-xR-DXM">
                                         <rect key="frame" x="5" y="57" width="140" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
@@ -1281,17 +1868,17 @@
                                 <color key="backgroundColor" red="0.35744888559999999" green="0.62174610640000005" blue="0.31387021659999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="gxC-qZ-G1K">
-                                <rect key="frame" x="80" y="822" width="150" height="125"/>
+                                <rect key="frame" x="80" y="865" width="150" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HIGHEST LVL STUDENT" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YCV-5s-bKa">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL STAMPS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YCV-5s-bKa">
                                         <rect key="frame" x="5" y="8" width="140" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kody Anderson" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cGV-nc-rmq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="420" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cGV-nc-rmq">
                                         <rect key="frame" x="5" y="57" width="140" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
@@ -1301,13 +1888,13 @@
                                 <color key="backgroundColor" red="0.35744888559999999" green="0.62174610640000005" blue="0.31387021659999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="wyn-jB-3pv">
-                                <rect key="frame" x="80" y="652" width="150" height="125"/>
+                                <rect key="frame" x="80" y="629" width="150" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AVG. POINTS PER DAY" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wZ3-mB-6r4">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL STAMPS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wZ3-mB-6r4">
                                         <rect key="frame" x="5" y="8" width="140" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1320,30 +1907,11 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.35744888559999999" green="0.62174610640000005" blue="0.31387021659999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class  Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EQ0-z4-kEE">
-                                <rect key="frame" x="29" y="394" width="294" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="School Stats" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aoR-KW-gsP">
+                                <rect key="frame" x="252" y="796" width="265" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="T23-jN-qUR">
-                                <rect key="frame" x="257" y="732" width="255" height="58"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.95465677976608276" green="0.091434482627206229" blue="0.13067654944359844" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
-                                <state key="normal" title="Order  Stamps">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="orderStampsClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="lxO-PJ-Mol"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q9b-4G-Sw5">
-                                <rect key="frame" x="0.0" y="235" width="371" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
@@ -1352,6 +1920,7 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Vhw-Ad-WTv" appends="YES" id="VQ1-ga-Ren"/>
+                            <outletCollection property="gestureRecognizers" destination="7ym-wB-KnK" appends="YES" id="JRY-7O-JXe"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Fef-5h-ER0">
@@ -1378,39 +1947,51 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="settingsClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="SEZ-fH-MbQ"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
-                        <outlet property="avgPointsView" destination="wyn-jB-3pv" id="E7M-Tb-sca"/>
-                        <outlet property="biggestSpenderView" destination="JY6-Si-OTD" id="V1i-SB-KYh"/>
+                        <outlet property="classAvgLevelLabel" destination="hGs-lu-Fw1" id="uLr-22-5e3"/>
+                        <outlet property="classAvgLevelView" destination="pw5-bK-UKq" id="CG5-gr-m4h"/>
+                        <outlet property="classAvgPointsLabel" destination="z5d-5Q-Qio" id="EhH-mP-8wK"/>
+                        <outlet property="classAvgPointsView" destination="bJV-dX-2Hs" id="qRO-ii-mXZ"/>
                         <outlet property="classLevelProgressBar" destination="Hpm-RC-lLu" id="UKS-l7-97g"/>
                         <outlet property="classNameLabel" destination="Q9b-4G-Sw5" id="66t-t6-MKN"/>
-                        <outlet property="classStatsLabel" destination="I6o-nz-kjF" id="l8E-Xs-zY8"/>
+                        <outlet property="classTotalStampsLabel" destination="s4X-wK-A8U" id="GVB-yv-5OV"/>
+                        <outlet property="classTotalStampsView" destination="wyn-jB-3pv" id="MUq-0N-Biv"/>
                         <outlet property="classesButton" destination="6wc-WN-UNy" id="Wip-5T-Z2f"/>
                         <outlet property="createClassButton" destination="AYK-wV-3HF" id="tXj-b5-Qww"/>
-                        <outlet property="highestLvlView" destination="gxC-qZ-G1K" id="FmG-f2-3ga"/>
                         <outlet property="jarProgressBar" destination="lwb-qo-JPp" id="ySO-eM-DAS"/>
-                        <outlet property="loewstLevelView" destination="5m8-Oy-IAD" id="HRk-DV-mqm"/>
-                        <outlet property="mostSoldItemView" destination="bJV-dX-2Hs" id="XaD-4H-bVR"/>
-                        <outlet property="mostUsedCategoryView" destination="pw5-bK-UKq" id="bvz-FK-kUJ"/>
-                        <outlet property="orderStampsButton" destination="T23-jN-qUR" id="dyq-wM-opE"/>
                         <outlet property="registerStudentsButton" destination="jM2-Cl-51v" id="itt-QW-UJx"/>
                         <outlet property="registerStudentsView" destination="OJH-pe-l3K" id="dTT-fN-hff"/>
+                        <outlet property="schoolAvgLevelLabel" destination="jej-mW-wCM" id="AmG-9H-5cQ"/>
+                        <outlet property="schoolAvgLevelView" destination="5m8-Oy-IAD" id="6Gq-IY-siU"/>
+                        <outlet property="schoolAvgPointsLabel" destination="9lQ-xR-DXM" id="9pz-Hp-Eiw"/>
+                        <outlet property="schoolAvgPointsView" destination="JY6-Si-OTD" id="5Zv-in-MeE"/>
                         <outlet property="schoolNameLabel" destination="sKY-1w-ww8" id="HL4-EM-wji"/>
+                        <outlet property="schoolTotalStampsLabel" destination="cGV-nc-rmq" id="KC0-la-6Rq"/>
+                        <outlet property="schoolTotalStampsView" destination="gxC-qZ-G1K" id="jdl-Ya-fk7"/>
                         <outlet property="settingsButton" destination="2DQ-cq-LCU" id="0Eu-cA-bcO"/>
                         <outlet property="teacherNameLabel" destination="wFg-oq-SLx" id="ZKv-JS-9fd"/>
                         <outlet property="totalClassPointsLabel" destination="EQ0-z4-kEE" id="FoX-f7-Va6"/>
                         <segue destination="MR8-j5-sYB" kind="push" identifier="home_to_register_students" id="K8T-Db-s2I"/>
                         <segue destination="sWF-eP-1Ke" kind="push" identifier="home_to_tutorial" id="LKv-5a-p8o"/>
-                        <segue destination="GvB-wg-9sc" kind="push" identifier="home_to_order_stamps" id="asf-zc-7o1"/>
+                        <segue destination="GvB-wg-9sc" kind="push" identifier="home_to_settings" id="asf-zc-7o1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2I1-Y9-i7Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="left" id="Vhw-Ad-WTv">
                     <connections>
                         <segue destination="gqC-DY-3f5" kind="push" identifier="home_to_award" id="Ocf-Y2-CZw"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="7ym-wB-KnK">
+                    <connections>
+                        <action selector="swipeDown:" destination="U2R-yA-zyV" id="tk0-Ey-ft1"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -1459,7 +2040,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMv-cd-NvT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7263" y="-1862"/>
+            <point key="canvasLocation" x="8094" y="-3302"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="cbb-8l-S9V">
@@ -1502,7 +2083,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hSK-EV-KNC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6281" y="-1862"/>
+            <point key="canvasLocation" x="7112" y="-3302"/>
         </scene>
         <!--Award View Controller-->
         <scene sceneID="q2u-Nq-y2U">
@@ -1553,7 +2134,7 @@
                                         <rect key="frame" x="20" y="0.0" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="homeIcon.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="homeClicked:" destination="gqC-DY-3f5" eventType="touchUpInside" id="hGR-sS-T2G"/>
@@ -1563,14 +2144,14 @@
                                         <rect key="frame" x="198" y="3" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="ch_coin_flare.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GeY-sx-NPj">
                                         <rect key="frame" x="386" y="-20" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="intact_jar.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="jar_full.png">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="classJarClicked:" destination="gqC-DY-3f5" eventType="touchUpInside" id="AJS-FK-Jqs"/>
@@ -1580,7 +2161,7 @@
                                         <rect key="frame" x="590" y="3" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="money_sack.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="marketClicked:" destination="gqC-DY-3f5" eventType="touchUpInside" id="kDd-DO-smE"/>
@@ -1703,6 +2284,7 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="qeI-AU-sWu" appends="YES" id="Pb8-0M-rhA"/>
                             <outletCollection property="gestureRecognizers" destination="Bdh-NG-UAR" appends="YES" id="nDx-n5-ceb"/>
+                            <outletCollection property="gestureRecognizers" destination="Uzo-QK-Kn6" appends="YES" id="sAK-X7-dxM"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="THD-2U-vjG">
@@ -1744,6 +2326,7 @@
                         <outlet property="bTwo" destination="XmI-w7-4HT" id="kKY-DB-So4"/>
                         <outlet property="cOne" destination="OjB-wd-amb" id="5d6-GI-XCU"/>
                         <outlet property="categoryPicker" destination="ftl-kY-J2T" id="Fns-9q-Z6F"/>
+                        <outlet property="editReinforcerButton" destination="71e-Xs-oG0" id="cW8-f1-qCf"/>
                         <outlet property="levelBar" destination="UyG-bg-ziW" id="8Ft-PZ-n0T"/>
                         <outlet property="levelLabel" destination="JRx-Ba-XCY" id="z2W-NP-mwG"/>
                         <outlet property="levelUpLabel" destination="Lu4-60-uIK" id="Ga1-R8-soM"/>
@@ -1753,6 +2336,7 @@
                         <outlet property="reinforcerLabel" destination="FgV-6t-tb4" id="Yh1-pR-E1L"/>
                         <outlet property="sackImage" destination="iwY-KV-Zpj" id="hiy-zl-s6y"/>
                         <outlet property="stampImage" destination="0xe-62-Iap" id="qp9-lp-fdX"/>
+                        <segue destination="MR8-j5-sYB" kind="push" identifier="award_to_students" id="Zt9-YX-YdQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oWq-DR-vbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1765,6 +2349,11 @@
                 <swipeGestureRecognizer direction="right" id="Bdh-NG-UAR">
                     <connections>
                         <segue destination="wum-BM-i6p" kind="unwind" unwindAction="unwindToHome:" id="N7W-t8-Ho2"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="Uzo-QK-Kn6">
+                    <connections>
+                        <action selector="swipeDown:" destination="gqC-DY-3f5" id="bmK-Dk-Sub"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -1833,7 +2422,7 @@
                                         <rect key="frame" x="20" y="0.0" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="homeIcon.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="homeClicked:" destination="mAJ-bY-EoJ" eventType="touchUpInside" id="KJh-xT-VT7"/>
@@ -1842,8 +2431,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gjP-kd-xTm">
                                         <rect key="frame" x="198" y="3" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="CH_coin.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="ch_coin_flare.png">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="awardClicked:" destination="mAJ-bY-EoJ" eventType="touchUpInside" id="Jao-yh-WWO"/>
@@ -1853,14 +2442,14 @@
                                         <rect key="frame" x="386" y="-20" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="jar_full.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a1L-w8-9oA">
                                         <rect key="frame" x="590" y="3" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="money_sack.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="marketClicked:" destination="mAJ-bY-EoJ" eventType="touchUpInside" id="Vq1-Zt-ZhL"/>
@@ -1910,6 +2499,7 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="EfU-vX-rI3" appends="YES" id="O3W-Nq-VZb"/>
                             <outletCollection property="gestureRecognizers" destination="uMv-JP-z0z" appends="YES" id="CHk-ml-9Ny"/>
+                            <outletCollection property="gestureRecognizers" destination="JJ6-ki-h8g" appends="YES" id="NNw-g6-PU5"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Eyo-nW-p63">
@@ -1953,6 +2543,7 @@
                         <outlet property="pointsLabel" destination="tS8-qQ-35D" id="cPo-xn-tYq"/>
                         <outlet property="stepper" destination="V12-pn-duu" id="Owr-YH-lZH"/>
                         <segue destination="ZmY-0S-XHe" kind="unwind" identifier="class_jar_to_home" unwindAction="unwindToHome:" id="aOj-Kz-tTR"/>
+                        <segue destination="MR8-j5-sYB" kind="push" identifier="jar_to_students" id="5Qb-t8-igW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlV-q2-8NG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1965,6 +2556,11 @@
                 <swipeGestureRecognizer direction="right" id="uMv-JP-z0z">
                     <connections>
                         <segue destination="ZmY-0S-XHe" kind="unwind" unwindAction="unwindToAward:" id="TDx-uI-USV"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="JJ6-ki-h8g">
+                    <connections>
+                        <action selector="swipeDown:" destination="mAJ-bY-EoJ" id="uHZ-fK-14s"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -2007,7 +2603,7 @@
                                         <rect key="frame" x="20" y="0.0" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="homeIcon.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="homeClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="vYl-cS-3cL"/>
@@ -2016,8 +2612,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HaJ-te-yRy">
                                         <rect key="frame" x="198" y="3" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="CH_coin.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="ch_coin_flare.png">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="awardClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="u2a-yf-IMM"/>
@@ -2026,8 +2622,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="muV-80-c4x">
                                         <rect key="frame" x="386" y="-20" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="intact_jar.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="jar_full.png">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="classJarClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="Oto-x0-n66"/>
@@ -2045,10 +2641,6 @@
                                             <action selector="classJarClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="EJo-Zj-280"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="money_sack_glow50.png" id="2bj-q4-jSp">
-                                        <rect key="frame" x="590" y="3" width="80" height="80"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1yu-Ru-tBy">
                                         <rect key="frame" x="100" y="23" width="59" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2061,11 +2653,54 @@
                                             <action selector="homeClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="38s-ZH-kN1"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zqK-G9-DSv">
+                                        <rect key="frame" x="590" y="3" width="80" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="money_sack.png">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.37476593339999997" green="0.64913119239999995" blue="0.33134224220000003" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z6f-ic-UP8">
+                                <rect key="frame" x="16" y="157" width="736" height="119"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="44"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" id="sR8-yY-mCI">
+                                <rect key="frame" x="0.0" y="824" width="768" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </pickerView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="money_sack.png" id="fIL-18-748">
+                                <rect key="frame" x="315" y="886" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EJH-Fw-5zY">
+                                <rect key="frame" x="403" y="904" width="88" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AmaticSC-Bold" family="Amatic SC" pointSize="45"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ptO-mf-fG9">
+                                <rect key="frame" x="16" y="807" width="736" height="86"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AmaticSC-Bold" family="Amatic SC" pointSize="50"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bNY-Tl-vWz">
+                                <rect key="frame" x="318" y="284" width="132" height="57"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="38"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="itemsIcon.png" id="gMz-PF-wDn">
-                                <rect key="frame" x="194" y="365" width="380" height="380"/>
+                                <rect key="frame" x="194" y="369" width="380" height="380"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -2073,6 +2708,7 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="JLX-xs-2M4" appends="YES" id="5st-cP-jnu"/>
+                            <outletCollection property="gestureRecognizers" destination="gHE-os-UhR" appends="YES" id="47Y-zf-Gs1"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="qau-OE-sNc">
@@ -2085,6 +2721,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="addItemClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="dy7-ko-2LN"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="rac-KK-P5u">
@@ -2096,13 +2735,25 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="editItemClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="hJL-aK-YmM"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
+                        <outlet property="editItemButton" destination="5dl-Iz-pMg" id="u2q-fJ-bgS"/>
+                        <outlet property="itemNameLabel" destination="z6f-ic-UP8" id="IzG-sc-YR8"/>
+                        <outlet property="picker" destination="sR8-yY-mCI" id="yan-sm-JrI"/>
+                        <outlet property="pointsLabel" destination="bNY-Tl-vWz" id="CWK-eB-qAq"/>
+                        <outlet property="sackImage" destination="fIL-18-748" id="6CV-d8-bCZ"/>
+                        <outlet property="stampImage" destination="gMz-PF-wDn" id="tSa-yW-cpJ"/>
+                        <outlet property="studentNameLabel" destination="ptO-mf-fG9" id="qsi-DR-hi9"/>
+                        <outlet property="studentPointsLabel" destination="EJH-Fw-5zY" id="bGF-DU-f76"/>
                         <segue destination="VH0-Rb-kzW" kind="unwind" identifier="market_to_award" unwindAction="unwindToAward:" id="v4f-G7-obf"/>
                         <segue destination="VH0-Rb-kzW" kind="unwind" identifier="market_to_home" unwindAction="unwindToHome:" id="xCl-aR-7ZO"/>
+                        <segue destination="MR8-j5-sYB" kind="push" identifier="market_to_students" id="zkP-67-VRC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNw-4P-enm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2112,8 +2763,28 @@
                         <segue destination="VH0-Rb-kzW" kind="unwind" unwindAction="unwindToClassJar:" id="lfH-Jt-bHu"/>
                     </connections>
                 </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="gHE-os-UhR">
+                    <connections>
+                        <action selector="swipeDown:" destination="Kyg-8S-AT0" id="ynb-02-0va"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="7128" y="922"/>
+        </scene>
+        <!--Activity Monitor-->
+        <scene sceneID="lGN-5m-4dY">
+            <objects>
+                <viewController id="b3C-b7-3Rv" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XK3-Ui-urb">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Activity Monitor" id="7Ls-zl-tOs"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gZW-YA-wfw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6278" y="-360"/>
         </scene>
     </scenes>
     <resources>
@@ -2141,9 +2812,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ewg-8k-sYO"/>
-        <segue reference="mtj-Wm-nfd"/>
         <segue reference="LKv-5a-p8o"/>
+        <segue reference="mtj-Wm-nfd"/>
+        <segue reference="ewg-8k-sYO"/>
         <segue reference="K8T-Db-s2I"/>
     </inferredMetricsTieBreakers>
 </document>

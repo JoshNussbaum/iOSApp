@@ -38,9 +38,10 @@ static NSString * const STUDENT_TRANSACTION_URL = @"http://73.231.27.167:8080/Sy
 static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/schools/get";
 static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/stamp";
 
-static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/addPointsToClass";
+static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/rewardAllStudents";
 static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/fill";
 
+static NSString * const ORDER_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
 
 static NSString *POST = @"POST";
 static NSString *PUT = @"PUT";
@@ -190,9 +191,9 @@ static NSInteger connectionType;
 }
 
 
-- (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname{
+- (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname :(NSString *)serial{
     connectionType = EDIT_STUDENT;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld, \"fname\":\"%@\", \"lname\":\"%@\"}}", (long)id, fname, lname];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student\":{\"id\":%ld, \"fname\":\"%@\", \"lname\":\"%@\", \"serial\":\"%@\"}}", (long)id, fname, lname, serial];
     
     [self asynchronousWebCall:jsonRequest :EDIT_STUDENT_URL :PUT];
 }
@@ -226,29 +227,28 @@ static NSInteger connectionType;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"reward\":{\"id\":%ld, \"pointsearned\":%ld, \"categoryId\":%ld}}", (long)id, (long)pointsEarned, (long)categoryId];
     
     [self asynchronousWebCall:jsonRequest :REWARD_STUDENT_URL :POST];
-
 }
 
 
 - (void)rewardAllStudentsWithcid:(NSInteger)cid{
     connectionType = REWARD_ALL_STUDENTS;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"reward\":{\"id\":%ld}}", (long)cid];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"class\":{\"id\":%ld}}", (long)cid];
     
-    [self asynchronousWebCall:jsonRequest :REWARD_STUDENT_URL :POST];
+    [self asynchronousWebCall:jsonRequest :REWARD_ALL_STUDENTS_URL :PUT];
 }
 
 
-- (void)addToClassJar:(NSInteger)cjid{
+- (void)addToClassJar:(NSInteger)cjid :(NSInteger)points{
     connectionType = ADD_TO_JAR;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"reward\":{\"jarId\":%ld}}", (long)cjid];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"jar\":{\"id\":%ld, \"points\":%ld}}", (long)cjid, (long)points];
 
-    [self asynchronousWebCall:jsonRequest :REWARD_ALL_STUDENTS_URL :POST];
+    [self asynchronousWebCall:jsonRequest :ADD_TO_JAR_URL :PUT];
 }
 
 
-- (void)studentTransaction:(NSInteger)sid :(NSInteger)iid :(NSInteger)cost{
+- (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost{
     connectionType = STUDENT_TRANSACTION;
     
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"transaction\":{\"id\":%ld, \"sid\":%ld, \"cost\":%ld}}", (long)iid, (long)sid, (long)cost];
@@ -256,6 +256,24 @@ static NSInteger connectionType;
     [self asynchronousWebCall:jsonRequest :STUDENT_TRANSACTION_URL :POST];
 }
 
+- (void)orderStampsWithid:(NSInteger)id packageId:(NSInteger)packageId :(NSInteger)stamps :(NSInteger)schoolId{
+    if (packageId == 1){
+        connectionType = ORDER_RECRUIT;
+    }
+    else if (packageId == 2){
+        connectionType = ORDER_HEROIC;
+    }
+    else if (packageId == 3){
+        connectionType = ORDER_LEGENDARY;
+    }
+    else if (packageId == 4){
+        connectionType = ORDER_HERO;
+    }
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"order\":{\"uid\":%ld, \"package\":%ld, \"numStamps\":%ld, \"schoolId\":%ld}}", (long)id, (long)packageId, (long)stamps, (long)schoolId];
+    
+    [self asynchronousWebCall:jsonRequest :ORDER_URL :POST];
+}
 
 
 

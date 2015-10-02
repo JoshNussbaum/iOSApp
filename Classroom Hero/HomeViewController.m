@@ -15,6 +15,8 @@
 #import "AwardViewController.h"
 #import "ClassJarViewController.h"
 #import "MarketViewController.h"
+#import "StudentsTableViewController.h"
+#import "BBBadgeBarButtonItem.h"
 
 
 @interface HomeViewController (){
@@ -29,12 +31,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    statsViews = @[self.avgPointsView, self.highestLvlView, self.mostUsedCategoryView, self.loewstLevelView, self.mostSoldItemView, self.biggestSpenderView];
     
     currentUser = [user getInstance];
     [Utilities makeRoundedButton:self.registerStudentsButton :nil];
     [Utilities makeRoundedButton:self.createClassButton :nil];
-    [Utilities makeRoundedButton:self.orderStampsButton :nil];
     [Utilities makeRoundedButton:self.classesButton :nil];
     [Utilities makeRoundedButton:self.settingsButton :nil];
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
@@ -42,28 +42,12 @@
     self.classNameLabel.text = [currentUser.currentClass getName];
     self.schoolNameLabel.text = [[DatabaseHandler getSharedInstance] getSchoolName:[currentUser.currentClass getSchoolId]];
     self.title  = @"Home Screen";
-    
-    if (currentUser.accountStatus <= 1){
-        for (UIView *view in statsViews){
-            view.hidden = YES;
-        }
-        self.orderStampsButton.hidden = NO;
-        self.orderStampsButton.enabled = YES;
-        self.classStatsLabel.hidden = YES;
-        
-    }
-    else{
-        for (UIView *view in statsViews){
-            view.hidden = NO;
-        }
-        self.orderStampsButton.hidden = YES;
-        self.orderStampsButton.enabled = NO;
-        self.classStatsLabel.hidden = NO;
-    }
 }
 
 
 -(void)viewDidAppear:(BOOL)animated{
+    currentUser = [user getInstance];
+
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     if (unregisteredStudents > 0){
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
@@ -82,12 +66,36 @@
     
     self.classLevelProgressBar.progress = (float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel];
     
+    
+    if (currentUser.accountStatus < 2){
+        NSLog(@"IN HURR");
+        BBBadgeBarButtonItem *barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:self.settingsButton];
+        barButton.badgeValue = @"1";
+        NSInteger size = self.view.frame.size.width/4 - 28;
+        NSLog(@"Size %li", (long)size);
+        barButton.badgeOriginX = size;
+        barButton.badgeOriginY = -5;
+        barButton.shouldHideBadgeAtZero = YES;
+        barButton.shouldAnimateBadge = YES;
+        self.navigationItem.rightBarButtonItem = barButton;
+    }
 
 }
 
 
 - (void)setFlag:(NSInteger)flag_{
     flag = flag_;
+}
+
+
+- (IBAction)swipeDown:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;    
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
 }
 
 
@@ -117,6 +125,10 @@
 
 }
 
+- (IBAction)settingsClicked:(id)sender {
+    [self performSegueWithIdentifier:@"home_to_settings" sender:self];
+}
+
 
 - (IBAction)tutorialClicked:(id)sender {
     [self performSegueWithIdentifier:@"home_to_tutorial" sender:nil];
@@ -142,10 +154,6 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-
-- (IBAction)orderStampsClicked:(id)sender {
-    [self performSegueWithIdentifier:@"home_to_order_stamps" sender:nil];
-}
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
