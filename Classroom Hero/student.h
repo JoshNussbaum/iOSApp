@@ -36,7 +36,11 @@
 
 -(void) setPoints:(NSInteger)points_;
 
+- (void) setLevel:(NSInteger)level_;
 
+- (void) setLevelUpAmount:(NSInteger)levelUpAmount_;
+
+- (void) setProgress:(NSInteger)progress_;
 
 // Read Functions
 -(NSInteger )getId;

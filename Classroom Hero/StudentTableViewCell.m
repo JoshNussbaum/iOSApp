@@ -22,6 +22,9 @@
     if ([[currentStudent getSerial] isEqualToString:@""]){
         self.backgroundColor = [Utilities CHRedColor];
     }
+    else {
+        self.backgroundColor = [UIColor clearColor];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -278,7 +278,7 @@ static NSInteger connectionType;
 }
 
 
-- (void)unregisterStampWithstudentId:(NSInteger)id{
+- (void)unregisterStampWithid:(NSInteger)id{
     connectionType = UNREGISTER_STAMP;
     
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"user\":{\"id\":%ld}}", (long)id];

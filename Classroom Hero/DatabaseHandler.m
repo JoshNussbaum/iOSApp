@@ -141,7 +141,7 @@ static sqlite3_stmt *statement = nil;
                                @"INSERT INTO StudentSchoolMatch (studentId, schoolId) VALUES (%ld, %ld)", (long)[ss getId], (long)schoolId];
         const char *query_stmt3 = [querySQL3 UTF8String];
         sqlite3_prepare_v2(database, query_stmt3,-1, &statement, NULL);
-        if(sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We added a student school match record");
+        sqlite3_step(statement);
         sqlite3_finalize(statement);
         
     }
@@ -277,7 +277,7 @@ static sqlite3_stmt *statement = nil;
             
             NSInteger currentCoins = [[studentDictionary objectForKey:@"currentCoins"]integerValue];
             NSInteger lvl = [[studentDictionary objectForKey:@"lvl"]integerValue];
-            NSInteger lvlUpAmount = 3 + (2*(lvl-1));
+            NSInteger lvlUpAmount = 2 + (2*(lvl-1));
             NSInteger progress = [[studentDictionary objectForKey:@"progress"]integerValue];
             NSInteger totalCoins = [[studentDictionary objectForKey:@"totalCoins"]integerValue];
             
@@ -357,7 +357,8 @@ static sqlite3_stmt *statement = nil;
             }
             sqlite3_reset(statement);
             sqlite3_close(database);
-            return resultArray;
+            NSMutableArray *reversed = [[[resultArray reverseObjectEnumerator]allObjects]mutableCopy];
+            return reversed;
         }
     }
     sqlite3_close(database);
@@ -488,9 +489,9 @@ static sqlite3_stmt *statement = nil;
           [NSSortDescriptor sortDescriptorWithKey:@"points" ascending:NO], nil]
          ];
         
-        sqlite3_close(database);
-        
         NSMutableArray *reversed = [[[allStudents reverseObjectEnumerator]allObjects]mutableCopy];
+        
+        sqlite3_close(database);
         return reversed;
     }
     sqlite3_close(database);
@@ -988,10 +989,11 @@ static sqlite3_stmt *statement = nil;
     {
         NSString *querySQL = [NSString stringWithFormat:
                               @"UPDATE Student SET serial=\"%@\" WHERE id=%ld", serial, (long)sid];
+        NSLog(@"Register student -> %@", querySQL);
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
-        sqlite3_step(statement);
+        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We edited a student");
         sqlite3_finalize(statement);
     }
     

@@ -75,9 +75,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StudentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentCell" forIndexPath:indexPath];
-    
+    NSLog(@"In table view cell for row");
     if (studentsData.count > 0){
         student *student_ = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        [student_ printStudent];
         [cell initializeWithStudent:student_];
     }
     

@@ -70,6 +70,7 @@
     
     
     if (!currentUser.serial){
+        NSLog(@"In here, serials %@", currentUser.serial);
         BBBadgeBarButtonItem *barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:self.settingsButton];
         barButton.badgeValue = @"2";
         NSInteger size = self.view.frame.size.width/4 - 28;

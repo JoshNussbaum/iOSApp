@@ -64,7 +64,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentUser = [user getInstance];
-    
+    [currentUser printUser];
     reinforcerData = [[DatabaseHandler getSharedInstance]getReinforcers:[currentUser.currentClass getId]];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
 
@@ -102,7 +102,6 @@
         [self.categoryPicker selectRow:index inComponent:0 animated:YES];
         self.categoryPicker.hidden = NO;
         currentReinforcer = [reinforcerData objectAtIndex:0];
-        [currentReinforcer printReinforcer];
         self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
         [self.categoryPicker reloadAllComponents];
 
@@ -295,7 +294,22 @@
         {
             NSInteger startLevel = [currentStudent getLvl];
             tmpPoints = [currentStudent getPoints];
-            [currentStudent addPoints:pointsAwarded];
+            [self displayStudent];
+
+            NSDictionary *studentDictionary = [data objectForKey:@"student"];
+            
+            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
+            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
+            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+            
+            [currentStudent setPoints:pointsNumber.integerValue];
+            [currentStudent setLevel:levelNumber.integerValue];
+            [currentStudent setProgress:progressNumber.integerValue];
+            NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
+            [currentStudent setLevelUpAmount:lvlUpAmount];
+            
+
+   
             NSInteger newLevel = [currentStudent getLvl];
             
             [self addPoints:pointsAwarded levelup:(newLevel > startLevel) ? YES : NO];
@@ -362,10 +376,6 @@
 }
 
 
-- (void)rewardStudent{
-    
-}
-
 
 - (void)displayStudent{
     self.categoryPicker.hidden = YES;
@@ -396,14 +406,14 @@
                 isStamping = YES;
                 [Utilities wiggleImage:self.stampImage sound:NO];
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if (![currentUser.serial isEqualToString:@""]){
+                if (currentUser.serial){
                     if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                         if ([stampSerial isEqualToString:currentUser.serial]){
+                            [Utilities wiggleImage:self.stampImage sound:NO];
                             [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
                         }
                         else if ([[DatabaseHandler getSharedInstance] isValidStamp:stampSerial :[currentUser.currentClass getSchoolId]]){
                             currentStudent = [[DatabaseHandler getSharedInstance]getStudentWithSerial:stampSerial];
-                            [self displayStudent];
                             pointsAwarded = [Utilities getRewardNumber];
                             NSLog(@"Points awarded -> %ld", (long)pointsAwarded);
                             [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsAwarded categoryId:[currentReinforcer getId]];
@@ -420,6 +430,7 @@
                 }
                 else {
                     [Utilities alertStatusWithTitle:@"Error awarding points" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
+                    isStamping = NO;
                 }
        
             }
@@ -446,9 +457,10 @@
 
 - (void)addPoints:(NSInteger)points levelup:(bool)levelup{
     AudioServicesPlaySystemSound(award);
-    
+    [currentStudent printStudent];
     if (levelup){
         levelRect = CGRectMake(self.levelView.frame.origin.x, self.levelView.frame.origin.y, self.levelView.frame.size.width, self.levelView.frame.size.height);
+        self.levelBar.progress = 0.0f;
     }
     if (points == 3){
         [self threeCoinsAnimationWithlevelup:levelup];

@@ -19,5 +19,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;
 @property (strong, nonatomic) IBOutlet UIButton *unregisterStampButton;
 - (IBAction)unreigsterClicked:(id)sender;
+- (IBAction)backButtonClicked:(id)sender;
 
 @end

@@ -73,6 +73,20 @@
 }
 
 
+- (void) setLevel:(NSInteger)level_{
+    self->lvl = level_;
+}
+
+
+- (void) setLevelUpAmount:(NSInteger)levelUpAmount_{
+    self->lvlupamount = levelUpAmount_;
+}
+
+
+- (void) setProgress:(NSInteger)progress_{
+    self->progress = progress_;
+}
+
 
 #pragma mark - Read
 

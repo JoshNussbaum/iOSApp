@@ -125,7 +125,7 @@
         [self activityStart:@"Unregistering student stamp..."];
         newStudentFirstName = [currentStudent getFirstName];
         newStudentLastName  = [currentStudent getLastName];
-        [webHandler unregisterStampWithstudentId:[currentStudent getId]];
+        [webHandler unregisterStampWithid:[currentStudent getId]];
     }
     if (alertView.tag == 3){
         [self activityStart:@"Deleting student..."];

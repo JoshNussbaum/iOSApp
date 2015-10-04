@@ -21,8 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self checkAccountStatus];
     [Utilities makeRoundedButton:self.orderStampsButton :nil];
     [Utilities makeRoundedButton:self.registerTeacherStamp :nil];
     [Utilities makeRoundedButton:self.activityMonitorButton :nil];
@@ -36,6 +34,7 @@
 }
 
 - (void)checkAccountStatus{
+    [currentUser printUser];
     if (!currentUser.serial){
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.registerTeacherStampView alignment:JSBadgeViewAlignmentTopRight];

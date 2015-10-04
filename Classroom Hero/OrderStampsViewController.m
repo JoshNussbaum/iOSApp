@@ -78,6 +78,11 @@
 }
 
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    return YES;
+}
+
+
 - (IBAction)recruitClicked:(id)sender {
     stamps = 40;
     [Utilities alertStatusWithTitle:@"Confirm purchase" message:@"Recruit package: 40 stamps for $40/year" cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:1 view:self];
@@ -145,11 +150,6 @@
 
 - (IBAction)backgroundTap:(id)sender{
     [self hideKeyboard];
-}
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    return YES;
 }
 
 

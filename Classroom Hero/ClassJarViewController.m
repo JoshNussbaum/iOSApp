@@ -60,6 +60,7 @@
     
     if (!currentClassJar){
         self.stepper.enabled = NO;
+        self.classJarName.text = @"Add  a  jar  above";
     }
     else {
         self.stepper.enabled = YES;
