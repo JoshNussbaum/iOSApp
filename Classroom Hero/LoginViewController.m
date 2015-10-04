@@ -78,7 +78,6 @@
 
 
 - (IBAction)loginClicked:(id)sender{
-    //[self performSegueWithIdentifier:@"login_to_class" sender:self];
     [self hideKeyboard];
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
@@ -115,7 +114,6 @@
             currentUser.email = self.emailTextField.text;
             currentUser.password = self.passwordTextField.text;
             currentUser.serial = [[data objectForKey:@"login"] objectForKey:@"stamp"];
-
             currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
             currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
             currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];

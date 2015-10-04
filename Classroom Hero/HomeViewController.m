@@ -33,6 +33,8 @@
     [super viewDidLoad];
     
     currentUser = [user getInstance];
+    [currentUser printUser];
+    
     [Utilities makeRoundedButton:self.registerStudentsButton :nil];
     [Utilities makeRoundedButton:self.createClassButton :nil];
     [Utilities makeRoundedButton:self.classesButton :nil];
@@ -67,11 +69,10 @@
     self.classLevelProgressBar.progress = (float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel];
     
     
-    if ([currentUser.serial isEqualToString:@""]){
+    if (!currentUser.serial){
         BBBadgeBarButtonItem *barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:self.settingsButton];
         barButton.badgeValue = @"2";
         NSInteger size = self.view.frame.size.width/4 - 28;
-        NSLog(@"Size %li", (long)size);
         barButton.badgeOriginX = size;
         barButton.badgeOriginY = -5;
         barButton.shouldHideBadgeAtZero = YES;

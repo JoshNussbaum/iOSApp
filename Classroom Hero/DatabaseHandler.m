@@ -139,7 +139,6 @@ static sqlite3_stmt *statement = nil;
         
         NSString *querySQL3 = [NSString stringWithFormat:
                                @"INSERT INTO StudentSchoolMatch (studentId, schoolId) VALUES (%ld, %ld)", (long)[ss getId], (long)schoolId];
-        NSLog(@"StudentSchool QUERY -> %@", querySQL3);
         const char *query_stmt3 = [querySQL3 UTF8String];
         sqlite3_prepare_v2(database, query_stmt3,-1, &statement, NULL);
         if(sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We added a student school match record");
@@ -174,11 +173,9 @@ static sqlite3_stmt *statement = nil;
         NSString *querySQL = [NSString stringWithFormat:
                               @"REPLACE INTO Reinforcer (id, cid, name) VALUES (%ld, %ld, \"%@\")", (long)[rr getId], (long)[rr getCid], [rr getName]];
         
-        NSLog(@"Add reinforcer query -> %@", querySQL);
-        
         const char *query_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
-        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"Done adding reinforcer");
+        sqlite3_step(statement);
         sqlite3_finalize(statement);
         
     }
@@ -192,10 +189,9 @@ static sqlite3_stmt *statement = nil;
     {
         NSString *querySQL = [NSString stringWithFormat:
                               @"REPLACE INTO Item (id, cid, name, cost) VALUES (%ld, %ld, \"%@\", %ld)", (long)[ii getId], (long)[ii getCid], [ii getName], (long)[ii getCost]];
-        NSLog(@"Add item query -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
-        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"Done adding item");
+        sqlite3_step(statement);
         sqlite3_finalize(statement);
         
     }
@@ -209,10 +205,9 @@ static sqlite3_stmt *statement = nil;
     {
         NSString *querySQL = [NSString stringWithFormat:
                               @"REPLACE INTO ClassJar (id, cid, name, progress, total) VALUES (%ld, %ld, \"%@\", %ld, %ld)", (long)[cj getId], (long)[cj getCid], [cj getName], (long)[cj getProgress], (long)[cj getTotal]];
-        NSLog(@"Heres the add class jar query sql -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
-        if(sqlite3_step(statement) == SQLITE_DONE) NSLog(@"WE added a class jar");
+        sqlite3_step(statement);
         sqlite3_finalize(statement);
         
     }
@@ -243,7 +238,6 @@ static sqlite3_stmt *statement = nil;
 
 
 - (void) login:(NSDictionary *)loginInfo{
-    NSLog(@"heres the login info -> %@", loginInfo);
     currentUser = [user getInstance];
     NSMutableArray *classes = [loginInfo objectForKey:@"classes"];
     NSMutableArray *schools = [loginInfo objectForKey:@"schools"];
@@ -544,13 +538,11 @@ static sqlite3_stmt *statement = nil;
     {
         NSString *querySQL = [NSString stringWithFormat:
                               @"SELECT * from Item where cid=%ld", (long)cid];
-        NSLog(@"Query sql get items -> %@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
         NSMutableArray *resultArray = [[NSMutableArray alloc]init];
         if (sqlite3_prepare_v2(database,
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
-            NSLog(@"In hurr");
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 NSInteger id = sqlite3_column_int(statement, 0);
@@ -567,7 +559,6 @@ static sqlite3_stmt *statement = nil;
             sqlite3_reset(statement);
             sqlite3_close(database);
             NSMutableArray *reversed = [[[resultArray reverseObjectEnumerator]allObjects]mutableCopy];
-            NSLog(@"WE GOT %ld ITEMS ", (long)reversed.count);
             return reversed;
         }
     }
@@ -618,7 +609,6 @@ static sqlite3_stmt *statement = nil;
         if (sqlite3_prepare_v2(database,
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
-            NSLog(@"We prepared the DB");
             if (sqlite3_step(statement) == SQLITE_ROW){
                 @try {
                     NSInteger id = sqlite3_column_int(statement, 0);
@@ -641,7 +631,6 @@ static sqlite3_stmt *statement = nil;
                     
                     student *ss = [[student alloc] initWithid:id firstName:firstName lastName:lastName serial:serial lvl:lvl progress:progress lvlupamount:lvlupamount points:points totalpoints:totalpoints];
                     
-                    NSLog(@"Found this student ->");
                     [ss printStudent];
                     
                     sqlite3_reset(statement);
@@ -649,17 +638,11 @@ static sqlite3_stmt *statement = nil;
                     return (ss);
                 }
                 @catch (NSException * e) {
-                    NSLog(@"Exception: %@", e);
-                    NSLog(@"COULDN'T FIND STUDENT");
                     sqlite3_reset(statement);
                     sqlite3_close(database);
                     return nil;
                 }
             }
-            else {
-                NSLog(@"IN HERE");
-            }
-            
         }
     }
     sqlite3_reset(statement);
@@ -925,7 +908,6 @@ static sqlite3_stmt *statement = nil;
     {
         NSMutableArray *schoolIds = [[NSMutableArray alloc]init];
         NSString *getSchoolIdsQuery = [NSString stringWithFormat:@"SELECT schoolId FROM StudentSchoolMatch WHERE studentId = %ld", (long)studentId];
-        NSLog(@"Get school Ids with Student Id -> %@", getSchoolIdsQuery);
         const char *query_stmt = [getSchoolIdsQuery UTF8String];
         if (sqlite3_prepare_v2(database,
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
@@ -933,7 +915,6 @@ static sqlite3_stmt *statement = nil;
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 NSInteger schoolId = sqlite3_column_int(statement, 0);
-                NSLog(@"We found school Id %ld for student Id %ld", (long)schoolId, (long)studentId);
                 NSNumber *schoolIdNumber = [NSNumber numberWithInteger:schoolId];
                 [schoolIds addObject:schoolIdNumber];
                 
@@ -994,8 +975,8 @@ static sqlite3_stmt *statement = nil;
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
-        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We edited an item");
-            sqlite3_finalize(statement);
+        sqlite3_step(statement);
+        sqlite3_finalize(statement);
     }
     sqlite3_close(database);
 }
@@ -1026,7 +1007,7 @@ static sqlite3_stmt *statement = nil;
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
-        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We unregistered a student stamp");
+        sqlite3_step(statement);
         sqlite3_finalize(statement);
     }
     
@@ -1038,8 +1019,6 @@ static sqlite3_stmt *statement = nil;
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
-        //            "CREATE TABLE Student (id integer primary key, firstname text, lastname text, serial text, lvl integer, progress integer, lvlupamount integer, points integer, totalpoints integer);"
-
         NSString *querySQL = [NSString stringWithFormat:
                               @"UPDATE Student SET firstname=\"%@\", lastname=\"%@\", progress=%ld, lvlupamount=%ld, lvl=%ld, points=%ld, totalpoints=%ld WHERE id=%ld", [updatedStudent getFirstName], [updatedStudent getLastName], (long)[updatedStudent getProgress], (long)[updatedStudent getLvlUpAmount], (long)[updatedStudent getLvl], (long)[updatedStudent getPoints], (long)[updatedStudent getTotalPoints], (long)[updatedStudent getId]];
         const char *update_stmt = [querySQL UTF8String];
@@ -1283,9 +1262,7 @@ static sqlite3_stmt *statement = nil;
 - (bool) isValidStamp:(NSString *)serial :(NSInteger)schoolId{
     student *currentStudent = [self getStudentWithSerial:serial];
     if (currentStudent != nil){
-        NSLog(@"Students not null");
         NSMutableArray *schoolIds = [self getSchoolIdsWithstudentId:[currentStudent getId]];
-        NSLog(@"We got %ld school Ids", (long)schoolIds.count);
         for (NSNumber *schoolNumber in schoolIds){
             if (schoolNumber.integerValue == schoolId){
                 return YES;

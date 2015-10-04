@@ -66,8 +66,6 @@
     currentUser = [user getInstance];
     
     reinforcerData = [[DatabaseHandler getSharedInstance]getReinforcers:[currentUser.currentClass getId]];
-    
-    NSLog(@"Heres the reinforcers -> %@", reinforcerData);
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
 
     self.categoryPicker.delegate = self;
@@ -411,7 +409,6 @@
                             [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsAwarded categoryId:[currentReinforcer getId]];
                         }
                         else {
-                            NSLog(@"Fail stamp");
                             [Utilities failAnimation:self.stampImage];
                             isStamping = NO;
                         }

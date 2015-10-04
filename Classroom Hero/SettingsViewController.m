@@ -36,7 +36,7 @@
 }
 
 - (void)checkAccountStatus{
-    if ([currentUser.serial isEqualToString:@""]){
+    if (!currentUser.serial){
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.registerTeacherStampView alignment:JSBadgeViewAlignmentTopRight];
         badgeView.badgeText = @"1";

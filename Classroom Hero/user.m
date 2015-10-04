@@ -31,7 +31,7 @@ static user *instance = nil;
             instance->email=@"";
             instance->password=@"";
             instance->accountStatus = 0;
-            instance->serial=@"";
+            instance->serial=nil;
         }
     }
     return instance;
@@ -43,7 +43,7 @@ static user *instance = nil;
     self->email = @"";
     self->password = @"";
     self->accountStatus = 0;
-    self->serial = @"";
+    self->serial = nil;
     self->currentClass = nil;
 }
 
