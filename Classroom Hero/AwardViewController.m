@@ -389,7 +389,7 @@
 
 
 - (void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping){
+    if (!isStamping && (reinforcerData.count > 0)){
         NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
         NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
@@ -398,7 +398,7 @@
                 isStamping = YES;
                 [Utilities wiggleImage:self.stampImage sound:NO];
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if (currentUser.accountStatus > 0){
+                if (![currentUser.serial isEqualToString:@""]){
                     if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                         if ([stampSerial isEqualToString:currentUser.serial]){
                             [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];

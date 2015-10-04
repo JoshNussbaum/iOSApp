@@ -14,8 +14,6 @@
 static NSString * const snowshoe_app_key = @"d12276c2fac976865fdc";
 static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c4f995db8";
 
-
-
 @interface Utilities : NSObject
 
 
@@ -46,6 +44,7 @@ extern NSInteger ORDER_RECRUIT;
 extern NSInteger ORDER_HEROIC;
 extern NSInteger ORDER_LEGENDARY;
 extern NSInteger ORDER_HERO;
+extern NSInteger UNREGISTER_STAMP;
 
 + (UIColor *) CHBlueColor;
 
@@ -72,6 +71,8 @@ extern NSInteger ORDER_HERO;
 
 
 + (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
+
++ (void) editAlertAddStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
 
 
 + (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color;

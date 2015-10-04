@@ -99,4 +99,7 @@
 - (void)orderStampsWithid:(NSInteger)id packageId:(NSInteger)packageId :(NSInteger)stamps :(NSInteger)schoolId;
 
 
+- (void)unregisterStampWithstudentId:(NSInteger)id;
+
+
 @end

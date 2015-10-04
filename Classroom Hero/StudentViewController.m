@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [Utilities makeRoundedButton:self.studentButton :[UIColor blackColor]];
     
     currentUser = [user getInstance];
     
@@ -48,10 +49,10 @@
 
 - (void)setStudentLabels{
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
-    self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld Points", (long)[currentStudent getPoints]];
+    self.levelLabel.text = [NSString stringWithFormat:@"Level  %ld", (long)[currentStudent getLvl]];
+    self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Coins", (long)[currentStudent getPoints]];
     self.levelBar.progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-    self.progressLabel.text = [NSString stringWithFormat:@"+%ld  Points  to  Level  %ld", (long)([currentStudent getLvlUpAmount] - [currentStudent getProgress]), (long)([currentStudent getLvl]+1) ];
+    self.progressLabel.text = [NSString stringWithFormat:@"+%ld  to  Level  %ld", (long)([currentStudent getLvlUpAmount] - [currentStudent getProgress]), (long)([currentStudent getLvl]+1) ];
     isRegistered = ((![currentStudent.getSerial isEqualToString:@""]) || ![currentStudent getSerial]);
     
     if (isRegistered){
@@ -124,7 +125,7 @@
         [self activityStart:@"Unregistering student stamp..."];
         newStudentFirstName = [currentStudent getFirstName];
         newStudentLastName  = [currentStudent getLastName];
-        [webHandler editStudent:[currentStudent getId] :[currentStudent getFirstName] :[currentStudent getLastName] :@""];
+        [webHandler unregisterStampWithstudentId:[currentStudent getId]];
     }
     if (alertView.tag == 3){
         [self activityStart:@"Deleting student..."];
@@ -134,7 +135,7 @@
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type {
-    NSLog(@"In market data ready -> %@", data);
+    NSLog(@"In Student View Controller ready -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -163,6 +164,35 @@
         [hud hide:YES];
         [self.navigationController popViewControllerAnimated:YES];
     }
+    else if (type == REGISTER_STAMP){
+        if ([successNumber boolValue] == YES){
+            [[DatabaseHandler getSharedInstance] registerStudent:[currentStudent getId] :[currentStudent getSerial]];
+
+            [hud hide:YES];
+            [Utilities wiggleImage:self.stampImage sound:YES];
+            self.studentButton.hidden = NO;
+            self.stampToRegisterLabel.hidden = YES;
+            isRegistered = YES;
+        }
+        else {
+            [Utilities failAnimation:self.stampImage];
+        }
+        isStamping = NO;
+    }
+    else if (type == UNREGISTER_STAMP){
+        if ([successNumber boolValue] == YES){
+            [[DatabaseHandler getSharedInstance] unregisterStudent:[currentStudent getId]];
+            [hud hide:YES];
+            [Utilities wiggleImage:self.stampImage sound:YES];
+            self.stampToRegisterLabel.hidden = NO;
+            self.studentButton.hidden = YES;
+            isRegistered = NO;
+        }
+        else {
+            [Utilities alertStatusNoConnection];
+        }
+    
+    }
 }
 
 
@@ -181,7 +211,7 @@
                     if (![[DatabaseHandler getSharedInstance] isSerialRegistered:stampSerial] && ![stampSerial isEqualToString:currentUser.serial]){
                         [currentStudent setSerial:stampSerial];
                         [self activityStart:@"Registering student..."];
-                        [webHandler editStudent:[currentStudent getId] :[currentStudent getFirstName] :[currentStudent getLastName] :stampSerial];
+                        [webHandler registerStamp:[currentStudent getId] :stampSerial];
                     }
                     else {
                         NSLog(@"Fail stamp");

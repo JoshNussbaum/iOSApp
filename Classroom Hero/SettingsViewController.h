@@ -16,6 +16,10 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *activityMonitorButton;
 
+@property (strong, nonatomic) IBOutlet UIView *registerTeacherStampView;
+
+@property (strong, nonatomic) IBOutlet UIView *orderStampsView;
+
 
 - (IBAction)orderStampsClicked:(id)sender;
 

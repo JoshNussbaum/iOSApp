@@ -67,10 +67,9 @@
     self.classLevelProgressBar.progress = (float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel];
     
     
-    if (currentUser.accountStatus < 2){
-        NSLog(@"IN HURR");
+    if ([currentUser.serial isEqualToString:@""]){
         BBBadgeBarButtonItem *barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:self.settingsButton];
-        barButton.badgeValue = @"1";
+        barButton.badgeValue = @"2";
         NSInteger size = self.view.frame.size.width/4 - 28;
         NSLog(@"Size %li", (long)size);
         barButton.badgeOriginX = size;

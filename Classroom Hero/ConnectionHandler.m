@@ -37,6 +37,8 @@ static NSString * const STUDENT_TRANSACTION_URL = @"http://73.231.27.167:8080/Sy
 
 static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/schools/get";
 static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/stamp";
+static NSString * const UNREGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/unregisterStamp";
+
 
 static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/rewardAllStudents";
 static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/fill";
@@ -273,6 +275,15 @@ static NSInteger connectionType;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"order\":{\"uid\":%ld, \"package\":%ld, \"numStamps\":%ld, \"schoolId\":%ld}}", (long)id, (long)packageId, (long)stamps, (long)schoolId];
     
     [self asynchronousWebCall:jsonRequest :ORDER_URL :POST];
+}
+
+
+- (void)unregisterStampWithstudentId:(NSInteger)id{
+    connectionType = UNREGISTER_STAMP;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"user\":{\"id\":%ld}}", (long)id];
+    
+    [self asynchronousWebCall:jsonRequest :UNREGISTER_STAMP_URL :PUT];
 }
 
 

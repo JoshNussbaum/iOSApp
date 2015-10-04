@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Classroom Hero/DatabaseHandler.m"
-            timestampString = "465468072.487804"
+            filePath = "Classroom Hero/AwardViewController.m"
+            timestampString = "464596771.794526"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "751"
-            endingLineNumber = "751"
-            landmarkName = "-getStudentIds:"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
+            landmarkName = "-incrementPoints"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Classroom Hero/AwardViewController.m"
-            timestampString = "464596771.794526"
+            filePath = "Classroom Hero/DatabaseHandler.m"
+            timestampString = "465610334.95701"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "470"
-            endingLineNumber = "470"
-            landmarkName = "-incrementPoints"
+            startingLineNumber = "1286"
+            endingLineNumber = "1286"
+            landmarkName = "-isValidStamp::"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

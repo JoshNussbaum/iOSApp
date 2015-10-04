@@ -32,7 +32,7 @@
 - (void)addClass:(class *)cl;
 
 
-- (void)addStudent:(student *)ss :(NSInteger)cid;
+- (void)addStudent:(student *)ss :(NSInteger)cid :(NSInteger)schoolId;
 
 
 - (void)addStudentToClass:(NSInteger)studentId :(NSInteger)classId;
@@ -109,6 +109,8 @@
 - (void)editItem:(item *)updatedItem;
 
 - (void)registerStudent:(NSInteger)sid :(NSString *)serial;
+
+- (void)unregisterStudent:(NSInteger)sid;
 
 - (void)updateStudent:(student *)updatedStudent;
 

@@ -11,11 +11,11 @@ account status: (on backend, first time a class is created for teacher, set stat
 
 Class Status:
 
-0 = has not ordered stamps for this class
+0 = hasn't logged in for first time
 
-1 = has ordered stamps
+1 = has logged in for first time
 
-2 = has registered a student with a classroom hero stamp
+2 = has registered teacher stamp
 
 
 

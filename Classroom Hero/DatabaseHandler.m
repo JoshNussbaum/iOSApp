@@ -66,7 +66,8 @@ static sqlite3_stmt *statement = nil;
             "CREATE TABLE ClassJar (id integer primary key, cid integer, name text, progress integer, total integer);"
             "CREATE TABLE Point (id integer, cid integer, timestamp text);"
             "CREATE TABLE Transactions (id integer, iid integer, timestamp text);"
-            "CREATE TABLE StudentClassMatch (sid integer, cid integer);";
+            "CREATE TABLE StudentClassMatch (sid integer, cid integer);"
+            "CREATE TABLE StudentSchoolMatch (studentId integer, schoolId integer);";
             
             if (sqlite3_exec(database, create_tables, NULL, NULL, &errMsg) == SQLITE_OK)
             {
@@ -114,7 +115,7 @@ static sqlite3_stmt *statement = nil;
 }
 
 
-- (void) addStudent:(student *)ss :(NSInteger)cid{
+- (void) addStudent:(student *)ss :(NSInteger)cid :(NSInteger)schoolId{
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
@@ -134,6 +135,14 @@ static sqlite3_stmt *statement = nil;
         const char *query_stmt2 = [querySQL2 UTF8String];
         sqlite3_prepare_v2(database, query_stmt2,-1, &statement, NULL);
         sqlite3_step(statement);
+        sqlite3_finalize(statement);
+        
+        NSString *querySQL3 = [NSString stringWithFormat:
+                               @"INSERT INTO StudentSchoolMatch (studentId, schoolId) VALUES (%ld, %ld)", (long)[ss getId], (long)schoolId];
+        NSLog(@"StudentSchool QUERY -> %@", querySQL3);
+        const char *query_stmt3 = [querySQL3 UTF8String];
+        sqlite3_prepare_v2(database, query_stmt3,-1, &statement, NULL);
+        if(sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We added a student school match record");
         sqlite3_finalize(statement);
         
     }
@@ -274,12 +283,12 @@ static sqlite3_stmt *statement = nil;
             
             NSInteger currentCoins = [[studentDictionary objectForKey:@"currentCoins"]integerValue];
             NSInteger lvl = [[studentDictionary objectForKey:@"lvl"]integerValue];
-            NSInteger lvlUpAmount = 3 + 2*(lvl-1);
+            NSInteger lvlUpAmount = 3 + (2*(lvl-1));
             NSInteger progress = [[studentDictionary objectForKey:@"progress"]integerValue];
             NSInteger totalCoins = [[studentDictionary objectForKey:@"totalCoins"]integerValue];
             
             student *newStudent = [[student alloc] initWithid:sid firstName:fname lastName:lname serial:serial lvl:lvl progress:progress lvlupamount:lvlUpAmount points:currentCoins totalpoints:totalCoins];
-            [self addStudent:newStudent :cid];
+            [self addStudent:newStudent :cid :schoolId];
             
         }
         NSMutableArray *reinforcers = [classDictionary objectForKey:@"categories"];
@@ -486,7 +495,9 @@ static sqlite3_stmt *statement = nil;
          ];
         
         sqlite3_close(database);
-        return allStudents;
+        
+        NSMutableArray *reversed = [[[allStudents reverseObjectEnumerator]allObjects]mutableCopy];
+        return reversed;
     }
     sqlite3_close(database);
     return nil;
@@ -607,33 +618,47 @@ static sqlite3_stmt *statement = nil;
         if (sqlite3_prepare_v2(database,
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
-
-            sqlite3_step(statement);
-            
-            NSInteger id = sqlite3_column_int(statement, 0);
-            
-            NSString *firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
-            
-            NSString *lastName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
-            
-            NSString *serial = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
-            
-            NSInteger lvl = sqlite3_column_int(statement, 4);
-            
-            NSInteger progress = sqlite3_column_int(statement, 5);
-
-            NSInteger lvlupamount = sqlite3_column_int(statement, 6);
-            
-            NSInteger points = sqlite3_column_int(statement, 7);
-            
-            NSInteger totalpoints = sqlite3_column_int(statement, 8);
-            
-            
-            student *ss = [[student alloc] initWithid:id firstName:firstName lastName:lastName serial:serial lvl:lvl progress:progress lvlupamount:lvlupamount points:points totalpoints:totalpoints];
-            
-            sqlite3_reset(statement);
-            sqlite3_close(database);
-            return (ss);
+            NSLog(@"We prepared the DB");
+            if (sqlite3_step(statement) == SQLITE_ROW){
+                @try {
+                    NSInteger id = sqlite3_column_int(statement, 0);
+                    
+                    NSString *firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+                    
+                    NSString *lastName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+                    
+                    NSString *serial = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+                    
+                    NSInteger lvl = sqlite3_column_int(statement, 4);
+                    
+                    NSInteger progress = sqlite3_column_int(statement, 5);
+                    
+                    NSInteger lvlupamount = sqlite3_column_int(statement, 6);
+                    
+                    NSInteger points = sqlite3_column_int(statement, 7);
+                    
+                    NSInteger totalpoints = sqlite3_column_int(statement, 8);
+                    
+                    student *ss = [[student alloc] initWithid:id firstName:firstName lastName:lastName serial:serial lvl:lvl progress:progress lvlupamount:lvlupamount points:points totalpoints:totalpoints];
+                    
+                    NSLog(@"Found this student ->");
+                    [ss printStudent];
+                    
+                    sqlite3_reset(statement);
+                    sqlite3_close(database);
+                    return (ss);
+                }
+                @catch (NSException * e) {
+                    NSLog(@"Exception: %@", e);
+                    NSLog(@"COULDN'T FIND STUDENT");
+                    sqlite3_reset(statement);
+                    sqlite3_close(database);
+                    return nil;
+                }
+            }
+            else {
+                NSLog(@"IN HERE");
+            }
             
         }
     }
@@ -855,44 +880,72 @@ static sqlite3_stmt *statement = nil;
 }
 
 
-- (NSMutableArray *)getClassIdsBySchoolId:(NSInteger)schoolId{
+//- (NSMutableArray *)getClassIdsBySchoolId:(NSInteger)schoolId{
+//    const char *dbpath = [databasePath UTF8String];
+//    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+//    {
+//        NSMutableArray *classIds = [[NSMutableArray alloc]init];
+//        NSString *getClassIdsQuery = [NSString stringWithFormat:@"SELECT id FROM Class WHERE schoolid = %ld", (long)schoolId];
+//        const char *query_stmt = [getClassIdsQuery UTF8String];
+//        if (sqlite3_prepare_v2(database,
+//                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+//        {
+//            while (sqlite3_step(statement) == SQLITE_ROW)
+//            {
+//                NSInteger classId = sqlite3_column_int(statement, 0);
+//                NSNumber *classIdNumber = [NSNumber numberWithInteger:classId];
+//                [classIds addObject:classIdNumber];
+//                
+//            }
+//        }
+//        sqlite3_reset(statement);
+//        sqlite3_close(database);
+//        return classIds;
+//    }
+//    sqlite3_close(database);
+//    return nil;
+//}
+//
+//
+//- (NSMutableArray *)getStudentIdsByClassIds:(NSMutableArray *)classIds{
+//    NSMutableArray *allStudentIds;
+//    for (NSNumber *classId in classIds){
+//        NSMutableArray *studentIds;
+//        NSInteger classId_ = classId.integerValue;
+//        studentIds = [self getStudentIds:classId_];
+//        [allStudentIds addObjectsFromArray:studentIds];
+//    }
+//    return allStudentIds;
+//}
+
+
+- (NSMutableArray *) getSchoolIdsWithstudentId:(NSInteger)studentId{
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
-        NSMutableArray *classIds = [[NSMutableArray alloc]init];
-        NSString *getClassIdsQuery = [NSString stringWithFormat:@"SELECT id FROM Class WHERE schoolid = %ld", (long)schoolId];
-        const char *query_stmt = [getClassIdsQuery UTF8String];
+        NSMutableArray *schoolIds = [[NSMutableArray alloc]init];
+        NSString *getSchoolIdsQuery = [NSString stringWithFormat:@"SELECT schoolId FROM StudentSchoolMatch WHERE studentId = %ld", (long)studentId];
+        NSLog(@"Get school Ids with Student Id -> %@", getSchoolIdsQuery);
+        const char *query_stmt = [getSchoolIdsQuery UTF8String];
         if (sqlite3_prepare_v2(database,
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-                NSInteger classId = sqlite3_column_int(statement, 0);
-                NSNumber *classIdNumber = [NSNumber numberWithInteger:classId];
-                [classIds addObject:classIdNumber];
+                NSInteger schoolId = sqlite3_column_int(statement, 0);
+                NSLog(@"We found school Id %ld for student Id %ld", (long)schoolId, (long)studentId);
+                NSNumber *schoolIdNumber = [NSNumber numberWithInteger:schoolId];
+                [schoolIds addObject:schoolIdNumber];
                 
             }
         }
         sqlite3_reset(statement);
         sqlite3_close(database);
-        return classIds;
+        return schoolIds;
     }
     sqlite3_close(database);
     return nil;
 }
-
-
-- (NSMutableArray *)getStudentIdsByClassIds:(NSMutableArray *)classIds{
-    NSMutableArray *allStudentIds;
-    for (NSNumber *classId in classIds){
-        NSMutableArray *studentIds;
-        NSInteger classId_ = classId.integerValue;
-        studentIds = [self getStudentIds:classId_];
-        [allStudentIds addObjectsFromArray:studentIds];
-    }
-    return allStudentIds;
-}
-
 
 
 #pragma mark - Update
@@ -958,6 +1011,22 @@ static sqlite3_stmt *statement = nil;
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
         sqlite3_step(statement);
+        sqlite3_finalize(statement);
+    }
+    
+    sqlite3_close(database);
+}
+
+- (void)unregisterStudent:(NSInteger)sid{
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:
+                              @"UPDATE Student SET serial=\"\" WHERE id=%ld", (long)sid];
+        const char *update_stmt = [querySQL UTF8String];
+        sqlite3_prepare_v2(database,
+                           update_stmt, -1, &statement, NULL);
+        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We unregistered a student stamp");
         sqlite3_finalize(statement);
     }
     
@@ -1209,23 +1278,24 @@ static sqlite3_stmt *statement = nil;
 
 #pragma mark - Misc
 
+// Teachers can only award points to students in the school of their current class.
+// Check to see if student who stamped is in school for current class.
 - (bool) isValidStamp:(NSString *)serial :(NSInteger)schoolId{
     student *currentStudent = [self getStudentWithSerial:serial];
     if (currentStudent != nil){
-        // THIS NEEDS TO BE CLASSES (STUDENT CAN BE IN MULTIPLE CLASSES)
-        class *foundClass = [self getClassWithstudentId:[currentStudent getId]];
-        NSInteger foundClassSchoolId = [foundClass getSchoolId];
-        if (schoolId == foundClassSchoolId){
-            return YES;
-        }
-        else {
-            return NO;
+        NSLog(@"Students not null");
+        NSMutableArray *schoolIds = [self getSchoolIdsWithstudentId:[currentStudent getId]];
+        NSLog(@"We got %ld school Ids", (long)schoolIds.count);
+        for (NSNumber *schoolNumber in schoolIds){
+            if (schoolNumber.integerValue == schoolId){
+                return YES;
+            }
         }
     }
     else {
         return NO;
     }
-
+    return NO;
 }
 
 

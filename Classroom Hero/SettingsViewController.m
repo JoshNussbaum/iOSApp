@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "Utilities.h"
 #import "user.h"
+#import "JSBadgeView.h"
 
 @interface SettingsViewController (){
     user *currentUser;
@@ -20,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [self checkAccountStatus];
     [Utilities makeRoundedButton:self.orderStampsButton :nil];
     [Utilities makeRoundedButton:self.registerTeacherStamp :nil];
@@ -34,16 +36,20 @@
 }
 
 - (void)checkAccountStatus{
-    if (currentUser.accountStatus < 2){
-        self.registerTeacherStamp.backgroundColor = [Utilities CHRedColor];
-    }
-    else {
-        self.registerTeacherStamp.backgroundColor = [Utilities CHBlueColor];
+    if ([currentUser.serial isEqualToString:@""]){
+        [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
+        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.registerTeacherStampView alignment:JSBadgeViewAlignmentTopRight];
+        badgeView.badgeText = @"1";
+        badgeView.badgeTextColor=[UIColor whiteColor];
+        badgeView.badgeBackgroundColor = [UIColor redColor];
+        
+        JSBadgeView *badgeView2 = [[JSBadgeView alloc] initWithParentView:self.orderStampsView alignment:JSBadgeViewAlignmentTopRight];
+        badgeView2.badgeText = @"1";
+        badgeView2.badgeTextColor=[UIColor whiteColor];
+        badgeView2.badgeBackgroundColor = [UIColor redColor];
         
     }
 }
-
-/* MAKE REGISTER STUDENTS HAVE THE JSVIEW BADGE */
 
 
 - (IBAction)orderStampsClicked:(id)sender {
@@ -51,6 +57,7 @@
 }
 
 - (IBAction)registerTeacherStampClicked:(id)sender {
+    [self performSegueWithIdentifier:@"settings_to_register_teacher_stamp" sender:self];
 }
 
 - (IBAction)backClicked:(id)sender {
