@@ -8,9 +8,14 @@ account status: (on backend, first time a class is created for teacher, set stat
 
 1 = logged in and no stamps
 
-2 = has stamped with a classroom hero stamp (so probably ordered stamps)
 
-3 = has stamped and registered self (UNSET THIS WHEN U UNREGISTER STAMP)
+Class Status:
+
+0 = hasn't logged in for first time
+
+1 = has logged in for first time
+
+2 = has registered teacher stamp
 
 
 
@@ -48,3 +53,23 @@ Home -> flag = 1 from class list popViewController
      -> flag = 2 from home so push to register students and set flag to 2
 
 
+
+
+Order stamps -> Prompt number of students and present cost to the user.
+             -> If they decide to buy, prompt Mailing address
+             -> Make a web call for buying stamps
+             -> If its successful, then proceed to apple pay.
+             -> Set account status to 2
+
+
+
+############ Free version ##############
+
+- Teachers award points to students by clicking a button
+- Students have to go home and log into the site to claim the points.
+- They have to answer a question (set by teacher or randomly generated based on grade) to unlock the reward.
+
+
+
+
+Attendance page

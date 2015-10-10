@@ -10,7 +10,6 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
-#import <AudioToolbox/AudioToolbox.h>
 
 @interface CreateClassViewController (){
     NSInteger index;
@@ -19,7 +18,6 @@
     user *currentUser;
     ConnectionHandler *webHandler;
     class *newClass;
-    SystemSoundID success;
 
 
 }
@@ -36,12 +34,6 @@
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     self.schoolPicker.delegate = self;
     schoolData = [[DatabaseHandler getSharedInstance] getSchools];
-    
-    NSString *path = [[NSBundle mainBundle]
-                      pathForResource:@"award" ofType:@"mp3"];
-    NSURL *pathURL = [NSURL fileURLWithPath:path];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &success);
-
     if (schoolData.count == 0){
         self.schoolPicker.hidden = YES;
         self.errorLabel.hidden = NO;
@@ -116,7 +108,7 @@
         NSString *className = self.classNameTextField.text;
         NSInteger classGrade = [self.classGradeTextField.text integerValue];
         NSInteger schoolId = [self getSchoolId];
-        newClass = [[class alloc]init:0 :className :classGrade :schoolId :1 :0 :30 :0];
+        newClass = [[class alloc]init:0 :className :classGrade :schoolId :1 :0 :30];
         [webHandler addClass:currentUser.id :className :classGrade :schoolId];
         
     }
@@ -150,13 +142,14 @@
         
         if([successNumber boolValue] == YES)
         {
-            AudioServicesPlaySystemSound(success);
+            AudioServicesPlaySystemSound([Utilities getTheSoundOfSuccess]);
             NSInteger cid = [[data objectForKey:@"id"] integerValue];
             [newClass setId:cid];
             [newClass printClass];
             [[DatabaseHandler getSharedInstance]addClass:newClass];
             [hud hide:YES];
-
+            self.classNameTextField.text = @"";
+            self.classGradeTextField.text = @"";
             [Utilities alertStatusWithTitle:@"Successfully added class!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
             
             

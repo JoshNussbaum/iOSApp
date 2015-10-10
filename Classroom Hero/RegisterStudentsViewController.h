@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "SnowShoeViewController.h"
+#import "ConnectionHandler.h"
 
-@interface RegisterStudentsViewController : SnowShoeViewController
+
+@interface RegisterStudentsViewController : SnowShoeViewController <ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *skipButton;
 @property (strong, nonatomic) IBOutlet UILabel *studentNameLabel;
@@ -20,5 +22,6 @@
 - (IBAction)skipButtonClicked:(id)sender;
 
 - (void)setFlag:(NSInteger)flag_;
+@property (strong, nonatomic) IBOutlet UILabel *swipeLabel;
 
 @end

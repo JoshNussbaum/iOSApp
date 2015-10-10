@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import "Utilities.h"
 #import "RegisterStudentsViewController.h"
+#import "TutorialViewController.h"
 
 
 @interface CreateAccountViewController (){
@@ -188,16 +189,15 @@
     self.passwordTextField.attributedPlaceholder = str;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"create_account_to_tutorial"]){
+        TutorialViewController *vc = [segue destinationViewController];
+        [vc setFlag:1];
+    }
 
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     RegisterStudentsViewController *vc = [segue destinationViewController];
-     [vc setFlag:1];
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
+}
+
+
 
 
 

@@ -27,7 +27,7 @@
 }
 
 
-- (id)init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_ :(NSInteger)progress_ :(NSInteger)total_{
+-(id)initWithid:(NSInteger)id_ cid:(NSInteger)cid_ name:(NSString *)name_ progress:(NSInteger)progress_ total:(NSInteger)total_{
     self = [super init];
     if (self){
         self->id = id_;
@@ -91,6 +91,20 @@
 
 - (NSInteger) getTotal{
     return self->total;
+}
+
+-(void) updateJar:(NSInteger)points{
+    NSInteger newProgress = self->progress + points;
+    if (newProgress >= self->total){
+        self->progress = 0;
+    }
+    else {
+        self->progress = newProgress;
+    }
+}
+
+-(void) printJar{
+    NSLog(@"Jar name -> %@,\n Jar Id -> %ld,\n Jar Cid -> %ld,\n Jar Progress -> %ld,\n Jar Total -> %ld,\n", self->name, (long)self->id, (long)self->cid, (long)self->progress, (long)self->total);
 }
 
 

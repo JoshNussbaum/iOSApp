@@ -33,21 +33,19 @@ static NSString * const classCell = @"classCell";
 
 @implementation ClassTableViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
+    
+    [self.tableView setBounces:NO];
     
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
+    UIColor *CHBlueColor = [UIColor colorWithRed:85.0/255.0 green:200.0/255.0 blue:255.0/255.0 alpha:1.0] ;
     
-    NSShadow* shadow = [NSShadow new];
-    shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    
-    [[UINavigationBar appearance] setTitleTextAttributes: @{
-                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                            NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:36.0f],
-                                                            NSShadowAttributeName: shadow
-                                                            }];
+    [self.navigationController.navigationBar setBarTintColor:CHBlueColor];
+  
     currentUser = [user getInstance];
     classes = [[DatabaseHandler getSharedInstance] getClasses];
     
@@ -60,8 +58,9 @@ static NSString * const classCell = @"classCell";
     
     studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
     
-    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
-    [self.tableView addGestureRecognizer:longPressRecognizer];
+    UISwipeGestureRecognizer* swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onSwipeRight:)];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.tableView addGestureRecognizer:swipeRight];
 
 }
 
@@ -147,14 +146,14 @@ static NSString * const classCell = @"classCell";
         NSString *newClassGrade = [alertView textFieldAtIndex:1].text;
         NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
         
-        if ([errorMessage isEqualToString:@""]){
+        if (!errorMessage){
             NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
-            if ([gradeErrorMessage isEqualToString:@""]){
+            if (!gradeErrorMessage){
                 NSInteger grade = newClassGrade.integerValue;
                 class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];
                 [webHandler editClass:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId]];
-                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getHasStamps]];
+                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel]];
                 
             }
             else {
@@ -174,6 +173,7 @@ static NSString * const classCell = @"classCell";
     }
 
 }
+
 
 
 #pragma mark - Table view data source
@@ -236,7 +236,7 @@ static NSString * const classCell = @"classCell";
     if (classes.count > 0){
         class *class_ = [classes objectAtIndex:classes.count - indexPath.row - 1];
         NSString *schoolName = [[DatabaseHandler getSharedInstance] getSchoolName:[class_ getSchoolId]];
-        NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInt:[class_ getId]]]integerValue];
+        NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInteger:[class_ getId]]]integerValue];
         [cell initializeCellWithClass:class_ :classCount :schoolName];
     }
     
@@ -244,22 +244,16 @@ static NSString * const classCell = @"classCell";
 }
 
 
-- (void)onLongPress:(UILongPressGestureRecognizer*)gesture{
+- (void)onSwipeRight:(UILongPressGestureRecognizer*)gesture{
     if (!editingClass){
-        if (gesture.state == UIGestureRecognizerStateBegan){
-            editingClass = YES;
-            UITableView* tableView = (UITableView*)self.view;
-            CGPoint touchPoint = [gesture locationInView:self.view];
-            NSIndexPath* row = [tableView indexPathForRowAtPoint:touchPoint];
-            if (row != nil) {
-                class *selectedClass = [self getClassByIndexPath:row];
-                NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
-                [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
-            }
-            
-        }
-        if (gesture.state == UIGestureRecognizerStateEnded)
-        {
+        editingClass = YES;
+        UITableView* tableView = (UITableView*)self.view;
+        CGPoint touchPoint = [gesture locationInView:self.view];
+        NSIndexPath* row = [tableView indexPathForRowAtPoint:touchPoint];
+        if (row != nil) {
+            class *selectedClass = [self getClassByIndexPath:row];
+            NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
+            [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
         }
     }
 }

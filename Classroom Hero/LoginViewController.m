@@ -17,6 +17,8 @@
     NSString *errorMessage;
     user *currentUser;
     MBProgressHUD* hud;
+    
+    bool isStamping;
 }
 
 @end
@@ -26,6 +28,12 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [currentUser reset];
+    isStamping = NO;
+    self.emailTextField.text = @"nussbaum.joshua@gmail.com";
+    self.passwordTextField.text = @"Punkzor";
+    
+    self.appKey = snowshoe_app_key;
+    self.appSecret = snowshoe_app_secret;
 }
 
 
@@ -38,9 +46,7 @@
     
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
-    
 
-    // Do any additional setup after loading the view.
 }
 
 
@@ -76,8 +82,39 @@
 }
 
 
+- (void)stampResultDidChange:(NSString *)stampResult{
+    if (!currentUser.serial){
+        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        if (resultObject != NULL) {
+            if ([resultObject objectForKey:@"stamp"] != nil){
+                isStamping = YES;
+                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                    if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
+                        [Utilities wiggleImage:self.stampImage sound:NO];
+                        [self activityStart:@"Logging in..."];
+                        [webHandler stampToLogin:stampSerial];
+                    }
+                    else {
+                        [Utilities failAnimation:self.stampImage];
+                        isStamping = NO;
+                    }
+                }
+                else{
+                    [Utilities failAnimation:self.stampImage];
+                    isStamping = NO;
+                }
+                
+            }
+        }
+    }
+    
+}
+
+
 - (IBAction)loginClicked:(id)sender{
-    //[self performSegueWithIdentifier:@"login_to_class" sender:self];
     [self hideKeyboard];
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
@@ -102,44 +139,14 @@
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    //NSLog(@"In Login \n %@", data);
-    if (type == 1){
+    NSLog(@"In Login \n %@", data);
+    if (type == LOGIN || type == STAMP_TO_LOGIN){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
         
         if([successNumber boolValue] == YES)
         {
-            // Set all the user stuff and query the database
-            [[DatabaseHandler getSharedInstance] login:data];
-            currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];
-            currentUser.email = self.emailTextField.text;
-            currentUser.password = self.passwordTextField.text;
-            currentUser.serial = [[data objectForKey:@"login"] objectForKey:@"stamp"];
-
-            currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
-            currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
-            currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];
-            NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance] getNumberOfUnregisteredStudentsInClass:currentUser.id];
-
-            self.passwordTextField.text=@"";
-        
-            if (currentUser.accountStatus == 0){
-                [self performSegueWithIdentifier:@"login_to_tutorial" sender:nil];
-            }
-            else {
-                if (unregisteredStudents == 0){
-                    [self performSegueWithIdentifier:@"login_to_class" sender:nil];
-
-                }
-                else {
-                    [self performSegueWithIdentifier:@"login_to_register_students" sender:self];
-                }
-            }
-            [hud hide:YES];
-            
-            
-            
-            //[self performSegueWithIdentifier:@"login_to_class" sender:nil];
-            
+            [Utilities wiggleImage:self.stampImage sound:NO];
+            [self loginSuccess:data];
         }
         else {
             NSString *message = [data objectForKey:@"message"];
@@ -151,11 +158,41 @@
 
         }
     }
+   
     else {
-        //[self alertStatus:@"Connection error" :@"Please check your connectivity and try again"];
+        [Utilities alertStatusNoConnection];
     }
- 
     
+}
+
+
+- (void)loginSuccess:(NSDictionary *)data{
+    // Set all the user stuff and query the database
+    [[DatabaseHandler getSharedInstance] login:data];
+    currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];
+    currentUser.email = self.emailTextField.text;
+    currentUser.password = self.passwordTextField.text;
+    currentUser.serial = [[data objectForKey:@"login"] objectForKey:@"stamp"];
+    currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
+    currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
+    currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];
+    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance] getNumberOfUnregisteredStudentsInClass:currentUser.id];
+    
+    self.passwordTextField.text=@"";
+    
+    if (currentUser.accountStatus == 0){
+        [self performSegueWithIdentifier:@"login_to_tutorial" sender:nil];
+    }
+    else {
+        if (unregisteredStudents == 0){
+            [self performSegueWithIdentifier:@"login_to_class" sender:nil];
+            
+        }
+        else {
+            [self performSegueWithIdentifier:@"login_to_register_students" sender:self];
+        }
+    }
+    [hud hide:YES];
 }
 
 

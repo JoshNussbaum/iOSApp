@@ -14,20 +14,15 @@
     NSString *lastName;
     NSString *serial;
     NSInteger lvl;
-    NSInteger lvlupamount;
-    NSInteger lvlsgained;
-    NSInteger points;
-    NSInteger pointsgained;
-    NSInteger pointsspent;
-    NSInteger totalpoints;
     NSInteger progress;
-    NSInteger progressgained;
-    NSString *timestamp;
+    NSInteger lvlupamount;
+    NSInteger points;
+    NSInteger totalpoints;
 }
 
 -(id) init;
 
--(id) init:(NSInteger)id_ :(NSString*)firstName_ :(NSString*)lastName_ :(NSString*)serial_ :(NSInteger)lvl_ :(NSInteger)lvlupamount_ :(NSInteger)lvlsgained_ :(NSInteger)points_  :(NSInteger)pointsgained_  :(NSInteger)pointsspent_ :(NSInteger)totalpoints_ :(NSInteger)progress_ :(NSInteger)progressgained_  :(NSString*)timestamp_;
+-(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ serial:(NSString*)serial_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_;
 
 // Creation Functions
 
@@ -39,11 +34,13 @@
 
 -(void) setSerial:(NSString *)serial_;
 
--(void) setTimestamp:(NSString *)timestamp_;
-
 -(void) setPoints:(NSInteger)points_;
 
--(void) setPointsspent:(NSInteger)pointsspent_;
+- (void) setLevel:(NSInteger)level_;
+
+- (void) setLevelUpAmount:(NSInteger)levelUpAmount_;
+
+- (void) setProgress:(NSInteger)progress_;
 
 // Read Functions
 -(NSInteger )getId;
@@ -54,31 +51,23 @@
 
 -(NSInteger)getLvl;
 
--(NSInteger)getLvlsGained;
-
 -(NSInteger)getLvlUpAmount;
 
 -(NSInteger)getPoints;
-
--(NSInteger)getPointsGained;
-
--(NSInteger)getPointsSpent;
 
 -(NSInteger)getTotalPoints;
 
 -(NSInteger)getProgress;
 
--(NSInteger)getProgressGained;
-
 -(NSString*)getSerial;
-
--(NSString*)getTimestamp;
 
 
 // Update Functions
 -(void)addPoints:(NSInteger)pointsGained;
 
 -(void)addOnlyPoints:(NSInteger)pointsGained;
+
+-(void)updatePoints:(NSInteger)newPoints;
 
 // Misc Functions
 -(void) printStudent;

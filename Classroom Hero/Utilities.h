@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
+
 
 static NSString * const snowshoe_app_key = @"d12276c2fac976865fdc";
 static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c4f995db8";
-
-
+static NSString * const merchant_id = @"merchant.com.classroom-hero";
 
 @interface Utilities : NSObject
 
@@ -36,11 +37,27 @@ extern NSInteger EDIT_JAR;
 extern NSInteger DELETE_JAR;
 extern NSInteger GET_SCHOOLS;
 extern NSInteger REGISTER_STAMP;
+extern NSInteger REWARD_STUDENT;
+extern NSInteger REWARD_ALL_STUDENTS;
+extern NSInteger ADD_TO_JAR;
+extern NSInteger STUDENT_TRANSACTION;
+extern NSInteger ORDER_RECRUIT;
+extern NSInteger ORDER_HEROIC;
+extern NSInteger ORDER_LEGENDARY;
+extern NSInteger ORDER_HERO;
+extern NSInteger UNREGISTER_STAMP;
+extern NSInteger EDIT_TEACHER_NAME;
+extern NSInteger EDIT_TEACHER_PASSWORD;
+extern NSInteger STAMP_TO_LOGIN;
+
 
 + (UIColor *) CHBlueColor;
 
 
 + (UIColor *) CHGreenColor;
+
+
++ (UIColor *) CHRedColor;
 
 
 + (NSString *) getDate;
@@ -55,11 +72,12 @@ extern NSInteger REGISTER_STAMP;
 + (bool)isValidClassroomHeroStamp:(NSString *)serial;
 
 
-+ (void) editAlertText:(NSString *)title :(NSString *)message :(NSString *)cancel :(NSString *)done :(NSString *)input :
-(NSInteger)tag;
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
 
 
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
+
++ (void) editAlertAddStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
 
 
 + (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color;
@@ -67,13 +85,52 @@ extern NSInteger REGISTER_STAMP;
 
 + (void) makeRoundedButton:(UIButton *)button :(UIColor *)color;
 
+
 + (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view;
+
 
 + (void) alertStatusNoConnection;
 
+
 + (NSString *) getRandomCompliment;
 
-+ (void) wiggleImage:(UIImageView *)image;
+
++ (NSString *) getRandomLoadingMessage;
+
+
++ (void) wiggleImage:(UIImageView *)image sound:(bool)sound;
+
+
++ (void) sackWiggle:(UIImageView *)sack;
+
+
++ (void) failAnimation:(UIImageView *)image;
+
+
++ (SystemSoundID) getFailSound;
+
++ (SystemSoundID) getTheSoundOfSuccess;
+
++ (SystemSoundID) getAwardSound;
+
++ (SystemSoundID) getTeacherStampSound;
+
++ (SystemSoundID) getLevelUpSound;
+
++ (SystemSoundID) getCoinShakeSound;
+
++ (SystemSoundID) getAwardAllSound;
+
++ (SystemSoundID) getJarSuccessSound;
+
++ (SystemSoundID) getCorkSound;
+
++ (SystemSoundID) getAchievementSound;
+
+
+
++ (NSInteger) getRewardNumber;
+
 
 
 @end

@@ -12,12 +12,12 @@
     NSInteger id;
     NSInteger cid;
     NSString *name;
-    
+    NSInteger value;
 }
 
 -(id) init;
 
--(id) init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_;
+-(id)init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_ :(NSInteger)value_;
 
 -(void)setId:(NSInteger)id_;
 
@@ -25,11 +25,17 @@
 
 -(void)setName:(NSString *)name_;
 
+-(void)setValue:(NSInteger)value_;
+
 -(NSInteger)getId;
 
 -(NSInteger)getCid;
 
 -(NSString *)getName;
+
+-(NSInteger)getValue;
+
+-(void)printReinforcer;
 
 
 @end

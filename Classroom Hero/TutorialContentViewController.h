@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AudioToolbox/AudioToolbox.h>
 #import "SnowShoeViewController.h"
 #import "ConnectionHandler.h"
 

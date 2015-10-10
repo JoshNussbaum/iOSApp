@@ -18,8 +18,6 @@
     NSInteger accountStatus;
     NSString *serial;
     class *currentClass;
-    NSInteger currentClassId;
-    NSString *currentClassName;
 }
 
 @property(nonatomic)NSInteger id;
@@ -30,12 +28,13 @@
 @property(nonatomic)NSInteger accountStatus;
 @property(nonatomic)NSString *serial;
 @property(nonatomic)class *currentClass;
-@property(nonatomic)NSString *currentClassName;
 
 
 +(user *)getInstance;
 
 -(void)reset;
+
+-(void)printUser;
 
 
 @end

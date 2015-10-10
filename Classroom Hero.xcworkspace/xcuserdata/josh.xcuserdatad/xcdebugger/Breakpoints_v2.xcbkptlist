@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classroom Hero/ClassTableViewController.m"
-            timestampString = "462778534.183148"
+            timestampString = "465974867.012351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
             landmarkName = "-getClassByIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -25,29 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Classroom Hero/ClassTableViewController.m"
-            timestampString = "462778534.183148"
+            filePath = "Classroom Hero/AwardViewController.m"
+            timestampString = "466146185.37558"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
-            landmarkName = "-onLongPress:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Classroom Hero/DatabaseHandler.m"
-            timestampString = "462691595.440836"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "677"
-            endingLineNumber = "677"
-            landmarkName = "-getStudentIds:"
+            startingLineNumber = "492"
+            endingLineNumber = "492"
+            landmarkName = "-addPoints:levelup:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

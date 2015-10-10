@@ -42,4 +42,7 @@
 
 -(NSInteger) getCost;
 
+
+-(void) printItem;
+
 @end
