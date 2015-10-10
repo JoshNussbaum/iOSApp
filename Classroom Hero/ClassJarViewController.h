@@ -28,5 +28,6 @@
 - (IBAction)addJarClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *addJarButton;
 - (IBAction)swipeDown:(id)sender;
+- (IBAction)studentListClicked:(id)sender;
 
 @end

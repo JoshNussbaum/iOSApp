@@ -9,6 +9,7 @@
 #import "OrderStampsViewController.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
+#import "Stripe.h"
 
 
 @interface OrderStampsViewController (){
@@ -35,20 +36,6 @@
     [self.stampsTextfield addTarget:self
                   action:@selector(textFieldDidChange:)
         forControlEvents:UIControlEventEditingChanged];
-    
-    if ([PKPaymentAuthorizationViewController canMakePayments]) {
-        NSLog(@"Can Make Payments");
-    }
-    else {
-        NSLog(@"Can't Make payments");
-    }
-    NSArray *paymentNetworks = [NSArray arrayWithObjects:PKPaymentNetworkMasterCard, PKPaymentNetworkVisa, PKPaymentNetworkAmex, nil];
-    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:paymentNetworks]) {
-        NSLog(@"Can Make payment with your card");
-    }
-    else {
-        NSLog(@"Card is not supporting");
-    }
 }
 
 
@@ -64,22 +51,27 @@
             self.costLabel.text = @"Must  order  at  least  10  stamps";
             return;
         }
-        if (stamps > 60){
-            price = stamps * .9;
-        }
-        else if (stamps > 120){
-            price = stamps * .8;
-        }
-        else if (stamps > 300){
-            price = stamps * .7;
-        }
-        else price = stamps;
         
-        self.costLabel.text = [NSString stringWithFormat:@"$%.02f/year", price];
+        self.costLabel.text = [NSString stringWithFormat:@"$%.02f/year", [self getPrice]];
     }
     else {
         self.costLabel.text = errorMessage;
     }
+}
+
+
+-(NSInteger)getPrice{
+    if (stamps > 60){
+        price = stamps * .9;
+    }
+    else if (stamps > 120){
+        price = stamps * .8;
+    }
+    else if (stamps > 300){
+        price = stamps * .7;
+    }
+    else price = stamps;
+    return price;
 }
 
 
@@ -120,6 +112,9 @@
 
 
 - (IBAction)orderClicked:(id)sender {
+    if ([self canMakePayments]){
+        
+    }
     NSString *stampString = self.stampsTextfield.text;
     NSString *errorMessage = [Utilities isNumeric:stampString];
     if(!errorMessage){
@@ -140,16 +135,49 @@
     NSLog(@"In order stamps -> %@", data);
     orderId = [[data objectForKey:@"id"] integerValue];
     [hud hide:YES];
-    // NOW APPLE PAY TIME 
-    if (type == ORDER_HERO) {
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+
+    if ([successNumber boolValue] == YES){
+        NSString *packageName;
+        if (type == ORDER_HERO) {
+            packageName = [NSString stringWithFormat:@"Hero package with %ld stamps", (long)stamps];
+        }
+        else if (type == ORDER_RECRUIT){
+            packageName = @"Recruit package";
+        }
+        else if (type == ORDER_HEROIC){
+            packageName = @"Heroic package";
+        }
+        else if (type == ORDER_LEGENDARY){
+            packageName = @"Legendary package";
+        }
+        PKPaymentRequest *request = [Stripe
+                                     paymentRequestWithMerchantIdentifier:merchant_id];
+        // Configure your request here.
+        NSString *label = packageName;
+        NSString *costAmount = [NSString stringWithFormat:@"%li", (long)price];
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:costAmount];
+        request.paymentSummaryItems = @[
+                                        [PKPaymentSummaryItem summaryItemWithLabel:label
+                                                                            amount:amount]
+                                        ];
         
+        if ([Stripe canSubmitPaymentRequest:request]) {
+            NSLog(@"In here can submit");
+            PKPaymentAuthorizationViewController *paymentController;
+            
+            paymentController = [[PKPaymentAuthorizationViewController alloc]
+                                 initWithPaymentRequest:request];
+            paymentController.delegate = self;
+            
+            [self presentViewController:paymentController animated:YES completion:nil];
+        } else {
+            NSLog(@"NAh you can't homei");
+            // Show the user your own credit card form (see options 2 or 3)
+        }
+
     }
-    else if (type == ORDER_RECRUIT){
-        
-    }
-    else if (type == ORDER_HEROIC){
-    
-    }
+
     
 }
 
@@ -175,6 +203,29 @@
     hud.labelText = message;
     [hud show:YES];
 }
+
+
+- (bool)canMakePayments{
+    if ([PKPaymentAuthorizationViewController canMakePayments]) {
+        NSLog(@"Can Make Payments");
+    }
+    else {
+        NSLog(@"Can't Make payments");
+        return NO;
+    }
+    NSArray *paymentNetworks = [NSArray arrayWithObjects:PKPaymentNetworkMasterCard, PKPaymentNetworkVisa, PKPaymentNetworkAmex, nil];
+    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:paymentNetworks]) {
+        return YES;
+    }
+    else {
+        if ([PKPassLibrary isPassLibraryAvailable]){
+            [Utilities alertStatusWithTitle:@"Set up your apple pay account" message:nil cancel:nil otherTitles:nil tag:0 view:self];
+            return NO;
+        }
+    }
+    return NO;
+}
+
 
 
 @end

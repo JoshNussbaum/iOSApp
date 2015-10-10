@@ -24,6 +24,18 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 1
 
+// Stripe
+#define COCOAPODS_POD_AVAILABLE_Stripe
+#define COCOAPODS_VERSION_MAJOR_Stripe 5
+#define COCOAPODS_VERSION_MINOR_Stripe 1
+#define COCOAPODS_VERSION_PATCH_Stripe 4
+
+// Stripe/Core
+#define COCOAPODS_POD_AVAILABLE_Stripe_Core
+#define COCOAPODS_VERSION_MAJOR_Stripe_Core 5
+#define COCOAPODS_VERSION_MINOR_Stripe_Core 1
+#define COCOAPODS_VERSION_PATCH_Stripe_Core 4
+
 // gtm-oauth
 #define COCOAPODS_POD_AVAILABLE_gtm_oauth
 #define COCOAPODS_VERSION_MAJOR_gtm_oauth 0

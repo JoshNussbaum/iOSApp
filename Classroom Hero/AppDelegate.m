@@ -8,10 +8,13 @@
 
 #import "AppDelegate.h"
 #import "Utilities.h"
+#import "Stripe.h"
 
 @interface AppDelegate ()
 
 @end
+
+NSString * const StripePublishableKey = @"sk_test_6KuDGpD3SKosGwnoDFeik3FD";
 
 @implementation AppDelegate
 
@@ -25,7 +28,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    
+    [Stripe setDefaultPublishableKey:StripePublishableKey];
 
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
@@ -35,7 +39,7 @@
     if ([self checkOSVersion] >= 7) {
         [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                                 NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:36.0f],
+                                                                NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:35.0f],
                                                                 NSShadowAttributeName: shadow
                                                                 }];
     } else {

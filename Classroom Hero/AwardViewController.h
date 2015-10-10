@@ -42,7 +42,6 @@
 - (IBAction)addReinforcerClicked:(id)sender;
 - (IBAction)editReinforcerClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *editReinforcerButton;
-
-- (IBAction)swipeDown:(id)sender;
+- (IBAction)studentListClicked:(id)sender;
 
 @end

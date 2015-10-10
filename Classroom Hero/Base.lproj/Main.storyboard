@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="VM1-vP-cnk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="VM1-vP-cnk">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="AmaticSC-Bold.ttf">
@@ -89,7 +90,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.37476593339999997" green="0.64913119239999995" blue="0.33134224220000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" none="YES" button="YES" link="YES"/>
+                                    <accessibilityTraits key="traits" button="YES" link="YES"/>
                                 </accessibility>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -685,7 +686,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="classCell" rowHeight="150" id="19w-rb-Agj" customClass="ClassTableViewCell">
-                                <rect key="frame" x="0.0" y="86" width="768" height="150"/>
+                                <rect key="frame" x="0.0" y="22" width="768" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="19w-rb-Agj" id="srO-EL-heQ">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="149"/>
@@ -769,7 +770,7 @@
                     <navigationItem key="navigationItem" title="Class List" id="Ww6-r8-kIc">
                         <barButtonItem key="leftBarButtonItem" id="X0P-Ki-Ho5">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gjC-cf-Wmv">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="20" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="30"/>
@@ -784,7 +785,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="AVh-do-D2J">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="47E-f4-FcI">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="578" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
                                 <state key="normal" title="Add">
@@ -1058,7 +1059,7 @@
                     <navigationItem key="navigationItem" title="Student List" id="h9O-tv-xg5">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="jKO-9W-RPq">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2xO-MT-fwe">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="20" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
                                 <state key="normal" title="Back">
@@ -1072,7 +1073,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="XV7-6h-L4P">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Lby-K0-REy">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="578" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
                                 <state key="normal" title="Add Student">
@@ -1180,7 +1181,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="156-ON-2Kk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="e96-Dn-8gD">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="578" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
                                 <state key="normal" title="Edit Student">
@@ -1575,7 +1576,7 @@
                     <navigationItem key="navigationItem" title="Edit Teacher" id="ju9-80-CLg">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="0Hy-vl-r80">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GEn-nl-Nbt">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="20" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
                                 <state key="normal" title="Back">
@@ -1614,7 +1615,7 @@
             <objects>
                 <viewController id="PzN-nE-apu" customClass="RegisterTeacherStampViewController" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="qlD-Y8-0fr">
-                        <rect key="frame" x="0.0" y="94" width="768" height="960"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try  stamping  again" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qNV-Im-lLw">
@@ -1656,7 +1657,7 @@
                     <navigationItem key="navigationItem" title="Register Teacher Stamp" id="9Ez-BF-2y1">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="MZ6-co-MF9">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GOY-Ip-ldY">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="20" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
                                 <state key="normal" title="Back">
@@ -2385,10 +2386,10 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="qeI-AU-sWu" appends="YES" id="Pb8-0M-rhA"/>
                             <outletCollection property="gestureRecognizers" destination="Bdh-NG-UAR" appends="YES" id="nDx-n5-ceb"/>
-                            <outletCollection property="gestureRecognizers" destination="Uzo-QK-Kn6" appends="YES" id="sAK-X7-dxM"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="THD-2U-vjG">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" id="9Jb-hh-ciO">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sLD-Ag-hTN">
                                 <rect key="frame" x="20" y="2" width="170" height="39"/>
@@ -2403,9 +2404,22 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WEj-SA-9nd">
+                            <rect key="frame" x="231" y="2" width="307" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <state key="normal" title="Student List">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="studentListClicked:" destination="gqC-DY-3f5" eventType="touchUpInside" id="xUx-ju-Ehm"/>
+                            </connections>
+                        </button>
                         <barButtonItem key="rightBarButtonItem" id="fLm-Od-qpN">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="71e-Xs-oG0">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="578" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
                                 <state key="normal" title="Edit Reinforcer">
@@ -2451,11 +2465,6 @@
                 <swipeGestureRecognizer direction="right" id="Bdh-NG-UAR">
                     <connections>
                         <segue destination="wum-BM-i6p" kind="unwind" unwindAction="unwindToHome:" id="N7W-t8-Ho2"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="down" id="Uzo-QK-Kn6">
-                    <connections>
-                        <action selector="swipeDown:" destination="gqC-DY-3f5" id="bmK-Dk-Sub"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -2601,13 +2610,13 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="EfU-vX-rI3" appends="YES" id="O3W-Nq-VZb"/>
                             <outletCollection property="gestureRecognizers" destination="uMv-JP-z0z" appends="YES" id="CHk-ml-9Ny"/>
-                            <outletCollection property="gestureRecognizers" destination="JJ6-ki-h8g" appends="YES" id="NNw-g6-PU5"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Eyo-nW-p63">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" id="cN6-1J-115">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="M6b-RD-dgz">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="20" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Add Jar">
@@ -2619,9 +2628,22 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bu7-l4-nmf">
+                            <rect key="frame" x="231" y="-1" width="307" height="46"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <state key="normal" title="Student List">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="studentListClicked:" destination="mAJ-bY-EoJ" eventType="touchUpInside" id="6ci-zf-sBX"/>
+                            </connections>
+                        </button>
                         <barButtonItem key="rightBarButtonItem" id="sI0-XT-2og">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="CWt-1u-ZJg">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="578" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Edit Jar">
@@ -2658,11 +2680,6 @@
                 <swipeGestureRecognizer direction="right" id="uMv-JP-z0z">
                     <connections>
                         <segue destination="ZmY-0S-XHe" kind="unwind" unwindAction="unwindToAward:" id="TDx-uI-USV"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="down" id="JJ6-ki-h8g">
-                    <connections>
-                        <action selector="swipeDown:" destination="mAJ-bY-EoJ" id="uHZ-fK-14s"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -2810,13 +2827,13 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="JLX-xs-2M4" appends="YES" id="5st-cP-jnu"/>
-                            <outletCollection property="gestureRecognizers" destination="gHE-os-UhR" appends="YES" id="47Y-zf-Gs1"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="qau-OE-sNc">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" id="sLn-DI-gFn">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cDc-RY-Xa8">
-                                <rect key="frame" x="-23" y="-15" width="170" height="30"/>
+                                <rect key="frame" x="20" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Add Item">
@@ -2828,6 +2845,19 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UvD-he-CPE">
+                            <rect key="frame" x="231" y="-1" width="307" height="46"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <state key="normal" title="Student List">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="studentListClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="XKB-cf-dQk"/>
+                            </connections>
+                        </button>
                         <barButtonItem key="rightBarButtonItem" id="rac-KK-P5u">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5dl-Iz-pMg">
                                 <rect key="frame" x="578" y="2" width="170" height="40"/>
@@ -2863,11 +2893,6 @@
                 <swipeGestureRecognizer direction="right" id="JLX-xs-2M4">
                     <connections>
                         <segue destination="VH0-Rb-kzW" kind="unwind" unwindAction="unwindToClassJar:" id="lfH-Jt-bHu"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="down" id="gHE-os-UhR">
-                    <connections>
-                        <action selector="swipeDown:" destination="Kyg-8S-AT0" id="ynb-02-0va"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -2908,15 +2933,10 @@
         <image name="theLOGO.png" width="792" height="792"/>
         <image name="treasure_chest.png" width="832" height="867"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SR2-9x-ZVn"/>
         <segue reference="mtj-Wm-nfd"/>
-        <segue reference="K8T-Db-s2I"/>
+        <segue reference="SR2-9x-ZVn"/>
         <segue reference="LKv-5a-p8o"/>
+        <segue reference="Zt9-YX-YdQ"/>
     </inferredMetricsTieBreakers>
 </document>

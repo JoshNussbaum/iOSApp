@@ -387,7 +387,6 @@ static NSInteger coinHeight = 250;
                                                           [self.stampImage setFrame:awardRect];
                                                       }
                                       ];
-                                     
                                      self.nameLabel.text = @"";
                                      isStamping = NO;
                                      
@@ -574,7 +573,9 @@ static NSInteger coinHeight = 250;
 - (void)coinAnimationWithlevelup:(bool)levelup coins:(NSInteger)points{
     
     NSMutableArray *coinImages = [[NSMutableArray alloc]init];
-    
+    if (points > 50){
+        points = 50;
+    }
     for (int i = 1; i < (points+1); i++){
         UIImageView *coinImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CH_coin.png"]];
         coinImage.frame = [self getRandomCoinRect:(i % 2)];
@@ -904,7 +905,7 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (IBAction)swipeDown:(id)sender {
+- (IBAction)studentListClicked:(id)sender {
     UIStoryboard *storyboard = self.storyboard;
     CATransition *transition = [CATransition animation];
     transition.duration = 0.2;
@@ -913,7 +914,6 @@ static NSInteger coinHeight = 250;
     StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
     [self.navigationController pushViewController:stvc animated:NO];
 }
-
 
 - (IBAction)unwindToAward:(UIStoryboardSegue *)unwindSegue {
     

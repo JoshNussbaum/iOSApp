@@ -390,7 +390,7 @@
 }
 
 
-- (IBAction)swipeDown:(id)sender {
+- (IBAction)studentListClicked:(id)sender {
     UIStoryboard *storyboard = self.storyboard;
     CATransition *transition = [CATransition animation];
     transition.duration = 0.2;

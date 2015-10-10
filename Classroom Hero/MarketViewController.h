@@ -28,6 +28,6 @@
 - (IBAction)addItemClicked:(id)sender;
 - (IBAction)editItemClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *editItemButton;
-- (IBAction)swipeDown:(id)sender;
+- (IBAction)studentListClicked:(id)sender;
 
 @end
