@@ -13,11 +13,15 @@
 #import "MBProgressHUD.h"
 #import "StudentsTableViewController.h"
 
+static NSInteger coinWidth = 250;
+static NSInteger coinHeight = 250;
+
 @interface AwardViewController (){
     NSMutableArray *reinforcerData;
     
     reinforcer *currentReinforcer;
     NSString *tmpName;
+    NSString *tmpValue;
     
     user *currentUser;
     ConnectionHandler *webHandler;
@@ -53,6 +57,8 @@
     student *currentStudent;
     NSInteger pointsAwarded;
     NSInteger tmpPoints;
+    NSInteger center;
+    
 }
 
 @end
@@ -98,11 +104,11 @@
     
     coinRect = self.aTwo.frame;
     if (reinforcerData.count > 0){
-        NSLog(@"In here bro");
         [self.categoryPicker selectRow:index inComponent:0 animated:YES];
         self.categoryPicker.hidden = NO;
         currentReinforcer = [reinforcerData objectAtIndex:0];
         self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
+        self.reinforcerValue.text = [NSString stringWithFormat:@"+ %ld", (long)[currentReinforcer getValue]];
         [self.categoryPicker reloadAllComponents];
 
     }
@@ -110,12 +116,15 @@
     if (!reinforcerData || [reinforcerData count] == 0) {
         self.categoryPicker.hidden = YES;
         self.reinforcerLabel.text=@"Add  reinforcers  above";
+        self.reinforcerValue.text = @"";
         self.editReinforcerButton.hidden = YES;
 
     }
     else {
         self.editReinforcerButton.hidden = NO;
     }
+    
+    center = self.stampImage.center.x;
 
 }
 
@@ -128,9 +137,9 @@
 - (void)setReinforcerName{
     index = [self.categoryPicker selectedRowInComponent:0];
     currentReinforcer = [reinforcerData objectAtIndex:index];
-    NSLog(@"At row -> %ld we have \n ", (long)index);
     [currentReinforcer printReinforcer];
     self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
+    self.reinforcerValue.text = [NSString stringWithFormat:@"+ %ld", (long)[currentReinforcer getValue]];
 }
 
 
@@ -140,7 +149,7 @@
 
 
 - (IBAction)addReinforcerClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Add Reinforcer" message:nil cancel:nil  done:nil delete:NO input:@"Reinforcer name" tag:2 view:self];
+    [Utilities editAlertTextWithtitle:@"Add Reinforcer" message:nil cancel:nil  done:nil delete:NO textfields:@[@"Reinforcer name", @"Reinforcer value"] tag:2 view:self];
 }
 
 
@@ -148,7 +157,7 @@
     if (reinforcerData.count > 0){
         index = [self.categoryPicker selectedRowInComponent:0];
         currentReinforcer = [reinforcerData objectAtIndex:index];
-        [Utilities editAlertTextWithtitle:@"Edit Reinforcer" message:nil cancel:nil done:nil delete:YES input:[currentReinforcer getName] tag:1 view:self];
+        [Utilities editAlertTextWithtitle:@"Edit Reinforcer" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%li", (long)[currentReinforcer getValue]]] tag:1 view:self];
     }
     
 }
@@ -166,16 +175,22 @@
         return;
     }
     if (alertView.tag == 1){
-        NSLog(@"BUTTON INDEX -> %ld", (long)buttonIndex );
         if (buttonIndex == 1){
             NSString *newReinforcerName = [alertView textFieldAtIndex:0].text;
+            NSString *newReinforcerValue = [alertView textFieldAtIndex:1].text;
             
             NSString *errorMessage = [Utilities isInputValid:newReinforcerName :@"Reinforcer Name"];
             
-            if ([errorMessage isEqualToString:@""]){
-                [self activityStart:@"Editing Reinforcer..."];
-                [currentReinforcer setName:newReinforcerName];
-                [webHandler editCategory:[currentReinforcer getId] :newReinforcerName];
+            if (!errorMessage){
+                NSString *valueErrorMessage = [Utilities isNumeric:newReinforcerValue];
+                if (!valueErrorMessage){
+                    [self activityStart:@"Editing Reinforcer..."];
+                    [currentReinforcer setName:newReinforcerName];
+                    [webHandler editReinforcer:[currentReinforcer getId] :newReinforcerName :newReinforcerValue.integerValue];
+                }
+                else {
+                    [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:valueErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                }
             }
             else {
                 [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -184,19 +199,25 @@
         }
         else if (buttonIndex == 2){
             NSString *deleteMessage = [NSString stringWithFormat:@"Really delete %@?", [currentReinforcer getName]];
-            NSLog(@"Here is the delete message -> %@", deleteMessage);
             [Utilities alertStatusWithTitle:@"Confirm delete" message:deleteMessage cancel:@"Cancel" otherTitles:@[@"Delete"] tag:3 view:self];
         }
 
     }
     else if (alertView.tag == 2){
         tmpName = [alertView textFieldAtIndex:0].text;
+        tmpValue = [alertView textFieldAtIndex:1].text;
         
         NSString *errorMessage = [Utilities isInputValid:tmpName :@"Reinforcer Name"];
         
-        if ([errorMessage isEqualToString:@""]){
-            [self activityStart:@"Adding Reinforcer..."];
-            [webHandler addReinforcer:[currentUser.currentClass getId] :tmpName];
+        if (!errorMessage){
+            NSString *valueErrorMessage = [Utilities isNumeric:tmpValue];
+            if (!valueErrorMessage){
+                [self activityStart:@"Adding Reinforcer..."];
+                [webHandler addReinforcer:[currentUser.currentClass getId] :tmpName :tmpValue.integerValue];
+            }
+            else {
+                [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:valueErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            }
             
         }
         else {
@@ -204,7 +225,7 @@
         }
     }
     else if (alertView.tag == 3){
-        [webHandler deleteCategory:[currentReinforcer getId]];
+        [webHandler deleteReinforcer:[currentReinforcer getId]];
     }
     
 }
@@ -221,6 +242,7 @@
         self.levelLabel.hidden=YES;
         self.sackImage.hidden=YES;
         self.levelBar.hidden=YES;
+        self.categoryPicker.hidden = NO;
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
@@ -238,7 +260,6 @@
         else {
             NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            
             [hud hide:YES];
             return;
         }
@@ -247,7 +268,7 @@
         if([successNumber boolValue] == YES)
         {
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
-            reinforcer *rr = [[reinforcer alloc] init:reinforcerId :[currentUser.currentClass getId] :tmpName];
+            reinforcer *rr = [[reinforcer alloc] init:reinforcerId :[currentUser.currentClass getId] :tmpName :tmpValue.integerValue];
             
             [[DatabaseHandler getSharedInstance] addReinforcer:rr];
             [reinforcerData insertObject:rr atIndex:0];
@@ -281,6 +302,7 @@
             if (!reinforcerData || [reinforcerData count] == 0) {
                 self.categoryPicker.hidden = YES;
                 self.reinforcerLabel.text=@"Add  reinforcers  above";
+                self.reinforcerValue.text = @"";
                 self.editReinforcerButton.hidden = YES;
             }
             else {
@@ -292,9 +314,10 @@
     else if (type == REWARD_STUDENT){
         if([successNumber boolValue] == YES)
         {
+            pointsAwarded = [currentReinforcer getValue];
+
             NSInteger startLevel = [currentStudent getLvl];
             tmpPoints = [currentStudent getPoints];
-            [self displayStudent];
 
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
@@ -312,7 +335,7 @@
    
             NSInteger newLevel = [currentStudent getLvl];
             
-            [self addPoints:pointsAwarded levelup:(newLevel > startLevel) ? YES : NO];
+            [self addPoints:[currentReinforcer getValue] levelup:(newLevel > startLevel) ? YES : NO];
 
             [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
             
@@ -376,10 +399,9 @@
 }
 
 
-
 - (void)displayStudent{
     self.categoryPicker.hidden = YES;
-    NSString *studentName = [[currentStudent getFirstName] stringByAppendingString:[NSString stringWithFormat:@" %@",[currentStudent getLastName]]];
+    NSString *studentName = [NSString stringWithFormat:@"%@  %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.nameLabel.text = studentName;
     self.nameLabel.hidden = NO;
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[currentStudent getPoints]];
@@ -404,19 +426,20 @@
         if (resultObject != NULL) {
             if ([resultObject objectForKey:@"stamp"] != nil){
                 isStamping = YES;
-                [Utilities wiggleImage:self.stampImage sound:NO];
+                self.nameLabel.hidden = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 if (currentUser.serial){
                     if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                         if ([stampSerial isEqualToString:currentUser.serial]){
-                            [Utilities wiggleImage:self.stampImage sound:NO];
                             [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
                         }
                         else if ([[DatabaseHandler getSharedInstance] isValidStamp:stampSerial :[currentUser.currentClass getSchoolId]]){
                             currentStudent = [[DatabaseHandler getSharedInstance]getStudentWithSerial:stampSerial];
-                            pointsAwarded = [Utilities getRewardNumber];
-                            NSLog(@"Points awarded -> %ld", (long)pointsAwarded);
-                            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsAwarded categoryId:[currentReinforcer getId]];
+                            [self displayStudent];
+                            [Utilities wiggleImage:self.stampImage sound:NO];
+                            //pointsAwarded = [Utilities getRewardNumber];
+                            //NSLog(@"Points awarded -> %ld", (long)pointsAwarded);
+                            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:[currentReinforcer getValue] categoryId:[currentReinforcer getId]];
                         }
                         else {
                             [Utilities failAnimation:self.stampImage];
@@ -456,6 +479,7 @@
 
 
 - (void)addPoints:(NSInteger)points levelup:(bool)levelup{
+    NSLog(@"Points -> %ld", (long)points);
     AudioServicesPlaySystemSound(award);
     [currentStudent printStudent];
     if (levelup){
@@ -470,6 +494,13 @@
     }
     else if (points == 1){
         [self oneCoinAnimationWithlevelup:levelup];
+    }
+    else if (points > 3){
+        [self coinAnimationWithlevelup:levelup coins:points];
+    }
+    else {
+        [Utilities alertStatusNoConnection];
+        [self hideStudent];
     }
 
 }
@@ -488,7 +519,7 @@
 
 - (void)animateCoinToSack:(UIImageView *)coin{
     [coin setFrame:CGRectMake(self.sackImage.frame.origin.x + self.sackImage.frame.size.width/2 - 30, self.sackImage.frame.origin.y+50, self.sackImage.frame.size.width-75, self.sackImage.frame.size.height-75)];
-    coin.alpha = 0;
+    coin.alpha = 0.0;
 }
 
 
@@ -521,6 +552,106 @@
                      }
      ];
     
+}
+
+
+- (CGRect)getRandomCoinRect:(bool)left{
+    NSInteger randomX;
+    if (left){
+        randomX = center - coinWidth/2 - arc4random() % 250;
+    }
+    else{
+        randomX = center - coinWidth/2 + arc4random() % 250;
+    }
+    NSLog(@"Random X -> %ld", (long)randomX);
+    NSInteger randomY;
+    randomY = self.view.frame.size.height/2 - coinHeight/2;
+    CGRect randomCoinRect = CGRectMake(randomX, randomY, coinWidth, coinHeight);
+    return randomCoinRect;
+}
+
+
+- (void)coinAnimationWithlevelup:(bool)levelup coins:(NSInteger)points{
+    
+    NSMutableArray *coinImages = [[NSMutableArray alloc]init];
+    
+    for (int i = 1; i < (points+1); i++){
+        UIImageView *coinImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CH_coin.png"]];
+        coinImage.frame = [self getRandomCoinRect:(i % 2)];
+        coinImage.alpha = 0.0;
+        [coinImages addObject:coinImage];
+        [self.view addSubview:coinImage];
+    }
+    [UIView animateWithDuration:.5
+                     animations:^{
+                         for (UIImageView *coinImage in coinImages){
+                             coinImage.alpha =1.0;
+                         }
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:.5
+                                          animations:^{
+                                              for (UIImageView *coinImage in coinImages){
+                                                  [self animateCoinToSack:coinImage];
+                                              }
+                                          }
+                                          completion:^(BOOL finished) {
+                                              [Utilities sackWiggle:self.sackImage];
+                                              AudioServicesPlaySystemSound(coins);
+                                              [Utilities sackWiggle:self.sackImage];
+                                              for (UIImageView *coinImage in coinImages){
+                                                  coinImage.hidden = YES;
+                                              }
+                                              float t = .5;
+                                              if (levelup) t = .7;
+                                              [UIView animateWithDuration:t
+                                                               animations:^{
+                                                                   float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+                                                                   [self.levelBar setProgress:progress animated:YES];
+                                                                   [self incrementPoints];
+                                                                   if (levelup){
+                                                                       self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
+                                                                       [UIView animateWithDuration:.6 animations:^{
+                                                                           [self showLevelView];
+                                                                       }];
+                                                                   }
+                                                               }
+                                                               completion:^(BOOL finished) {
+                                                                   double delayInSeconds = 1.0;
+                                                                   if (levelup) delayInSeconds = 2.6;
+                                                                   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                                                                   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                                                       [UIView animateWithDuration:.5
+                                                                                        animations:^{
+                                                                                            [self hideStudent];
+                                                                                        }
+                                                                                        completion:^(BOOL finished) {
+                                                                                            self.categoryPicker.hidden = NO;
+                                                                                            isStamping = NO;
+                                                                                        }
+                                                                        ];
+                                                                   });
+                                                               }
+                                               ];
+                                          }
+                          ];
+                     }
+     ];
+    
+
+    
+    // Generate a ton of coins and put them in an array
+    
+    // For every coin in the array, animate it to the sack
+}
+
+
+- (void)hideStudent{
+    self.nameLabel.hidden=YES;
+    self.pointsLabel.hidden=YES;
+    self.levelLabel.hidden=YES;
+    self.sackImage.hidden=YES;
+    self.levelBar.hidden=YES;
 }
 
 
@@ -564,11 +695,7 @@
                                                                        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                                                                            [UIView animateWithDuration:.5
                                                                                             animations:^{
-                                                                                                self.nameLabel.hidden=YES;
-                                                                                                self.pointsLabel.hidden=YES;
-                                                                                                self.levelLabel.hidden=YES;
-                                                                                                self.sackImage.hidden=YES;
-                                                                                                self.levelBar.hidden=YES;
+                                                                                                [self hideStudent];
                                                                                             }
                                                                                             completion:^(BOOL finished) {
                                                                                                 self.categoryPicker.hidden = NO;
@@ -635,11 +762,7 @@
                                                                                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                                                                                                 [UIView animateWithDuration:.5
                                                                                                                  animations:^{
-                                                                                                                     self.nameLabel.hidden=YES;
-                                                                                                                     self.pointsLabel.hidden=YES;
-                                                                                                                     self.levelLabel.hidden=YES;
-                                                                                                                     self.sackImage.hidden=YES;
-                                                                                                                     self.levelBar.hidden=YES;
+                                                                                                                     [self hideStudent];
                                                                                                                  }
                                                                                                                  completion:^(BOOL finished) {
                                                                                                                      self.categoryPicker.hidden = NO;
@@ -704,7 +827,8 @@
                                                                                                                      self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
                                                                                                                      [UIView animateWithDuration:.6 animations:^{
                                                                                                                          [self showLevelView];
-                                                                                                                     }];                                                                                                                 }
+                                                                                                                     }];
+                                                                                                                 }
                                                                                                              }
                                                                                                              completion:^(BOOL finished) {
                                                                                                                  double delayInSeconds = 1.0;
@@ -713,11 +837,8 @@
                                                                                                                  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                                                                                                                      [UIView animateWithDuration:.5
                                                                                                                                       animations:^{
-                                                                                                                                          self.nameLabel.hidden=YES;
-                                                                                                                                          self.pointsLabel.hidden=YES;
-                                                                                                                                          self.levelLabel.hidden=YES;
-                                                                                                                                          self.sackImage.hidden=YES;
-                                                                                                                                          self.levelBar.hidden=YES;
+                                                                                                                                          [self hideStudent];
+
                                                                                                                                       }
                                                                                                                                       completion:^(BOOL finished) {
                                                                                                                                           self.categoryPicker.hidden = NO;

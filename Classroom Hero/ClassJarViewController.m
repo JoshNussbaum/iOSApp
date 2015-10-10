@@ -59,6 +59,7 @@
     self.appSecret = snowshoe_app_secret;
     
     if (!currentClassJar){
+        
         self.stepper.enabled = NO;
         self.classJarName.text = @"Add  a  jar  above";
     }
@@ -141,9 +142,9 @@
     
     NSString *errorMessage = [Utilities isInputValid:newClassJarName :@"Class jar Name"];
     
-    if ([errorMessage isEqualToString:@""]){
+    if (!errorMessage){
         errorMessage = [Utilities isNumeric:newClassJarTotal];
-        if ([errorMessage isEqualToString:@""]){
+        if (!errorMessage){
             if (alertView.tag == 1){
                 [self activityStart:@"Adding class jar..."];
                 [webHandler addJar:[currentUser.currentClass getId] :newClassJarName :newClassJarTotal.integerValue];

@@ -38,6 +38,10 @@ NSInteger ORDER_HEROIC = 25;
 NSInteger ORDER_LEGENDARY = 26;
 NSInteger ORDER_HERO = 27;
 NSInteger UNREGISTER_STAMP = 28;
+NSInteger EDIT_TEACHER_NAME = 29;
+NSInteger EDIT_TEACHER_PASSWORD = 29;
+NSInteger STAMP_TO_LOGIN = 30;
+
 
 
 + (UIColor *)CHBlueColor{
@@ -79,7 +83,7 @@ NSInteger UNREGISTER_STAMP = 28;
         if (!numeric){
             return [NSString stringWithFormat:@"\"%@\" is not a positive number", input];
         }
-        else return @"";
+        else return nil;
     }
     else{
         return [NSString stringWithFormat:@"\"%@\" is not a positive number", input];
@@ -99,7 +103,7 @@ NSInteger UNREGISTER_STAMP = 28;
     if (input.length < 1){
         return [NSString stringWithFormat:@"%@ must contain at least 1 character", inputName];
     }
-    return @"";
+    return nil;
 }
 
 

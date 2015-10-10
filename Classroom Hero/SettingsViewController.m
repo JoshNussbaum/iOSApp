@@ -13,6 +13,8 @@
 
 @interface SettingsViewController (){
     user *currentUser;
+    JSBadgeView *badgeView;
+    JSBadgeView *badgeView2;
 }
 
 @end
@@ -36,18 +38,24 @@
 - (void)checkAccountStatus{
     [currentUser printUser];
     if (!currentUser.serial){
+        NSLog(@"IN HERE");
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
-        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.registerTeacherStampView alignment:JSBadgeViewAlignmentTopRight];
+        badgeView = [[JSBadgeView alloc] initWithParentView:self.registerTeacherStampView alignment:JSBadgeViewAlignmentTopRight];
         badgeView.badgeText = @"1";
         badgeView.badgeTextColor=[UIColor whiteColor];
         badgeView.badgeBackgroundColor = [UIColor redColor];
         
-        JSBadgeView *badgeView2 = [[JSBadgeView alloc] initWithParentView:self.orderStampsView alignment:JSBadgeViewAlignmentTopRight];
+        badgeView2 = [[JSBadgeView alloc] initWithParentView:self.orderStampsView alignment:JSBadgeViewAlignmentTopRight];
         badgeView2.badgeText = @"1";
         badgeView2.badgeTextColor=[UIColor whiteColor];
         badgeView2.badgeBackgroundColor = [UIColor redColor];
         
     }
+    else {
+        [badgeView removeFromSuperview];
+        [badgeView2 removeFromSuperview];
+    }
+
 }
 
 

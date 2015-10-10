@@ -6,10 +6,11 @@
 //  Copyright (c) 2015 Josh Nussbaum. All rights reserved.
 //
 
+@import PassKit;
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
 
-@interface OrderStampsViewController : UIViewController <ConnectionHandlerDelegate>
+@interface OrderStampsViewController : PKPaymentAuthorizationViewController <ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *recruitButton;
 @property (strong, nonatomic) IBOutlet UIButton *heroicButton;

@@ -119,7 +119,7 @@
             if ([resultObject objectForKey:@"stamp"] != nil){
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                if ([Utilities isValidClassroomHeroStamp:stampSerial] && ![stampSerial isEqualToString:currentUser.serial]){
                     if (unregisteredStudents.count != 0){
                         if (![[DatabaseHandler getSharedInstance] isSerialRegistered:stampSerial] && ![stampSerial isEqualToString:currentUser.serial])
                         {

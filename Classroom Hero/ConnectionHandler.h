@@ -27,6 +27,7 @@
 
 +(ConnectionHandler *)getSharedInstance;
 
+
 - (void)logIn:(NSString *)email :(NSString *)password;
 
 
@@ -42,13 +43,13 @@
 - (void)deleteClass:(NSInteger)id;
 
 
-- (void)addReinforcer:(NSInteger)id :(NSString *)name;
+- (void)addReinforcer:(NSInteger)id :(NSString *)name :(NSInteger)value;
 
 
-- (void)editCategory:(NSInteger)id :(NSString *)name;
+- (void)editReinforcer:(NSInteger)id :(NSString *)name :(NSInteger)value;
 
 
-- (void)deleteCategory:(NSInteger)id;
+- (void)deleteReinforcer:(NSInteger)id;
 
 
 - (void)addItem:(NSInteger)id :(NSString *)name :(NSInteger)cost;
@@ -100,6 +101,15 @@
 
 
 - (void)unregisterStampWithid:(NSInteger)id;
+
+
+- (void)editTeacherNameWithid:(NSInteger)id firstName:(NSString *)firstName lastName:(NSString *)lastName;
+
+
+- (void)editTeacherPasswordWithid:(NSInteger)id password:(NSString *)password;
+
+
+- (void)stampToLogin:(NSString *)stampSerial;
 
 
 @end

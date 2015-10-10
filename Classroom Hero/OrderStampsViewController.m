@@ -35,7 +35,23 @@
     [self.stampsTextfield addTarget:self
                   action:@selector(textFieldDidChange:)
         forControlEvents:UIControlEventEditingChanged];
+    
+    if ([PKPaymentAuthorizationViewController canMakePayments]) {
+        NSLog(@"Can Make Payments");
+    }
+    else {
+        NSLog(@"Can't Make payments");
+    }
+    NSArray *paymentNetworks = [NSArray arrayWithObjects:PKPaymentNetworkMasterCard, PKPaymentNetworkVisa, PKPaymentNetworkAmex, nil];
+    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:paymentNetworks]) {
+        NSLog(@"Can Make payment with your card");
+    }
+    else {
+        NSLog(@"Card is not supporting");
+    }
 }
+
+
 
 
 - (void)textFieldDidChange:(UITextField *)textfield{
@@ -43,7 +59,7 @@
     NSString *errorMessage = [Utilities isNumeric:input];
     if ([errorMessage isEqualToString:@""]){
         stamps = input.integerValue;
-        if (stamps < 10){
+        if (stamps < 10 && ![input isEqualToString:@""]){
             price = stamps;
             self.costLabel.text = @"Must  order  at  least  10  stamps";
             return;
@@ -106,7 +122,7 @@
 - (IBAction)orderClicked:(id)sender {
     NSString *stampString = self.stampsTextfield.text;
     NSString *errorMessage = [Utilities isNumeric:stampString];
-    if([errorMessage isEqualToString:@""]){
+    if(!errorMessage){
         stamps = stampString.integerValue;
         if (stamps >= 10){
             [Utilities alertStatusWithTitle:@"Confirm purchase" message:[NSString stringWithFormat:@"Hero package: %ld stamps for $%.02f/year", (long)stampString.integerValue, price] cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:4 view:self];

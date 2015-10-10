@@ -98,9 +98,9 @@
     if (alertView.tag == 1){
         NSString *errorMessage = [Utilities isInputValid:newItemName :@"Item Name"];
         
-        if ([errorMessage isEqualToString:@""]){
+        if (!errorMessage){
             NSString *costErrorMessage = [Utilities isNumeric:newItemCost];
-            if ([costErrorMessage isEqualToString:@""]){
+            if (!costErrorMessage){
                 [self activityStart:@"Adding Item..."];
                 [webHandler addItem:[currentUser.currentClass getId] :newItemName :newItemCost.integerValue];
             }
@@ -118,9 +118,9 @@
         if (buttonIndex == 1){
             NSString *errorMessage = [Utilities isInputValid:newItemName :@"Item Name"];
             
-            if ([errorMessage isEqualToString:@""]){
+            if (!errorMessage){
                 NSString *costErrorMessage = [Utilities isNumeric:newItemCost];
-                if ([costErrorMessage isEqualToString:@""]){
+                if (!costErrorMessage){
                     [self activityStart:@"Editing Item..."];
                     [currentItem setName:newItemName];
                     [webHandler editItem:[currentItem getId] :newItemName :newItemCost.integerValue];
@@ -289,6 +289,7 @@
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 if (currentUser.serial){
                     if ([[DatabaseHandler getSharedInstance] isValidStamp:stampSerial :[currentUser.currentClass getSchoolId]]){
+                        [Utilities wiggleImage:self.stampImage sound:NO];
                         isStamping = YES;
                         [self sellItem:stampSerial];
                         self.picker.hidden = YES;

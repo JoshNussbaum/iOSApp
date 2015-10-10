@@ -24,12 +24,13 @@
 }
 
 
-- (id) init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_{
+- (id) init:(NSInteger)id_ :(NSInteger)cid_ :(NSString *)name_ :(NSInteger)value_{
     self = [super init];
     if (self){
         self->id = id_;
         self->cid = cid_;
         self->name = name_;
+        self->value = value_;
     }
     return self;
 }
@@ -53,6 +54,10 @@
 }
 
 
+- (void)setValue:(NSInteger)value_{
+    self->value = value_;
+}
+
 #pragma mark - Read
 
 
@@ -71,8 +76,13 @@
     return self->name;
 }
 
+
+- (NSInteger)getValue{
+    return self->value;
+}
+
 - (void)printReinforcer{
-    NSLog(@"Reinforcer name -> %@,\n Reinforcer Id -> %ld,\n Reinforecer CID -> %ld\n", self->name, (long)self->id , (long)self->cid);
+    NSLog(@"Reinforcer name -> %@,\n Reinforcer Id -> %ld,\n Reinforecer CID -> %ld,\n Reinforcer Value -> %ld\n", self->name, (long)self->id , (long)self->cid, (long)self->value);
 }
 
 

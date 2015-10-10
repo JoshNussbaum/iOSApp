@@ -11,6 +11,7 @@
 #import "Utilities.h"
 
 static NSString * const LOGIN_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/login/auth";
+static NSString * const STAMP_TO_LOGIN_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/login/auth/stamp";
 static NSString * const CREATE_ACCOUNT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/teacher";
 
 static NSString * const ADD_CLASS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/add";
@@ -44,6 +45,11 @@ static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/Sy
 static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/fill";
 
 static NSString * const ORDER_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
+
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
+
+
 
 static NSString *POST = @"POST";
 static NSString *PUT = @"PUT";
@@ -113,23 +119,23 @@ static NSInteger connectionType;
 }
 
 
-- (void)addReinforcer:(NSInteger)id :(NSString *)name{
+- (void)addReinforcer:(NSInteger)id :(NSString *)name :(NSInteger)value{
     connectionType = ADD_REINFORCER;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld,\"name\":\"%@\"}}", (long)id, name];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld,\"name\":\"%@\",\"value\":%ld}}", (long)id, name, (long)value];
     
     [self asynchronousWebCall:jsonRequest :ADD_CATEGORY_URL :POST];
 }
 
 
-- (void)editCategory:(NSInteger)id :(NSString *)name{
+- (void)editReinforcer:(NSInteger)id :(NSString *)name :(NSInteger)value{
     connectionType = EDIT_REINFORCER;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld,\"name\":\"%@\"}}", (long)id, name];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld,\"name\":\"%@\",\"value\":%ld}}", (long)id, name, (long)value];
     
     [self asynchronousWebCall:jsonRequest :EDIT_CATEGORY_URL :PUT];
 }
 
 
-- (void)deleteCategory:(NSInteger)id{
+- (void)deleteReinforcer:(NSInteger)id{
     connectionType = DELETE_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"category\":{\"id\":%ld}}", (long)id];
     
@@ -284,6 +290,34 @@ static NSInteger connectionType;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"user\":{\"id\":%ld}}", (long)id];
     
     [self asynchronousWebCall:jsonRequest :UNREGISTER_STAMP_URL :PUT];
+}
+
+
+- (void)editTeacherNameWithid:(NSInteger)id firstName:(NSString *)firstName lastName:(NSString *)lastName{
+    
+    connectionType = EDIT_TEACHER_NAME;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"user\":{\"id\":%ld, \"firstName\":\"%@\", \"lastName\":\"%@\"}}", (long)id, firstName, lastName];
+    
+    [self asynchronousWebCall:jsonRequest :EDIT_TEACHER_NAME_URL :PUT];
+
+}
+
+
+- (void)editTeacherPasswordWithid:(NSInteger)id password:(NSString *)password{
+    connectionType = EDIT_TEACHER_PASSWORD;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"user\":{\"id\":%ld, \"password\":\"%@\"}}", (long)id, password];
+    
+    [self asynchronousWebCall:jsonRequest :EDIT_TEACHER_PASSWORD_URL :PUT];
+}
+
+- (void)stampToLogin:(NSString *)stampSerial{
+    connectionType = STAMP_TO_LOGIN;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"credentials\":{\"stamp\":\"%@\"}}", stampSerial];
+    
+    [self asynchronousWebCall:jsonRequest :STAMP_TO_LOGIN_URL :POST];
 }
 
 

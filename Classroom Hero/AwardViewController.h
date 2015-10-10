@@ -21,6 +21,7 @@
 - (IBAction)marketClicked:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerLabel;
+@property (strong, nonatomic) IBOutlet UILabel *reinforcerValue;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIView *levelView;
 @property (strong, nonatomic) IBOutlet UILabel *levelLabel;

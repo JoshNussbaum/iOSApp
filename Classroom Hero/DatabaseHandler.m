@@ -41,7 +41,7 @@ static sqlite3_stmt *statement = nil;
     //Create filemanager and use it to check if database file already exists
     NSFileManager *filemgr = [NSFileManager defaultManager];
     
-    if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    if ([filemgr fileExistsAtPath: databasePath ] == YES)
     {
         const char *dbpath = [databasePath UTF8String];
         if (sqlite3_open(dbpath, &database) == SQLITE_OK)
@@ -61,7 +61,7 @@ static sqlite3_stmt *statement = nil;
             "CREATE TABLE School (id integer primary key, name text);"
             "CREATE TABLE Class (id integer primary key, name text, grade integer, schoolid integer, level integer, progress integer, nextlevel integer);"
             "CREATE TABLE Student (id integer primary key, firstname text, lastname text, serial text, lvl integer, progress integer, lvlupamount integer, points integer, totalpoints integer);"
-            "CREATE TABLE Reinforcer (id integer primary key, cid integer, name text);"
+            "CREATE TABLE Reinforcer (id integer primary key, cid integer, name text, value integer);"
             "CREATE TABLE Item (id integer primary key, cid integer, name text, cost integer);"
             "CREATE TABLE ClassJar (id integer primary key, cid integer, name text, progress integer, total integer);"
             "CREATE TABLE Point (id integer, cid integer, timestamp text);"
@@ -101,6 +101,7 @@ static sqlite3_stmt *statement = nil;
     {
         NSString *querySQL = [NSString stringWithFormat:
                               @"REPLACE INTO Class (id, name, grade, schoolid, level, progress, nextlevel) VALUES (%ld, \"%@\", %ld, %ld, %ld, %ld, %ld)", (long)[cl getId], [cl getName], (long)[cl getGradeNumber], (long)[cl getSchoolId], (long)[cl getLevel], (long)[cl getProgress], (long)[cl getNextLevel]];
+        NSLog(@"Add class query -> %@", querySQL);
         
         const char *query_stmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(database,
@@ -171,7 +172,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"REPLACE INTO Reinforcer (id, cid, name) VALUES (%ld, %ld, \"%@\")", (long)[rr getId], (long)[rr getCid], [rr getName]];
+                              @"REPLACE INTO Reinforcer (id, cid, name, value) VALUES (%ld, %ld, \"%@\", %ld)", (long)[rr getId], (long)[rr getCid], [rr getName], (long)[rr getValue]];
         
         const char *query_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
@@ -290,7 +291,9 @@ static sqlite3_stmt *statement = nil;
         for (NSDictionary *reinforcerDictionary in reinforcers){
             NSInteger rid = [[reinforcerDictionary objectForKey:@"id"]integerValue ];
             NSString *name = [reinforcerDictionary objectForKey:@"name"];
-            reinforcer *newReinforcer = [[reinforcer alloc] init:rid :cid :name];
+            NSInteger value = [[reinforcerDictionary objectForKey:@"value"]integerValue ];
+
+            reinforcer *newReinforcer = [[reinforcer alloc] init:rid :cid :name :value];
             [self addReinforcer:newReinforcer];
         }
        
@@ -518,7 +521,9 @@ static sqlite3_stmt *statement = nil;
                 
                 NSString *name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
                 
-                reinforcer *rr = [[reinforcer alloc] init:id :cid :name];
+                NSInteger value = sqlite3_column_int(statement, 3);
+                
+                reinforcer *rr = [[reinforcer alloc] init:id :cid :name :value];
                 [resultArray addObject:rr];
                 
             }

@@ -101,9 +101,9 @@
         if (buttonIndex == 1){
             NSString *errorMessage = [Utilities isInputValid:newStudentFirstName :@"Student First Name"];
             
-            if ([errorMessage isEqualToString:@""]){
+            if (!errorMessage){
                 NSString *costErrorMessage = [Utilities isInputValid:newStudentLastName :@"Student Last Name"];
-                if ([costErrorMessage isEqualToString:@""]){
+                if (!costErrorMessage){
                     [self activityStart:@"Editing Student..."];
                     [webHandler editStudent:[currentStudent getId] :[currentStudent getFirstName] :[currentStudent getLastName] :[currentStudent getSerial]];
                 }

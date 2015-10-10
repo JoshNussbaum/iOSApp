@@ -33,26 +33,19 @@ static NSString * const classCell = @"classCell";
 
 @implementation ClassTableViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView setBounces:NO];
     
-    UIColor *CHBlueColor = [UIColor colorWithRed:85.0/255.0 green:200.0/255.0 blue:255.0/255.0 alpha:1.0] ;
-
-    [self.navigationController.navigationBar setBarTintColor:CHBlueColor];
-    
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
+    UIColor *CHBlueColor = [UIColor colorWithRed:85.0/255.0 green:200.0/255.0 blue:255.0/255.0 alpha:1.0] ;
     
-    NSShadow* shadow = [NSShadow new];
-    shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    
-    [[UINavigationBar appearance] setTitleTextAttributes: @{
-                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                            NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:36.0f],
-                                                            NSShadowAttributeName: shadow
-                                                            }];
+    [self.navigationController.navigationBar setBarTintColor:CHBlueColor];
+  
     currentUser = [user getInstance];
     classes = [[DatabaseHandler getSharedInstance] getClasses];
     
@@ -153,9 +146,9 @@ static NSString * const classCell = @"classCell";
         NSString *newClassGrade = [alertView textFieldAtIndex:1].text;
         NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
         
-        if ([errorMessage isEqualToString:@""]){
+        if (!errorMessage){
             NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
-            if ([gradeErrorMessage isEqualToString:@""]){
+            if (!gradeErrorMessage){
                 NSInteger grade = newClassGrade.integerValue;
                 class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];

@@ -16,7 +16,7 @@
     // check if name has anything but letters
     if (self.text.length >= 1){
         NSString *classErrorMessage = [Utilities isNumeric:self.text];
-        if ([classErrorMessage isEqualToString:@""]){
+        if (!classErrorMessage){
             return @"";
         }
         else {
@@ -26,6 +26,7 @@
     else {
         return @"All fields are required";
     }
+    return @"";
 }
 
 @end

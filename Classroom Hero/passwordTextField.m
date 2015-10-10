@@ -13,7 +13,7 @@
 - (NSString *)validate{
     if (self.text.length >= 6){
         NSString *errorMessage = [self isPasswordValid:self.text];
-        if ([errorMessage isEqualToString:@""]){
+        if (!errorMessage){
             return @"";
         }
         else return errorMessage;
@@ -43,7 +43,7 @@
             return [NSString stringWithFormat:@"Password may not contain the character \"%c\"", uchar] ;
         }
     }
-    return @"" ;
+    return nil;
 }
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -45,6 +45,10 @@ extern NSInteger ORDER_HEROIC;
 extern NSInteger ORDER_LEGENDARY;
 extern NSInteger ORDER_HERO;
 extern NSInteger UNREGISTER_STAMP;
+extern NSInteger EDIT_TEACHER_NAME;
+extern NSInteger EDIT_TEACHER_PASSWORD;
+extern NSInteger STAMP_TO_LOGIN;
+
 
 + (UIColor *) CHBlueColor;
 
