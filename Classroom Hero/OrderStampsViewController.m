@@ -52,7 +52,7 @@
             return;
         }
         
-        self.costLabel.text = [NSString stringWithFormat:@"$%.02f/year", [self getPrice]];
+        self.costLabel.text = [NSString stringWithFormat:@"$%.2ld/year", (long)[self getPrice]];
     }
     else {
         self.costLabel.text = errorMessage;
@@ -126,6 +126,53 @@
     else {
         [Utilities alertStatusWithTitle:@"Error placing order" message:errorMessage cancel:nil otherTitles:nil tag:0 view:self];
     }
+}
+
+- (void)handlePaymentAuthorizationWithPayment:(PKPayment *)payment
+                                   completion:(void (^)(PKPaymentAuthorizationStatus))completion {
+    [[STPAPIClient sharedClient] createTokenWithPayment:payment
+                                             completion:^(STPToken *token, NSError *error) {
+                                                 if (error) {
+                                                     completion(PKPaymentAuthorizationStatusFailure);
+                                                     return;
+                                                 }
+                                                 /*
+                                                  We'll implement this below in "Sending the token to your server".
+                                                  Notice that we're passing the completion block through.
+                                                  See the above comment in didAuthorizePayment to learn why.
+                                                  */
+                                                 [self createBackendChargeWithToken:token completion:completion];
+                                             }];
+}
+
+- (void)createBackendChargeWithToken:(STPToken *)token
+                          completion:(void (^)(PKPaymentAuthorizationStatus))completion {
+    NSURL *url = [NSURL URLWithString:@"https://example.com/token"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    request.HTTPMethod = @"POST";
+    NSString *body     = [NSString stringWithFormat:@"stripeToken=%@", token.tokenId];
+    request.HTTPBody   = [body dataUsingEncoding:NSUTF8StringEncoding];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response,
+                                               NSData *data,
+                                               NSError *error) {
+                               if (error) {
+                                   if ([self canMakePayments]) {
+                                       completion(PKPaymentAuthorizationStatusFailure);
+                                   }
+                                   else {
+                                       [Utilities alertStatusNoConnection];
+                                   }
+                               } else {
+                                   if ([self canMakePayments]) {
+                                       completion(PKPaymentAuthorizationStatusFailure);
+                                   }
+                                   else {
+                                       [Utilities alertStatusWithTitle:@"Payment successfully processed" message:@"Check your email for confirmation details" cancel:nil otherTitles:nil tag:0 view:self];
+                                   }
+                               }
+                           }];
 }
 
 

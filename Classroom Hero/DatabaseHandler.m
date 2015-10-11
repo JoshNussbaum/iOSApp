@@ -368,7 +368,6 @@ static sqlite3_stmt *statement = nil;
     return nil;
 }
 
-//            "CREATE TABLE Class (id integer primary key, name text, grade integer, schoolid integer, level integer, progress integer, nextlevel integer);"
 
 - (class *) getClass:(NSInteger)classId{
     const char *dbpath = [databasePath UTF8String];
@@ -869,45 +868,6 @@ static sqlite3_stmt *statement = nil;
 }
 
 
-//- (NSMutableArray *)getClassIdsBySchoolId:(NSInteger)schoolId{
-//    const char *dbpath = [databasePath UTF8String];
-//    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
-//    {
-//        NSMutableArray *classIds = [[NSMutableArray alloc]init];
-//        NSString *getClassIdsQuery = [NSString stringWithFormat:@"SELECT id FROM Class WHERE schoolid = %ld", (long)schoolId];
-//        const char *query_stmt = [getClassIdsQuery UTF8String];
-//        if (sqlite3_prepare_v2(database,
-//                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
-//        {
-//            while (sqlite3_step(statement) == SQLITE_ROW)
-//            {
-//                NSInteger classId = sqlite3_column_int(statement, 0);
-//                NSNumber *classIdNumber = [NSNumber numberWithInteger:classId];
-//                [classIds addObject:classIdNumber];
-//                
-//            }
-//        }
-//        sqlite3_reset(statement);
-//        sqlite3_close(database);
-//        return classIds;
-//    }
-//    sqlite3_close(database);
-//    return nil;
-//}
-//
-//
-//- (NSMutableArray *)getStudentIdsByClassIds:(NSMutableArray *)classIds{
-//    NSMutableArray *allStudentIds;
-//    for (NSNumber *classId in classIds){
-//        NSMutableArray *studentIds;
-//        NSInteger classId_ = classId.integerValue;
-//        studentIds = [self getStudentIds:classId_];
-//        [allStudentIds addObjectsFromArray:studentIds];
-//    }
-//    return allStudentIds;
-//}
-
-
 - (NSMutableArray *) getSchoolIdsWithstudentId:(NSInteger)studentId{
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
@@ -932,6 +892,77 @@ static sqlite3_stmt *statement = nil;
     }
     sqlite3_close(database);
     return nil;
+}
+
+
+
+- (NSMutableArray *)getStudentIdsWithSchoolId:(NSInteger)schoolId{
+    const char *dbpath = [databasePath UTF8String];
+    NSMutableArray *studentIds = [[NSMutableArray alloc]init];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK){
+        NSString *getStudentIds = [NSString stringWithFormat:@"SELECT studentId FROM StudentSchoolMatch where schoolId=%ld", (long)schoolId];
+        const char *query_stmt = [getStudentIds UTF8String];
+        
+        if (sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL) == SQLITE_OK){
+            while (sqlite3_step(statement) == SQLITE_ROW){
+                NSInteger studentId = sqlite3_column_int(statement, 0);
+                
+                [studentIds addObject:[NSNumber numberWithInteger:studentId]];
+            }
+        }
+        sqlite3_reset(statement);
+        sqlite3_close(database);
+        return studentIds;
+    }
+    sqlite3_close(database);
+    return nil;
+}
+
+
+- (NSMutableArray *)getStudentsWithStudentIds:(NSMutableArray *)studentIds{
+    NSMutableArray *students = [[NSMutableArray alloc]init];
+    
+    for (NSNumber *studentId in studentIds){
+        NSInteger sid = [studentId integerValue];
+        student *foundStudent = [self getStudentWithID:sid];
+        [students addObject:foundStudent];
+    }
+    return students;
+}
+
+
+
+
+- (NSInteger)getNumberOfPointsInSchool:(NSInteger)schoolId{
+    NSInteger totalPoints = 0;
+    NSMutableArray *studentIds = [self getStudentIdsWithSchoolId:schoolId];
+    NSMutableArray *students = [self getStudentsWithStudentIds:studentIds];
+    
+    for (student *student_ in students){
+        totalPoints += [student_ getProgress];
+    }
+    return totalPoints;
+}
+
+
+- (NSMutableDictionary *)getClassStats:(NSInteger)classId{
+    NSMutableDictionary *stats = [[NSMutableDictionary alloc] init];
+    NSMutableArray *students = [self getStudents:classId];
+    
+    NSInteger totalLevels = 0;
+    NSInteger totalPoints = 0;
+    for (student *student_ in students){
+        totalPoints += [student_ getProgress];
+        totalLevels += [student_ getLvl];
+    }
+    NSInteger averageLevel = totalLevels / [students count];
+    NSInteger averagePoints = totalPoints / [students count];
+    
+    [stats setObject:[NSNumber numberWithInteger:averageLevel] forKey:@"averageLevel"];
+    [stats setObject:[NSNumber numberWithInteger:averagePoints] forKey:@"averagePoints"];
+    return stats;
+
+    
 }
 
 
@@ -1333,6 +1364,48 @@ static sqlite3_stmt *statement = nil;
     sqlite3_close(database);
     return NO;
 }
+
+
+
+
+
+//- (NSMutableArray *)getClassIdsBySchoolId:(NSInteger)schoolId{
+//    const char *dbpath = [databasePath UTF8String];
+//    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+//    {
+//        NSMutableArray *classIds = [[NSMutableArray alloc]init];
+//        NSString *getClassIdsQuery = [NSString stringWithFormat:@"SELECT id FROM Class WHERE schoolid = %ld", (long)schoolId];
+//        const char *query_stmt = [getClassIdsQuery UTF8String];
+//        if (sqlite3_prepare_v2(database,
+//                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+//        {
+//            while (sqlite3_step(statement) == SQLITE_ROW)
+//            {
+//                NSInteger classId = sqlite3_column_int(statement, 0);
+//                NSNumber *classIdNumber = [NSNumber numberWithInteger:classId];
+//                [classIds addObject:classIdNumber];
+//
+//            }
+//        }
+//        sqlite3_reset(statement);
+//        sqlite3_close(database);
+//        return classIds;
+//    }
+//    sqlite3_close(database);
+//    return nil;
+//}
+//
+//
+//- (NSMutableArray *)getStudentIdsByClassIds:(NSMutableArray *)classIds{
+//    NSMutableArray *allStudentIds;
+//    for (NSNumber *classId in classIds){
+//        NSMutableArray *studentIds;
+//        NSInteger classId_ = classId.integerValue;
+//        studentIds = [self getStudentIds:classId_];
+//        [allStudentIds addObjectsFromArray:studentIds];
+//    }
+//    return allStudentIds;
+//}
 
 
 @end

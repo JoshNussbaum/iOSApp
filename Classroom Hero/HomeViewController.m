@@ -80,6 +80,12 @@
         barButton.shouldAnimateBadge = YES;
         self.navigationItem.rightBarButtonItem = barButton;
     }
+    
+    NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
+    
+    self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%d", [[classStats objectForKey:@"averageLevel"] integerValue]];
+    self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%d", [[classStats objectForKey:@"averagePoints"] integerValue]];
+
 
 }
 

@@ -99,6 +99,11 @@
 - (NSInteger)getNumberOfUnregisteredStudentsInClass:(NSInteger)cid;
 
 
+- (NSInteger)getNumberOfPointsInSchool:(NSInteger)schoolId;
+
+
+- (NSMutableDictionary *)getClassStats:(NSInteger)classId;
+
 
 // Update Functions
 

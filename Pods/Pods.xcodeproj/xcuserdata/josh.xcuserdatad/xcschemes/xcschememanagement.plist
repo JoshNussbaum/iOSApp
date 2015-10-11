@@ -9,22 +9,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-Classroom Hero-BBBadgeBarButtonItem.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Classroom Hero-JSBadgeView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-Classroom Hero-MBProgressHUD.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-Classroom Hero-Stripe.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -62,7 +52,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>36537BD597D7F09F39C30F9C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>37DD313C64A162E46A32B570</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5664E2BACC7F253D97D28F33</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>702DCD2FB3BEDE6EA897FC54</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A924EEDE6A095010914F1F80</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -78,6 +88,16 @@
 			<true/>
 		</dict>
 		<key>BD9A28321B7EDBAE411173F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C359B4455809E7FAADCA50B5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E9D0370DD027E29D1FB2E96A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
