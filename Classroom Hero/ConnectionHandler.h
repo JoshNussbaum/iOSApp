@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "user.h"
+#import "Stripe.h"
 
 @protocol ConnectionHandlerDelegate
 
@@ -97,9 +98,6 @@
 - (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost;
 
 
-- (void)orderStampsWithid:(NSInteger)id packageId:(NSInteger)packageId :(NSInteger)stamps :(NSInteger)schoolId;
-
-
 - (void)unregisterStampWithid:(NSInteger)id;
 
 
@@ -110,6 +108,9 @@
 
 
 - (void)stampToLogin:(NSString *)stampSerial;
+
+
+- (void)getClassStatsWithclassId:(NSInteger)classId schoolId:(NSInteger)schoolId;
 
 
 @end

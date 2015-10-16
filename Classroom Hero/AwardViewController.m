@@ -59,6 +59,8 @@ static NSInteger coinHeight = 250;
     NSInteger tmpPoints;
     NSInteger center;
     
+    NSInteger counter;
+    
 }
 
 @end
@@ -123,8 +125,9 @@ static NSInteger coinHeight = 250;
     else {
         self.editReinforcerButton.hidden = NO;
     }
-    
+    self.levelView.layer.zPosition = 5.0;
     center = self.stampImage.center.x;
+    counter = 0;
 
 }
 
@@ -186,6 +189,7 @@ static NSInteger coinHeight = 250;
                 if (!valueErrorMessage){
                     [self activityStart:@"Editing Reinforcer..."];
                     [currentReinforcer setName:newReinforcerName];
+                    [currentReinforcer setValue:newReinforcerValue.integerValue];
                     [webHandler editReinforcer:[currentReinforcer getId] :newReinforcerName :newReinforcerValue.integerValue];
                 }
                 else {
@@ -427,6 +431,7 @@ static NSInteger coinHeight = 250;
                 isStamping = YES;
                 self.nameLabel.hidden = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                NSLog(@"Stamp serial -> %@", stampSerial);
                 if (currentUser.serial){
                     if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                         if ([stampSerial isEqualToString:currentUser.serial]){
@@ -554,13 +559,16 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (CGRect)getRandomCoinRect:(bool)left{
-    NSInteger randomX;
-    if (left){
-        randomX = center - coinWidth/2 - arc4random() % 250;
+- (CGRect)getRandomCoinRect:(NSInteger)coin{
+    NSInteger randomX = 0;
+    if (coin == 0){
+        randomX = arc4random() % 100;
     }
-    else{
-        randomX = center - coinWidth/2 + arc4random() % 250;
+    else if (coin == 1){
+        randomX = center - (coinWidth/2)- 50 + (arc4random() % 100);
+    }
+    else if (coin == 2){
+        randomX = self.view.frame.size.width - coinWidth  - arc4random() % 100;
     }
     NSLog(@"Random X -> %ld", (long)randomX);
     NSInteger randomY;
@@ -577,13 +585,16 @@ static NSInteger coinHeight = 250;
         points = 50;
     }
     for (int i = 1; i < (points+1); i++){
-        UIImageView *coinImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CH_coin.png"]];
-        coinImage.frame = [self getRandomCoinRect:(i % 2)];
+        UIImageView *coinImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"star.png"]];
+
+        coinImage.frame = [self getRandomCoinRect:counter];
+        if (counter == 2) counter = 0;
+        else counter++;
         coinImage.alpha = 0.0;
         [coinImages addObject:coinImage];
         [self.view addSubview:coinImage];
     }
-    [UIView animateWithDuration:.5
+    [UIView animateWithDuration:1.0
                      animations:^{
                          for (UIImageView *coinImage in coinImages){
                              coinImage.alpha =1.0;
@@ -915,6 +926,7 @@ static NSInteger coinHeight = 250;
     [self.navigationController pushViewController:stvc animated:NO];
 }
 
+
 - (IBAction)unwindToAward:(UIStoryboardSegue *)unwindSegue {
     
 }
@@ -927,5 +939,6 @@ static NSInteger coinHeight = 250;
     [hud show:YES];
     
 }
+
 
 @end

@@ -40,7 +40,6 @@ static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/SynappWebS
 static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/stamp";
 static NSString * const UNREGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/unregisterStamp";
 
-
 static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/rewardAllStudents";
 static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/fill";
 
@@ -48,6 +47,8 @@ static NSString * const ORDER_URL = @"http://73.231.27.167:8080/SynappWebService
 
 static NSString * const EDIT_TEACHER_NAME_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
 static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
+
+static NSString * const GET_CLASS_STATS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/stats";
 
 
 
@@ -264,24 +265,24 @@ static NSInteger connectionType;
     [self asynchronousWebCall:jsonRequest :STUDENT_TRANSACTION_URL :POST];
 }
 
-- (void)orderStampsWithid:(NSInteger)id packageId:(NSInteger)packageId :(NSInteger)stamps :(NSInteger)schoolId{
-    if (packageId == 1){
-        connectionType = ORDER_RECRUIT;
-    }
-    else if (packageId == 2){
-        connectionType = ORDER_HEROIC;
-    }
-    else if (packageId == 3){
-        connectionType = ORDER_LEGENDARY;
-    }
-    else if (packageId == 4){
-        connectionType = ORDER_HERO;
-    }
-    
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"order\":{\"uid\":%ld, \"package\":%ld, \"numStamps\":%ld, \"schoolId\":%ld}}", (long)id, (long)packageId, (long)stamps, (long)schoolId];
-    
-    [self asynchronousWebCall:jsonRequest :ORDER_URL :POST];
-}
+//- (void)orderStampsWithid:(NSInteger)id packageId:(NSInteger)packageId stamps:(NSInteger)stamps schoolId:(NSInteger)schoolId source:(STPToken *)source amount:(NSInteger)amount currency:(NSString *)currency email:(NSString *)email{
+//    if (packageId == 1){
+//        connectionType = ORDER_RECRUIT;
+//    }
+//    else if (packageId == 2){
+//        connectionType = ORDER_EPIC;
+//    }
+//    else if (packageId == 3){
+//        connectionType = ORDER_LEGENDARY;
+//    }
+//    else if (packageId == 4){
+//        connectionType = ORDER_HERO;
+//    }
+//    
+//    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"order\":{\"uid\":%ld, \"package\":%ld, \"numStamps\":%ld, \"schoolId\":%ld, \"source\":\"%@\", \"amount\":%ld, \"currency\":\"%@\", \"email\":\"%@\" }}", (long)id, (long)packageId, (long)stamps, (long)schoolId, source, (long)amount, @"USD", email];
+//    
+//    [self asynchronousWebCall:jsonRequest :ORDER_URL :POST];
+//}
 
 
 - (void)unregisterStampWithid:(NSInteger)id{
@@ -320,6 +321,13 @@ static NSInteger connectionType;
     [self asynchronousWebCall:jsonRequest :STAMP_TO_LOGIN_URL :POST];
 }
 
+- (void)getClassStatsWithclassId:(NSInteger)classId schoolId:(NSInteger)schoolId{
+    connectionType = GET_CLASS_STATS;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"stats\":{\"classId\":%ld, \"schoolId\":%ld}}", (long)classId, (long)schoolId];
+    
+    [self asynchronousWebCall:jsonRequest :GET_CLASS_STATS_URL :GET];
+}
 
 
 - (NSDictionary *) synchronousWebCall:(NSString *)jsonRequest :(NSURL *)url :(NSString *)httpMethod{

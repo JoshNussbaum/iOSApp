@@ -10,15 +10,16 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "Stripe.h"
+#import "User.h"
 
 
 @interface OrderStampsViewController (){
     NSInteger stamps;
-    ConnectionHandler *webHandler;
     user *currentUser;
     float price;
     NSInteger orderId;
     MBProgressHUD *hud;
+    NSInteger packageId;
 }
 
 @end
@@ -28,7 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSArray *buttons = @[self.recruitButton, self.heroicButton, self.legendaryButton, self.placeOrderButton];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     currentUser = [user getInstance];
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :[UIColor whiteColor]];
@@ -44,7 +44,7 @@
 - (void)textFieldDidChange:(UITextField *)textfield{
     NSString *input = textfield.text;
     NSString *errorMessage = [Utilities isNumeric:input];
-    if ([errorMessage isEqualToString:@""]){
+    if (!errorMessage){
         stamps = input.integerValue;
         if (stamps < 10 && ![input isEqualToString:@""]){
             price = stamps;
@@ -80,8 +80,47 @@
         return;
     }
     else{
-        [self activityStart:@"Placing order..."];
-        [webHandler orderStampsWithid:currentUser.id packageId:alertView.tag :stamps :[currentUser.currentClass getSchoolId]];
+        //[self activityStart:@"Placing order..."];
+        
+        PKPaymentRequest *request = [Stripe
+                                     paymentRequestWithMerchantIdentifier:merchant_id];
+        // Configure your request here.
+        NSString *description;
+        switch (packageId) {
+            case 0:
+                description = [NSString stringWithFormat:@"Hero package with %ld stamps", (long)stamps];
+                break;
+            case 1:
+                description = [NSString stringWithFormat:@"Recruit package with 40 stamps"];
+                break;
+            case 2:
+                description = [NSString stringWithFormat:@"Epic package with 120 stamps"];
+                break;
+            case 3:
+                description = [NSString stringWithFormat:@"Legendary package with 500 stamps"];
+                break;
+            default:
+                break;
+        }
+        NSString *amountString = [NSString stringWithFormat:@"%f", price];
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:amountString];
+        request.paymentSummaryItems = @[
+                                        [PKPaymentSummaryItem summaryItemWithLabel:description
+                                                                            amount:amount]
+                                        ];
+        
+        if ([Stripe canSubmitPaymentRequest:request]) {
+            PKPaymentAuthorizationViewController *paymentController;
+            paymentController = [[PKPaymentAuthorizationViewController alloc]
+                                 initWithPaymentRequest:request];
+            paymentController.delegate = self;
+            [self presentViewController:paymentController animated:YES completion:nil];
+            //
+        } else {
+            // Show the user your own credit card form (see options 2 or 3)
+            NSLog(@"Er nah");
+        }
+        
     }
 }
 
@@ -93,6 +132,8 @@
 
 - (IBAction)recruitClicked:(id)sender {
     stamps = 40;
+    packageId = 1;
+    price = 40;
     [Utilities alertStatusWithTitle:@"Confirm purchase" message:@"Recruit package: 40 stamps for $40/year" cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:1 view:self];
     
 }
@@ -100,13 +141,16 @@
 
 - (IBAction)heroicClicked:(id)sender {
     stamps = 120;
-
+    packageId = 2;
+    price = 96;
     [Utilities alertStatusWithTitle:@"Confirm purchase" message:@"Heroic package: 120 stamps for $96/year" cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:2 view:self];
 }
 
 
 - (IBAction)legendaryClicked:(id)sender {
     stamps = 500;
+    packageId = 3;
+    price = 350;
     [Utilities alertStatusWithTitle:@"Confirm purchase" message:@"Legendary package: 500 stamps for $350/year" cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:3 view:self];
 }
 
@@ -120,7 +164,7 @@
     if(!errorMessage){
         stamps = stampString.integerValue;
         if (stamps >= 10){
-            [Utilities alertStatusWithTitle:@"Confirm purchase" message:[NSString stringWithFormat:@"Hero package: %ld stamps for $%.02f/year", (long)stampString.integerValue, price] cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:4 view:self];
+            [Utilities alertStatusWithTitle:@"Confirm purchase" message:[NSString stringWithFormat:@"Basic package: %ld stamps for $%.02f/year", (long)stampString.integerValue, price] cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:4 view:self];
         }
     }
     else {
@@ -141,92 +185,56 @@
                                                   Notice that we're passing the completion block through.
                                                   See the above comment in didAuthorizePayment to learn why.
                                                   */
+                                                 NSLog(@"IN hurrr");
+                                                 
+
                                                  [self createBackendChargeWithToken:token completion:completion];
                                              }];
 }
 
+- (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
+                       didAuthorizePayment:(PKPayment *)payment
+                                completion:(void (^)(PKPaymentAuthorizationStatus))completion {
+    NSLog(@"IN here bout to order stamps");
+    [self handlePaymentAuthorizationWithPayment:payment completion:completion];
+}
+
+- (void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)createBackendChargeWithToken:(STPToken *)token
                           completion:(void (^)(PKPaymentAuthorizationStatus))completion {
-    NSURL *url = [NSURL URLWithString:@"https://example.com/token"];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"stripeToken=%@", token.tokenId];
-    request.HTTPBody   = [body dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"order\":{\"uid\":%ld, \"package\":%ld, \"numStamps\":%ld, \"schoolId\":%ld, \"source\":\"%@\", \"amount\":%ld, \"currency\":\"%@\", \"email\":\"%@\" }}", (long)currentUser.id, (long)packageId, (long)stamps, (long)[currentUser.currentClass getSchoolId], token, (long)price, @"USD", currentUser.email];
+    NSURL *url = [NSURL URLWithString:@"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:10];
+    NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody: requestData];
+    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response,
                                                NSData *data,
                                                NSError *error) {
                                if (error) {
-                                   if ([self canMakePayments]) {
-                                       completion(PKPaymentAuthorizationStatusFailure);
-                                   }
-                                   else {
-                                       [Utilities alertStatusNoConnection];
-                                   }
+                                   completion(PKPaymentAuthorizationStatusFailure);
                                } else {
-                                   if ([self canMakePayments]) {
-                                       completion(PKPaymentAuthorizationStatusFailure);
-                                   }
-                                   else {
-                                       [Utilities alertStatusWithTitle:@"Payment successfully processed" message:@"Check your email for confirmation details" cancel:nil otherTitles:nil tag:0 view:self];
-                                   }
+                                   completion(PKPaymentAuthorizationStatusSuccess);
+                                   [Utilities alertStatusWithTitle:@"Order successfully placed" message:@"Check your email for confirmation details" cancel:nil otherTitles:nil tag:0 view:self];
                                }
                            }];
-}
-
-
-
-
-- (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    NSLog(@"In order stamps -> %@", data);
-    orderId = [[data objectForKey:@"id"] integerValue];
-    [hud hide:YES];
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-
-    if ([successNumber boolValue] == YES){
-        NSString *packageName;
-        if (type == ORDER_HERO) {
-            packageName = [NSString stringWithFormat:@"Hero package with %ld stamps", (long)stamps];
-        }
-        else if (type == ORDER_RECRUIT){
-            packageName = @"Recruit package";
-        }
-        else if (type == ORDER_HEROIC){
-            packageName = @"Heroic package";
-        }
-        else if (type == ORDER_LEGENDARY){
-            packageName = @"Legendary package";
-        }
-        PKPaymentRequest *request = [Stripe
-                                     paymentRequestWithMerchantIdentifier:merchant_id];
-        // Configure your request here.
-        NSString *label = packageName;
-        NSString *costAmount = [NSString stringWithFormat:@"%li", (long)price];
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:costAmount];
-        request.paymentSummaryItems = @[
-                                        [PKPaymentSummaryItem summaryItemWithLabel:label
-                                                                            amount:amount]
-                                        ];
-        
-        if ([Stripe canSubmitPaymentRequest:request]) {
-            NSLog(@"In here can submit");
-            PKPaymentAuthorizationViewController *paymentController;
-            
-            paymentController = [[PKPaymentAuthorizationViewController alloc]
-                                 initWithPaymentRequest:request];
-            paymentController.delegate = self;
-            
-            [self presentViewController:paymentController animated:YES completion:nil];
-        } else {
-            NSLog(@"NAh you can't homei");
-            // Show the user your own credit card form (see options 2 or 3)
-        }
-
-    }
 
     
 }
+
 
 
 - (IBAction)backClicked:(id)sender {
@@ -246,6 +254,7 @@
 
 - (void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.layer.zPosition = 200.0;
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
     [hud show:YES];

@@ -46,7 +46,6 @@
 
 
 - (void)setFlag:(NSInteger)flag_;
-- (IBAction)swipeDown:(id)sender;
 - (IBAction)tutorialClicked:(id)sender;
 - (IBAction)registerStudentsClicked:(id)sender;
 - (IBAction)classesClicked:(id)sender;
@@ -54,7 +53,6 @@
 - (IBAction)classJarClicked:(id)sender;
 - (IBAction)marketClicked:(id)sender;
 - (IBAction)settingsClicked:(id)sender;
-
-@property (strong, nonatomic) IBOutlet UIButton *testbutton;
+- (IBAction)studentListClicked:(id)sender;
 
 @end

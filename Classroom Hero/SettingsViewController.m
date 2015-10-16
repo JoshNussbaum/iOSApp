@@ -10,6 +10,7 @@
 #import "Utilities.h"
 #import "user.h"
 #import "JSBadgeView.h"
+#import "StudentsTableViewController.h"
 
 @interface SettingsViewController (){
     user *currentUser;
@@ -25,7 +26,7 @@
     [super viewDidLoad];
     [Utilities makeRoundedButton:self.orderStampsButton :nil];
     [Utilities makeRoundedButton:self.registerTeacherStamp :nil];
-    [Utilities makeRoundedButton:self.activityMonitorButton :nil];
+    [Utilities makeRoundedButton:self.studentListButton :nil];
     
 
 }
@@ -69,6 +70,16 @@
 
 - (IBAction)backClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
 }
 
 - (IBAction)editTeacherClicked:(id)sender {

@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *registerTeacherStamp;
 
-@property (strong, nonatomic) IBOutlet UIButton *activityMonitorButton;
+@property (strong, nonatomic) IBOutlet UIButton *studentListButton;
 
 @property (strong, nonatomic) IBOutlet UIView *registerTeacherStampView;
 
@@ -29,5 +29,6 @@
 
 - (IBAction)backClicked:(id)sender;
 
+- (IBAction)studentListClicked:(id)sender;
 
 @end

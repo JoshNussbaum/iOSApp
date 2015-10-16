@@ -83,8 +83,8 @@
     
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
     
-    self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%d", [[classStats objectForKey:@"averageLevel"] integerValue]];
-    self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%d", [[classStats objectForKey:@"averagePoints"] integerValue]];
+    self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averageLevel"] integerValue]];
+    self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averagePoints"] integerValue]];
 
 
 }
@@ -95,15 +95,7 @@
 }
 
 
-- (IBAction)swipeDown:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.2;
-    transition.type = kCATransitionFromTop;    
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
-    [self.navigationController pushViewController:stvc animated:NO];
-}
+
 
 
 - (IBAction)awardClicked:(id)sender {
@@ -134,6 +126,16 @@
 
 - (IBAction)settingsClicked:(id)sender {
     [self performSegueWithIdentifier:@"home_to_settings" sender:self];
+}
+
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
 }
 
 

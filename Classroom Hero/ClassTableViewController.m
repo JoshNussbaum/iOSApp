@@ -25,8 +25,8 @@ static NSString * const classCell = @"classCell";
     ConnectionHandler *webHandler;
     class *tmpClass;
     bool addingClass;
-    bool editingClass;
     NSInteger flag;
+    bool editingEnabled;
 }
 
 @end
@@ -37,6 +37,7 @@ static NSString * const classCell = @"classCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    editingEnabled = NO;
     
     [self.tableView setBounces:NO];
     
@@ -55,13 +56,15 @@ static NSString * const classCell = @"classCell";
         [classIds addObject:classId];
     }
     
+
     
     studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
     
+    /*
     UISwipeGestureRecognizer* swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onSwipeRight:)];
     [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [self.tableView addGestureRecognizer:swipeRight];
-
+     */
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -118,7 +121,7 @@ static NSString * const classCell = @"classCell";
         {
       
             [[DatabaseHandler getSharedInstance]deleteClass:[tmpClass getId]];
-            NSInteger row = [classes count] - index -1;
+            NSInteger row = index + 1;
 
             [classes removeObjectAtIndex:index];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
@@ -137,7 +140,6 @@ static NSString * const classCell = @"classCell";
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == [alertView cancelButtonIndex]) {
-        editingClass = NO;
         return;
     }
     if (alertView.tag == 1){
@@ -150,11 +152,10 @@ static NSString * const classCell = @"classCell";
             NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
             if (!gradeErrorMessage){
                 NSInteger grade = newClassGrade.integerValue;
-                class *selectedClass = [classes objectAtIndex:index];
+                class *selectedClass = [classes objectAtIndex:index-1];
                 [self activityStart:@"Editing class..."];
                 [webHandler editClass:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId]];
                 tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel]];
-                
             }
             else {
                 [Utilities alertStatusWithTitle:@"Error editing class" message:gradeErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -163,7 +164,6 @@ static NSString * const classCell = @"classCell";
         else {
             [Utilities alertStatusWithTitle:@"Error editing class" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
         }
-        editingClass = NO;
     }
     else if (alertView.tag == 2){
         // Delete class
@@ -188,22 +188,16 @@ static NSString * const classCell = @"classCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     if (classes.count > 0){
-        return classes.count;
+        return classes.count + 1;
     }else return 0;
 }
 
 
 - (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
-
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        tmpClass = [self getClassByIndexPath:indexPath];
-
-        [Utilities alertStatusWithTitle:@"Confirm Delete" message:[NSString stringWithFormat:@"Are you sure you want to delete %@?", [tmpClass getName]]  cancel:@"Cancel"  otherTitles:@[@"Delete"] tag:2 view:self];
-        
+    if (indexPath.row > 0){
+        class *selectedClass = [self getClassByIndexPath:indexPath];
+        NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
+        [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
     }
 }
 
@@ -231,36 +225,46 @@ static NSString * const classCell = @"classCell";
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ClassTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:classCell forIndexPath:indexPath];
-    
-    if (classes.count > 0){
-        class *class_ = [classes objectAtIndex:classes.count - indexPath.row - 1];
-        NSString *schoolName = [[DatabaseHandler getSharedInstance] getSchoolName:[class_ getSchoolId]];
-        NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInteger:[class_ getId]]]integerValue];
-        [cell initializeCellWithClass:class_ :classCount :schoolName];
+    if (indexPath.row == 0){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"addClassCell"];
+        return cell;
     }
-    
-    return cell;
+    else {
+        ClassTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:classCell forIndexPath:indexPath];
+        
+        if (classes.count > 0){
+            class *class_ = [classes objectAtIndex:indexPath.row-1];
+            NSString *schoolName = [[DatabaseHandler getSharedInstance] getSchoolName:[class_ getSchoolId]];
+            NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInteger:[class_ getId]]]integerValue];
+            [cell initializeCellWithClass:class_ :classCount :schoolName];
+        }
+        
+        return cell;
+    }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0 ) return 74;
+    else return 150;
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) return NO;
+    return YES;
+}
 
-- (void)onSwipeRight:(UILongPressGestureRecognizer*)gesture{
-    if (!editingClass){
-        editingClass = YES;
-        UITableView* tableView = (UITableView*)self.view;
-        CGPoint touchPoint = [gesture locationInView:self.view];
-        NSIndexPath* row = [tableView indexPathForRowAtPoint:touchPoint];
-        if (row != nil) {
-            class *selectedClass = [self getClassByIndexPath:row];
-            NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
-            [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
-        }
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        tmpClass = [self getClassByIndexPath:indexPath];
+        
+        [Utilities alertStatusWithTitle:@"Confirm Delete" message:[NSString stringWithFormat:@"Are you sure you want to delete %@?", [tmpClass getName]]  cancel:@"Cancel"  otherTitles:@[@"Delete"] tag:2 view:self];
     }
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (!editingClass){
+    if (indexPath.row == 0) [self performSegueWithIdentifier:@"class_to_add_class" sender:self];
+    if (!self.editing){
         if (classes.count > 0){
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             class *selectedClass = [self getClassByIndexPath:indexPath];
@@ -277,6 +281,12 @@ static NSString * const classCell = @"classCell";
                 [self performSegueWithIdentifier:@"class_to_register_students" sender:nil];
             }
         }
+    }
+    else {
+        class *selectedClass = [self getClassByIndexPath:indexPath];
+        NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
+        [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
+        
     }
 }
 
@@ -301,7 +311,7 @@ static NSString * const classCell = @"classCell";
 
 
 - (class *)getClassByIndexPath:(NSIndexPath *)indexPath{
-    index = [classes count] - indexPath.row - 1;
+    index = indexPath.row - 1;
     class *selectedClass = [classes objectAtIndex:index];
     return selectedClass;
 }
@@ -319,6 +329,19 @@ static NSString * const classCell = @"classCell";
         [vc setFlag:2];
     }
     
+}
+
+- (IBAction)editClicked:(id)sender {
+    NSLog(@"In edit clicked");
+    if (self.editing) {
+        //self.editButton.titleLabel.text=@"Edit";
+        [self.tableView setEditing:NO animated:YES];
+        self.editing = NO;
+    } else {
+        //self.editButton.titleLabel.text=@"Done";
+        [self.tableView setEditing:YES animated:YES];
+        self.editing = YES;
+    }
 }
 
 @end

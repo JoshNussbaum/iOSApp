@@ -8,9 +8,8 @@
 
 #import <PassKit/PassKit.h>
 #import <UIKit/UIKit.h>
-#import "ConnectionHandler.h"
 
-@interface OrderStampsViewController : UIViewController <ConnectionHandlerDelegate, PKPaymentAuthorizationViewControllerDelegate>
+@interface OrderStampsViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *recruitButton;
 @property (strong, nonatomic) IBOutlet UIButton *heroicButton;
