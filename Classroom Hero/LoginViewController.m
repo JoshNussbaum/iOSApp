@@ -59,31 +59,9 @@ NSArray *fakeStudents;
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
     
-    /*
-     NSMutableArray *students = [classDictionary objectForKey:@"students"];
-     for (NSDictionary *studentDictionary in students){
-     NSInteger sid = [[studentDictionary objectForKey:@"uid"]integerValue];
-     NSString *fname = [studentDictionary objectForKey:@"fname"];
-     NSString *lname = [studentDictionary objectForKey:@"lname"];
-     NSString *serial = [studentDictionary objectForKey:@"stamp"];
-     
-     if (!serial){
-     serial = @"";
-     }
-     
-     NSInteger currentCoins = [[studentDictionary objectForKey:@"currentCoins"]integerValue];
-     NSInteger lvl = [[studentDictionary objectForKey:@"lvl"]integerValue];
-     NSInteger lvlUpAmount = 2 + (2*(lvl-1));
-     NSInteger progress = [[studentDictionary objectForKey:@"progress"]integerValue];
-     NSInteger totalCoins = [[studentDictionary objectForKey:@"totalCoins"]integerValue];
-     
-     student *newStudent = [[student alloc] initWithid:sid firstName:fname lastName:lname serial:serial lvl:lvl progress:progress lvlupamount:lvlUpAmount points:currentCoins totalpoints:totalCoins];
-     [self addStudent:newStudent :cid :schoolId];
-     
-     }
-
-     
-     */
+    
+    
+    
     fakeStudent1 = @{@"uid": @"1", @"fname": @"Mel", @"lname": @"Clarke", @"stamp": @"ClassroomHero1", @"currentCoins": @"1", @"lvl": @"1", @"progress": @"1", @"totalCoins": @"1", @"checkedIn": @"0"};
     fakeStudent2 = @{@"uid": @"2", @"fname": @"Holly", @"lname": @"Irish", @"stamp": @"ClassroomHero2", @"currentCoins": @"2", @"lvl": @"1", @"progress": @"2", @"totalCoins": @"2", @"checkedIn": @"0"};
     fakeStudent3 = @{@"uid": @"3", @"fname": @"Mike", @"lname": @"Sela", @"currentCoins": @"3", @"lvl": @"2", @"progress": @"0", @"totalCoins": @"3", @"checkedIn": @"0"};
@@ -92,9 +70,9 @@ NSArray *fakeStudents;
     
     fakeSchool1 = @{@"id": @"2", @"name": @"Josh's Jedi Lounge"};
     fakeSchools = @[fakeSchool1];
-    fakeClass1 = @{@"cid": @"20", @"name": @"Fake Class Bruh", @"classProgress": @"2", @"grade": @"2", @"nextLvl": @"10", @"classLvl": @"1", @"schoolId": @"2", @"students": fakeStudents};
+    fakeClass1 = @{@"cid": @"20", @"name": @"Python for Monkeys", @"classProgress": @"2", @"grade": @"2", @"nextLvl": @"10", @"classLvl": @"1", @"schoolId": @"2", @"students": fakeStudents};
     fakeClassArray = @[fakeClass1];
-    fakeUserDict = @{@"fname" : @"Billy", @"lname": @"Bob Thorton", @"uid": @"120", @"accountStatus": @"2"};
+    fakeUserDict = @{@"fname" : @"Monkey", @"lname": @"Wizard", @"uid": @"120", @"accountStatus": @"2"};
     fakeLoginDict = @{@"login": fakeUserDict, @"classes":fakeClassArray, @"schools": fakeSchools};
 }
 

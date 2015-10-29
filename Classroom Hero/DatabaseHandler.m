@@ -41,7 +41,7 @@ static sqlite3_stmt *statement = nil;
     //Create filemanager and use it to check if database file already exists
     NSFileManager *filemgr = [NSFileManager defaultManager];
     
-    if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    if ([filemgr fileExistsAtPath: databasePath ] == YES)
     {
         const char *dbpath = [databasePath UTF8String];
         if (sqlite3_open(dbpath, &database) == SQLITE_OK)
@@ -450,7 +450,7 @@ static sqlite3_stmt *statement = nil;
         NSMutableArray *allStudents = [[NSMutableArray alloc]init];
         for (NSNumber *studentId in studentIds){
             NSInteger sid = [studentId integerValue];
-            NSString *getStudentsQuery = [NSString stringWithFormat:@"SELECT id, firstname, lastname, serial, lvl, progress, lvlupamount, points, totalpoints FROM Student WHERE id=%ld", (long)sid];
+            NSString *getStudentsQuery = [NSString stringWithFormat:@"SELECT id, firstname, lastname, serial, lvl, progress, lvlupamount, points, totalpoints, checkedin FROM Student WHERE id=%ld", (long)sid];
             const char *query_stmt = [getStudentsQuery UTF8String];
             
             if (sqlite3_prepare_v2(database,
@@ -481,6 +481,8 @@ static sqlite3_stmt *statement = nil;
                     student *ss = [[student alloc] initWithid:id firstName:firstName lastName:lastName serial:serial lvl:level progress:progress lvlupamount:levelUpAmount points:points totalpoints:totalPoints checkedin:(checkedIn==1 ? YES : NO)];
                     [allStudents addObject:ss];
                     
+                    [ss printStudent];
+                    
                     sqlite3_finalize(statement);
                     
                 }
@@ -489,9 +491,9 @@ static sqlite3_stmt *statement = nil;
         if (attendance){
             [allStudents sortUsingDescriptors:
              [NSArray arrayWithObjects:
-              [NSSortDescriptor sortDescriptorWithKey:@"checkedin" ascending:YES],
-              [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES],
-              [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES]]
+              [NSSortDescriptor sortDescriptorWithKey:@"checkedin" ascending:NO],
+              [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:NO],
+              [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:NO], nil]
              ];
         }
         else {
@@ -1092,7 +1094,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"UPDATE ClassJar SET name=\"%@\", progress=%ld, total=%ld,  WHERE id=%ld", [updatedClassJar getName], (long)[updatedClassJar getProgress], (long)[updatedClassJar getTotal], (long)[updatedClassJar getId]];
+                              @"UPDATE ClassJar SET name=\"%@\", progress=%ld, total=%ld, WHERE id=%ld", [updatedClassJar getName], (long)[updatedClassJar getProgress], (long)[updatedClassJar getTotal], (long)[updatedClassJar getId]];
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
@@ -1107,7 +1109,6 @@ static sqlite3_stmt *statement = nil;
 - (void)rewardAllStudentsInClassWithid:(NSInteger)classId{
     NSMutableArray *resultArray = [self getStudents:classId :NO];
     for (student *student in resultArray){
-        NSLog(@"IN DB AND IN STUDENT ARRAY");
         [student addPoints:1];
         [self updateStudent:student];
     }
@@ -1126,12 +1127,14 @@ static sqlite3_stmt *statement = nil;
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
+        NSInteger checkedIn_ = (checkedIn ? 1: 0);
         NSString *querySQL = [NSString stringWithFormat:
-                              @"UPDATE Student SET checkedin=%ld WHERE id=%ld", (long)(checkedIn ? 1 : 0), (long)studentId];
+                              @"UPDATE Student SET checkedin=%ld WHERE id=%ld", (long)checkedIn_, (long)studentId];
+        NSLog(@"Query sql -> %@", querySQL);
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
-        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We edited a class jar");
+        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We checked a student in or out");
         sqlite3_finalize(statement);
     }
     

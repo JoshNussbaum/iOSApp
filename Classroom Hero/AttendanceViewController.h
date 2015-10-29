@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AttendanceViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface AttendanceViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;

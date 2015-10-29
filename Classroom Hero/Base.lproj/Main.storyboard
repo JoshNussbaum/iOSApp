@@ -685,7 +685,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addClassCell" rowHeight="74" id="FI5-Kw-U0s">
-                                <rect key="frame" x="0.0" y="22" width="768" height="74"/>
+                                <rect key="frame" x="0.0" y="86" width="768" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FI5-Kw-U0s" id="csd-9P-cat">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="73"/>
@@ -706,14 +706,14 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="classCell" rowHeight="150" id="19w-rb-Agj" customClass="ClassTableViewCell">
-                                <rect key="frame" x="0.0" y="96" width="768" height="150"/>
+                                <rect key="frame" x="0.0" y="160" width="768" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="19w-rb-Agj" id="srO-EL-heQ">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="149"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Erin's Special Education Class" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LdH-IN-dkH">
-                                            <rect key="frame" x="10" y="0.0" width="485" height="75"/>
+                                            <rect key="frame" x="20" y="0.0" width="475" height="75"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="26"/>
@@ -722,7 +722,7 @@
                                             <color key="shadowColor" red="0.35686274509999999" green="0.62352941179999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strawberry Elementary School" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ff9-1b-O4p">
-                                            <rect key="frame" x="10" y="75" width="490" height="75"/>
+                                            <rect key="frame" x="20" y="75" width="480" height="75"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="22"/>
                                             <nil key="highlightedColor"/>
@@ -882,6 +882,10 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="jQI-k1-z5V" appends="YES" id="UIF-ha-PC6"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Attendance" id="KLA-ZQ-03D">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="Vdz-MR-64k">
@@ -925,6 +929,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nuT-B8-7E8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="jQI-k1-z5V">
+                    <connections>
+                        <outlet property="delegate" destination="rrA-d8-rIs" id="zhw-fJ-GAf"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4601" y="83"/>
         </scene>
@@ -1664,9 +1673,9 @@
                         <segue destination="b3C-b7-3Rv" kind="push" id="Ak6-Q7-dvZ"/>
                         <segue destination="QoO-vK-vKM" kind="push" identifier="settings_to_students" id="322-BR-rYV"/>
                         <segue destination="h7O-Dz-74Y" kind="push" identifier="settings_to_stamp_identifier" id="z9Y-ih-go4"/>
-                        <segue destination="MR8-j5-sYB" kind="push" identifier="settings_unwind_to_register_students" id="0DC-7k-br8"/>
+                        <segue destination="MR8-j5-sYB" kind="push" identifier="settings_to_register_students" id="0DC-7k-br8"/>
                         <segue destination="sWF-eP-1Ke" kind="push" identifier="settings_to_tutorial" id="asf-xD-FDq"/>
-                        <segue destination="8H9-mJ-RCu" kind="unwind" unwindAction="unwindToRegisterStudents:" id="Gy7-fz-rM3"/>
+                        <segue destination="8H9-mJ-RCu" kind="unwind" identifier="settings_unwind_to_register_students" unwindAction="unwindToRegisterStudents:" id="x3z-8W-D76"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QVK-Ro-vZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3195,9 +3204,9 @@
         <image name="treasure_chest.png" width="832" height="867"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mtj-Wm-nfd"/>
+        <segue reference="3xj-Rp-VH0"/>
         <segue reference="ewg-8k-sYO"/>
+        <segue reference="mtj-Wm-nfd"/>
         <segue reference="asf-xD-FDq"/>
-        <segue reference="zkP-67-VRC"/>
     </inferredMetricsTieBreakers>
 </document>

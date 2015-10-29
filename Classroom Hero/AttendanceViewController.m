@@ -16,6 +16,7 @@
     NSMutableArray *studentsData;
     user *currentUser;
     student *currentStudent;
+    NSInteger studentIndex;
 }
 
 @end
@@ -29,10 +30,23 @@
     self.studentsTableView.delegate = self;
     
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
-    
-    //self.studentsTableView.layer.zPosition = 10;
+
     
 }
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([touch.view isDescendantOfView:self.studentsTableView]) {
+        
+        return NO;
+    }
+    if (self.studentsTableView.hidden == NO){
+        [self animateTableView:YES];
+    }
+    return YES;
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -51,7 +65,6 @@
     NSLog(@"In table view cell for row");
     if (studentsData.count > 0){
         student *student_ = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
-        [student_ printStudent];
         [cell initializeWithStudent:student_];
     }
     
@@ -61,14 +74,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (studentsData.count > 0){
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        studentIndex = studentsData.count - indexPath.row - 1;
+        currentStudent = [studentsData objectAtIndex:studentIndex];
         [currentStudent printStudent];
         if (![currentStudent getCheckedIn]){
-            [Utilities editAlertTextWithtitle:[NSString stringWithFormat:@"Check in %@?", [currentStudent getFirstName]] message:nil cancel:@"Cancel" done:@"Check in" delete:NO textfields:nil tag:1 view:self];
+            UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Check in %@?", [currentStudent getFirstName]]
+                                                               message:nil
+                                                              delegate:self
+                                                     cancelButtonTitle:@"Cancel"
+                                                     otherButtonTitles:@"Yes", nil];
+            [alertView setTag:1];
+            [alertView show];
 
         }
         else{
-            [Utilities editAlertTextWithtitle:[NSString stringWithFormat:@"Check out %@?", [currentStudent getFirstName]] message:nil cancel:@"Cancel" done:@"Check out" delete:NO textfields:nil tag:2 view:self];
+            UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Check out %@?", [currentStudent getFirstName]]
+                                                               message:nil
+                                                              delegate:self
+                                                     cancelButtonTitle:@"Cancel"
+                                                     otherButtonTitles:@"Yes", nil];
+            [alertView setTag:2];
+            [alertView show];
         }
     }
 }
@@ -103,11 +129,20 @@
     
     if (alertView.tag == 1){
         [[DatabaseHandler getSharedInstance] updateStudentCheckedIn:[currentStudent getId] :YES];
+        [currentStudent setCheckedIn:YES];
     }
     else if (alertView.tag == 2){
         [[DatabaseHandler getSharedInstance] updateStudentCheckedIn:[currentStudent getId] :NO];
-
+        [currentStudent setCheckedIn:NO];
     }
+    [studentsData replaceObjectAtIndex:studentIndex withObject:currentStudent];
+    [studentsData sortUsingDescriptors:
+     [NSArray arrayWithObjects:
+      [NSSortDescriptor sortDescriptorWithKey:@"checkedin" ascending:NO],
+      [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:NO],
+      [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:NO], nil]
+     ];
+    [self.studentsTableView reloadData];
 }
 
 - (void)animateTableView:(BOOL)open{
@@ -141,7 +176,10 @@
     
 }
 
+
 - (IBAction)backClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 @end

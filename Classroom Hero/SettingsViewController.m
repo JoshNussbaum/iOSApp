@@ -117,7 +117,7 @@
 - (IBAction)registerStudentsClicked:(id)sender {
     if (flag == 1){
         if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
-            [self.navigationController performSegueWithIdentifier:@"settings_unwind_to_register_students" sender:self];
+            [self performSegueWithIdentifier:@"settings_unwind_to_register_students" sender:self];
         }
     }
     else if (flag == 2){
