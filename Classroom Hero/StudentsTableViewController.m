@@ -36,7 +36,7 @@
     
     currentUser = [user getInstance];
     
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId]];
+    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
     
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
@@ -48,7 +48,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     if (editingStudent) {
         NSLog(@"In here");
-        studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId]];
+        studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
         [self.tableView reloadData];
         editingStudent = NO;
     }
@@ -160,7 +160,7 @@
         if([successNumber boolValue] == YES)
         {
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
-            student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0];
+            student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
             [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
             [studentsData addObject:newStudent];
             [self.tableView reloadData];

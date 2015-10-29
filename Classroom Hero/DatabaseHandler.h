@@ -63,7 +63,7 @@
 - (class *)getClassWithstudentId:(NSInteger)studentId;
 
 
-- (NSMutableArray *)getStudents:(NSInteger)cid;
+- (NSMutableArray *)getStudents:(NSInteger)cid :(BOOL)attendance;
 
 
 - (NSMutableArray *)getReinforcers:(NSInteger)cid;
@@ -123,6 +123,10 @@
 
 - (void)rewardAllStudentsInClassWithid:(NSInteger)classId;
 
+- (void)unregisterAllStudentsInClassWithid:(NSInteger)classId;
+
+- (void)updateStudentCheckedIn:(NSInteger)studentId :(BOOL)checkedIn;
+
 
 
 // Delete Functions
@@ -150,7 +154,7 @@
 - (bool) isSerialRegistered:(NSString *)serial;
 
 
-- (bool)doesClassNameExist:(NSString *)className;
+- (bool) doesClassNameExist:(NSString *)className;
 
 
 @end

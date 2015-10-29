@@ -11,7 +11,7 @@
 #import "nameTextField.h"
 #import "passwordTextField.h"
 
-@interface EditTeacherViewController : UIViewController <ConnectionHandlerDelegate>
+@interface EditTeacherViewController : UIViewController <ConnectionHandlerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *editNameButton;
 @property (strong, nonatomic) IBOutlet UIButton *editPasswordButton;

@@ -685,7 +685,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addClassCell" rowHeight="74" id="FI5-Kw-U0s">
-                                <rect key="frame" x="0.0" y="86" width="768" height="74"/>
+                                <rect key="frame" x="0.0" y="22" width="768" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FI5-Kw-U0s" id="csd-9P-cat">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="73"/>
@@ -706,7 +706,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="classCell" rowHeight="150" id="19w-rb-Agj" customClass="ClassTableViewCell">
-                                <rect key="frame" x="0.0" y="160" width="768" height="150"/>
+                                <rect key="frame" x="0.0" y="96" width="768" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="19w-rb-Agj" id="srO-EL-heQ">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="149"/>
@@ -823,7 +823,6 @@
                         <segue destination="U2R-yA-zyV" kind="push" identifier="class_to_home" id="mtj-Wm-nfd"/>
                         <segue destination="eMN-Zh-xzp" kind="modal" identifier="class_to_add_class" id="716-vg-ubi"/>
                         <segue destination="MR8-j5-sYB" kind="push" identifier="class_to_register_students" id="3xj-Rp-VH0"/>
-                        <segue destination="rrA-d8-rIs" kind="push" identifier="class_to_attendance" id="Gnz-rW-VNj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iuy-0M-pN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -834,7 +833,7 @@
         <!--Attendance-->
         <scene sceneID="4YI-1C-2z4">
             <objects>
-                <viewController id="rrA-d8-rIs" sceneMemberID="viewController">
+                <viewController id="rrA-d8-rIs" customClass="AttendanceViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fYY-Mq-Vhl">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -847,21 +846,46 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Bxq-k9-0Z0">
-                                <rect key="frame" x="0.0" y="67" width="337" height="957"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ch-logo.png" id="yE7-Lt-FIe">
                                 <rect key="frame" x="163" y="291" width="443" height="441"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="HhE-Pd-HrM">
+                                <rect key="frame" x="0.0" y="64" width="391" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentAttendanceCell" id="ytH-HF-MyZ" customClass="StudentAttendanceTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="391" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ytH-HF-MyZ" id="msq-Qj-m0F">
+                                            <rect key="frame" x="0.0" y="0.0" width="391" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="n4s-60-H8s">
+                                                    <rect key="frame" x="0.0" y="-6" width="391" height="56"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="n4s-60-H8s" id="Xnq-XX-BVc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="rrA-d8-rIs" id="ycs-m7-RKg"/>
+                                    <outlet property="delegate" destination="rrA-d8-rIs" id="3Jr-iS-DUb"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Attendance" id="KLA-ZQ-03D">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="Vdz-MR-64k">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="W7g-Y4-PW5">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="W7g-Y4-PW5">
                                 <rect key="frame" x="20" y="2" width="170" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
@@ -869,28 +893,40 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="backClicked:" destination="rrA-d8-rIs" eventType="touchUpInside" id="7Jo-Py-Ugv"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="B2N-eh-7e0">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sU3-EE-PhM">
-                                <rect key="frame" x="578" y="7" width="170" height="30"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sU3-EE-PhM">
+                                <rect key="frame" x="578" y="2" width="170" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Skip">
+                                <state key="normal" title="Students">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="studentsClicked:" destination="rrA-d8-rIs" eventType="touchUpInside" id="hU7-si-oRB"/>
+                                </connections>
                             </button>
+                            <connections>
+                                <action selector="studentsClicked:" destination="rrA-d8-rIs" id="vi6-DS-BDr"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
-                        <segue destination="U2R-yA-zyV" kind="push" identifier="attendance_to_home" id="MKQ-zE-YwH"/>
+                        <outlet property="stampImage" destination="yE7-Lt-FIe" id="xny-La-XrK"/>
+                        <outlet property="studentsButton" destination="sU3-EE-PhM" id="Tg1-Pp-bM4"/>
+                        <outlet property="studentsTableView" destination="HhE-Pd-HrM" id="SKb-Dk-2Ju"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nuT-B8-7E8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3048" y="906"/>
+            <point key="canvasLocation" x="4601" y="83"/>
         </scene>
         <!--Create Class View Controller-->
         <scene sceneID="eBJ-fA-hHl">
@@ -1082,12 +1118,11 @@
                         <outlet property="studentNameLabel" destination="zdE-pO-J9z" id="LtB-E0-tuP"/>
                         <outlet property="swipeLabel" destination="hn7-4n-jm3" id="e0q-RK-oe4"/>
                         <segue destination="U2R-yA-zyV" kind="push" identifier="register_students_to_home" id="hcw-Vj-VJR"/>
-                        <segue destination="rrA-d8-rIs" kind="push" identifier="register_students_to_attendance" id="1Qb-7g-mKL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mHQ-GP-TnF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4738" y="2138"/>
+            <point key="canvasLocation" x="6354" y="2074"/>
         </scene>
         <!--Student List-->
         <scene sceneID="Q00-IN-WCw">
@@ -1177,7 +1212,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bg6-AO-vSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5675" y="2138"/>
+            <point key="canvasLocation" x="7291" y="2074"/>
         </scene>
         <!--Hero Page-->
         <scene sceneID="T1K-z5-mPF">
@@ -1291,7 +1326,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfW-Vd-zfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5675" y="3327"/>
+            <point key="canvasLocation" x="7291" y="3263"/>
         </scene>
         <!--Order Stamps-->
         <scene sceneID="vKg-oq-SPD">
@@ -1401,7 +1436,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.35686274509999999" green="0.62352941179999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.45639661656573544" green="0.76123046875" blue="0.51015130271462295" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.45639661660000003" green="0.7612304688" blue="0.51015130269999998" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="dTC-5F-ftW" appends="YES" id="jFh-RT-9XS"/>
@@ -1451,7 +1487,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4738" y="-408"/>
+            <point key="canvasLocation" x="6354" y="-472"/>
         </scene>
         <!--Settings-->
         <scene sceneID="dTU-Uw-cXe">
@@ -1462,7 +1498,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eNA-9i-dCY">
-                                <rect key="frame" x="223" y="460" width="320" height="58"/>
+                                <rect key="frame" x="38" y="142" width="320" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
@@ -1475,7 +1511,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" id="qJk-DT-Z8f">
-                                <rect key="frame" x="223" y="303" width="320" height="58"/>
+                                <rect key="frame" x="38" y="401" width="320" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="I5v-qN-Tv3">
@@ -1483,7 +1519,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
-                                        <state key="normal" title="Register Teacher Stamp">
+                                        <state key="normal" title="Register Teacher">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1495,8 +1531,68 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vMA-LW-z0a">
+                                <rect key="frame" x="405" y="142" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Stamp  Identifier">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stampIdentifierClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="m5v-Ru-Fao"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7wX-0f-pUM">
+                                <rect key="frame" x="43" y="522" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Unregister  All  Stamps">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="unregisterAllStampsClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="7g7-Yy-MyT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fnG-HZ-kFV">
+                                <rect key="frame" x="43" y="275" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Class Tutorial">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="classTutorialClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="52h-zg-rgm"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="W1Z-ke-eEL">
+                                <rect key="frame" x="405" y="275" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jS2-bs-zXL">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                        <state key="normal" title="Register Students">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="registerStudentsClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="rrV-kQ-4j7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" id="p83-Re-F7w">
-                                <rect key="frame" x="224" y="146" width="320" height="58"/>
+                                <rect key="frame" x="405" y="401" width="320" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="91n-4v-DLN">
@@ -1553,20 +1649,30 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="classTutorialButton" destination="fnG-HZ-kFV" id="Vsf-pM-cn3"/>
                         <outlet property="orderStampsButton" destination="91n-4v-DLN" id="3q0-H9-c34"/>
                         <outlet property="orderStampsView" destination="p83-Re-F7w" id="JEb-bX-wiy"/>
+                        <outlet property="registerStudentsButton" destination="jS2-bs-zXL" id="7IO-Jr-ckH"/>
+                        <outlet property="registerStudentsView" destination="W1Z-ke-eEL" id="Oqh-jj-tRt"/>
                         <outlet property="registerTeacherStamp" destination="I5v-qN-Tv3" id="fJn-QY-fyj"/>
                         <outlet property="registerTeacherStampView" destination="qJk-DT-Z8f" id="NDB-qR-L1A"/>
+                        <outlet property="stampIdentifierButton" destination="vMA-LW-z0a" id="Tg4-1z-FlN"/>
                         <outlet property="studentListButton" destination="eNA-9i-dCY" id="OLY-CM-RDw"/>
+                        <outlet property="unregisterAllStampsButton" destination="7wX-0f-pUM" id="tuE-PK-DIN"/>
                         <segue destination="qjs-mU-BOe" kind="push" identifier="settings_to_order_stamps" id="fOv-1p-Wtg"/>
                         <segue destination="PzN-nE-apu" kind="push" identifier="settings_to_register_teacher_stamp" id="kmt-xD-cxB"/>
                         <segue destination="b3C-b7-3Rv" kind="push" id="Ak6-Q7-dvZ"/>
                         <segue destination="QoO-vK-vKM" kind="push" identifier="settings_to_students" id="322-BR-rYV"/>
+                        <segue destination="h7O-Dz-74Y" kind="push" identifier="settings_to_stamp_identifier" id="z9Y-ih-go4"/>
+                        <segue destination="MR8-j5-sYB" kind="push" identifier="settings_unwind_to_register_students" id="0DC-7k-br8"/>
+                        <segue destination="sWF-eP-1Ke" kind="push" identifier="settings_to_tutorial" id="asf-xD-FDq"/>
+                        <segue destination="8H9-mJ-RCu" kind="unwind" unwindAction="unwindToRegisterStudents:" id="Gy7-fz-rM3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QVK-Ro-vZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8H9-mJ-RCu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5675" y="-408"/>
+            <point key="canvasLocation" x="7291" y="-472"/>
         </scene>
         <!--Edit Teacher-->
         <scene sceneID="nIf-vc-m5J">
@@ -1580,20 +1686,13 @@
                                 <rect key="frame" x="167" y="172" width="435" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mPW-jD-jVJ">
-                                <rect key="frame" x="298" y="104" width="172" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last name" minimumFontSize="17" id="f01-K8-clh" customClass="nameTextField">
                                 <rect key="frame" x="167" y="246" width="435" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yp5-Yw-3r7">
                                 <rect key="frame" x="298" y="445" width="172" height="37"/>
@@ -1650,9 +1749,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iy0-1Q-SD0">
+                                <rect key="frame" x="291" y="100" width="172" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.35686274509999999" green="0.62352941179999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="tintColor" red="0.35686274509999999" green="0.62352941179999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.45639661660000003" green="0.7612304688" blue="0.51015130269999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.45639661660000003" green="0.7612304688" blue="0.51015130269999998" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="7Kf-UY-9Z1" appends="YES" id="7GU-Rf-UVL"/>
@@ -1680,10 +1786,8 @@
                         <outlet property="editNameButton" destination="Xti-oO-LFy" id="8wE-PW-Wfp"/>
                         <outlet property="editPasswordButton" destination="435-lk-IRA" id="c6e-mO-A7S"/>
                         <outlet property="editPasswordTextField" destination="0rL-fG-8cZ" id="rwI-VW-fKH"/>
-                        <outlet property="firstNameLabel" destination="aTs-pJ-FOQ" id="3qD-dz-jel"/>
                         <outlet property="firstNameTextField" destination="Hq6-0w-VXW" id="w2g-zX-dZ7"/>
                         <outlet property="lastNameTextField" destination="f01-K8-clh" id="J6w-SO-Fsu"/>
-                        <outlet property="newPasswordTextField" destination="0rL-fG-8cZ" id="67b-Ej-wPy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hZZ-j0-3gL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1693,7 +1797,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4738" y="-1684"/>
+            <point key="canvasLocation" x="6354" y="-1748"/>
         </scene>
         <!--Register Teacher Stamp-->
         <scene sceneID="wND-dv-xS4">
@@ -1765,7 +1869,86 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xzX-3f-fcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5675" y="-1684"/>
+            <point key="canvasLocation" x="7291" y="-1748"/>
+        </scene>
+        <!--Stamp Identifier-->
+        <scene sceneID="YTB-FQ-4NE">
+            <objects>
+                <viewController id="h7O-Dz-74Y" customClass="StampIdentifierViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gHx-mF-6RI">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ch-logo.png" id="9tq-0J-4Dd">
+                                <rect key="frame" x="154" y="197" width="460" height="474"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stamp  the  apple  to  see  who  the  stamp  belongs  to" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F2l-ng-2eP">
+                                <rect key="frame" x="81" y="83" width="606" height="129"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="36"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stamp Serial" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FhH-PK-LUc">
+                                <rect key="frame" x="140" y="799" width="489" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="36"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZKV-YW-f49">
+                                <rect key="frame" x="224" y="926" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Unregister  Stamp">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="unregisterStampClicked:" destination="h7O-Dz-74Y" eventType="touchUpInside" id="mv7-lo-FyF"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SK7-zy-vPQ">
+                                <rect key="frame" x="71" y="679" width="627" height="112"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="36"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95859375000000002" green="1" blue="0.9605581688" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Stamp Identifier" id="Nxk-aZ-UIK">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="dFx-Jg-MDI">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2Ly-0H-38P">
+                                <rect key="frame" x="20" y="7" width="170" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backClicked:" destination="h7O-Dz-74Y" eventType="touchUpInside" id="u3k-XP-dDO"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="stampImage" destination="9tq-0J-4Dd" id="rhB-QR-WLq"/>
+                        <outlet property="stampSerialLabel" destination="FhH-PK-LUc" id="Xn6-wZ-ZmH"/>
+                        <outlet property="studentNameLabel" destination="SK7-zy-vPQ" id="9Oe-w9-Hfs"/>
+                        <outlet property="unregisterStampButton" destination="ZKV-YW-f49" id="UDd-4F-OWR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i81-ZQ-PYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8209" y="-1728"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="T4s-j2-Csh">
@@ -1909,39 +2092,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
-                            <view contentMode="scaleToFill" id="OJH-pe-l3K">
-                                <rect key="frame" x="476" y="270" width="232" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jM2-Cl-51v">
-                                        <rect key="frame" x="0.0" y="0.0" width="232" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.4549019608" green="0.81568627449999997" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
-                                        <state key="normal" title="Register  Students">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="registerStudentsClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="2Y8-qj-axD"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="tintColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AYK-wV-3HF">
-                                <rect key="frame" x="476" y="188" width="232" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
-                                <state key="normal" title="Class  Tutorial">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tutorialClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="vtL-ta-5bp"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class  Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EQ0-z4-kEE">
                                 <rect key="frame" x="29" y="394" width="294" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2092,6 +2242,39 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jqF-Jk-HLs">
+                                <rect key="frame" x="484" y="197" width="232" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                <state key="normal" title="Attendance">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="attendanceClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="1uH-GU-in1"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="OJH-pe-l3K">
+                                <rect key="frame" x="484" y="271" width="232" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jM2-Cl-51v">
+                                        <rect key="frame" x="0.0" y="0.0" width="232" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.4549019608" green="0.81568627449999997" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                        <state key="normal" title="Settings">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="settingsClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="We2-jQ-NoR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="tintColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.95859375000000002" green="1" blue="0.9605581688242425" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -2127,23 +2310,10 @@
                                 <action selector="studentListClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="TmK-RK-jBH"/>
                             </connections>
                         </button>
-                        <barButtonItem key="rightBarButtonItem" id="7cr-e3-nqW">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2DQ-cq-LCU">
-                                <rect key="frame" x="578" y="2" width="170" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
-                                <state key="normal" title="Settings">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="settingsClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="SEZ-fH-MbQ"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
+                        <outlet property="attendanceButton" destination="jqF-Jk-HLs" id="sb2-pj-9F1"/>
                         <outlet property="classAvgLevelLabel" destination="hGs-lu-Fw1" id="uLr-22-5e3"/>
                         <outlet property="classAvgLevelView" destination="pw5-bK-UKq" id="CG5-gr-m4h"/>
                         <outlet property="classAvgPointsLabel" destination="z5d-5Q-Qio" id="EhH-mP-8wK"/>
@@ -2153,10 +2323,7 @@
                         <outlet property="classTotalStampsLabel" destination="s4X-wK-A8U" id="GVB-yv-5OV"/>
                         <outlet property="classTotalStampsView" destination="wyn-jB-3pv" id="MUq-0N-Biv"/>
                         <outlet property="classesButton" destination="6wc-WN-UNy" id="Wip-5T-Z2f"/>
-                        <outlet property="createClassButton" destination="AYK-wV-3HF" id="tXj-b5-Qww"/>
                         <outlet property="jarProgressBar" destination="lwb-qo-JPp" id="ySO-eM-DAS"/>
-                        <outlet property="registerStudentsButton" destination="jM2-Cl-51v" id="itt-QW-UJx"/>
-                        <outlet property="registerStudentsView" destination="OJH-pe-l3K" id="dTT-fN-hff"/>
                         <outlet property="schoolAvgLevelLabel" destination="jej-mW-wCM" id="AmG-9H-5cQ"/>
                         <outlet property="schoolAvgLevelView" destination="5m8-Oy-IAD" id="6Gq-IY-siU"/>
                         <outlet property="schoolAvgPointsLabel" destination="9lQ-xR-DXM" id="9pz-Hp-Eiw"/>
@@ -2164,12 +2331,12 @@
                         <outlet property="schoolNameLabel" destination="sKY-1w-ww8" id="HL4-EM-wji"/>
                         <outlet property="schoolTotalStampsLabel" destination="cGV-nc-rmq" id="KC0-la-6Rq"/>
                         <outlet property="schoolTotalStampsView" destination="gxC-qZ-G1K" id="jdl-Ya-fk7"/>
-                        <outlet property="settingsButton" destination="2DQ-cq-LCU" id="0Eu-cA-bcO"/>
+                        <outlet property="settingsButton" destination="jM2-Cl-51v" id="Pf1-9V-C84"/>
+                        <outlet property="settingsView" destination="OJH-pe-l3K" id="S9Q-Gg-L6t"/>
                         <outlet property="teacherNameLabel" destination="wFg-oq-SLx" id="ZKv-JS-9fd"/>
                         <outlet property="totalClassPointsLabel" destination="EQ0-z4-kEE" id="FoX-f7-Va6"/>
-                        <segue destination="MR8-j5-sYB" kind="push" identifier="home_to_register_students" id="K8T-Db-s2I"/>
-                        <segue destination="sWF-eP-1Ke" kind="push" identifier="home_to_tutorial" id="LKv-5a-p8o"/>
                         <segue destination="GvB-wg-9sc" kind="push" identifier="home_to_settings" id="asf-zc-7o1"/>
+                        <segue destination="rrA-d8-rIs" kind="push" identifier="home_to_attendance" id="YbT-ct-Yrr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2I1-Y9-i7Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2179,7 +2346,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4738" y="874"/>
+            <point key="canvasLocation" x="6354" y="810"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="dlX-Rq-Svj">
@@ -2560,7 +2727,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="5675" y="874"/>
+            <point key="canvasLocation" x="7291" y="810"/>
         </scene>
         <!--Class Jar View Controller-->
         <scene sceneID="aR5-Qo-doW">
@@ -2775,7 +2942,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6540" y="874"/>
+            <point key="canvasLocation" x="8156" y="810"/>
         </scene>
         <!--Market View Controller-->
         <scene sceneID="euu-Jd-jaq">
@@ -2885,7 +3052,7 @@
                                 <rect key="frame" x="0.0" y="774" width="768" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="money_sack.png" id="fIL-18-748">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coinsack.png" id="fIL-18-748">
                                 <rect key="frame" x="315" y="886" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -2988,7 +3155,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="7464" y="874"/>
+            <point key="canvasLocation" x="9080" y="810"/>
         </scene>
         <!--Activity Monitor-->
         <scene sceneID="lGN-5m-4dY">
@@ -3003,7 +3170,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZW-YA-wfw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6614" y="-408"/>
+            <point key="canvasLocation" x="8230" y="-472"/>
         </scene>
     </scenes>
     <resources>
@@ -3030,8 +3197,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="mtj-Wm-nfd"/>
         <segue reference="ewg-8k-sYO"/>
-        <segue reference="Gnz-rW-VNj"/>
-        <segue reference="K8T-Db-s2I"/>
-        <segue reference="LKv-5a-p8o"/>
+        <segue reference="asf-xD-FDq"/>
+        <segue reference="zkP-67-VRC"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AttendanceViewController : UIViewController
+@interface AttendanceViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+
+@property (strong, nonatomic) IBOutlet UIImageView *stampImage;
+@property (strong, nonatomic) IBOutlet UIButton *studentsButton;
+
+@property (strong, nonatomic) IBOutlet UITableView *studentsTableView;
+
+
+- (IBAction)studentsClicked:(id)sender;
+- (IBAction)backClicked:(id)sender;
 
 @end

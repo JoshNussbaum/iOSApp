@@ -113,4 +113,10 @@
 - (void)getClassStatsWithclassId:(NSInteger)classId schoolId:(NSInteger)schoolId;
 
 
+- (void)identifyStampWithserial:(NSString *)serial;
+
+
+- (void)unregisterAllStampsWithClassId:(NSInteger)classId;
+
+
 @end

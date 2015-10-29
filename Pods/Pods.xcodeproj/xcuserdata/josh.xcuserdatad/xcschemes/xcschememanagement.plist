@@ -4,27 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>BBBadgeBarButtonItem.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>JSBadgeView-JSBadgeView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JSBadgeView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-Classroom Hero-JSBadgeView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-Classroom Hero-MBProgressHUD.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-Classroom Hero-gtm-oauth.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-Classroom Hero-snowshoe.xcscheme</key>
+		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -34,75 +29,60 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Stripe.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>gtm-oauth.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>snowshoe.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1EC36D26CB9BDB2E6BA629DA</key>
+		<key>4DB826B64B8D7FFAD1B0054C67556181</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2B58E61F1C0F31F12D314C84</key>
+		<key>A33653DDC9A7E345216B6549C06F2B38</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2EA524B501686612D6D5222B</key>
+		<key>BCCC0F4081C473B2448DD2FB829E748C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>36537BD597D7F09F39C30F9C</key>
+		<key>C1071068DB988D25AD8E7E796905F326</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>37DD313C64A162E46A32B570</key>
+		<key>C9E3DBC74C36D2080E44078867A75CEF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5664E2BACC7F253D97D28F33</key>
+		<key>E63EA3FC3E0A88A11341641DBAC04F9F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>702DCD2FB3BEDE6EA897FC54</key>
+		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A924EEDE6A095010914F1F80</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AF0E123836978668ADB69211</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B67537B21604EBFE2B292B12</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BD9A28321B7EDBAE411173F9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C359B4455809E7FAADCA50B5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E9D0370DD027E29D1FB2E96A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F80367ABDA4BDC21300FF17E</key>
+		<key>FE99C3FBD7147A391C904EFC44CCC35B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0315AB051BD5F08C00C77F2F /* StampIdentifierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */; settings = {ASSET_TAGS = (); }; };
 		033855711B8996D400173600 /* CreateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033855701B8996D400173600 /* CreateClassViewController.m */; };
 		033855741B89984500173600 /* numberTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 033855731B89984500173600 /* numberTextField.m */; };
 		0338558B1B89C97E00173600 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 033855771B89C97D00173600 /* Contents.json */; };
@@ -46,6 +47,7 @@
 		0362C7FC1B89CD9300C93682 /* theLOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = 0362C7F91B89CD9300C93682 /* theLOGO.png */; };
 		036811561B8C49B400690294 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811551B8C49B400690294 /* AboutViewController.m */; };
 		036811591B8C49C300690294 /* PricingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811581B8C49C300690294 /* PricingViewController.m */; };
+		0369CF8D1BE082EC00E8857D /* StudentAttendanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		036AAD661BBF9245007AF0A8 /* RegisterTeacherStampViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036AAD651BBF9245007AF0A8 /* RegisterTeacherStampViewController.m */; };
 		036E4ED41B9832EA00A06B25 /* MarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E4ED31B9832EA00A06B25 /* MarketViewController.m */; };
 		038545261B6359DD0053C169 /* emailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545251B6359DD0053C169 /* emailTextField.m */; };
@@ -131,6 +133,8 @@
 
 /* Begin PBXFileReference section */
 		003C81B540498279E6B276D7 /* Pods-Classroom Hero.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Classroom Hero.release.xcconfig"; path = "Pods/Target Support Files/Pods-Classroom Hero/Pods-Classroom Hero.release.xcconfig"; sourceTree = "<group>"; };
+		0315AB031BD5F08C00C77F2F /* StampIdentifierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StampIdentifierViewController.h; sourceTree = "<group>"; };
+		0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StampIdentifierViewController.m; sourceTree = "<group>"; };
 		0338556F1B8996D400173600 /* CreateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateClassViewController.h; sourceTree = "<group>"; };
 		033855701B8996D400173600 /* CreateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateClassViewController.m; sourceTree = "<group>"; };
 		033855721B89984500173600 /* numberTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = numberTextField.h; sourceTree = "<group>"; };
@@ -177,6 +181,8 @@
 		036811551B8C49B400690294 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		036811571B8C49C300690294 /* PricingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PricingViewController.h; sourceTree = "<group>"; };
 		036811581B8C49C300690294 /* PricingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PricingViewController.m; sourceTree = "<group>"; };
+		0369CF8B1BE082EC00E8857D /* StudentAttendanceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentAttendanceTableViewCell.h; sourceTree = "<group>"; };
+		0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentAttendanceTableViewCell.m; sourceTree = "<group>"; };
 		036AAD631BBF917C007AF0A8 /* Classroom Hero.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Classroom Hero.entitlements"; sourceTree = "<group>"; };
 		036AAD641BBF9245007AF0A8 /* RegisterTeacherStampViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterTeacherStampViewController.h; sourceTree = "<group>"; };
 		036AAD651BBF9245007AF0A8 /* RegisterTeacherStampViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterTeacherStampViewController.m; sourceTree = "<group>"; };
@@ -409,6 +415,8 @@
 				0399AAF51B84731E00972F21 /* ClassTableViewCell.m */,
 				038898381BB3B6ED00D12468 /* StudentTableViewCell.h */,
 				038898391BB3B6ED00D12468 /* StudentTableViewCell.m */,
+				0369CF8B1BE082EC00E8857D /* StudentAttendanceTableViewCell.h */,
+				0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -424,6 +432,8 @@
 				03A2C1DB1BB901C20073EBF8 /* OrderStampsViewController.m */,
 				036AAD641BBF9245007AF0A8 /* RegisterTeacherStampViewController.h */,
 				036AAD651BBF9245007AF0A8 /* RegisterTeacherStampViewController.m */,
+				0315AB031BD5F08C00C77F2F /* StampIdentifierViewController.h */,
+				0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */,
 			);
 			name = Administrative;
 			sourceTree = "<group>";
@@ -632,6 +642,7 @@
 				03AA99DE1B6333C300750758 /* Frameworks */,
 				03AA99DF1B6333C300750758 /* Resources */,
 				E9CB6F83AAE1753AE3C8B58D /* Copy Pods Resources */,
+				C50860F23C223D78B4F9965B /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -804,6 +815,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		C50860F23C223D78B4F9965B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Classroom Hero/Pods-Classroom Hero-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E9CB6F83AAE1753AE3C8B58D /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -843,12 +869,14 @@
 				034075D71B980A60008E14B2 /* AwardViewController.m in Sources */,
 				03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */,
 				0388983D1BB3CCDA00D12468 /* StudentViewController.m in Sources */,
+				0315AB051BD5F08C00C77F2F /* StampIdentifierViewController.m in Sources */,
 				0385453B1B636BFF0053C169 /* nameTextField.m in Sources */,
 				03AA99EA1B6333C300750758 /* AppDelegate.m in Sources */,
 				038545291B6359E90053C169 /* passwordTextField.m in Sources */,
 				033855711B8996D400173600 /* CreateClassViewController.m in Sources */,
 				03A2C1DC1BB901C20073EBF8 /* OrderStampsViewController.m in Sources */,
 				036E4ED41B9832EA00A06B25 /* MarketViewController.m in Sources */,
+				0369CF8D1BE082EC00E8857D /* StudentAttendanceTableViewCell.m in Sources */,
 				03A01EDA1B68A8C20037110E /* TutorialContentViewController.m in Sources */,
 				036AAD661BBF9245007AF0A8 /* RegisterTeacherStampViewController.m in Sources */,
 				03F46FBB1B6B54C200A695B2 /* student.m in Sources */,

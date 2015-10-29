@@ -1,5 +1,0 @@
-#include "Pods-Classroom Hero-gtm-oauth.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/gtm-oauth" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BBBadgeBarButtonItem" "${PODS_ROOT}/Headers/Public/JSBadgeView" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/Stripe" "${PODS_ROOT}/Headers/Public/gtm-oauth" "${PODS_ROOT}/Headers/Public/snowshoe"
-OTHER_LDFLAGS = ${PODS_CLASSROOM_HERO_GTM_OAUTH_OTHER_LDFLAGS} -ObjC
-PODS_ROOT = ${SRCROOT}

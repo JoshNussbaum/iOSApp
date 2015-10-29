@@ -17,6 +17,7 @@
 #import "MarketViewController.h"
 #import "StudentsTableViewController.h"
 #import "BBBadgeBarButtonItem.h"
+#import "SettingsViewController.h"
 
 
 @interface HomeViewController (){
@@ -34,11 +35,10 @@
     
     currentUser = [user getInstance];
     [currentUser printUser];
-    
-    [Utilities makeRoundedButton:self.registerStudentsButton :nil];
-    [Utilities makeRoundedButton:self.createClassButton :nil];
-    [Utilities makeRoundedButton:self.classesButton :nil];
-    [Utilities makeRoundedButton:self.settingsButton :nil];
+    NSArray *buttons = @[self.settingsButton, self.classesButton, self.settingsButton, self.attendanceButton];
+    for (UIButton *button in buttons){
+        [Utilities makeRoundedButton:button :nil];
+    }
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
     self.teacherNameLabel.text = name;
     self.classNameLabel.text = [currentUser.currentClass getName];
@@ -49,16 +49,6 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     currentUser = [user getInstance];
-
-    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
-    if (unregisteredStudents > 0){
-        [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
-        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.registerStudentsView alignment:JSBadgeViewAlignmentTopRight];
-        badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long)unregisteredStudents];
-        badgeView.badgeTextColor=[UIColor whiteColor];
-        badgeView.badgeBackgroundColor = [UIColor redColor];
-  
-    }
     
     classjar *jar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     
@@ -67,24 +57,20 @@
     self.jarProgressBar.progress = (float)[jar getProgress] / (float)[jar getTotal];
     
     self.classLevelProgressBar.progress = (float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel];
+    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     
-    
-    if (!currentUser.serial){
-        NSLog(@"In here, serials %@", currentUser.serial);
-        BBBadgeBarButtonItem *barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:self.settingsButton];
-        barButton.badgeValue = @"2";
-        NSInteger size = self.view.frame.size.width/4 - 28;
-        barButton.badgeOriginX = size;
-        barButton.badgeOriginY = -5;
-        barButton.shouldHideBadgeAtZero = YES;
-        barButton.shouldAnimateBadge = YES;
-        self.navigationItem.rightBarButtonItem = barButton;
+    if (!currentUser.serial || unregisteredStudents > 0){
+        [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
+        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.settingsView alignment:JSBadgeViewAlignmentTopRight];
+        badgeView.badgeText = @"!";
+        badgeView.badgeTextColor=[UIColor whiteColor];
+        badgeView.badgeBackgroundColor = [UIColor redColor];
     }
     
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
     
-    self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averageLevel"] integerValue]];
-    self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averagePoints"] integerValue]];
+    self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%d", [[classStats objectForKey:@"averageLevel"] integerValue]];
+    self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%d", [[classStats objectForKey:@"averagePoints"] integerValue]];
 
 
 }
@@ -138,24 +124,8 @@
     [self.navigationController pushViewController:stvc animated:NO];
 }
 
-
-- (IBAction)tutorialClicked:(id)sender {
-    [self performSegueWithIdentifier:@"home_to_tutorial" sender:nil];
-}
-
-
-- (IBAction)registerStudentsClicked:(id)sender {
-    if (flag == 1){
-        if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }
-    else if (flag == 2){
-        if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
-            [self performSegueWithIdentifier:@"home_to_register_students" sender:nil];
-        }
-    }
-  
+- (IBAction)attendanceClicked:(id)sender {
+    [self performSegueWithIdentifier:@"home_to_attendance" sender:self];
 }
 
 
@@ -166,13 +136,9 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"home_to_tutorial"]){
-        TutorialViewController *vc = [segue destinationViewController];
-        [vc setFlag:2];
-    }
-    else if ([segue.identifier isEqualToString:@"home_to_register_students"]){
-        RegisterStudentsViewController *vc = [segue destinationViewController];
-        [vc setFlag:2];
+    if ([segue.identifier isEqualToString:@"home_to_settings"]){
+        SettingsViewController *vc = [segue destinationViewController];
+        [vc setFlag:flag];
     }
     
 }

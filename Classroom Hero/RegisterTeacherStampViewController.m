@@ -82,7 +82,6 @@
             [Utilities failAnimation:self.stampImage];
         }
     }
-    [hud hide:YES];
 
 }
 

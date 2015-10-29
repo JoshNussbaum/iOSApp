@@ -1,6 +1,10 @@
 
+>>>>> Award all students. Write function to award points by student ID <<<<<
+>>>>> then all we do is query all student ids then award them all      <<<<<
 
->>>>>>>>>>>> ADD DELETE FUNCTIONS FOR CLASS AND SHIT <<<<<<<<<<<<<
+
+>>>> Every page has a student list that becomes part of page (on award, it brings up a student to reward, then you tap center button to add points)
+>>>> or on sell screen, you have the student select himself then subtract points
 
 
 

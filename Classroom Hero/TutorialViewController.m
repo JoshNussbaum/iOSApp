@@ -25,12 +25,11 @@
         _pageTitles = @[@"Welcome   to   Classroom   Hero!   Swipe   left   to   create  a  class  and  register  your  teacher  stamp", @"Add   a   class   that   belongs   to   your   school", @"Add   students   to   your   selected   class", @"Add   positive   reinforcers   to   categorize   points   awarded   to   students", @"Add   market   place   items   for   students   to   spend   their   points   on", @"Add   a   jar   that   only   your   teacher   stamp   can   add   points   to   for   a   class-wide   reward", @"Stamp   the   apple   to   register   your   teacher   stamp   and   begin   your   journey  with   Classroom   Hero!"];
         self.backButton.enabled = YES;
         self.backButton.hidden = NO;
-        [Utilities makeRoundedButton:self.backButton :nil];
 
     }
     if (flag == 2){
-        self.backButton.enabled = NO;
-        self.backButton.hidden = YES;
+        //self.backButton.enabled = NO;
+        //self.backButton.hidden = YES;
         _pageTitles = @[@"Swipe   left   to   create   or   add   to   a   class  and  register  your  teacher  stamp", @"Add   a   class   that   belongs   to   your   school", @"Add   students   to   your   selected   class", @"Add   positive   reinforcers   to   categorize   points   awarded   to   students", @"Add   market   place   items   for   students   to   spend   their   points   on", @"Add   a   jar   that   only   your   teacher   stamp   can   add   points   to   for   a   class-wide   reward", @"Stamp   the   apple   to   register   your   teacher   stamp   and   begin   your   journey  with   Classroom   Hero!"];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
@@ -50,9 +49,11 @@
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
     
-    [Utilities makeRoundedButton:self.startOverButton :nil];
-    [Utilities makeRoundedButton:self.skipButton :nil];
-    
+    NSArray *buttons = @[self.startOverButton, self.skipButton, self.backButton];
+    for (UIButton *button in buttons){
+        [Utilities makeRoundedButton:button :nil];
+    }
+
 }
 
 
@@ -132,8 +133,9 @@
     }
     if (flag ==2){
         [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
 
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        //[self.navigationController popToRootViewControllerAnimated:YES];
     }
     
     

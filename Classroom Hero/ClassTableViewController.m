@@ -189,7 +189,7 @@ static NSString * const classCell = @"classCell";
     // Return the number of rows in the section.
     if (classes.count > 0){
         return classes.count + 1;
-    }else return 0;
+    }else return 1;
 }
 
 

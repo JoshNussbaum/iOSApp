@@ -10,6 +10,18 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 
+NSDictionary *fakeSchool1;
+NSArray *fakeSchools;
+NSDictionary *fakeClass1;
+NSArray *fakeClassArray;
+NSDictionary *fakeUserDict;
+NSDictionary *fakeLoginDict;
+NSDictionary *fakeStudent1;
+NSDictionary *fakeStudent2;
+NSDictionary *fakeStudent3;
+NSArray *fakeStudents;
+
+
 
 @interface LoginViewController (){
     ConnectionHandler *webHandler;
@@ -46,7 +58,44 @@
     
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
+    
+    /*
+     NSMutableArray *students = [classDictionary objectForKey:@"students"];
+     for (NSDictionary *studentDictionary in students){
+     NSInteger sid = [[studentDictionary objectForKey:@"uid"]integerValue];
+     NSString *fname = [studentDictionary objectForKey:@"fname"];
+     NSString *lname = [studentDictionary objectForKey:@"lname"];
+     NSString *serial = [studentDictionary objectForKey:@"stamp"];
+     
+     if (!serial){
+     serial = @"";
+     }
+     
+     NSInteger currentCoins = [[studentDictionary objectForKey:@"currentCoins"]integerValue];
+     NSInteger lvl = [[studentDictionary objectForKey:@"lvl"]integerValue];
+     NSInteger lvlUpAmount = 2 + (2*(lvl-1));
+     NSInteger progress = [[studentDictionary objectForKey:@"progress"]integerValue];
+     NSInteger totalCoins = [[studentDictionary objectForKey:@"totalCoins"]integerValue];
+     
+     student *newStudent = [[student alloc] initWithid:sid firstName:fname lastName:lname serial:serial lvl:lvl progress:progress lvlupamount:lvlUpAmount points:currentCoins totalpoints:totalCoins];
+     [self addStudent:newStudent :cid :schoolId];
+     
+     }
 
+     
+     */
+    fakeStudent1 = @{@"uid": @"1", @"fname": @"Mel", @"lname": @"Clarke", @"stamp": @"ClassroomHero1", @"currentCoins": @"1", @"lvl": @"1", @"progress": @"1", @"totalCoins": @"1", @"checkedIn": @"0"};
+    fakeStudent2 = @{@"uid": @"2", @"fname": @"Holly", @"lname": @"Irish", @"stamp": @"ClassroomHero2", @"currentCoins": @"2", @"lvl": @"1", @"progress": @"2", @"totalCoins": @"2", @"checkedIn": @"0"};
+    fakeStudent3 = @{@"uid": @"3", @"fname": @"Mike", @"lname": @"Sela", @"currentCoins": @"3", @"lvl": @"2", @"progress": @"0", @"totalCoins": @"3", @"checkedIn": @"0"};
+    
+    fakeStudents = @[fakeStudent1, fakeStudent2, fakeStudent3];
+    
+    fakeSchool1 = @{@"id": @"2", @"name": @"Josh's Jedi Lounge"};
+    fakeSchools = @[fakeSchool1];
+    fakeClass1 = @{@"cid": @"20", @"name": @"Fake Class Bruh", @"classProgress": @"2", @"grade": @"2", @"nextLvl": @"10", @"classLvl": @"1", @"schoolId": @"2", @"students": fakeStudents};
+    fakeClassArray = @[fakeClass1];
+    fakeUserDict = @{@"fname" : @"Billy", @"lname": @"Bob Thorton", @"uid": @"120", @"accountStatus": @"2"};
+    fakeLoginDict = @{@"login": fakeUserDict, @"classes":fakeClassArray, @"schools": fakeSchools};
 }
 
 
@@ -83,7 +132,7 @@
 
 
 - (void)stampResultDidChange:(NSString *)stampResult{
-    if (!currentUser.serial){
+    if (!currentUser.serial && !isStamping){
         NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
         NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
@@ -92,9 +141,11 @@
                 isStamping = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                    [Utilities wiggleImage:self.stampImage sound:NO];
                     if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
                         [Utilities wiggleImage:self.stampImage sound:NO];
                         [self activityStart:@"Logging in..."];
+                        [[DatabaseHandler getSharedInstance] resetDatabase];
                         [webHandler stampToLogin:stampSerial];
                     }
                     else {
@@ -116,6 +167,9 @@
 
 - (IBAction)loginClicked:(id)sender{
     [self hideKeyboard];
+    [[DatabaseHandler getSharedInstance] resetDatabase];
+    [self loginSuccess:fakeLoginDict];
+    /*
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
     errorMessage = @"";
@@ -135,6 +189,7 @@
         [[DatabaseHandler getSharedInstance] resetDatabase];
         [webHandler logIn:self.emailTextField.text :self.passwordTextField.text];
     }
+     */
 }
 
 

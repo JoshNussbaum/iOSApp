@@ -10,45 +10,50 @@
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-static NSString * const LOGIN_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/login/auth";
-static NSString * const STAMP_TO_LOGIN_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/login/auth/stamp";
-static NSString * const CREATE_ACCOUNT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/teacher";
+static NSString * const LOGIN_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/login/auth";
+static NSString * const STAMP_TO_LOGIN_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/login/auth/stamp";
+static NSString * const CREATE_ACCOUNT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/teacher";
 
-static NSString * const ADD_CLASS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/add";
-static NSString * const EDIT_CLASS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/edit";
-static NSString * const DELETE_CLASS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/delete";
+static NSString * const ADD_CLASS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/add";
+static NSString * const EDIT_CLASS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/edit";
+static NSString * const DELETE_CLASS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/delete";
 
-static NSString * const ADD_CATEGORY_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/category/add";
-static NSString * const EDIT_CATEGORY_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/category/edit";
-static NSString * const DELETE_CATEGORY_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/category/delete";
+static NSString * const ADD_CATEGORY_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/category/add";
+static NSString * const EDIT_CATEGORY_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/category/edit";
+static NSString * const DELETE_CATEGORY_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/category/delete";
 
-static NSString * const ADD_ITEM_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/item/add";
-static NSString * const EDIT_ITEM_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/item/edit";
-static NSString * const DELETE_ITEM_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/item/delete";
+static NSString * const ADD_ITEM_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/item/add";
+static NSString * const EDIT_ITEM_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/item/edit";
+static NSString * const DELETE_ITEM_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/item/delete";
 
-static NSString * const ADD_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/add";
-static NSString * const EDIT_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/edit";
-static NSString * const DELETE_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/delete";
+static NSString * const ADD_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/add";
+static NSString * const EDIT_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/edit";
+static NSString * const DELETE_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/delete";
 
-static NSString * const ADD_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/add";
-static NSString * const EDIT_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/edit";
-static NSString * const DELETE_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/delete";
-static NSString * const REWARD_STUDENT_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/reward";
-static NSString * const STUDENT_TRANSACTION_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/student/transaction";
+static NSString * const ADD_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/add";
+static NSString * const EDIT_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/edit";
+static NSString * const DELETE_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/delete";
+static NSString * const REWARD_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/reward";
+static NSString * const STUDENT_TRANSACTION_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/transaction";
 
-static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/schools/get";
-static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/stamp";
-static NSString * const UNREGISTER_STAMP_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/unregisterStamp";
+static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/schools/get";
+static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/stamp";
+static NSString * const UNREGISTER_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/unregisterStamp";
 
-static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/rewardAllStudents";
-static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/jar/fill";
+static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/rewardAllStudents";
+static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/fill";
 
-static NSString * const ORDER_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
+static NSString * const ORDER_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/order";
 
-static NSString * const EDIT_TEACHER_NAME_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/register/order";
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/order";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/order";
 
-static NSString * const GET_CLASS_STATS_URL = @"http://73.231.27.167:8080/SynappWebServiceDemo/services/class/stats";
+static NSString * const GET_CLASS_STATS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/stats";
+
+static NSString * const IDENTIFY_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/identify";
+
+static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/unregisterAllStudents";
+
 
 
 
@@ -327,6 +332,23 @@ static NSInteger connectionType;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"stats\":{\"classId\":%ld, \"schoolId\":%ld}}", (long)classId, (long)schoolId];
     
     [self asynchronousWebCall:jsonRequest :GET_CLASS_STATS_URL :GET];
+}
+
+
+- (void)identifyStampWithserial:(NSString *)serial{
+    connectionType = IDENTIFY_STAMP;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"identify\":{\"serial\":\"%@\"}", serial];
+    
+    [self asynchronousWebCall:jsonRequest :IDENTIFY_STAMP_URL :GET];
+}
+
+- (void)unregisterAllStudentsInClassWithid:(NSInteger)classId{
+    connectionType = UNREGISTER_ALL_STUDENTS;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"unregisterAll\":{\"classId\":\"%ld}", (long)classId];
+    
+    [self asynchronousWebCall:jsonRequest :UNREGISTER_ALL_STUDENTS_URL :GET];
 }
 
 

@@ -50,6 +50,8 @@ extern NSInteger EDIT_TEACHER_NAME;
 extern NSInteger EDIT_TEACHER_PASSWORD;
 extern NSInteger STAMP_TO_LOGIN;
 extern NSInteger GET_CLASS_STATS;
+extern NSInteger IDENTIFY_STAMP;
+extern NSInteger UNREGISTER_ALL_STUDENTS; 
 
 
 + (UIColor *) CHBlueColor;

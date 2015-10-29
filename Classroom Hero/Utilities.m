@@ -42,6 +42,8 @@ NSInteger EDIT_TEACHER_NAME = 29;
 NSInteger EDIT_TEACHER_PASSWORD = 29;
 NSInteger STAMP_TO_LOGIN = 30;
 NSInteger GET_CLASS_STATS = 31;
+NSInteger IDENTIFY_STAMP = 32;
+NSInteger UNREGISTER_ALL_STUDENTS = 33;
 
 
 
@@ -180,6 +182,7 @@ NSInteger GET_CLASS_STATS = 31;
     [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
     [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
     [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [alertView textFieldAtIndex:1].autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
     [[alertView textFieldAtIndex:1] setDelegate:(id)view];
     

@@ -26,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    currentUser = [user getInstance];
     [Utilities makeRoundedButton:self.editNameButton :[UIColor whiteColor]];
     [Utilities makeRoundedButton:self.editPasswordButton :[UIColor whiteColor]];
     
