@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface Classroom_HeroTests : XCTestCase
+@interface Classroom_HeroTests : XCTestCase{
+    
+}
 
 @end
 

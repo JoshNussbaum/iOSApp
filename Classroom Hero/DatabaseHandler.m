@@ -122,8 +122,6 @@ static sqlite3_stmt *statement = nil;
     {
         NSString *querySQL = [NSString stringWithFormat:
                               @"REPLACE INTO Student (id, firstname, lastname, serial, lvl, progress, lvlupamount, points, totalpoints, checkedin) VALUES (%ld, \"%@\", \"%@\", \"%@\", %ld, %ld, %ld, %ld, %ld, %ld)", (long)[ss getId], [ss getFirstName], [ss getLastName], [ss getSerial], (long)[ss getLvl], (long)[ss getProgress], (long)[ss getLvlUpAmount], (long)[ss getPoints], (long)[ss getTotalPoints], (long)([ss getCheckedIn] ? 1 : 0)];
-        NSLog(@"%@",querySQL);
-        
         const char *query_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
         sqlite3_step(statement);
@@ -314,7 +312,6 @@ static sqlite3_stmt *statement = nil;
             
             classjar *newJar = [[classjar alloc] initWithid:jid cid:cid name:name progress:jarProgress total:total];
             
-            [newJar printJar];
             [self addClassJar:newJar];
             
         }
@@ -480,8 +477,6 @@ static sqlite3_stmt *statement = nil;
                     
                     student *ss = [[student alloc] initWithid:id firstName:firstName lastName:lastName serial:serial lvl:level progress:progress lvlupamount:levelUpAmount points:points totalpoints:totalPoints checkedin:(checkedIn==1 ? YES : NO)];
                     [allStudents addObject:ss];
-                    
-                    [ss printStudent];
                     
                     sqlite3_finalize(statement);
                     
@@ -652,7 +647,6 @@ static sqlite3_stmt *statement = nil;
                     
                     student *ss = [[student alloc] initWithid:id firstName:firstName lastName:lastName serial:serial lvl:lvl progress:progress lvlupamount:lvlupamount points:points totalpoints:totalpoints checkedin:(checkedIn==1 ? YES : NO)];
                     
-                    [ss printStudent];
                     
                     sqlite3_reset(statement);
                     sqlite3_close(database);
@@ -1130,8 +1124,7 @@ static sqlite3_stmt *statement = nil;
         NSInteger checkedIn_ = (checkedIn ? 1: 0);
         NSString *querySQL = [NSString stringWithFormat:
                               @"UPDATE Student SET checkedin=%ld WHERE id=%ld", (long)checkedIn_, (long)studentId];
-        NSLog(@"Query sql -> %@", querySQL);
-        const char *update_stmt = [querySQL UTF8String];
+         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
         if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We checked a student in or out");

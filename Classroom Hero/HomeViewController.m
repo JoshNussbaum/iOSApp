@@ -34,7 +34,6 @@
     [super viewDidLoad];
     
     currentUser = [user getInstance];
-    [currentUser printUser];
     NSArray *buttons = @[self.settingsButton, self.classesButton, self.settingsButton, self.attendanceButton];
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
@@ -52,7 +51,6 @@
     
     classjar *jar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     
-    [jar printJar];
     
     self.jarProgressBar.progress = (float)[jar getProgress] / (float)[jar getTotal];
     

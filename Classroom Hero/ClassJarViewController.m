@@ -78,8 +78,6 @@
     corkRect = self.corkImage.frame;
     
     currentPoints = 1;
-    
-    // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated{

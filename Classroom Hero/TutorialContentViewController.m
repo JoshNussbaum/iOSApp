@@ -59,12 +59,7 @@ static int screenNumber;
     
     self.schoolPicker.delegate = self;
     
-    if (self.pageIndex == 6 && ![currentUser.serial isEqualToString:@""]){
-        self.titleLabel.text = @"You  have  already  registered  your  a  stamp  to  your account.  Unregister  from  the  in  app  settings  menu";
-    }
-    else {
-        self.titleLabel.text = self.titleText;
-    }
+    self.titleLabel.text = self.titleText;
     
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
@@ -173,11 +168,11 @@ static int screenNumber;
         if (self.pageIndex == 0 || self.pageIndex == 6){
             self.stampImage.hidden = NO;
             if (self.pageIndex == 6){
-                if ([currentUser.serial isEqualToString:@""]){
+                if (!currentUser.serial){
                     self.titleLabel.hidden = NO;
                 }
                 else {
-                    self.titleLabel.text = @"You  have  a  stamp  registered  to  your  account!  Unregister  from  the  in  app  settings  menu";
+                    self.titleLabel.text = @"You  have  a  stamp  registered  to  your  account.  Unregister  from  the  in  app  settings  menu";
                     self.titleLabel.hidden =  NO;
                 }
             }

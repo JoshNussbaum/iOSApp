@@ -72,7 +72,6 @@ static NSInteger coinHeight = 250;
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentUser = [user getInstance];
-    [currentUser printUser];
     reinforcerData = [[DatabaseHandler getSharedInstance]getReinforcers:[currentUser.currentClass getId]];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
 
@@ -140,7 +139,6 @@ static NSInteger coinHeight = 250;
 - (void)setReinforcerName{
     index = [self.categoryPicker selectedRowInComponent:0];
     currentReinforcer = [reinforcerData objectAtIndex:index];
-    [currentReinforcer printReinforcer];
     self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
     self.reinforcerValue.text = [NSString stringWithFormat:@"+ %ld", (long)[currentReinforcer getValue]];
 }

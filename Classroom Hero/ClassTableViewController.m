@@ -167,7 +167,6 @@ static NSString * const classCell = @"classCell";
     }
     else if (alertView.tag == 2){
         // Delete class
-        [tmpClass printClass];
         [self activityStart:@"Deleting class..."];
         [webHandler deleteClass:[tmpClass getId]];
     }
@@ -268,7 +267,6 @@ static NSString * const classCell = @"classCell";
         if (classes.count > 0){
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             class *selectedClass = [self getClassByIndexPath:indexPath];
-            [selectedClass printClass];
             currentUser.currentClass = selectedClass;
             NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance] getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
             if (unregisteredStudents == 0){
