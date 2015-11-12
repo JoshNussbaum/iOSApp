@@ -44,6 +44,7 @@ NSInteger STAMP_TO_LOGIN = 30;
 NSInteger GET_CLASS_STATS = 31;
 NSInteger IDENTIFY_STAMP = 32;
 NSInteger UNREGISTER_ALL_STUDENTS = 33;
+NSInteger GET_STUDENT_BY_STAMP = 34;
 
 
 
@@ -162,6 +163,37 @@ NSInteger UNREGISTER_ALL_STUDENTS = 33;
         [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
         
     }
+    alertView.tag = tag;
+    [alertView show];
+}
+
+
++ (void) editTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
+    
+    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    for (NSInteger i = 0; i < textfields.count; i++){
+        NSString *placeholder = [textfields objectAtIndex:i];
+        UITextField *txtField = [alertView textFieldAtIndex:i];
+        [txtField setText:placeholder];
+        [txtField setPlaceholder:placeholder];
+        
+    }
+    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
+    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
+    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    
+
     alertView.tag = tag;
     [alertView show];
 }

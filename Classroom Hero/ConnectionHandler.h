@@ -71,10 +71,10 @@
 - (void)deleteJar:(NSInteger)id;
 
 
-- (void)addStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname;
+- (void)addStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname :(NSInteger)schoolId;
 
 
-- (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname :(NSString *)serial;
+- (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname;
 
 
 - (void)deleteStudent:(NSInteger)id;
@@ -86,7 +86,7 @@
 - (void)registerStamp:(NSInteger)id :(NSString *)serial;
 
 
-- (void)rewardStudentWithid:(NSInteger)id pointsEarned:(NSInteger)pointsEarned categoryId:(NSInteger)categoryId;
+- (void)rewardStudentWithserial:(NSString *)serial pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId;
 
 
 - (void)rewardAllStudentsWithcid:(NSInteger)cid;
@@ -117,6 +117,9 @@
 
 
 - (void)unregisterAllStampsWithClassId:(NSInteger)classId;
+
+
+- (void)getStudentBySerialwithserial:(NSString *)serial :(NSInteger)schoolId;
 
 
 @end

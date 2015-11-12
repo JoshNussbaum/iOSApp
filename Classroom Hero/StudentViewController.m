@@ -77,7 +77,7 @@
 
 
 - (IBAction)editStudentClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Edit student" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentStudent getFirstName], [currentStudent getLastName]] tag:1 view:self];
+    [Utilities editAlertAddStudentWithtitle:@"Edit student" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentStudent getFirstName], [currentStudent getLastName]] tag:1 view:self];
 }
 
 
@@ -106,7 +106,7 @@
                 NSString *costErrorMessage = [Utilities isInputValid:newStudentLastName :@"Student Last Name"];
                 if (!costErrorMessage){
                     [self activityStart:@"Editing Student..."];
-                    [webHandler editStudent:[currentStudent getId] :[currentStudent getFirstName] :[currentStudent getLastName] :[currentStudent getSerial]];
+                    [webHandler editStudent:[currentStudent getId] :newStudentFirstName :newStudentLastName];
                 }
                 else {
                     [Utilities alertStatusWithTitle:@"Error adding item" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];

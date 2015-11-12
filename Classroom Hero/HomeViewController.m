@@ -57,7 +57,7 @@
     self.classLevelProgressBar.progress = (float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel];
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     
-    if (!currentUser.serial || unregisteredStudents > 0){
+    if (!currentUser.serial || unregisteredStudents > 0 || currentUser.accountStatus < 2){
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.settingsView alignment:JSBadgeViewAlignmentTopRight];
         badgeView.badgeText = @"!";
@@ -67,8 +67,8 @@
     
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
     
-    self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%d", [[classStats objectForKey:@"averageLevel"] integerValue]];
-    self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%d", [[classStats objectForKey:@"averagePoints"] integerValue]];
+    self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averageLevel"] integerValue]];
+    self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averagePoints"] integerValue]];
 
 
 }

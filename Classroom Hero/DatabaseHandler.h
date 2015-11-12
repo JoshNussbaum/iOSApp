@@ -26,6 +26,7 @@
 
 
 // Create Functions
+
 - (BOOL)createDatabase;
 
 
@@ -54,6 +55,7 @@
 
 
 // Read Functions
+
 - (NSMutableArray *)getClasses;
 
 
@@ -148,6 +150,7 @@
 
 
 // Misc Functions
+
 - (bool) isValidStamp:(NSString *)serial :(NSInteger)schoolId;
 
 

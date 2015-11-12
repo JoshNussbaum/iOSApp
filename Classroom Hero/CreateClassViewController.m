@@ -22,8 +22,6 @@
 
 }
 
-- (IBAction)infoButtonClicked:(id)sender;
-
 @end
 
 @implementation CreateClassViewController
@@ -47,6 +45,7 @@
     
     [Utilities makeRoundedButton:self.addClassButton :nil];
     [Utilities makeRoundedButton:self.backButton :nil];
+    [Utilities makeRoundedButton:self.helpButton :nil];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
@@ -209,8 +208,7 @@
 
 
 
-- (IBAction)infoButtonClicked:(id)sender {
+- (IBAction)helpClicked:(id)sender {
     [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
 }
-
 @end

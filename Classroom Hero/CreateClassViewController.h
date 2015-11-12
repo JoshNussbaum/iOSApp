@@ -21,5 +21,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
 @property (strong, nonatomic) IBOutlet UIButton *addClassButton;
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
+@property (strong, nonatomic) IBOutlet UIButton *helpButton;
+- (IBAction)helpClicked:(id)sender;
 
 @end

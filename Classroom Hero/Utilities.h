@@ -51,7 +51,8 @@ extern NSInteger EDIT_TEACHER_PASSWORD;
 extern NSInteger STAMP_TO_LOGIN;
 extern NSInteger GET_CLASS_STATS;
 extern NSInteger IDENTIFY_STAMP;
-extern NSInteger UNREGISTER_ALL_STUDENTS; 
+extern NSInteger UNREGISTER_ALL_STUDENTS;
+extern NSInteger GET_STUDENT_BY_STAMP;
 
 
 + (UIColor *) CHBlueColor;
@@ -77,6 +78,7 @@ extern NSInteger UNREGISTER_ALL_STUDENTS;
 
 + (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
 
++ (void) editTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
 
 + (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
 

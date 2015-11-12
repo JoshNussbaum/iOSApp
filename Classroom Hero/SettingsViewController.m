@@ -15,6 +15,7 @@
 #import "DatabaseHandler.h"
 #import "RegisterStudentsViewController.h"
 #import "TutorialViewController.h"
+#import "NSString+FontAwesome.h"
 
 @interface SettingsViewController (){
     user *currentUser;
@@ -34,7 +35,20 @@
     
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
+        button.titleLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:25];
     }
+
+    
+    //self.studentListButton.titleLabel.text = [NSString stringWithFormat:@"Student List %@", [NSString fontAwesomeIconStringForEnum:FAList]];
+    [self.studentListButton setTitle:[NSString stringWithFormat:@"  %@   Student List", [NSString fontAwesomeIconStringForEnum:FAList]] forState:UIControlStateNormal ];
+    [self.classTutorialButton setTitle:[NSString stringWithFormat:@"  %@   Class Tutorial", [NSString fontAwesomeIconStringForEnum:FAQuestionCircle]] forState:UIControlStateNormal];
+    [self.registerTeacherStamp setTitle:[NSString stringWithFormat:@"  %@   Register Teacher Stamp", [NSString fontAwesomeIconStringForEnum:FABell]] forState:UIControlStateNormal];
+    [self.registerTeacherStamp setNeedsLayout];
+    [self.unregisterAllStampsButton setTitle:[NSString stringWithFormat:@"  %@    Unregister All Stamps", [NSString fontAwesomeIconStringForEnum:FAExclamationTriangle]] forState:UIControlStateNormal];
+    [self.stampIdentifierButton setTitle:[NSString stringWithFormat:@"  %@   Stamp Identifier", [NSString fontAwesomeIconStringForEnum:FALightbulbO]] forState:UIControlStateNormal];
+    [self.registerStudentsButton setTitle:[NSString stringWithFormat:@"  %@   Register Students", [NSString fontAwesomeIconStringForEnum:FAchild]] forState:UIControlStateNormal];
+    [self.orderStampsButton setTitle:[NSString stringWithFormat:@"  %@   Order Stamps", [NSString fontAwesomeIconStringForEnum:FAShoppingCart]] forState:UIControlStateNormal];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -53,14 +67,14 @@
 }
 
 - (void)checkAccountStatus{
-    [currentUser printUser];
+    [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
     if (!currentUser.serial){
-        [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
         badgeView = [[JSBadgeView alloc] initWithParentView:self.registerTeacherStampView alignment:JSBadgeViewAlignmentTopRight];
         badgeView.badgeText = @"!";
         badgeView.badgeTextColor=[UIColor whiteColor];
         badgeView.badgeBackgroundColor = [UIColor redColor];
-        
+    }
+    if (currentUser.accountStatus < 2){
         badgeView2 = [[JSBadgeView alloc] initWithParentView:self.orderStampsView alignment:JSBadgeViewAlignmentTopRight];
         badgeView2.badgeText = @"!";
         badgeView2.badgeTextColor=[UIColor whiteColor];
@@ -179,7 +193,10 @@
         RegisterStudentsViewController *vc = [segue destinationViewController];
         [vc setFlag:2];
     }
-    
+    else if ([segue.identifier isEqualToString:@"settings_unwind_to_register_students"]){
+        RegisterStudentsViewController *vc = [segue destinationViewController];
+        [vc setFlag:3];
+    }
 }
 
 

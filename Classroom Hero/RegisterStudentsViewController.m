@@ -11,6 +11,7 @@
 #import "Utilities.h"
 #import "HomeViewController.h"
 #import "MBProgressHUD.h"
+#import "SettingsViewController.h"
 
 @interface RegisterStudentsViewController (){
     NSMutableArray *unregisteredStudents;
@@ -31,6 +32,11 @@
     currentUser =[user getInstance];
     unregisteredStudents = [[NSMutableArray alloc]init];
     unregisteredStudents = [[DatabaseHandler getSharedInstance]getUnregisteredStudents:[currentUser.currentClass getId]];
+    if ([unregisteredStudents count] != 0)
+    {
+        self.stampToRegisterLabel.hidden = NO;
+        self.swipeLabel.hidden = NO;
+    }
     
     NSLog(@"We got %lu unregistered students", (unsigned long)unregisteredStudents.count);
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
@@ -96,15 +102,26 @@
         student *ss = [unregisteredStudents objectAtIndex:index];
         NSString *name = [ss getFirstName];
         name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [ss getLastName]]];
-        self.studentNameLabel.text = name;
-        self.stampToRegisterLabel.hidden = NO;
-        self.swipeLabel.hidden = NO;
+        
+        
+        [UIView animateWithDuration:.1
+                         animations:^{
+                             self.studentNameLabel.alpha = 0.0;
+                         }completion:^(BOOL finished) {
+                             self.studentNameLabel.text = name;
 
+                             [UIView animateWithDuration:.1
+                                              animations:^{
+                                                  self.studentNameLabel.alpha = 1.0;
+                                              }
+                              ];
+                         }
+         ];
 
     }
     else{
         self.studentNameLabel.text=@"All  Students  Registered";
-        self.stampToRegisterLabel.hidden = YES;
+        self.stampToRegisterLabel.hidden = YES; 
         self.swipeLabel.hidden = YES;
     }
     
@@ -126,7 +143,7 @@
                             [self activityStart:@"Registering stamp..."];
 
                             isStamping = YES;
-                            [Utilities wiggleImage:self.stampImage sound:YES];
+                            [Utilities wiggleImage:self.stampImage sound:NO];
                             student *ss = [unregisteredStudents objectAtIndex:registerIndex];
                             [ss setSerial:stampSerial];
                             [webHandler registerStamp:[ss getId] :stampSerial];
@@ -155,6 +172,7 @@
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
+        isStamping = NO;
         return;
     }
     if (type == REGISTER_STAMP){
@@ -163,6 +181,8 @@
         [[DatabaseHandler getSharedInstance] registerStudent:[ss getId] :[ss getSerial]];
         [hud hide:YES];
         [unregisteredStudents removeObjectAtIndex:registerIndex];
+        [Utilities wiggleImage:self.stampImage sound:YES];
+
         count--;
         if (count == 0) {
             self.swipeLabel.text = @"All  Students  Registered";
@@ -198,6 +218,16 @@
     }
     if (flag == 2){
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    if (flag == 3){
+        UIStoryboard *storyboard = self.storyboard;
+        
+        HomeViewController *hvc = [storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
+        SettingsViewController *svc = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+        [hvc setFlag:1];
+        [self.navigationController pushViewController:hvc animated:NO];
+        [svc setFlag:1];
+        [self.navigationController pushViewController:svc animated:NO];
     }
 }
 

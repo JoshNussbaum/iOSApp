@@ -44,6 +44,7 @@
 		034075D71B980A60008E14B2 /* AwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034075D61B980A60008E14B2 /* AwardViewController.m */; };
 		034075DA1B980CBB008E14B2 /* ClassJarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034075D91B980CBA008E14B2 /* ClassJarViewController.m */; };
 		03492CF21B8863DB0015CD78 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03492CF11B8863DB0015CD78 /* HomeViewController.m */; };
+		034C92B81BF19A7B0090667C /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */; settings = {ASSET_TAGS = (); }; };
 		0362C7FC1B89CD9300C93682 /* theLOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = 0362C7F91B89CD9300C93682 /* theLOGO.png */; };
 		036811561B8C49B400690294 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811551B8C49B400690294 /* AboutViewController.m */; };
 		036811591B8C49C300690294 /* PricingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811581B8C49C300690294 /* PricingViewController.m */; };
@@ -176,6 +177,8 @@
 		034075D91B980CBA008E14B2 /* ClassJarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassJarViewController.m; sourceTree = "<group>"; };
 		03492CF01B8863DB0015CD78 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		03492CF11B8863DB0015CD78 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
+		034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
 		0362C7F91B89CD9300C93682 /* theLOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theLOGO.png; sourceTree = "<group>"; };
 		036811541B8C49B400690294 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		036811551B8C49B400690294 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
@@ -506,6 +509,8 @@
 		03AA99E41B6333C300750758 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */,
+				034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */,
 				03AA99F31B6333C400750758 /* LaunchScreen.xib */,
 				03DC9D811B732C7F005C7562 /* sounds */,
 				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
@@ -866,6 +871,7 @@
 				03F46FB81B69CC2700A695B2 /* class.m in Sources */,
 				03492CF21B8863DB0015CD78 /* HomeViewController.m in Sources */,
 				038545321B635B1F0053C169 /* baseTextField.m in Sources */,
+				034C92B81BF19A7B0090667C /* NSString+FontAwesome.m in Sources */,
 				034075D71B980A60008E14B2 /* AwardViewController.m in Sources */,
 				03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */,
 				0388983D1BB3CCDA00D12468 /* StudentViewController.m in Sources */,

@@ -90,7 +90,7 @@ static NSString * const classCell = @"classCell";
 }
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    //NSLog(@"In class table and heres data -> %@", data);
+    NSLog(@"In class table and heres data -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -152,7 +152,7 @@ static NSString * const classCell = @"classCell";
             NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
             if (!gradeErrorMessage){
                 NSInteger grade = newClassGrade.integerValue;
-                class *selectedClass = [classes objectAtIndex:index-1];
+                class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];
                 [webHandler editClass:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId]];
                 tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel]];
@@ -191,14 +191,6 @@ static NSString * const classCell = @"classCell";
     }else return 1;
 }
 
-
-- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row > 0){
-        class *selectedClass = [self getClassByIndexPath:indexPath];
-        NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
-        [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
-    }
-}
 
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -283,7 +275,7 @@ static NSString * const classCell = @"classCell";
     else {
         class *selectedClass = [self getClassByIndexPath:indexPath];
         NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
-        [Utilities editAlertTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
+        [Utilities editTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
         
     }
 }
@@ -332,11 +324,11 @@ static NSString * const classCell = @"classCell";
 - (IBAction)editClicked:(id)sender {
     NSLog(@"In edit clicked");
     if (self.editing) {
-        //self.editButton.titleLabel.text=@"Edit";
+        [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
         [self.tableView setEditing:NO animated:YES];
         self.editing = NO;
     } else {
-        //self.editButton.titleLabel.text=@"Done";
+        [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
         [self.tableView setEditing:YES animated:YES];
         self.editing = YES;
     }

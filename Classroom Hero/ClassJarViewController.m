@@ -58,14 +58,7 @@
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
     
-    if (!currentClassJar){
-        
-        self.stepper.enabled = NO;
-        self.classJarName.text = @"Add  a  jar  above";
-    }
-    else {
-        self.stepper.enabled = YES;
-    }
+
     
     
     award = [Utilities getAwardSound];
@@ -121,7 +114,7 @@
 }
 - (IBAction)editJarClicked:(id)sender {
     if (currentClassJar){
-        [Utilities editAlertTextWithtitle:@"Edit Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
+        [Utilities editTextWithtitle:@"Edit Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
     }
 }
 
@@ -150,7 +143,7 @@
             }
             else if (alertView.tag == 2){
                 [self activityStart:@"Editing class jar..."];
-                [webHandler editJar:[currentUser.currentClass getId] :newClassJarName :newClassJarTotal.integerValue];
+                [webHandler editJar:[currentClassJar getId] :newClassJarName :newClassJarTotal.integerValue];
             }
             
         }
@@ -163,9 +156,10 @@
         [Utilities alertStatusWithTitle:@"Error adding class jar" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
     }
 }
-
+	
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
+    NSLog(@"Heres the data in class jar bruh -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -250,18 +244,17 @@
 -(void)addCoins{
     AudioServicesPlaySystemSound(award);
     self.jarCoins.hidden = NO;
-    NSMutableArray *scores = [NSMutableArray array];
-    NSInteger newTotal = [currentClassJar getProgress] +currentPoints;
-    NSInteger points = [currentClassJar getProgress];
-    
-    [scores addObject:[NSNumber numberWithInteger:points]];
-    [scores addObject:[NSNumber numberWithInteger:newTotal]];
-    
-
-    if (newTotal >= [currentClassJar getTotal]) {
-        [currentClassJar setProgress:[currentClassJar getTotal]];
+    NSInteger newTotal = [currentClassJar getProgress];
+    if (newTotal == 0) {
+        [self jarFull];
     }
-    [self coinsFall:scores];
+    else {
+        NSMutableArray *scores = [NSMutableArray array];
+        NSInteger points = [currentClassJar getProgress] - currentPoints;
+        [scores addObject:[NSNumber numberWithInteger:points]];
+        [scores addObject:[NSNumber numberWithInteger:newTotal]];
+        [self coinsFall:scores];
+    }
 }
 
 
@@ -280,7 +273,7 @@
     {
         score++;
         UIImageView *coin = [[UIImageView alloc] initWithFrame:coinRect];
-        coin.image = [UIImage imageNamed:@"teachers_coin.png"];
+        coin.image = [UIImage imageNamed:@"star.png"];
         coin.alpha=1.0;
         coin.layer.zPosition = -50;
         [self.view addSubview:coin];
@@ -355,6 +348,13 @@
 
 - (void)displayClassJar{
     self.classJarName.text = [currentClassJar getName];
+    if (currentClassJar == nil){
+        self.stepper.enabled = NO;
+        self.classJarName.text = @"Add  a  jar  above";
+    }
+    else {
+        self.stepper.enabled = YES;
+    }
 }
 
 

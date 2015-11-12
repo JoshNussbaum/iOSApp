@@ -62,8 +62,8 @@ NSArray *fakeStudents;
     
     
     
-    fakeStudent1 = @{@"uid": @"1", @"fname": @"Mel", @"lname": @"Clarke", @"stamp": @"ClassroomHero1", @"currentCoins": @"1", @"lvl": @"1", @"progress": @"1", @"totalCoins": @"1", @"checkedIn": @"0"};
-    fakeStudent2 = @{@"uid": @"2", @"fname": @"Holly", @"lname": @"Irish", @"stamp": @"ClassroomHero2", @"currentCoins": @"2", @"lvl": @"1", @"progress": @"2", @"totalCoins": @"2", @"checkedIn": @"0"};
+    fakeStudent1 = @{@"uid": @"1", @"fname": @"Mel", @"lname": @"Clarke", @"currentCoins": @"1", @"lvl": @"1", @"progress": @"1", @"totalCoins": @"1", @"checkedIn": @"0"};
+    fakeStudent2 = @{@"uid": @"2", @"fname": @"Holly", @"lname": @"Irish", @"currentCoins": @"2", @"lvl": @"1", @"progress": @"2", @"totalCoins": @"2", @"checkedIn": @"0"};
     fakeStudent3 = @{@"uid": @"3", @"fname": @"Mike", @"lname": @"Sela", @"currentCoins": @"3", @"lvl": @"2", @"progress": @"0", @"totalCoins": @"3", @"checkedIn": @"0"};
     
     fakeStudents = @[fakeStudent1, fakeStudent2, fakeStudent3];
@@ -146,8 +146,8 @@ NSArray *fakeStudents;
 - (IBAction)loginClicked:(id)sender{
     [self hideKeyboard];
     [[DatabaseHandler getSharedInstance] resetDatabase];
-    [self loginSuccess:fakeLoginDict];
-    /*
+    //[self loginSuccess:fakeLoginDict];
+    
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
     errorMessage = @"";
@@ -167,7 +167,7 @@ NSArray *fakeStudents;
         [[DatabaseHandler getSharedInstance] resetDatabase];
         [webHandler logIn:self.emailTextField.text :self.passwordTextField.text];
     }
-     */
+     
 }
 
 

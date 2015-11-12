@@ -64,7 +64,6 @@
             
             currentUser.serial = nil;
             [self setLabels];
-            [Utilities alertStatusWithTitle:@"Successfully unregistered stamp" message:nil cancel:nil otherTitles:nil tag:0 view:self];
 
         }
         else{
@@ -75,6 +74,7 @@
         if([successNumber boolValue] == YES)
         {
             currentUser.serial = serial;
+            currentUser.accountStatus = 2;
             [self setLabels];
             [Utilities alertStatusWithTitle:@"Successfully registered stamp" message:nil cancel:nil otherTitles:nil tag:0 view:self];
         }
@@ -128,18 +128,6 @@
     }
 
 }
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    NSLog(@"In this dope function BOIIIIS OOOOP");
-    if ([[event touchesForView:self.view] count] > 3) {
-        [Utilities wiggleImage:self.stampImage sound:NO];
-        NSLog(@"We stamped like how i stamped erics moms vaj");
-    }
-    [super touchesBegan:touches withEvent:event];
-}
-
-
 
 
 - (IBAction)unreigsterClicked:(id)sender {

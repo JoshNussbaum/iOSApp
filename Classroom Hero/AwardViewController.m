@@ -158,7 +158,7 @@ static NSInteger coinHeight = 250;
     if (reinforcerData.count > 0){
         index = [self.categoryPicker selectedRowInComponent:0];
         currentReinforcer = [reinforcerData objectAtIndex:index];
-        [Utilities editAlertTextWithtitle:@"Edit Reinforcer" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%li", (long)[currentReinforcer getValue]]] tag:1 view:self];
+        [Utilities editTextWithtitle:@"Edit Reinforcer" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%li", (long)[currentReinforcer getValue]]] tag:1 view:self];
     }
     
 }
@@ -317,32 +317,38 @@ static NSInteger coinHeight = 250;
         if([successNumber boolValue] == YES)
         {
             pointsAwarded = [currentReinforcer getValue];
-
-            NSInteger startLevel = [currentStudent getLvl];
-            tmpPoints = [currentStudent getPoints];
-
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
             NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
+            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
             NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
             NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-            
-            [currentStudent setPoints:pointsNumber.integerValue];
-            [currentStudent setLevel:levelNumber.integerValue];
-            [currentStudent setProgress:progressNumber.integerValue];
+            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
             NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
-            [currentStudent setLevelUpAmount:lvlUpAmount];
-            
 
-   
-            NSInteger newLevel = [currentStudent getLvl];
+            currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
             
-            [self addPoints:[currentReinforcer getValue] levelup:(newLevel > startLevel) ? YES : NO];
+            if (currentStudent != nil){
+                [currentStudent setPoints:pointsNumber.integerValue];
+                [currentStudent setLevel:levelNumber.integerValue];
+                [currentStudent setProgress:progressNumber.integerValue];
+                [currentStudent setLevelUpAmount:lvlUpAmount];
+                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
 
-            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-            
-            
-            
+            }
+            else{
+                NSString *stamp = [studentDictionary objectForKey:@"stamp"];
+                NSString * fname = [studentDictionary objectForKey: @"fname"];
+                NSString * lname = [studentDictionary objectForKey: @"lname"];
+                
+                currentStudent = [[student alloc]initWithid:idNumber.integerValue firstName:fname lastName:lname serial:stamp lvl:levelNumber.integerValue progress:progressNumber.integerValue lvlupamount:lvlUpAmount points:pointsNumber.integerValue totalpoints:totalPoints.integerValue checkedin:NO];
+                
+                [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
+            }
+            [self displayStudent];
+            tmpPoints = [currentStudent getPoints];
+            [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
+      
             //TODO- Flurry
             
             
@@ -414,7 +420,6 @@ static NSInteger coinHeight = 250;
     self.levelLabel.text=levelDisplay;
     self.levelLabel.hidden = NO;
     
-    
     self.sackImage.hidden = NO;
 }
 
@@ -435,18 +440,25 @@ static NSInteger coinHeight = 250;
                         if ([stampSerial isEqualToString:currentUser.serial]){
                             [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
                         }
+                        else{
+                            [Utilities wiggleImage:self.stampImage sound:NO];
+                            [webHandler rewardStudentWithserial:stampSerial pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId]];
+                        }
+                        
+                        
+                        /*
                         else if ([[DatabaseHandler getSharedInstance] isValidStamp:stampSerial :[currentUser.currentClass getSchoolId]]){
                             currentStudent = [[DatabaseHandler getSharedInstance]getStudentWithSerial:stampSerial];
                             [self displayStudent];
                             [Utilities wiggleImage:self.stampImage sound:NO];
-                            //pointsAwarded = [Utilities getRewardNumber];
                             //NSLog(@"Points awarded -> %ld", (long)pointsAwarded);
-                            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:[currentReinforcer getValue] categoryId:[currentReinforcer getId]];
+                            [webHandler rewardStudentWithserial:[currentStudent getSerial] pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId]];
                         }
                         else {
                             [Utilities failAnimation:self.stampImage];
                             isStamping = NO;
                         }
+                         */
                     }
                     else {
                         [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];

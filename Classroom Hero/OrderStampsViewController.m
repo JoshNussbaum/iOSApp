@@ -43,6 +43,10 @@
 
 - (void)textFieldDidChange:(UITextField *)textfield{
     NSString *input = textfield.text;
+    if ([input isEqualToString:@""]){
+        self.costLabel.text = @"";
+        return;
+    }
     NSString *errorMessage = [Utilities isNumeric:input];
     if (!errorMessage){
         stamps = input.integerValue;

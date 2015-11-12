@@ -205,7 +205,7 @@ static sqlite3_stmt *statement = nil;
                               @"REPLACE INTO ClassJar (id, cid, name, progress, total) VALUES (%ld, %ld, \"%@\", %ld, %ld)", (long)[cj getId], (long)[cj getCid], [cj getName], (long)[cj getProgress], (long)[cj getTotal]];
         const char *query_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database, query_stmt,-1, &statement, NULL);
-        sqlite3_step(statement);
+        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"Added a class jar");
         sqlite3_finalize(statement);
         
     }
@@ -265,7 +265,7 @@ static sqlite3_stmt *statement = nil;
         
         NSMutableArray *students = [classDictionary objectForKey:@"students"];
         for (NSDictionary *studentDictionary in students){
-            NSInteger sid = [[studentDictionary objectForKey:@"uid"]integerValue];
+            NSInteger sid = [[studentDictionary objectForKey:@"id"]integerValue];
             NSString *fname = [studentDictionary objectForKey:@"fname"];
             NSString *lname = [studentDictionary objectForKey:@"lname"];
             NSString *serial = [studentDictionary objectForKey:@"stamp"];
@@ -667,6 +667,54 @@ static sqlite3_stmt *statement = nil;
 
 
 - (student *)getStudentWithID:(NSInteger)sid{
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:
+                              @"SELECT * from Student WHERE id=%ld", (long)sid];
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(database,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_ROW){
+                @try {
+                    NSInteger id = sqlite3_column_int(statement, 0);
+                    
+                    NSString *firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+                    
+                    NSString *lastName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+                    
+                    NSString *serial = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+                    
+                    NSInteger lvl = sqlite3_column_int(statement, 4);
+                    
+                    NSInteger progress = sqlite3_column_int(statement, 5);
+                    
+                    NSInteger lvlupamount = sqlite3_column_int(statement, 6);
+                    
+                    NSInteger points = sqlite3_column_int(statement, 7);
+                    
+                    NSInteger totalpoints = sqlite3_column_int(statement, 8);
+                    
+                    NSInteger checkedIn = sqlite3_column_int(statement, 9);
+                    
+                    student *ss = [[student alloc] initWithid:id firstName:firstName lastName:lastName serial:serial lvl:lvl progress:progress lvlupamount:lvlupamount points:points totalpoints:totalpoints checkedin:(checkedIn==1 ? YES : NO)];
+                    
+                    
+                    sqlite3_reset(statement);
+                    sqlite3_close(database);
+                    return (ss);
+                }
+                @catch (NSException * e) {
+                    sqlite3_reset(statement);
+                    sqlite3_close(database);
+                    return nil;
+                }
+            }
+        }
+    }
+    sqlite3_reset(statement);
+    sqlite3_close(database);
     return nil;
 }
 
@@ -986,7 +1034,7 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"UPDATE Categories SET name=\"%@\" WHERE cid=%ld", [updatedClass getName], (long)[updatedClass getId]];
+                              @"UPDATE Class SET name=\"%@\", grade=%ld WHERE id=%ld", [updatedClass getName], (long)[updatedClass getGradeNumber], (long)[updatedClass getId]];
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
@@ -1041,7 +1089,7 @@ static sqlite3_stmt *statement = nil;
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
-        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We edited a student");
+        if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We registered a student");
         sqlite3_finalize(statement);
     }
     
@@ -1081,6 +1129,7 @@ static sqlite3_stmt *statement = nil;
     sqlite3_close(database);
 }
 
+//            "CREATE TABLE ClassJar (id integer primary key, cid integer, name text, progress integer, total integer);"
 
 
 - (void)updateClassJar:(classjar *)updatedClassJar{
@@ -1088,12 +1137,12 @@ static sqlite3_stmt *statement = nil;
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"UPDATE ClassJar SET name=\"%@\", progress=%ld, total=%ld, WHERE id=%ld", [updatedClassJar getName], (long)[updatedClassJar getProgress], (long)[updatedClassJar getTotal], (long)[updatedClassJar getId]];
+                              @"UPDATE ClassJar SET name=\"%@\", progress=%ld, total=%ld, cid=%ld WHERE id=%ld", [updatedClassJar getName], (long)[updatedClassJar getProgress], (long)[updatedClassJar getTotal], (long)[updatedClassJar getCid], (long)[updatedClassJar getId]];
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
         if (sqlite3_step(statement) == SQLITE_DONE) NSLog(@"We edited a class jar");
-            sqlite3_finalize(statement);
+        sqlite3_finalize(statement);
     }
     
     sqlite3_close(database);

@@ -22,6 +22,7 @@
     NSInteger index;
     item *currentItem;
     student *currentStudent;
+    NSString *stampSerial;
     
     NSString *newItemName;
     NSString *newItemCost;
@@ -68,7 +69,6 @@
         [self.picker reloadAllComponents];
         [self.picker selectRow:index inComponent:0 animated:YES];
         currentItem = [itemsData objectAtIndex:0];
-        [currentItem printItem];
         self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
         self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]];
     }
@@ -82,13 +82,14 @@
 
 
 - (IBAction)editItemClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Edit item" message:nil cancel:nil done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
+    [Utilities editTextWithtitle:@"Edit item" message:nil cancel:nil done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
 }
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if (buttonIndex == [alertView cancelButtonIndex]) {
+        [self hideStudent];
         return;
     }
     
@@ -160,6 +161,7 @@
         self.studentPointsLabel.hidden = YES;
         self.sackImage.hidden = YES;
         self.picker.hidden = NO;
+        return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     if (type == ADD_ITEM){
@@ -182,10 +184,7 @@
             
         }
         else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-
-            [hud hide:YES];
+            [self showErrorMessageWithtitle:@"Error editing item" message:[data objectForKey:@"student"]];
             return;
         }
     }
@@ -206,10 +205,8 @@
             
         }
         else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error editing item" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [self showErrorMessageWithtitle:@"Error editing item" message:[data objectForKey:@"student"]];
             
-            [hud hide:YES];
             return;
         }
     }
@@ -247,17 +244,11 @@
             [currentStudent setPoints:pointsNumber.integerValue];
             NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
             [currentStudent setLevelUpAmount:lvlUpAmount];
-            
-            self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
-            self.studentNameLabel.hidden = NO;
-            NSString *scoreDisplay = [NSString stringWithFormat:@"%ld", (long)[currentStudent getPoints]];
-            self.studentPointsLabel.text = scoreDisplay;
-            self.studentPointsLabel.hidden = NO;
-            self.sackImage.hidden = NO;
+        
             
             NSMutableArray *scores = [NSMutableArray array];
-            NSInteger score = [currentStudent getPoints] + [currentItem getCost];
-            NSInteger newScore = [currentStudent getPoints];
+            NSInteger score = [currentStudent getPoints];
+            NSInteger newScore = [currentStudent getPoints] - [currentItem getCost];
             [scores addObject:[NSNumber numberWithInteger:score]];
             [scores addObject:[NSNumber numberWithInteger:newScore]];
             [currentStudent setPoints:newScore];
@@ -266,37 +257,91 @@
             [self sellItemAnimation:scores];
         }
         else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error selling item" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            self.picker.hidden = NO;
-            isStamping = NO;
+            [self showErrorMessageWithtitle:@"Error selling item" message:[data objectForKey:@"student"]];
+
             return;
         }
     }
+    else if (type == GET_STUDENT_BY_STAMP){
+        if([successNumber boolValue] == YES)
+        {
+            NSDictionary *studentDictionary = [data objectForKey:@"student"];
+            
+            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
+            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
+            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
+            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
+            NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
+            
+            currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
+            
+            if (currentStudent != nil){
+                [currentStudent setPoints:pointsNumber.integerValue];
+                [currentStudent setLevel:levelNumber.integerValue];
+                [currentStudent setProgress:progressNumber.integerValue];
+                [currentStudent setLevelUpAmount:lvlUpAmount];
+                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+                
+            }
+            else{
+                NSString *stamp = [studentDictionary objectForKey:@"stamp"];
+                NSString * fname = [studentDictionary objectForKey: @"fname"];
+                NSString * lname = [studentDictionary objectForKey: @"lname"];
+                
+                currentStudent = [[student alloc]initWithid:idNumber.integerValue firstName:fname lastName:lname serial:stamp lvl:levelNumber.integerValue progress:progressNumber.integerValue lvlupamount:lvlUpAmount points:pointsNumber.integerValue totalpoints:totalPoints.integerValue checkedin:NO];
+                
+                [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
+            }
+            [self displayStudent];
+            [self sellItem];
+        }
+        else {
+            [self showErrorMessageWithtitle:@"Error selling item" message:[data objectForKey:@"student"]];
+            return;
+        }
 
+    }
+
+}
+
+- (void)showErrorMessageWithtitle:(NSString *)title message:(NSString *)message{
+    [hud hide:YES];
+    [Utilities alertStatusWithTitle:title message:message cancel:nil otherTitles:nil tag:0 view:nil];
+    self.picker.hidden = NO;
+    isStamping = NO;
 }
 
 
 
 
 -(void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping){
+    if (!isStamping && (itemsData.count > 0)){
         NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
         NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
         if (resultObject != NULL) {
             if ([resultObject objectForKey:@"stamp"] != nil){
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if (currentUser.serial){
-                    if ([[DatabaseHandler getSharedInstance] isValidStamp:stampSerial :[currentUser.currentClass getSchoolId]]){
-                        [Utilities wiggleImage:self.stampImage sound:NO];
-                        isStamping = YES;
-                        [self sellItem:stampSerial];
-                        self.picker.hidden = YES;
+                stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                if (![stampSerial isEqualToString:currentUser.serial]){
+                    if (currentUser.serial){
+                        if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                            [Utilities wiggleImage:self.stampImage sound:NO];
+                            isStamping = YES;
+                            self.picker.hidden = YES;
+                            [webHandler getStudentBySerialwithserial:stampSerial :[currentUser.currentClass getSchoolId]];
+                        }
+                        else{
+                            [Utilities failAnimation:self.stampImage];
+                        }
+                        
+                    }
+                    else {
+                        [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
+                        isStamping = NO;
                     }
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
                     isStamping = NO;
                 }
             }
@@ -308,9 +353,25 @@
     }
 }
 
+- (void)displayStudent{
+    self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
+    self.studentNameLabel.hidden = NO;
+    NSString *scoreDisplay = [NSString stringWithFormat:@"%ld", (long)[currentStudent getPoints]];
+    self.studentPointsLabel.text = scoreDisplay;
+    self.studentPointsLabel.hidden = NO;
+    self.sackImage.hidden = NO;
+}
 
--(void)sellItem:(NSString*)stampSerial{
-    currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithSerial:stampSerial];
+- (void)hideStudent{
+    self.studentNameLabel.hidden = NO;
+    self.studentPointsLabel.hidden = NO;
+    self.sackImage.hidden = NO;
+    self.studentNameLabel.text= @"";
+    self.studentPointsLabel.text = @"";
+    isStamping = NO;
+}
+
+-(void)sellItem{
     NSString *alertMsg = [NSString stringWithFormat:@"%@, buy %@?",[currentStudent getFirstName], [currentItem getName]];
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"Confirm Purchase"
                                                        message:alertMsg
@@ -320,33 +381,6 @@
     [alertView addButtonWithTitle:@"Yes"];
     [alertView setTag:3];
     [alertView show];
-    
-    /*
-    NSInteger cost = [currentItem getCost];
-    self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
-    self.studentNameLabel.hidden = NO;
-    NSString *scoreDisplay = [NSString stringWithFormat:@"%ld", (long)[currentStudent getPoints]];
-    self.studentPointsLabel.text = scoreDisplay;
-    self.studentPointsLabel.hidden = NO;
-    self.sackImage.hidden = NO;
-    if (cost <= [currentStudent getPoints]){
-        
-        NSString *alertMsg = [NSString stringWithFormat:@"%@, buy %@?",[currentStudent getFirstName], [currentItem getName]];
-        UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"Confirm Purchase"
-                                                           message:alertMsg
-                                                          delegate:self
-                                                 cancelButtonTitle:@"Cancel"
-                                                 otherButtonTitles:nil];
-        [alertView addButtonWithTitle:@"Yes"];
-        [alertView setTag:3];
-        [alertView show];
-        
-    }
-    else {
-        [Utilities alertStatusWithTitle:@"Insufficient funds" message:@"Earn more coins first" cancel:nil otherTitles:nil tag:0 view:self];
-    }
-     */
-    
 }
 
 
@@ -394,9 +428,6 @@
 }
 
 
-
-
-
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
@@ -409,8 +440,6 @@
 
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     item *tmpItem = [itemsData objectAtIndex:row];
-    NSLog(@"At row %ld we have \n", (long)row);
-    [tmpItem printItem];
     return [tmpItem getName];
 }
 

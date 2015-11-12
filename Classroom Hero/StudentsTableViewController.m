@@ -138,7 +138,7 @@
             errorMessage = [Utilities isInputValid:studentLastName :@"Student last name"];
             if (!errorMessage){
                 [self activityStart:@"Adding Student..."];
-                [webHandler addStudent:[currentUser.currentClass getId] :studentFirstName :studentLastName];
+                [webHandler addStudent:[currentUser.currentClass getId] :studentFirstName :studentLastName :[currentUser.currentClass getSchoolId]];
             }
         }
         else {

@@ -28,7 +28,8 @@
     currentUser = [user getInstance];
     showingStudents = NO;
     self.studentsTableView.delegate = self;
-    
+    [self.studentsTableView setBounces:NO];
+
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
 
     

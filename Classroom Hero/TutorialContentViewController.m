@@ -266,7 +266,7 @@ static int screenNumber;
                     NSString *lastErrorMessage = [Utilities isInputValid:lastName :@"Last name"];
                     if (!lastErrorMessage) {
                         [self activityStart:@"Adding student..."];
-                        [webHandler addStudent:[currentUser.currentClass getId] :firstName :lastName];
+                        [webHandler addStudent:[currentUser.currentClass getId] :firstName :lastName :[currentUser.currentClass getSchoolId]];
                         
                     }
                     else {
