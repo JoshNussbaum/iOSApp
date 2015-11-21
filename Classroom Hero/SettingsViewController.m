@@ -33,21 +33,32 @@
     [super viewDidLoad];
     NSArray *buttons = @[self.orderStampsButton, self.registerStudentsButton, self.registerTeacherStamp, self.studentListButton, self.stampIdentifierButton, self.unregisterAllStampsButton, self.classTutorialButton, self.registerStudentsButton];
     
+    NSArray *icons = @[self.registerTeacherIcon, self.registerTeacherIcon, self.studentListIcon, self.stampIdentifierIcon, self.unregisterAllStampsIcon, self.classTutorialIcon, self.registerStudentsIcon, self.orderStampsIcon];
+    
+    
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
-        button.titleLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:25];
+    }
+    for (UILabel *icon in icons){
+        icon.font = [UIFont fontWithName:kFontAwesomeFamilyName size:25];
     }
 
     
     //self.studentListButton.titleLabel.text = [NSString stringWithFormat:@"Student List %@", [NSString fontAwesomeIconStringForEnum:FAList]];
-    [self.studentListButton setTitle:[NSString stringWithFormat:@"  %@   Student List", [NSString fontAwesomeIconStringForEnum:FAList]] forState:UIControlStateNormal ];
-    [self.classTutorialButton setTitle:[NSString stringWithFormat:@"  %@   Class Tutorial", [NSString fontAwesomeIconStringForEnum:FAQuestionCircle]] forState:UIControlStateNormal];
-    [self.registerTeacherStamp setTitle:[NSString stringWithFormat:@"  %@   Register Teacher Stamp", [NSString fontAwesomeIconStringForEnum:FABell]] forState:UIControlStateNormal];
-    [self.registerTeacherStamp setNeedsLayout];
-    [self.unregisterAllStampsButton setTitle:[NSString stringWithFormat:@"  %@    Unregister All Stamps", [NSString fontAwesomeIconStringForEnum:FAExclamationTriangle]] forState:UIControlStateNormal];
-    [self.stampIdentifierButton setTitle:[NSString stringWithFormat:@"  %@   Stamp Identifier", [NSString fontAwesomeIconStringForEnum:FALightbulbO]] forState:UIControlStateNormal];
-    [self.registerStudentsButton setTitle:[NSString stringWithFormat:@"  %@   Register Students", [NSString fontAwesomeIconStringForEnum:FAchild]] forState:UIControlStateNormal];
-    [self.orderStampsButton setTitle:[NSString stringWithFormat:@"  %@   Order Stamps", [NSString fontAwesomeIconStringForEnum:FAShoppingCart]] forState:UIControlStateNormal];
+    [self.studentListButton setTitle:@"          Student List" forState:UIControlStateNormal ];
+    self.studentListIcon.text = [NSString fontAwesomeIconStringForEnum:FAList];
+    [self.classTutorialButton setTitle:@"          Class Tutorial" forState:UIControlStateNormal];
+    self.classTutorialIcon.text = [NSString fontAwesomeIconStringForEnum:FAQuestionCircle];
+    [self.registerTeacherStamp setTitle:@"          Register Teacher Stamp" forState:UIControlStateNormal];
+    self.registerTeacherIcon.text = [NSString fontAwesomeIconStringForEnum:FAStar];
+    [self.unregisterAllStampsButton setTitle:@"          Unregister All Stamps" forState:UIControlStateNormal];
+    self.unregisterAllStampsIcon.text = [NSString fontAwesomeIconStringForEnum:FAExclamationTriangle];
+    [self.stampIdentifierButton setTitle:@"          Stamp Identifier" forState:UIControlStateNormal];
+    self.stampIdentifierIcon.text = [NSString fontAwesomeIconStringForEnum:FALightbulbO];
+    [self.registerStudentsButton setTitle:@"          Register Students" forState:UIControlStateNormal];
+    self.registerStudentsIcon.text = [NSString fontAwesomeIconStringForEnum:FAchild];
+    [self.orderStampsButton setTitle:@"          Order Stamps" forState:UIControlStateNormal];
+    self.orderStampsIcon.text = [NSString fontAwesomeIconStringForEnum:FAShoppingCart];
     
 }
 

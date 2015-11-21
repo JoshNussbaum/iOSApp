@@ -14,22 +14,29 @@
 @property (strong, nonatomic) IBOutlet UIButton *orderStampsButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *classTutorialButton;
+@property (strong, nonatomic) IBOutlet UILabel *classTutorialIcon;
 
 @property (strong, nonatomic) IBOutlet UIView *registerStudentsView;
+@property (strong, nonatomic) IBOutlet UILabel *registerStudentsIcon;
 
 @property (strong, nonatomic) IBOutlet UIButton *registerStudentsButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *registerTeacherStamp;
+@property (strong, nonatomic) IBOutlet UILabel *registerTeacherIcon;
 
 @property (strong, nonatomic) IBOutlet UIButton *studentListButton;
+@property (strong, nonatomic) IBOutlet UILabel *studentListIcon;
 
 @property (strong, nonatomic) IBOutlet UIView *registerTeacherStampView;
 
 @property (strong, nonatomic) IBOutlet UIView *orderStampsView;
+@property (strong, nonatomic) IBOutlet UILabel *orderStampsIcon;
 
 @property (strong, nonatomic) IBOutlet UIButton *stampIdentifierButton;
+@property (strong, nonatomic) IBOutlet UILabel *stampIdentifierIcon;
 
 @property (strong, nonatomic) IBOutlet UIButton *unregisterAllStampsButton;
+@property (strong, nonatomic) IBOutlet UILabel *unregisterAllStampsIcon;
 
 
 - (IBAction)orderStampsClicked:(id)sender;

@@ -263,7 +263,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="treasure_chest.png" id="PSk-2j-6kC">
-                                <rect key="frame" x="197" y="671" width="375" height="375"/>
+                                <rect key="frame" x="197" y="661" width="375" height="375"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -410,7 +410,7 @@
                                 <rect key="frame" x="128" y="355" width="513" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="23"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="N40-iH-uTO" id="kE5-kJ-2Jz"/>
                                 </connections>
@@ -948,7 +948,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4601" y="83"/>
+            <point key="canvasLocation" x="3209" y="91"/>
         </scene>
         <!--Create Class View Controller-->
         <scene sceneID="eBJ-fA-hHl">
@@ -1148,7 +1148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mHQ-GP-TnF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6354" y="2074"/>
+            <point key="canvasLocation" x="4962" y="2082"/>
         </scene>
         <!--Student List-->
         <scene sceneID="Q00-IN-WCw">
@@ -1238,7 +1238,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bg6-AO-vSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7291" y="2074"/>
+            <point key="canvasLocation" x="5899" y="2082"/>
         </scene>
         <!--Hero Page-->
         <scene sceneID="T1K-z5-mPF">
@@ -1352,7 +1352,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfW-Vd-zfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7291" y="3263"/>
+            <point key="canvasLocation" x="5899" y="3271"/>
         </scene>
         <!--Order Stamps-->
         <scene sceneID="vKg-oq-SPD">
@@ -1513,7 +1513,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6354" y="-472"/>
+            <point key="canvasLocation" x="4962" y="-464"/>
         </scene>
         <!--Settings-->
         <scene sceneID="dTU-Uw-cXe">
@@ -1527,7 +1527,7 @@
                                 <rect key="frame" x="20" y="134" width="339" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                 <state key="normal" title="Student  List">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1540,7 +1540,7 @@
                                 <rect key="frame" x="20" y="523" width="339" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                 <state key="normal" title="Unregister  All  Stamps">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1549,11 +1549,18 @@
                                     <action selector="unregisterAllStampsClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="7g7-Yy-MyT"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bMt-Nw-sTE">
+                                <rect key="frame" x="25" y="529" width="45" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fnG-HZ-kFV">
                                 <rect key="frame" x="25" y="267" width="334" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                 <state key="normal" title="Class Tutorial">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1562,6 +1569,13 @@
                                     <action selector="classTutorialClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="52h-zg-rgm"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oEw-qM-kaV">
+                                <rect key="frame" x="25" y="273" width="45" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" id="qJk-DT-Z8f">
                                 <rect key="frame" x="20" y="393" width="339" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1570,7 +1584,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="339" height="58"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Register Teacher">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1579,6 +1593,13 @@
                                             <action selector="registerTeacherStampClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="7u9-Mc-BFL"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HId-xy-shx">
+                                        <rect key="frame" x="0.0" y="6" width="45" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1587,7 +1608,7 @@
                                 <rect key="frame" x="409" y="134" width="339" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                 <state key="normal" title="Stamp  Identifier">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1604,7 +1625,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="339" height="58"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Register Students">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1613,6 +1634,13 @@
                                             <action selector="registerStudentsClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="rrV-kQ-4j7"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ajI-d6-Jyt">
+                                        <rect key="frame" x="0.0" y="6" width="45" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1625,7 +1653,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="339" height="58"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Order  Stamps">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1634,10 +1662,31 @@
                                             <action selector="orderStampsClicked:" destination="GvB-wg-9sc" eventType="touchUpInside" id="V9V-xE-LOw"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1hg-2a-q2e">
+                                        <rect key="frame" x="0.0" y="6" width="45" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FZO-kd-zv6">
+                                <rect key="frame" x="25" y="140" width="45" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bT5-wS-YUi">
+                                <rect key="frame" x="409" y="140" width="45" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1676,15 +1725,22 @@
                     </navigationItem>
                     <connections>
                         <outlet property="classTutorialButton" destination="fnG-HZ-kFV" id="Vsf-pM-cn3"/>
+                        <outlet property="classTutorialIcon" destination="oEw-qM-kaV" id="AmO-iD-pBP"/>
                         <outlet property="orderStampsButton" destination="91n-4v-DLN" id="3q0-H9-c34"/>
+                        <outlet property="orderStampsIcon" destination="1hg-2a-q2e" id="g85-qp-ZQH"/>
                         <outlet property="orderStampsView" destination="p83-Re-F7w" id="JEb-bX-wiy"/>
                         <outlet property="registerStudentsButton" destination="jS2-bs-zXL" id="7IO-Jr-ckH"/>
+                        <outlet property="registerStudentsIcon" destination="ajI-d6-Jyt" id="QVj-S9-sJN"/>
                         <outlet property="registerStudentsView" destination="W1Z-ke-eEL" id="Oqh-jj-tRt"/>
+                        <outlet property="registerTeacherIcon" destination="HId-xy-shx" id="uEV-0k-SQS"/>
                         <outlet property="registerTeacherStamp" destination="I5v-qN-Tv3" id="fJn-QY-fyj"/>
                         <outlet property="registerTeacherStampView" destination="qJk-DT-Z8f" id="NDB-qR-L1A"/>
                         <outlet property="stampIdentifierButton" destination="vMA-LW-z0a" id="Tg4-1z-FlN"/>
+                        <outlet property="stampIdentifierIcon" destination="bT5-wS-YUi" id="762-mV-r3G"/>
                         <outlet property="studentListButton" destination="eNA-9i-dCY" id="OLY-CM-RDw"/>
+                        <outlet property="studentListIcon" destination="FZO-kd-zv6" id="Cpn-F1-kqv"/>
                         <outlet property="unregisterAllStampsButton" destination="7wX-0f-pUM" id="tuE-PK-DIN"/>
+                        <outlet property="unregisterAllStampsIcon" destination="bMt-Nw-sTE" id="fDM-vl-Oi2"/>
                         <segue destination="qjs-mU-BOe" kind="push" identifier="settings_to_order_stamps" id="fOv-1p-Wtg"/>
                         <segue destination="PzN-nE-apu" kind="push" identifier="settings_to_register_teacher_stamp" id="kmt-xD-cxB"/>
                         <segue destination="b3C-b7-3Rv" kind="push" id="Ak6-Q7-dvZ"/>
@@ -1698,7 +1754,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QVK-Ro-vZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="8H9-mJ-RCu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7291" y="-472"/>
+            <point key="canvasLocation" x="5899" y="-464"/>
         </scene>
         <!--Edit Teacher-->
         <scene sceneID="nIf-vc-m5J">
@@ -1823,7 +1879,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6354" y="-1748"/>
+            <point key="canvasLocation" x="4962" y="-1740"/>
         </scene>
         <!--Register Teacher Stamp-->
         <scene sceneID="wND-dv-xS4">
@@ -1895,7 +1951,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xzX-3f-fcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7291" y="-1748"/>
+            <point key="canvasLocation" x="5899" y="-1740"/>
         </scene>
         <!--Stamp Identifier-->
         <scene sceneID="YTB-FQ-4NE">
@@ -1974,7 +2030,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i81-ZQ-PYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8209" y="-1728"/>
+            <point key="canvasLocation" x="6817" y="-1720"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="T4s-j2-Csh">
@@ -2372,7 +2428,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6354" y="810"/>
+            <point key="canvasLocation" x="4962" y="818"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="dlX-Rq-Svj">
@@ -2753,7 +2809,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="7291" y="810"/>
+            <point key="canvasLocation" x="5899" y="818"/>
         </scene>
         <!--Class Jar View Controller-->
         <scene sceneID="aR5-Qo-doW">
@@ -2774,12 +2830,12 @@
                                 <rect key="frame" x="77" y="117" width="614" height="790"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intact_jar.png" id="3PS-Y6-N4D">
-                                <rect key="frame" x="77" y="105" width="614" height="790"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cork.png" id="PKY-bC-m3E">
                                 <rect key="frame" x="76" y="-10" width="616" height="767"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intact_jar.png" id="3PS-Y6-N4D">
+                                <rect key="frame" x="77" y="105" width="614" height="790"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" id="tHH-bU-t83">
@@ -2968,7 +3024,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="8156" y="810"/>
+            <point key="canvasLocation" x="6764" y="818"/>
         </scene>
         <!--Market View Controller-->
         <scene sceneID="euu-Jd-jaq">
@@ -3181,7 +3237,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="9080" y="810"/>
+            <point key="canvasLocation" x="7688" y="818"/>
         </scene>
         <!--Activity Monitor-->
         <scene sceneID="lGN-5m-4dY">
@@ -3196,7 +3252,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZW-YA-wfw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8230" y="-472"/>
+            <point key="canvasLocation" x="6838" y="-464"/>
         </scene>
     </scenes>
     <resources>
@@ -3220,9 +3276,9 @@
         <image name="treasure_chest.png" width="832" height="867"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ewg-8k-sYO"/>
-        <segue reference="mtj-Wm-nfd"/>
+        <segue reference="hcw-Vj-VJR"/>
+        <segue reference="0DC-7k-br8"/>
         <segue reference="asf-xD-FDq"/>
-        <segue reference="5Qb-t8-igW"/>
+        <segue reference="SR2-9x-ZVn"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -59,12 +59,6 @@ static NSString * const classCell = @"classCell";
 
     
     studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
-    
-    /*
-    UISwipeGestureRecognizer* swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onSwipeRight:)];
-    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self.tableView addGestureRecognizer:swipeRight];
-     */
 }
 
 - (void)viewDidAppear:(BOOL)animated{

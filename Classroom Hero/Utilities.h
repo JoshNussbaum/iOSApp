@@ -15,6 +15,12 @@ static NSString * const snowshoe_app_key = @"d12276c2fac976865fdc";
 static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c4f995db8";
 static NSString * const merchant_id = @"merchant.com.classroom-hero";
 
+@protocol alertBarAction <NSObject>
+
+- (void)
+
+@end
+
 @interface Utilities : NSObject
 
 

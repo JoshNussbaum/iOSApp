@@ -152,11 +152,12 @@
 
 - (void) addPoints:(NSInteger)pointsGained{
     self->points += pointsGained;
+    self->totalpoints += pointsGained;
     self->progress += 1;
     
-    while (self->progress >= self->lvlupamount)
+    if (self->progress >= self->lvlupamount)
     {
-        [self levelUp:self->progress :self->lvlupamount];
+        [self levelUp];
     }
 }
 
@@ -170,13 +171,17 @@
     self->points = newPoints;
 }
 
+- (void)updateCheckedIn:(BOOL)checkedIn_{
+    self->checkedin = checkedIn_;
+}
+
 
 #pragma mark - Misc
 
 
-- (void) levelUp:(NSInteger)progress :(NSInteger)lvlupamount{
+- (void) levelUp{
     self->lvl += 1;
-    self->progress = self->progress - self->lvlupamount;
+    self->progress = 0;
     self->lvlupamount += 2;
 }
 

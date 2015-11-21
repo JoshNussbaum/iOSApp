@@ -324,7 +324,7 @@ static NSInteger coinHeight = 250;
             NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
             NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
             NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-            NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
+            NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
 
             currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
             
@@ -346,7 +346,7 @@ static NSInteger coinHeight = 250;
                 [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
             }
             [self displayStudent];
-            tmpPoints = [currentStudent getPoints];
+            tmpPoints = ([currentStudent getPoints] - pointsAwarded);
             [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
       
             //TODO- Flurry
@@ -356,6 +356,7 @@ static NSInteger coinHeight = 250;
         else {
             NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error rewarding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            isStamping = NO;
             return;
         }
     }
@@ -411,12 +412,23 @@ static NSInteger coinHeight = 250;
     NSString *studentName = [NSString stringWithFormat:@"%@  %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.nameLabel.text = studentName;
     self.nameLabel.hidden = NO;
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[currentStudent getPoints]];
+    self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)([currentStudent getPoints] - pointsAwarded)];
     self.pointsLabel.hidden = NO;
     
-    self.levelBar.progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+    
+    NSInteger level;
+    if ([currentStudent getProgress] == 0){
+        level = [currentStudent getLvl] - 1;
+        self.levelBar.progress = (float)([currentStudent getLvlUpAmount]-3)/(float)([currentStudent getLvlUpAmount]-2);
+    }
+    else {
+        level = [currentStudent getLvl];
+        self.levelBar.progress = (float)(([currentStudent getProgress]-1) / (float)[currentStudent getLvlUpAmount]);
+
+    }
     self.levelBar.hidden = NO;
-    NSString *levelDisplay = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
+    NSString * levelDisplay = [NSString stringWithFormat:@"Level %ld", (long)level];
+
     self.levelLabel.text=levelDisplay;
     self.levelLabel.hidden = NO;
     
@@ -498,7 +510,7 @@ static NSInteger coinHeight = 250;
     [currentStudent printStudent];
     if (levelup){
         levelRect = CGRectMake(self.levelView.frame.origin.x, self.levelView.frame.origin.y, self.levelView.frame.size.width, self.levelView.frame.size.height);
-        self.levelBar.progress = 0.0f;
+        [self.levelBar setProgress:1.0f animated:YES];
     }
     if (points == 3){
         [self threeCoinsAnimationWithlevelup:levelup];
@@ -558,6 +570,7 @@ static NSInteger coinHeight = 250;
                                                   self.levelView.alpha = 0;
                                               }
                                               completion:^(BOOL finished) {
+                                                  [self.levelBar setProgress:0.0f animated:NO];
                                                   self.levelView.hidden = YES;
                                                   [self.levelView setFrame:levelRect];
                                               }
@@ -767,8 +780,7 @@ static NSInteger coinHeight = 250;
                                                                                         animations:^{
                                                                                             [self.bOne setFrame:bOneRect];
                                                                                             [self.bTwo setFrame:bTwoRect];
-                                                                                            float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                                                            [self.levelBar setProgress:progress animated:YES];
+                                                                                            
                                                                                             [self incrementPoints];
                                                                                             if (levelup){
                                                                                                 self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
@@ -778,6 +790,8 @@ static NSInteger coinHeight = 250;
                                                                                             }
                                                                                         }
                                                                                         completion:^(BOOL finished) {
+                                                                                            float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+                                                                                            [self.levelBar setProgress:progress animated:YES];
                                                                                             double delayInSeconds = 1.0;
                                                                                             if (levelup) delayInSeconds = 2.6;
                                                                                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);

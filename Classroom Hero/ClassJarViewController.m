@@ -29,7 +29,7 @@
     NSString *newClassJarTotal;
 
     double currentPoints;
-    bool isStamping;
+    BOOL isStamping;
 }
 
 @property UIImageView *jarCoins;
@@ -44,7 +44,6 @@
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     currentClassJar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     
-    [currentClassJar printJar];
     if (!currentClassJar){
         self.addJarButton.hidden = NO;
         self.addJarButton.enabled = YES;
@@ -54,7 +53,6 @@
         self.addJarButton.enabled = NO;
     }
     [self displayClassJar];
-    
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
     
@@ -159,7 +157,6 @@
 	
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    NSLog(@"Heres the data in class jar bruh -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -199,12 +196,12 @@
         NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
         if (resultObject != NULL) {
             if ([resultObject objectForKey:@"stamp"] != nil){
+                isStamping = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 NSLog(@"We stamped with -> %@", stampSerial);
 
                 if (self.corkImage.hidden == YES){
                     self.stepper.enabled = NO;
-                    isStamping = YES;
 
                     if ([stampSerial isEqualToString:currentUser.serial] && ([currentClassJar getTotal] != 0))
                     {
@@ -245,16 +242,17 @@
     AudioServicesPlaySystemSound(award);
     self.jarCoins.hidden = NO;
     NSInteger newTotal = [currentClassJar getProgress];
-    if (newTotal == 0) {
-        [self jarFull];
+    NSMutableArray *scores = [NSMutableArray array];
+    NSInteger points = [currentClassJar getProgress] - currentPoints;
+    
+    if ([currentClassJar getProgress]==0){
+        newTotal = [currentClassJar getTotal];
+        points = [currentClassJar getTotal] - currentPoints;
     }
-    else {
-        NSMutableArray *scores = [NSMutableArray array];
-        NSInteger points = [currentClassJar getProgress] - currentPoints;
-        [scores addObject:[NSNumber numberWithInteger:points]];
-        [scores addObject:[NSNumber numberWithInteger:newTotal]];
-        [self coinsFall:scores];
-    }
+    [scores addObject:[NSNumber numberWithInteger:points]];
+    [scores addObject:[NSNumber numberWithInteger:newTotal]];
+    [currentClassJar printJar];
+    [self coinsFall:scores];
 }
 
 
@@ -262,7 +260,7 @@
     NSInteger score = [[scores objectAtIndex:0]integerValue];
     NSInteger newScore = [[scores objectAtIndex:1]integerValue];
     NSInteger points;
-    if (newScore >= [currentClassJar getTotal]) {
+    if (newScore > [currentClassJar getTotal]) {
         points = [currentClassJar getTotal] - score;
     }
     else {
@@ -306,13 +304,13 @@
                              [UIView animateWithDuration:time animations:^{
                                  self.jarCoins.frame = CGRectMake(194, 840, 381, newProg);
                              }];
-                             
                          }
          ];
         [self performSelector:@selector(coinsFall:) withObject:scores afterDelay:0.2 ];
+        return;
     }
     
-    else if ([currentClassJar getProgress] >= [currentClassJar getTotal]){
+    else if ([currentClassJar getProgress] == 0){
         [self jarFull];
     }
     else {
@@ -325,7 +323,6 @@
     double delayInSeconds = 1.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [currentClassJar setProgress:0];
         self.stepper.enabled = YES;
         isStamping = NO;
         
@@ -334,7 +331,6 @@
         [UIView animateWithDuration:1.2
                          animations:^{
                              [self.corkImage setFrame:CGRectMake(self.corkImage.frame.origin.x, self.corkImage.frame.origin.y+140, self.corkImage.frame.size.width, self.corkImage.frame.size.height)];
-                             
                          }
                          completion:^(BOOL finished) {
                              AudioServicesPlaySystemSound(cork);
@@ -342,7 +338,6 @@
                          }
          ];
     });
-    
 }
 
 

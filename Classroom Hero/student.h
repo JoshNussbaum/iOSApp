@@ -74,7 +74,7 @@
 
 -(void)updatePoints:(NSInteger)newPoints;
 
--(void)updateCheckedIn:(BOOL)checkedIn;
+-(void)updateCheckedIn:(BOOL)checkedIn_;
 
 // Misc Functions
 -(void) printStudent;

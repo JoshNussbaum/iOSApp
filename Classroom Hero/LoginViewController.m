@@ -60,11 +60,9 @@ NSArray *fakeStudents;
     [Utilities makeRoundedButton:self.pricingButton :nil];
     
     
-    
-    
-    fakeStudent1 = @{@"uid": @"1", @"fname": @"Mel", @"lname": @"Clarke", @"currentCoins": @"1", @"lvl": @"1", @"progress": @"1", @"totalCoins": @"1", @"checkedIn": @"0"};
-    fakeStudent2 = @{@"uid": @"2", @"fname": @"Holly", @"lname": @"Irish", @"currentCoins": @"2", @"lvl": @"1", @"progress": @"2", @"totalCoins": @"2", @"checkedIn": @"0"};
-    fakeStudent3 = @{@"uid": @"3", @"fname": @"Mike", @"lname": @"Sela", @"currentCoins": @"3", @"lvl": @"2", @"progress": @"0", @"totalCoins": @"3", @"checkedIn": @"0"};
+    fakeStudent1 = @{@"id": @"1", @"fname": @"Mel", @"lname": @"Clarke", @"currentCoins": @"1", @"lvl": @"1", @"progress": @"1", @"totalCoins": @"1", @"checkedIn": @"0"};
+    fakeStudent2 = @{@"id": @"2", @"fname": @"Holly", @"lname": @"Irish", @"currentCoins": @"2", @"lvl": @"1", @"progress": @"2", @"totalCoins": @"2", @"checkedIn": @"0"};
+    fakeStudent3 = @{@"id": @"3", @"fname": @"Mike", @"lname": @"Sela", @"currentCoins": @"3", @"lvl": @"2", @"progress": @"0", @"totalCoins": @"3", @"checkedIn": @"0"};
     
     fakeStudents = @[fakeStudent1, fakeStudent2, fakeStudent3];
     
@@ -167,7 +165,6 @@ NSArray *fakeStudents;
         [[DatabaseHandler getSharedInstance] resetDatabase];
         [webHandler logIn:self.emailTextField.text :self.passwordTextField.text];
     }
-     
 }
 
 

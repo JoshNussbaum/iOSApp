@@ -41,7 +41,6 @@
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
     NSLog(@"In here with %ld students", (long)studentsData.count);
-    
 }
 
 
