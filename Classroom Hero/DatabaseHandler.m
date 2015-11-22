@@ -283,7 +283,6 @@ static sqlite3_stmt *statement = nil;
             NSInteger totalCoins = [[studentDictionary objectForKey:@"totalCoins"]integerValue];
             
             student *newStudent = [[student alloc] initWithid:sid firstName:fname lastName:lname serial:serial lvl:lvl progress:progress lvlupamount:lvlUpAmount points:currentCoins totalpoints:totalCoins checkedin:checkedIn];
-            [newStudent printStudent];
             [self addStudent:newStudent :cid :schoolId];
             
         }
@@ -1088,7 +1087,6 @@ static sqlite3_stmt *statement = nil;
     {
         NSString *querySQL = [NSString stringWithFormat:
                               @"UPDATE Student SET serial=\"%@\" WHERE id=%ld", serial, (long)sid];
-        NSLog(@"Register student -> %@", querySQL);
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);
