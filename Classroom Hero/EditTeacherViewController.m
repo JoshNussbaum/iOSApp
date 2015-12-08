@@ -119,7 +119,6 @@
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    NSLog(@"In Create Account and here is the data =>\n %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];

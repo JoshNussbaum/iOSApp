@@ -16,11 +16,12 @@
     NSInteger level;
     NSInteger progress;
     NSInteger nextLevel;
+    NSString *currentDay;
 }
 
 -(id) init;
 
--(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_;
+-(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_;
 
 // Creation Functions
 
@@ -32,7 +33,7 @@
 
 -(void) setSchoolId:(NSInteger)schoolId_;
 
-
+-(void) setCurrentDay:(NSString *)date;
 
 
 // Read Functions
@@ -50,6 +51,8 @@
 -(NSInteger) getProgress;
 
 -(NSInteger) getNextLevel;
+
+-(NSString *)getCurrentDate;
 
 
 

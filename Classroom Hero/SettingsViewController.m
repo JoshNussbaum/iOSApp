@@ -110,7 +110,6 @@
 }
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    NSLog(@"In Settings and here is the data =>\n %@", data);
     if (data == nil){
         [Utilities alertStatusNoConnection];
     }

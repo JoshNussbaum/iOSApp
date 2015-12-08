@@ -50,7 +50,6 @@
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    NSLog(@"In register teacher stamp -> %@", data);
     [hud hide:YES];
     isStamping = NO;
     if (data == nil){
@@ -108,7 +107,6 @@
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                     if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
-                        [Utilities wiggleImage:self.stampImage sound:YES];
                         serial = stampSerial;
                         [self activityStart:@"Registering stamp..."];
                         [webHandler registerStamp:currentUser.id :stampSerial];

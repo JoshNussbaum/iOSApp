@@ -152,7 +152,6 @@
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type {
-    NSLog(@"In market data ready -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -282,7 +281,6 @@
                 [currentStudent setProgress:progressNumber.integerValue];
                 [currentStudent setLevelUpAmount:lvlUpAmount];
                 [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-                
             }
             else{
                 NSString *stamp = [studentDictionary objectForKey:@"stamp"];
@@ -294,7 +292,13 @@
                 [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
             }
             [self displayStudent];
-            [self sellItem];
+            
+            if (pointsNumber.integerValue >= [currentItem getCost]){
+                [self sellItem];
+            }
+            else {
+                [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must earn more coins first" cancel:nil otherTitles:nil tag:0 view:self];
+            }
         }
         else {
             [self showErrorMessageWithtitle:@"Error selling item" message:[data objectForKey:@"student"]];
@@ -363,11 +367,12 @@
 }
 
 - (void)hideStudent{
-    self.studentNameLabel.hidden = NO;
-    self.studentPointsLabel.hidden = NO;
-    self.sackImage.hidden = NO;
+    self.studentNameLabel.hidden = YES;
+    self.studentPointsLabel.hidden = YES;
+    self.sackImage.hidden = YES;
     self.studentNameLabel.text= @"";
     self.studentPointsLabel.text = @"";
+    self.picker.hidden = NO;
     isStamping = NO;
 }
 

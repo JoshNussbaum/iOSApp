@@ -40,13 +40,11 @@
     
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
-    NSLog(@"In here with %ld students", (long)studentsData.count);
 }
 
 
 - (void)viewDidAppear:(BOOL)animated{
     if (editingStudent) {
-        NSLog(@"In here");
         studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
         [self.tableView reloadData];
         editingStudent = NO;
@@ -74,10 +72,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StudentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentCell" forIndexPath:indexPath];
-    NSLog(@"In table view cell for row");
     if (studentsData.count > 0){
         student *student_ = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
-        [student_ printStudent];
         [cell initializeWithStudent:student_];
     }
     
@@ -147,7 +143,6 @@
 }
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    NSLog(@"In student table data ready -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];

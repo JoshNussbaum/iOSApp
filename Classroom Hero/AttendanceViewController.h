@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SnowShoeViewController.h"
+#import "ConnectionHandler.h"
 
-@interface AttendanceViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface AttendanceViewController : SnowShoeViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, ConnectionHandlerDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;
@@ -16,6 +18,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *studentsTableView;
 
+@property (weak, nonatomic) IBOutlet UILabel *studentNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *studentPointsLabel;
 
 - (IBAction)studentsClicked:(id)sender;
 - (IBAction)backClicked:(id)sender;

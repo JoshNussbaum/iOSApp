@@ -107,7 +107,7 @@
         NSString *className = self.classNameTextField.text;
         NSInteger classGrade = [self.classGradeTextField.text integerValue];
         NSInteger schoolId = [self getSchoolId];
-        newClass = [[class alloc]init:0 :className :classGrade :schoolId :1 :0 :30];
+        newClass = [[class alloc]init:0 :className :classGrade :schoolId :1 :0 :30 :[Utilities getCurrentDate]];
         [webHandler addClass:currentUser.id :className :classGrade :schoolId];
         
     }
@@ -144,7 +144,6 @@
             AudioServicesPlaySystemSound([Utilities getTheSoundOfSuccess]);
             NSInteger cid = [[data objectForKey:@"id"] integerValue];
             [newClass setId:cid];
-            [newClass printClass];
             [[DatabaseHandler getSharedInstance]addClass:newClass];
             [hud hide:YES];
             self.classNameTextField.text = @"";

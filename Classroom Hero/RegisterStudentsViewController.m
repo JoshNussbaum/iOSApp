@@ -38,7 +38,6 @@
         self.swipeLabel.hidden = NO;
     }
     
-    NSLog(@"We got %lu unregistered students", (unsigned long)unregisteredStudents.count);
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
@@ -168,7 +167,6 @@
 
 }
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    NSLog(@"In register students and heres the data -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];

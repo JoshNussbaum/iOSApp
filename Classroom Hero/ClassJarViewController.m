@@ -27,6 +27,7 @@
     MBProgressHUD *hud;
     NSString *newClassJarName;
     NSString *newClassJarTotal;
+    NSInteger tmpProgress;
 
     double currentPoints;
     BOOL isStamping;
@@ -181,6 +182,7 @@
         [hud hide:YES];
     }
     else if (type == ADD_TO_JAR){
+        tmpProgress = [currentClassJar getProgress];
         [currentClassJar updateJar:currentPoints];
         [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
         [self addCoins];
@@ -243,40 +245,37 @@
     self.jarCoins.hidden = NO;
     NSInteger newTotal = [currentClassJar getProgress];
     NSMutableArray *scores = [NSMutableArray array];
-    NSInteger points = [currentClassJar getProgress] - currentPoints;
+    NSInteger points = currentPoints;
     
-    if ([currentClassJar getProgress]==0){
-        newTotal = [currentClassJar getTotal];
-        points = [currentClassJar getTotal] - currentPoints;
+    if ([currentClassJar getProgress] == 0){
+        if ([currentClassJar getTotal] == tmpProgress){
+            points = tmpProgress;
+        }
+        else{
+            points = [currentClassJar getTotal] - tmpProgress;
+        }
     }
     [scores addObject:[NSNumber numberWithInteger:points]];
     [scores addObject:[NSNumber numberWithInteger:newTotal]];
-    [currentClassJar printJar];
     [self coinsFall:scores];
 }
 
 
 -(void)coinsFall:(NSMutableArray*)scores{
-    NSInteger score = [[scores objectAtIndex:0]integerValue];
+    NSInteger pointsEarned = [[scores objectAtIndex:0]integerValue];
     NSInteger newScore = [[scores objectAtIndex:1]integerValue];
-    NSInteger points;
-    if (newScore > [currentClassJar getTotal]) {
-        points = [currentClassJar getTotal] - score;
-    }
-    else {
-        points = newScore - score;
-    }
-    float time = points *.25;
-    if (score != newScore)
+
+    float time = pointsEarned *.25;
+    if (pointsEarned != 0)
     {
-        score++;
+        pointsEarned--;
         UIImageView *coin = [[UIImageView alloc] initWithFrame:coinRect];
         coin.image = [UIImage imageNamed:@"star.png"];
         coin.alpha=1.0;
         coin.layer.zPosition = -50;
         [self.view addSubview:coin];
         
-        [scores replaceObjectAtIndex:0 withObject:[NSNumber numberWithInteger:score]];
+        [scores replaceObjectAtIndex:0 withObject:[NSNumber numberWithInteger:pointsEarned]];
         
         [UIView animateWithDuration:.60
                          animations:^{
@@ -288,11 +287,17 @@
                              
                              coin.alpha=0;
                              coin.frame = coinRect;
-                             float prog = (float)score / (float)[currentClassJar getTotal];
+                             float prog;
+                             if ([currentClassJar getProgress] == 0){
+                                 prog = (float)([currentClassJar getTotal] - pointsEarned);
+                             }
+                             else{
+                                 prog = (float)([currentClassJar getProgress]-pointsEarned) / (float)[currentClassJar getTotal];
+                             }
                              
                              CGRect finalFrame = self.jarCoins.frame;
                              float newProg;
-                             if (prog >= 1.0) {
+                             if (prog >= 1.0 || prog == 0) {
                                  newProg = -420;
                              }
                              else {
@@ -309,11 +314,10 @@
         [self performSelector:@selector(coinsFall:) withObject:scores afterDelay:0.2 ];
         return;
     }
-    
-    else if ([currentClassJar getProgress] == 0){
-        [self jarFull];
-    }
     else {
+        if ([currentClassJar getProgress] == 0){
+            [self jarFull];
+        }
         self.stepper.enabled = YES;
         isStamping = NO;
     }
@@ -330,6 +334,7 @@
         
         [UIView animateWithDuration:1.2
                          animations:^{
+                             self.jarCoins.frame = CGRectMake(194, 840, 381, -420);
                              [self.corkImage setFrame:CGRectMake(self.corkImage.frame.origin.x, self.corkImage.frame.origin.y+140, self.corkImage.frame.size.width, self.corkImage.frame.size.height)];
                          }
                          completion:^(BOOL finished) {

@@ -46,8 +46,6 @@
 
 
 - (IBAction)createAccountClicked:(id)sender {
-    //[self performSegueWithIdentifier:@"create_account_to_tutorial" sender:nil];
-    
     [self hideKeyboard];
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.passwordTextField, self.confirmPasswordTextField, nil];
     errorMessage = @"";
@@ -71,13 +69,11 @@
         [self activityStart:@"Validating account..."];
         [[DatabaseHandler getSharedInstance] resetDatabase];
         [webHandler createAccount:self.emailTextField.text :self.passwordTextField.text :self.firstNameTextField.text :self.lastNameTextField.text];
-        
     }
 }
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    NSLog(@"In Create Account and here is the data =>\n %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];

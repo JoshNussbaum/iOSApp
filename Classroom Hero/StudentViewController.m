@@ -136,7 +136,6 @@
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type {
-    NSLog(@"In Student View Controller ready -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -215,7 +214,6 @@
                         [webHandler registerStamp:[currentStudent getId] :stampSerial];
                     }
                     else {
-                        NSLog(@"Fail stamp");
                         [Utilities failAnimation:self.stampImage];
                         isStamping = NO;
                     }

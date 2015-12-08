@@ -379,7 +379,7 @@
 			name = Textfields;
 			sourceTree = "<group>";
 		};
-		038F7B311B643FCC0026F679 /* Objects */ = {
+		038F7B311B643FCC0026F679 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				03DCFFDC1B6C6FDA00C451CC /* school.h */,
@@ -397,7 +397,7 @@
 				03DCFFD91B6C6C8A00C451CC /* classjar.h */,
 				03DCFFDA1B6C6C8A00C451CC /* classjar.m */,
 			);
-			name = Objects;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		0399AAEF1B845E9F00972F21 /* Tutorial */ = {
@@ -498,7 +498,7 @@
 				036811531B8C498700690294 /* Login */,
 				0399AAF31B8472EA00972F21 /* TableViewCells */,
 				0399AAEF1B845E9F00972F21 /* Tutorial */,
-				038F7B311B643FCC0026F679 /* Objects */,
+				038F7B311B643FCC0026F679 /* Models */,
 				038545201B6359A30053C169 /* Textfields */,
 				03AA99F11B6333C300750758 /* Images.xcassets */,
 				03AA99E41B6333C300750758 /* Supporting Files */,
@@ -509,12 +509,12 @@
 		03AA99E41B6333C300750758 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
+				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
 				034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */,
 				034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */,
 				03AA99F31B6333C400750758 /* LaunchScreen.xib */,
 				03DC9D811B732C7F005C7562 /* sounds */,
-				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
-				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
 				033855751B89C97D00173600 /* icons */,
 				03AA9A141B63399D00750758 /* img */,
 				03AA9A0D1B63381B00750758 /* fonts */,

@@ -39,13 +39,147 @@ NSInteger ORDER_LEGENDARY = 26;
 NSInteger ORDER_HERO = 27;
 NSInteger UNREGISTER_STAMP = 28;
 NSInteger EDIT_TEACHER_NAME = 29;
-NSInteger EDIT_TEACHER_PASSWORD = 29;
-NSInteger STAMP_TO_LOGIN = 30;
-NSInteger GET_CLASS_STATS = 31;
-NSInteger IDENTIFY_STAMP = 32;
-NSInteger UNREGISTER_ALL_STUDENTS = 33;
-NSInteger GET_STUDENT_BY_STAMP = 34;
+NSInteger EDIT_TEACHER_PASSWORD = 30;
+NSInteger STAMP_TO_LOGIN = 31;
+NSInteger GET_CLASS_STATS = 32;
+NSInteger IDENTIFY_STAMP = 33;
+NSInteger UNREGISTER_ALL_STUDENTS = 34;
+NSInteger GET_STUDENT_BY_STAMP = 45;
+NSInteger IS_DIFFERENT_DAY= 36;
+NSInteger STUDENT_CHECK_IN = 37;
+NSInteger STUDENT_CHECK_OUT = 38;
+NSInteger ALL_STUDENT_CHECK_IN = 39;
+NSInteger ALL_STUDENT_CHECK_OUT = 40;
 
+
++ (NSString *) getConnectionTypeString:(NSInteger)connectionType{
+    switch (connectionType) {
+        case 1:
+            return @"LOGIN";
+            break;
+        case 2:
+            return @"CREATE_ACCOUNT";
+            break;
+        case 3:
+            return @"ADD_CLASS";
+            break;
+        case 4:
+            return @"EDIT_CLASS";
+            break;
+        case 5:
+            return @"DELETE_CLASS";
+            break;
+        case 6:
+            return @"ADD_STUDENT";
+            break;
+        case 7:
+            return @"EDIT_STUDENT";
+            break;
+        case 8:
+            return @"DELETE_STUDENT";
+            break;
+        case 9:
+            return @"ADD_REINFORCER";
+            break;
+        case 10:
+            return @"EDIT_REINFORCER";
+            break;
+        case 11:
+            return @"DELETE_REINFORCER";
+            break;
+        case 12:
+            return @"ADD_ITEM";
+            break;
+        case 13:
+            return @"EDIT_ITEM";
+            break;
+        case 14:
+            return @"DELETE_ITEM";
+            break;
+        case 15:
+            return @"ADD_JAR";
+            break;
+        case 16:
+            return @"EDIT_JAR";
+            break;
+        case 17:
+            return @"DELETE_JAR";
+            break;
+        case 18:
+            return @"GET_SCHOOLS";
+            break;
+        case 19:
+            return @"REGISTER_STAMP";
+            break;
+        case 20:
+            return @"REWARD_STUDENT";
+            break;
+        case 21:
+            return @"REWARD_ALL_STUDENTS";
+            break;
+        case 22:
+            return @"ADD_TO_JAR";
+            break;
+        case 23:
+            return @"STUDENT_TRANSACTION";
+            break;
+        case 24:
+            return @"ORDER_RECRUIT";
+            break;
+        case 25:
+            return @"ORDER_EPIC";
+            break;
+        case 26:
+            return @"ORDER_LEGENDARY";
+            break;
+        case 27:
+            return @"ORDER_HERO";
+            break;
+        case 28:
+            return @"UNREGISTER_STAMP";
+            break;
+        case 29:
+            return @"EDIT_TEACHER_NAME";
+            break;
+        case 30:
+            return @"EDIT_TEACHER_PASSWORD";
+            break;
+        case 31:
+            return @"STAMP_TO_LOGIN";
+            break;
+        case 32:
+            return @"GET_CLASS_STATS";
+            break;
+        case 33:
+            return @"IDENTIFY_STAMP";
+            break;
+        case 34:
+            return @"UNREGISTER_ALL_STUDENTS";
+            break;
+        case 35:
+            return @"GET_STUDENT_BY_STAMP";
+            break;
+        case 36:
+            return @"IS_DIFFERENT_DAY";
+            break;
+        case 37:
+            return @"STUDENT_CHECK_IN";
+            break;
+        case 38:
+            return @"STUDENT_CHECK_OUT";
+            break;
+        case 39:
+            return @"ALL_STUDENT_CHECK_IN";
+            break;
+        case 40:
+            return @"ALL_STUDENT_CHECK_OUT";
+            break;
+ 
+        default:
+            return nil;
+            break;
+    }
+}
 
 
 + (UIColor *)CHBlueColor{
@@ -464,6 +598,61 @@ NSInteger GET_STUDENT_BY_STAMP = 34;
     
 }
 
++ (NSString *)getCurrentDate{
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setDay:(0)];
+    
+    NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
+    
+    NSDateFormatter *dateformater=[[NSDateFormatter alloc]init];
+    
+    NSString *formatString = @"MM/dd";
+    [dateformater setDateFormat:formatString];
+    
+    NSString *dateString=[dateformater stringFromDate:date];
+    
+    return dateString;
+}
+
+
++ (BOOL)isNewDate:(NSString *)oldDate{
+    NSString *newDate = [self getCurrentDate];
+    
+    if ([newDate isEqualToString:oldDate]){
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
+
++ (id) getStudentWitharray:(NSMutableArray *)searchArray propertyName:(NSString *)propertyName searchString:(NSString *)searchString{
+    
+    for (student *stud in searchArray){
+        if ([propertyName isEqualToString:@"serial"]){
+            if ([[stud getSerial] isEqualToString:searchString]){
+                return stud;
+            }
+        }
+        else if ([propertyName isEqualToString:@"id"]){
+            if ([[NSString stringWithFormat:@"%ld",[stud getId]] isEqualToString:searchString]){
+                return stud;
+            }
+        }
+       
+    }
+    return nil;
+    
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"serial contains[c] %@", searchString]];
+//    NSLog(@"This is the predicate -> %@", predicate);
+//    NSArray *results = [searchArray filteredArrayUsingPredicate:predicate];
+//    if (results.count > 0){
+//        student *stud = results[0];
+//        return stud;
+//    }
+//    else return nil;
+}
 
 
 

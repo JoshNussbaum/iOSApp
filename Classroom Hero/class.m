@@ -21,7 +21,7 @@
     return self;
 }
 
-- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_{
+- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_{
     self = [super init];
     if (self)
     {
@@ -32,6 +32,7 @@
         self->level = level_;
         self->progress = progress_;
         self->nextLevel = nextLevel_;
+        self->currentDay = currentDay_;
     }
     return self;
 }
@@ -57,6 +58,10 @@
 
 - (void) setSchoolId:(NSInteger)schoolId_{
     self->schoolId = schoolId_;
+}
+
+- (void) setCurrentDay:(NSString *)date{
+    self->currentDay = date;
 }
 
 
@@ -96,6 +101,10 @@
 
 - (NSInteger)getNextLevel{
     return self->nextLevel;
+}
+
+- (NSString *)getCurrentDate{
+    return self->currentDay;
 }
 
 

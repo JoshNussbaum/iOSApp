@@ -29,7 +29,7 @@
 +(ConnectionHandler *)getSharedInstance;
 
 
-- (void)logIn:(NSString *)email :(NSString *)password;
+- (void)logIn:(NSString *)email :(NSString *)password :(double)date;
 
 
 - (void)createAccount:(NSString *)email :(NSString *)password :(NSString *)fname :(NSString *)lname;
@@ -120,6 +120,18 @@
 
 
 - (void)getStudentBySerialwithserial:(NSString *)serial :(NSInteger)schoolId;
+
+
+- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId;
+
+
+- (void)checkOutStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId;
+
+
+- (void)checkInAllStudentsWithclassId:(NSInteger)classId;
+
+
+- (void)checkOutAllStudentsWithclassId:(NSInteger)classId;
 
 
 @end

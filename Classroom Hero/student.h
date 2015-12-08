@@ -9,17 +9,19 @@
 #import <Foundation/Foundation.h>
 
 @interface student : NSObject{
-    NSInteger id;
-    NSString *firstName;
-    NSString *lastName;
-    NSString *serial;
-    NSInteger lvl;
-    NSInteger progress;
-    NSInteger lvlupamount;
-    NSInteger points;
-    NSInteger totalpoints;
-    BOOL checkedin;
+
 }
+
+@property(nonatomic)NSInteger id;
+@property(nonatomic)NSString *firstName;
+@property(nonatomic)NSString *lastName;
+@property(nonatomic)NSString *serial;
+@property(nonatomic)NSInteger lvl;
+@property(nonatomic)NSInteger progress;
+@property(nonatomic)NSInteger lvlupamount;
+@property(nonatomic)NSInteger points;
+@property(nonatomic)NSInteger totalpoints;
+@property(nonatomic)BOOL checkedin;
 
 -(id) init;
 

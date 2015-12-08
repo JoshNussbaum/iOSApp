@@ -8,8 +8,20 @@
 
 #import "student.h"
 
+
+
 @implementation student
 
+@synthesize id;
+@synthesize firstName;
+@synthesize lastName;
+@synthesize lvl;
+@synthesize lvlupamount;
+@synthesize points;
+@synthesize checkedin;
+@synthesize totalpoints;
+@synthesize progress;
+@synthesize serial;
 
 #pragma mark - Constructors
 

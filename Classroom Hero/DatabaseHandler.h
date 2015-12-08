@@ -129,6 +129,7 @@
 
 - (void)updateStudentCheckedIn:(NSInteger)studentId :(BOOL)checkedIn;
 
+- (void)updateAllStudentsCheckedInWithclassId:(NSInteger)classId checkedIn:(BOOL)checkedIn;
 
 
 // Delete Functions

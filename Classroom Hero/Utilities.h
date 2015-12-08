@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "student.h"
 
 
 static NSString * const snowshoe_app_key = @"d12276c2fac976865fdc";
@@ -54,6 +55,14 @@ extern NSInteger GET_CLASS_STATS;
 extern NSInteger IDENTIFY_STAMP;
 extern NSInteger UNREGISTER_ALL_STUDENTS;
 extern NSInteger GET_STUDENT_BY_STAMP;
+extern NSInteger IS_DIFFERENT_DAY;
+extern NSInteger STUDENT_CHECK_IN;
+extern NSInteger STUDENT_CHECK_OUT;
+extern NSInteger ALL_STUDENT_CHECK_IN;
+extern NSInteger ALL_STUDENT_CHECK_OUT;
+
+
++ (NSString *) getConnectionTypeString:(NSInteger)connectionType;
 
 
 + (UIColor *) CHBlueColor;
@@ -79,9 +88,12 @@ extern NSInteger GET_STUDENT_BY_STAMP;
 
 + (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
 
+
 + (void) editTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
 
+
 + (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
+
 
 + (void) editAlertAddStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
 
@@ -133,10 +145,12 @@ extern NSInteger GET_STUDENT_BY_STAMP;
 
 + (SystemSoundID) getAchievementSound;
 
-
-
 + (NSInteger) getRewardNumber;
 
++ (NSString *)getCurrentDate;
 
++ (BOOL)isNewDate:(NSString *)oldDate;
+
++ (id) getStudentWitharray:(NSMutableArray *)searchArray propertyName:(NSString *)propertyName searchString:(NSString *)searchString;
 
 @end

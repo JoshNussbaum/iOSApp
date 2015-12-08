@@ -35,6 +35,11 @@ static NSString * const EDIT_STUDENT_URL = @"http://73.231.27.167:8080/dev.class
 static NSString * const DELETE_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/delete";
 static NSString * const GET_STUDENT_BY_SERIAL_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/get";
 static NSString * const REWARD_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/reward";
+static NSString * const CHECK_IN_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/checkin";
+static NSString * const CHECK_OUT_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/checkout";
+static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
+static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
+
 static NSString * const STUDENT_TRANSACTION_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/transaction";
 
 static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/schools/get";
@@ -55,7 +60,7 @@ static NSString * const IDENTIFY_STAMP_URL = @"http://73.231.27.167:8080/dev.cla
 
 static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/unregisterAllStudents";
 
-
+//[[NSDate date] timeIntervalSince1970];
 static NSString *POST = @"POST";
 static NSString *PUT = @"PUT";
 static NSString *GET = @"GET";
@@ -84,9 +89,9 @@ static NSInteger connectionType;
 }
 
 
-- (void)logIn:(NSString *)email :(NSString *)password{
+- (void)logIn:(NSString *)email :(NSString *)password :(double)date{
     connectionType = LOGIN;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"username\": \"%@\", \"password\": \"%@\"}", email, password];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"username\": \"%@\", \"password\": \"%@\", \"date\": %ld}", email, password, (long)date];
     
     [self asynchronousWebCall:jsonRequest :LOGIN_URL :POST];
 }
@@ -119,7 +124,6 @@ static NSInteger connectionType;
 - (void)deleteClass:(NSInteger)id{
     
     NSString *url = [NSString stringWithFormat:@"%@/%ld", DELETE_CLASS_URL, (long)id];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = DELETE_CLASS;
     
     [self asynchronousWebCall:nil :url :DELETE];
@@ -144,7 +148,6 @@ static NSInteger connectionType;
 
 - (void)deleteReinforcer:(NSInteger)id{
     NSString *url = [NSString stringWithFormat:@"%@/%ld", DELETE_REINFORCER_URL, (long)id];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = DELETE_REINFORCER;
     
     [self asynchronousWebCall:nil :url :DELETE];
@@ -169,7 +172,6 @@ static NSInteger connectionType;
 
 - (void)deleteJar:(NSInteger)id{
     NSString *url = [NSString stringWithFormat:@"%@/%ld", DELETE_JAR_URL, (long)id];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = DELETE_JAR;
     
     [self asynchronousWebCall:nil :url :DELETE];
@@ -194,7 +196,6 @@ static NSInteger connectionType;
 
 - (void)deleteItem:(NSInteger)id{
     NSString *url = [NSString stringWithFormat:@"%@/%ld", DELETE_ITEM_URL, (long)id];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = DELETE_ITEM;
     
     [self asynchronousWebCall:nil :url :DELETE];
@@ -218,7 +219,6 @@ static NSInteger connectionType;
 
 - (void)deleteStudent:(NSInteger)id{
     NSString *url = [NSString stringWithFormat:@"%@/%ld", DELETE_STUDENT_URL, (long)id];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = DELETE_STUDENT;
     
     [self asynchronousWebCall:nil :url :DELETE];
@@ -251,7 +251,6 @@ static NSInteger connectionType;
 
 - (void)rewardAllStudentsWithcid:(NSInteger)cid{
     NSString *url = [NSString stringWithFormat:@"%@/%ld", REWARD_ALL_STUDENTS_URL, (long)cid];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = REWARD_ALL_STUDENTS;
     
     [self asynchronousWebCall:nil :url :PUT];
@@ -260,7 +259,6 @@ static NSInteger connectionType;
 
 - (void)addToClassJar:(NSInteger)cjid :(NSInteger)points{
     NSString *url = [NSString stringWithFormat:@"%@/?id=%ld&points=%ld", ADD_TO_JAR_URL, (long)cjid, (long)points];
-    NSLog(@"This is the URL Boys -> %@", url);
 
     connectionType = ADD_TO_JAR;
     
@@ -298,7 +296,6 @@ static NSInteger connectionType;
 
 - (void)unregisterStampWithid:(NSInteger)id{
     NSString *url = [NSString stringWithFormat:@"%@/%ld", UNREGISTER_STAMP_URL, (long)id];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = UNREGISTER_STAMP;
     
     [self asynchronousWebCall:nil :url :PUT];
@@ -326,7 +323,6 @@ static NSInteger connectionType;
 
 - (void)stampToLogin:(NSString *)stampSerial{
     NSString *url = [NSString stringWithFormat:@"%@/%@", STAMP_TO_LOGIN_URL, stampSerial];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = STAMP_TO_LOGIN;
     
     [self asynchronousWebCall:nil :url :POST];
@@ -343,7 +339,6 @@ static NSInteger connectionType;
 
 - (void)identifyStampWithserial:(NSString *)serial{
     NSString *url = [NSString stringWithFormat:@"%@/%@", IDENTIFY_STAMP_URL, serial];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = IDENTIFY_STAMP;
     
     [self asynchronousWebCall:nil :url :GET];
@@ -351,7 +346,6 @@ static NSInteger connectionType;
 
 - (void)unregisterAllStudentsInClassWithid:(NSInteger)classId{
     NSString *url = [NSString stringWithFormat:@"%@/%ld", UNREGISTER_ALL_STUDENTS_URL, (long)classId];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = UNREGISTER_ALL_STUDENTS;
     
     [self asynchronousWebCall:nil :url :GET];
@@ -359,10 +353,48 @@ static NSInteger connectionType;
 
 - (void)getStudentBySerialwithserial:(NSString *)serial :(NSInteger)schoolId{
     NSString *url = [NSString stringWithFormat:@"%@/?stamp=%@&schoolId=%ld", GET_STUDENT_BY_SERIAL_URL, serial, (long)schoolId];
-    NSLog(@"This is the URL Boys -> %@", url);
     connectionType = GET_STUDENT_BY_STAMP;
     
     [self asynchronousWebCall:nil :url :GET];
+}
+
+
+- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId{
+    connectionType = STUDENT_CHECK_IN;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld, \"cid\":%ld, \"timestamp\":%ld}", (long)studentId, (long)classId, (long)[[NSDate date] timeIntervalSince1970]];
+    
+    [self asynchronousWebCall:jsonRequest :CHECK_IN_STUDENT_URL :POST];
+    
+}
+
+
+- (void)checkOutStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId{
+    connectionType = STUDENT_CHECK_OUT;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld, \"cid\":%ld}", (long)studentId, (long)classId];
+    
+    [self asynchronousWebCall:jsonRequest :CHECK_OUT_STUDENT_URL :POST];
+}
+
+
+- (void)checkInAllStudentsWithclassId:(NSInteger)classId{
+    connectionType = ALL_STUDENT_CHECK_IN;
+    
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/checkAllStudentsIn", CHECK_IN_ALL_STUDENTS_URL, (long)classId];
+    
+    [self asynchronousWebCall:nil :url :POST];
+}
+
+
+
+- (void)checkOutAllStudentsWithclassId:(NSInteger)classId{
+    connectionType = ALL_STUDENT_CHECK_OUT;
+
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/checkAllStudentsOut", CHECK_OUT_ALL_STUDENTS_URL, (long)classId];
+    
+    [self asynchronousWebCall:nil :url :POST];
+
 }
 
 
@@ -414,6 +446,9 @@ static NSInteger connectionType;
         [request setHTTPBody: requestData];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
     }
+    else {
+        NSLog(@"Heres the URL -> %@", url);
+    }
     
     [NSURLConnection connectionWithRequest:request delegate:self];
 }
@@ -450,7 +485,9 @@ static NSInteger connectionType;
     NSDictionary *jsonData = [NSJSONSerialization
                               JSONObjectWithData:responseData
                               options:NSJSONReadingMutableContainers
-                              error:&err];    
+                              error:&err];
+    NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
+    
     [delegate_ dataReady:jsonData :connectionType];
 }
 

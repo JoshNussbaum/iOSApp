@@ -234,7 +234,6 @@ static NSInteger coinHeight = 250;
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    NSLog(@"In award data ready -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -348,10 +347,6 @@ static NSInteger coinHeight = 250;
             [self displayStudent];
             tmpPoints = ([currentStudent getPoints] - pointsAwarded);
             [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
-      
-            //TODO- Flurry
-            
-            
         }
         else {
             NSString *message = [data objectForKey:@"message"];
@@ -409,7 +404,7 @@ static NSInteger coinHeight = 250;
 
 - (void)displayStudent{
     self.categoryPicker.hidden = YES;
-    NSString *studentName = [NSString stringWithFormat:@"%@  %@", [currentStudent getFirstName], [currentStudent getLastName]];
+    NSString *studentName = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.nameLabel.text = studentName;
     self.nameLabel.hidden = NO;
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)([currentStudent getPoints] - pointsAwarded)];
@@ -456,21 +451,6 @@ static NSInteger coinHeight = 250;
                             [Utilities wiggleImage:self.stampImage sound:NO];
                             [webHandler rewardStudentWithserial:stampSerial pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId]];
                         }
-                        
-                        
-                        /*
-                        else if ([[DatabaseHandler getSharedInstance] isValidStamp:stampSerial :[currentUser.currentClass getSchoolId]]){
-                            currentStudent = [[DatabaseHandler getSharedInstance]getStudentWithSerial:stampSerial];
-                            [self displayStudent];
-                            [Utilities wiggleImage:self.stampImage sound:NO];
-                            //NSLog(@"Points awarded -> %ld", (long)pointsAwarded);
-                            [webHandler rewardStudentWithserial:[currentStudent getSerial] pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId]];
-                        }
-                        else {
-                            [Utilities failAnimation:self.stampImage];
-                            isStamping = NO;
-                        }
-                         */
                     }
                     else {
                         [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];
@@ -503,11 +483,8 @@ static NSInteger coinHeight = 250;
 
 
 
-
 - (void)addPoints:(NSInteger)points levelup:(bool)levelup{
-    NSLog(@"Points -> %ld", (long)points);
     AudioServicesPlaySystemSound(award);
-    [currentStudent printStudent];
     if (levelup){
         levelRect = CGRectMake(self.levelView.frame.origin.x, self.levelView.frame.origin.y, self.levelView.frame.size.width, self.levelView.frame.size.height);
         [self.levelBar setProgress:1.0f animated:YES];
@@ -593,7 +570,6 @@ static NSInteger coinHeight = 250;
     else if (coin == 2){
         randomX = self.view.frame.size.width - coinWidth  - arc4random() % 100;
     }
-    NSLog(@"Random X -> %ld", (long)randomX);
     NSInteger randomY;
     randomY = self.view.frame.size.height/2 - coinHeight/2;
     CGRect randomCoinRect = CGRectMake(randomX, randomY, coinWidth, coinHeight);

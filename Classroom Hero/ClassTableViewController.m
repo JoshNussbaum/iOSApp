@@ -84,7 +84,6 @@ static NSString * const classCell = @"classCell";
 }
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    NSLog(@"In class table and heres data -> %@", data);
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
@@ -149,7 +148,7 @@ static NSString * const classCell = @"classCell";
                 class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];
                 [webHandler editClass:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId]];
-                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel]];
+                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getCurrentDate]];
             }
             else {
                 [Utilities alertStatusWithTitle:@"Error editing class" message:gradeErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -248,7 +247,10 @@ static NSString * const classCell = @"classCell";
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) [self performSegueWithIdentifier:@"class_to_add_class" sender:self];
+    if (indexPath.row == 0) {
+        [self performSegueWithIdentifier:@"class_to_add_class" sender:self];
+        return;
+    }
     if (!self.editing){
         if (classes.count > 0){
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -316,7 +318,6 @@ static NSString * const classCell = @"classCell";
 }
 
 - (IBAction)editClicked:(id)sender {
-    NSLog(@"In edit clicked");
     if (self.editing) {
         [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
         [self.tableView setEditing:NO animated:YES];

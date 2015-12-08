@@ -9,16 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "class.h"
 
-@interface user : NSObject{
-    NSInteger id;
-    NSString *firstName;
-    NSString *lastName;
-    NSString *email;
-    NSString *password;
-    NSInteger accountStatus;
-    NSString *serial;
-    class *currentClass;
-}
+@interface user : NSObject
 
 @property(nonatomic)NSInteger id;
 @property(nonatomic)NSString *firstName;

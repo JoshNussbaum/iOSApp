@@ -390,7 +390,7 @@ static int screenNumber;
         {
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
             NSInteger schoolId = [self getSchoolId];
-            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :1 :0 :30];
+            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :1 :0 :30 :[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             currentUser.currentClass = newClass;
             [hud hide:YES];

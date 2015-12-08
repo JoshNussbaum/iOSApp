@@ -22,14 +22,12 @@ NSDictionary *fakeStudent3;
 NSArray *fakeStudents;
 
 
-
 @interface LoginViewController (){
     ConnectionHandler *webHandler;
     NSMutableArray *textFields;
     NSString *errorMessage;
     user *currentUser;
     MBProgressHUD* hud;
-    
     bool isStamping;
 }
 
@@ -144,7 +142,9 @@ NSArray *fakeStudents;
 - (IBAction)loginClicked:(id)sender{
     [self hideKeyboard];
     [[DatabaseHandler getSharedInstance] resetDatabase];
-    //[self loginSuccess:fakeLoginDict];
+    //å[self loginSuccess:fakeLoginDict];
+    
+
     
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
@@ -163,13 +163,13 @@ NSArray *fakeStudents;
     else {
         [self activityStart:@"Logging in..."];
         [[DatabaseHandler getSharedInstance] resetDatabase];
-        [webHandler logIn:self.emailTextField.text :self.passwordTextField.text];
+        [webHandler logIn:self.emailTextField.text :self.passwordTextField.text :[[NSDate date] timeIntervalSince1970]];
     }
+     
 }
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    NSLog(@"In Login \n %@", data);
     if (type == LOGIN || type == STAMP_TO_LOGIN){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
         
