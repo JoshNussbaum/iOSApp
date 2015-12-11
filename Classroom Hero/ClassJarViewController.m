@@ -37,7 +37,9 @@
 
 @end
 
+
 @implementation ClassJarViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,7 +59,7 @@
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
     
-
+    
     
     
     award = [Utilities getAwardSound];
@@ -72,7 +74,8 @@
     currentPoints = 1;
 }
 
--(void)viewWillAppear:(BOOL)animated{
+
+- (void)viewWillAppear:(BOOL)animated{
     currentUser = [user getInstance];
     
     UIImage *image = [UIImage imageNamed:@"jar_progress_coins.png"];
@@ -104,94 +107,59 @@
     
 }
 
-- (void) activityStart :(NSString *)message {
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = message;
-    [hud show:YES];
+
+- (IBAction)unwindToClassJar:(UIStoryboardSegue *)unwindSegue{
     
 }
+
+
+- (IBAction)valueChanged:(id)sender {
+    if (!isStamping && currentClassJar) {
+        self.pointsLabel.text = [NSString stringWithFormat:@"+ %.f",self.stepper.value];
+        currentPoints = [(UIStepper*)sender value];
+    }
+}
+
+
+- (IBAction)homeClicked:(id)sender {
+    [self performSegueWithIdentifier:@"class_jar_to_home" sender:self];
+}
+
+
+- (IBAction)awardClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (IBAction)marketClicked:(id)sender {
+    [self performSegueWithIdentifier:@"class_jar_to_market" sender:nil];
+}
+
+
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
+}
+
+
 - (IBAction)editJarClicked:(id)sender {
     if (currentClassJar){
         [Utilities editTextWithtitle:@"Edit Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
     }
 }
 
+
 - (IBAction)addJarClicked:(id)sender {
     [Utilities editAlertTextWithtitle:@"Add Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    if (buttonIndex == [alertView cancelButtonIndex]) {
-        return;
-    }
-    newClassJarName = [alertView textFieldAtIndex:0].text;
-    newClassJarTotal = [alertView textFieldAtIndex:1].text;
-    
-    
-    NSString *errorMessage = [Utilities isInputValid:newClassJarName :@"Class jar Name"];
-    
-    if (!errorMessage){
-        errorMessage = [Utilities isNumeric:newClassJarTotal];
-        if (!errorMessage){
-            if (alertView.tag == 1){
-                [self activityStart:@"Adding class jar..."];
-                [webHandler addJar:[currentUser.currentClass getId] :newClassJarName :newClassJarTotal.integerValue];
 
-            }
-            else if (alertView.tag == 2){
-                [self activityStart:@"Editing class jar..."];
-                [webHandler editJar:[currentClassJar getId] :newClassJarName :newClassJarTotal.integerValue];
-            }
-            
-        }
-        else {
-            [Utilities alertStatusWithTitle:@"Error adding class jar" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-        }
-        
-    }
-    else {
-        [Utilities alertStatusWithTitle:@"Error adding class jar" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-    }
-}
-	
-
-- (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    if (data == nil){
-        [hud hide:YES];
-        [Utilities alertStatusNoConnection];
-        return;
-    }
-    if (type == ADD_JAR){
-        NSInteger jarId = [[data objectForKey:@"id"] integerValue];
-        currentClassJar = [[classjar alloc] initWithid:jarId cid:[currentUser.currentClass getId] name:newClassJarName progress:0 total:newClassJarTotal.integerValue];
-        [[DatabaseHandler getSharedInstance] addClassJar:(currentClassJar)];
-        [self displayClassJar];	
-        self.addJarButton.enabled = NO;
-        self.addJarButton.hidden = YES;
-        [hud hide:YES];
-        self.stepper.enabled = YES;
-
-    }
-    else if (type == EDIT_JAR){
-        [currentClassJar setName:newClassJarName];
-        [currentClassJar setTotal:newClassJarTotal.integerValue];
-        [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
-        [self displayClassJar];
-        [hud hide:YES];
-    }
-    else if (type == ADD_TO_JAR){
-        tmpProgress = [currentClassJar getProgress];
-        [currentClassJar updateJar:currentPoints];
-        [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
-        [self addCoins];
-    }
-}
-
-
--(void)stampResultDidChange:(NSString *)stampResult{
-    currentUser = [user getInstance];
+- (void)stampResultDidChange:(NSString *)stampResult{
     if (!isStamping && currentClassJar){
         NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
@@ -201,19 +169,19 @@
                 isStamping = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 NSLog(@"We stamped with -> %@", stampSerial);
-
+                
                 if (self.corkImage.hidden == YES){
                     self.stepper.enabled = NO;
-
+                    
                     if ([stampSerial isEqualToString:currentUser.serial] && ([currentClassJar getTotal] != 0))
                     {
                         [webHandler addToClassJar:[currentClassJar getId] :currentPoints];
-
-                        /*
-                        NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys: currentUser.jarName, @"added", nil];
                         
-                        [[Countly sharedInstance] recordEvent:@"addToJar" segmentation:dict count:1 sum:currentPoints];
-                        */
+                        /*
+                         NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys: currentUser.jarName, @"added", nil];
+                         
+                         [[Countly sharedInstance] recordEvent:@"addToJar" segmentation:dict count:1 sum:currentPoints];
+                         */
                         
                     }
                     else {
@@ -240,7 +208,86 @@
 }
 
 
--(void)addCoins{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == [alertView cancelButtonIndex]) {
+        return;
+    }
+    
+    if (alertView.tag !=3 ){
+        newClassJarName = [alertView textFieldAtIndex:0].text;
+        newClassJarTotal = [alertView textFieldAtIndex:1].text;
+    }
+   
+    NSString *errorMessage = [Utilities isInputValid:newClassJarName :@"Class jar name"];
+    
+    if (!errorMessage){
+        errorMessage = [Utilities isNumeric:newClassJarTotal];
+        if (!errorMessage){
+            if (alertView.tag == 1){
+                [self activityStart:@"Adding class jar..."];
+                [webHandler addJar:[currentUser.currentClass getId] :newClassJarName :newClassJarTotal.integerValue];
+
+            }
+            else if (alertView.tag == 2){
+                [self activityStart:@"Editing class jar..."];
+                if (newClassJarTotal <= [currentClassJar getProgress]){
+                    [Utilities alertStatusWithTitle:@"Warning" message:@"Your new total is less than your current progress. Proceeding will reset your progress to 0" cancel:@"Cancel" otherTitles:@[@"Proceed"] tag:3 view:self];
+
+                }
+                else{
+                    [webHandler editJar:[currentClassJar getId] :newClassJarName :newClassJarTotal.integerValue :[currentClassJar getProgress]];
+                }
+            }
+            else if (alertView.tag == 3){
+                [webHandler editJar:[currentClassJar getId] :newClassJarName :newClassJarTotal.integerValue :0];
+            }
+            
+        }
+        else {
+            [Utilities alertStatusWithTitle:@"Error adding class jar" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+        }
+        
+    }
+    else {
+        [Utilities alertStatusWithTitle:@"Error adding class jar" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+    }
+}
+	
+
+- (void)dataReady:(NSDictionary *)data :(NSInteger)type{
+    [hud hide:YES];
+    
+    if (data == nil){
+        [Utilities alertStatusNoConnection];
+        return;
+    }
+    if (type == ADD_JAR){
+        NSInteger jarId = [[data objectForKey:@"id"] integerValue];
+        currentClassJar = [[classjar alloc] initWithid:jarId cid:[currentUser.currentClass getId] name:newClassJarName progress:0 total:newClassJarTotal.integerValue];
+        [[DatabaseHandler getSharedInstance] addClassJar:(currentClassJar)];
+        [self displayClassJar];	
+        self.addJarButton.enabled = NO;
+        self.addJarButton.hidden = YES;
+        self.stepper.enabled = YES;
+
+    }
+    else if (type == EDIT_JAR){
+        [currentClassJar setName:newClassJarName];
+        [currentClassJar setTotal:newClassJarTotal.integerValue];
+        [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
+        [self displayClassJar];
+    }
+    else if (type == ADD_TO_JAR){
+        tmpProgress = [currentClassJar getProgress];
+        [currentClassJar updateJar:currentPoints];
+        [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
+        [self addCoins];
+    }
+}
+
+
+- (void)addCoins{
     AudioServicesPlaySystemSound(award);
     self.jarCoins.hidden = NO;
     NSInteger newTotal = [currentClassJar getProgress];
@@ -261,7 +308,7 @@
 }
 
 
--(void)coinsFall:(NSMutableArray*)scores{
+- (void)coinsFall:(NSMutableArray*)scores{
     NSInteger pointsEarned = [[scores objectAtIndex:0]integerValue];
     NSInteger newScore = [[scores objectAtIndex:1]integerValue];
 
@@ -323,12 +370,12 @@
     }
 }
 
--(void)jarFull{
+
+- (void)jarFull{
     double delayInSeconds = 1.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         self.stepper.enabled = YES;
-        isStamping = NO;
         
         self.corkImage.hidden = NO;
         
@@ -347,6 +394,7 @@
 
 
 - (void)displayClassJar{
+
     self.classJarName.text = [currentClassJar getName];
     if (currentClassJar == nil){
         self.stepper.enabled = NO;
@@ -354,47 +402,19 @@
     }
     else {
         self.stepper.enabled = YES;
+        if ([currentClassJar getProgress] > [currentClassJar getTotal]){
+            [currentClassJar setProgress:0];
+        }
     }
 }
 
 
-
-- (IBAction)homeClicked:(id)sender {
-    [self performSegueWithIdentifier:@"class_jar_to_home" sender:self];
+- (void) activityStart :(NSString *)message {
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+    [hud show:YES];
 }
 
 
-- (IBAction)awardClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-- (IBAction)marketClicked:(id)sender {
-    [self performSegueWithIdentifier:@"class_jar_to_market" sender:nil];
-}
-
-
-- (IBAction)unwindToClassJar:(UIStoryboardSegue *)unwindSegue
-{
-    
-}
-
-
-- (IBAction)valueChanged:(id)sender {
-    if (!isStamping && currentClassJar) {
-        self.pointsLabel.text = [NSString stringWithFormat:@"+ %.f",self.stepper.value];
-        currentPoints = [(UIStepper*)sender value];
-    }
-}
-
-
-- (IBAction)studentListClicked:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.2;
-    transition.type = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
-    [self.navigationController pushViewController:stvc animated:NO];
-}
 @end

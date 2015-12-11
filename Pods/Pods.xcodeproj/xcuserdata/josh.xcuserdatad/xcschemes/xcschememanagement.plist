@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>CircleProgressBar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JSBadgeView-JSBadgeView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,42 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4DB826B64B8D7FFAD1B0054C67556181</key>
+		<key>105BB21DDA17F283BCA6C012BAB3E330</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A33653DDC9A7E345216B6549C06F2B38</key>
+		<key>37117C25314C65B0C6EB0E7C2B6F14F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BCCC0F4081C473B2448DD2FB829E748C</key>
+		<key>37BF5062A4D2BE015CBD77812A7EFF99</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C1071068DB988D25AD8E7E796905F326</key>
+		<key>5BB69D3F3BE24BC6BE2B1DE2E5BD3B36</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C9E3DBC74C36D2080E44078867A75CEF</key>
+		<key>69A6175EC9507C4F1B577F3AF1E558EE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E63EA3FC3E0A88A11341641DBAC04F9F</key>
+		<key>996C4CEDBD819845E4AE075097DBD57D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
+		<key>A00F51781201D70FE5D98D7CB0CC1505</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FE99C3FBD7147A391C904EFC44CCC35B</key>
+		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F194304CFC17C4F3C6CB20896F68B0D9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

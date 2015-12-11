@@ -15,16 +15,17 @@
 @property (strong, nonatomic) IBOutlet UIButton *heroicButton;
 @property (strong, nonatomic) IBOutlet UIButton *legendaryButton;
 
-- (IBAction)recruitClicked:(id)sender;
-- (IBAction)heroicClicked:(id)sender;
-- (IBAction)legendaryClicked:(id)sender;
-- (IBAction)orderClicked:(id)sender;
-
 @property (strong, nonatomic) IBOutlet UIButton *placeOrderButton;
 @property (strong, nonatomic) IBOutlet UITextField *stampsTextfield;
 @property (strong, nonatomic) IBOutlet UILabel *costLabel;
 
 - (IBAction)backClicked:(id)sender;
 - (IBAction)backgroundTap:(id)sender;
+
+- (IBAction)recruitClicked:(id)sender;
+- (IBAction)heroicClicked:(id)sender;
+- (IBAction)legendaryClicked:(id)sender;
+- (IBAction)orderClicked:(id)sender;
+
 
 @end

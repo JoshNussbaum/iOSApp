@@ -10,8 +10,11 @@
 #import "student.h"
 
 @interface StudentTableViewCell : UITableViewCell
+
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *levelLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 
 

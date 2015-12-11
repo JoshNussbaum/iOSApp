@@ -57,6 +57,46 @@
 }
 
 
+- (IBAction)startTutorial:(id)sender {
+    TutorialContentViewController *initialViewController = [self viewControllerAtIndex:0];
+    NSArray *viewControllers = @[initialViewController];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    
+}
+
+
+- (IBAction)backClicked:(id)sender {
+    if (flag == 1){
+        [self performSegueWithIdentifier:@"tutorial_to_login" sender:self];
+    }
+    if (flag ==2){
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        //[self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
+    
+}
+
+
+- (IBAction)skipClicked:(id)sender {
+    if (flag == 1){
+        [self performSegueWithIdentifier:@"tutorial_skip_to_class" sender:nil];
+    }
+    if (flag ==2){
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+
+- (void)setFlag:(NSInteger)flag_{
+    flag = flag_;
+}
+
+
 #pragma mark - Page View Controller Data Source
 
 
@@ -118,43 +158,5 @@
     return 1;
 }
 
-
-- (IBAction)startTutorial:(id)sender {
-    TutorialContentViewController *initialViewController = [self viewControllerAtIndex:0];
-    NSArray *viewControllers = @[initialViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
-}
-
-
-- (IBAction)backClicked:(id)sender {
-    if (flag == 1){
-        [self performSegueWithIdentifier:@"tutorial_to_login" sender:self];
-    }
-    if (flag ==2){
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        [self.navigationController popViewControllerAnimated:YES];
-
-        //[self.navigationController popToRootViewControllerAnimated:YES];
-    }
-    
-    
-}
-
-
-- (IBAction)skipClicked:(id)sender {
-    if (flag == 1){
-        [self performSegueWithIdentifier:@"tutorial_skip_to_class" sender:nil];
-    }
-    if (flag ==2){
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-}
-
-- (void)setFlag:(NSInteger)flag_{
-    flag = flag_;
-}
 
 @end

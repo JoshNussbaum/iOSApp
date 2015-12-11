@@ -29,19 +29,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     currentUser =[user getInstance];
-    unregisteredStudents = [[NSMutableArray alloc]init];
-    unregisteredStudents = [[DatabaseHandler getSharedInstance]getUnregisteredStudents:[currentUser.currentClass getId]];
-    if ([unregisteredStudents count] != 0)
-    {
-        self.stampToRegisterLabel.hidden = NO;
-        self.swipeLabel.hidden = NO;
-    }
-    
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
-    
+    self.appKey = snowshoe_app_key ;
+    self.appSecret = snowshoe_app_secret;
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
-    
+
     UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     
@@ -51,20 +45,49 @@
     [self.view addGestureRecognizer:swipeLeft];
     [self.view addGestureRecognizer:swipeRight];
     
-    
-    // Set up Snowshoe
-    self.appKey = snowshoe_app_key ;
-    self.appSecret = snowshoe_app_secret;
+    unregisteredStudents = [[NSMutableArray alloc]init];
+    unregisteredStudents = [[DatabaseHandler getSharedInstance]getUnregisteredStudents:[currentUser.currentClass getId]];
+    if ([unregisteredStudents count] != 0)
+    {
+        self.stampToRegisterLabel.hidden = NO;
+        self.swipeLabel.hidden = NO;
+    }
     
     [self displayName:registerIndex];
-
 }
 
 
 - (void)viewDidAppear:(BOOL)animated{
     unregisteredStudents = [[DatabaseHandler getSharedInstance]getUnregisteredStudents:[currentUser.currentClass getId]];
-    
 }
+
+
+- (IBAction)backButtonClicked:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
+- (IBAction)skipButtonClicked:(id)sender {
+    if (flag == 1){
+        [self performSegueWithIdentifier:@"register_students_to_home" sender:self];
+    }
+    if (flag == 2){
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    if (flag == 3){
+        UIStoryboard *storyboard = self.storyboard;
+        
+        HomeViewController *hvc = [storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
+        SettingsViewController *svc = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+        
+        [hvc setFlag:1];
+        [self.navigationController pushViewController:hvc animated:NO];
+        
+        [svc setFlag:1];
+        [self.navigationController pushViewController:svc animated:NO];
+    }
+}
+
 
 - (void)handleSwipe:(UISwipeGestureRecognizer *)swipe {
     if (swipe.direction == UISwipeGestureRecognizerDirectionLeft) {
@@ -78,6 +101,7 @@
     
 }
 
+
 - (void)previousStudent {
     if(registerIndex == 0){
         registerIndex = [unregisteredStudents count] - 1;
@@ -87,6 +111,7 @@
     
 }
 
+
 - (void)nextStudent {
     if (++registerIndex >= [unregisteredStudents count]){
         registerIndex = 0;
@@ -95,7 +120,8 @@
     
 }
 
--(void) displayName:(NSInteger)index{
+
+- (void) displayName:(NSInteger)index{
     if ([unregisteredStudents count] != 0)
     {
         student *ss = [unregisteredStudents objectAtIndex:index];
@@ -125,6 +151,7 @@
     }
     
 }
+
 
 - (void)stampResultDidChange:(NSString *)stampResult{
     if (!isStamping){
@@ -166,68 +193,53 @@
     }
 
 }
+
+
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
+    isStamping = NO;
+    [hud hide:YES];
+    
     if (data == nil){
-        [hud hide:YES];
         [Utilities alertStatusNoConnection];
-        isStamping = NO;
         return;
     }
+    
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+    NSString *message = [data objectForKey:@"message"];
+    
     if (type == REGISTER_STAMP){
-        NSInteger count = unregisteredStudents.count;
-        student *ss = [unregisteredStudents objectAtIndex:registerIndex];
-        [[DatabaseHandler getSharedInstance] registerStudent:[ss getId] :[ss getSerial]];
-        [hud hide:YES];
-        [unregisteredStudents removeObjectAtIndex:registerIndex];
-        [Utilities wiggleImage:self.stampImage sound:YES];
+        if ([successNumber boolValue] == YES){
+            [Utilities wiggleImage:self.stampImage sound:YES];
+            NSInteger count = unregisteredStudents.count;
 
-        count--;
-        if (count == 0) {
-            self.swipeLabel.text = @"All  Students  Registered";
-        }
-        
-        if (registerIndex >= count  && count  > 0){
-            registerIndex = 0;
-            [self displayName:registerIndex];
+            student *ss = [unregisteredStudents objectAtIndex:registerIndex];
+            [[DatabaseHandler getSharedInstance] registerStudent:[ss getId] :[ss getSerial]];
+            [unregisteredStudents removeObjectAtIndex:registerIndex];
             
+            count--;
+            
+            if (count == 0) {
+                self.swipeLabel.text = @"All  Students  Registered";
+            }
+            
+            if (registerIndex >= count  && count  > 0){
+                registerIndex = 0;
+                [self displayName:registerIndex];
+                
+            }
+            [self displayName:registerIndex];
         }
-        isStamping = NO;
-        [self displayName:registerIndex];
+        else{
+            [Utilities alertStatusWithTitle:@"Error registering student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            return;
+        }
 
     }
+
+
     
 }
 
-- (void)setFlag:(NSInteger)flag_{
-    flag = flag_;
-}
-
-
-
-- (IBAction)backButtonClicked:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-
-- (IBAction)skipButtonClicked:(id)sender {
-    if (flag == 1){
-        [self performSegueWithIdentifier:@"register_students_to_home" sender:self];
-
-    }
-    if (flag == 2){
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    if (flag == 3){
-        UIStoryboard *storyboard = self.storyboard;
-        
-        HomeViewController *hvc = [storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
-        SettingsViewController *svc = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
-        [hvc setFlag:1];
-        [self.navigationController pushViewController:hvc animated:NO];
-        [svc setFlag:1];
-        [self.navigationController pushViewController:svc animated:NO];
-    }
-}
 
 - (void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -239,6 +251,7 @@
 
 
  #pragma mark - Navigation
+
  
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      if ([segue.identifier isEqualToString:@"register_students_to_home"]){
@@ -249,10 +262,15 @@
      }
 }
 
+
 - (IBAction)unwindToRegisterStudents:(UIStoryboardSegue *)unwindSegue {
     
 }
- 
+
+
+- (void)setFlag:(NSInteger)flag_{
+    flag = flag_;
+}
 
 
 @end

@@ -12,21 +12,38 @@
 
 @interface ClassJarViewController : SnowShoeViewController <ConnectionHandlerDelegate>
 
-- (IBAction)homeClicked:(id)sender;
-- (IBAction)awardClicked:(id)sender;
-- (IBAction)marketClicked:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UILabel *classJarName;
+
 @property (strong, nonatomic) IBOutlet UIImageView *jarImage;
+
 @property (strong, nonatomic) IBOutlet UIImageView *corkImage;
+
 @property (strong, nonatomic) IBOutlet UIImageView *lidImage;
+
 @property (strong, nonatomic) IBOutlet UIImageView *coinImage;
+
 @property (strong, nonatomic) IBOutlet UIStepper *stepper;
-- (IBAction)valueChanged:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
-- (IBAction)editJarClicked:(id)sender;
-- (IBAction)addJarClicked:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UIButton *addJarButton;
+
+
+- (IBAction)valueChanged:(id)sender;
+
+- (IBAction)editJarClicked:(id)sender;
+
+- (IBAction)addJarClicked:(id)sender;
+
 - (IBAction)studentListClicked:(id)sender;
+
+
+- (IBAction)homeClicked:(id)sender;
+
+- (IBAction)awardClicked:(id)sender;
+
+- (IBAction)marketClicked:(id)sender;
+
 
 @end

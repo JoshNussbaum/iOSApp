@@ -39,15 +39,15 @@
     [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[Utilities CHGreenColor]];
     
     [Utilities makeRoundedButton:self.createAccountButton :[UIColor blackColor]];
-    
     [Utilities makeRoundedButton:self.backButton :[UIColor blackColor]];
-
 }
 
 
 - (IBAction)createAccountClicked:(id)sender {
     [self hideKeyboard];
+    
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.passwordTextField, self.confirmPasswordTextField, nil];
+    
     errorMessage = @"";
     for (int i =0; i < [textFields count]; i++){
         NSString *error = [[textFields objectAtIndex:i] validate];
@@ -73,9 +73,20 @@
 }
 
 
+- (IBAction)backClicked:(id)sender{
+    [self performSegueWithIdentifier:@"account_creation_to_login" sender:self];
+}
+
+
+- (IBAction)backgroundTap:(id)sender {
+    [self hideKeyboard];
+}
+
+
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
+    [hud hide:YES];
+
     if (data == nil){
-        [hud hide:YES];
         [Utilities alertStatusNoConnection];
         
         return;
@@ -96,7 +107,6 @@
             currentUser.password = self.passwordTextField.text;
             currentUser.id = cid;
             currentUser.accountStatus = 0;
-            [hud hide:YES];
             
             [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
 
@@ -105,7 +115,6 @@
         else {
             NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error creating account" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
             return;
         }
     }
@@ -120,18 +129,8 @@
 }
 
 
-- (IBAction)backClicked:(id)sender{
-    [self performSegueWithIdentifier:@"account_creation_to_login" sender:self];
-}
-
-
 - (void)hideKeyboard{
     [self.view endEditing:YES];
-}
-
-
-- (IBAction)backgroundTap:(id)sender {
-    [self hideKeyboard];
 }
 
 
@@ -167,23 +166,6 @@
     [hud show:YES];
 }
 
-- (void)setFirstTextField:(NSString *)placeholder{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:25.0]
-                                                                                                  }];
-    
-    self.emailTextField.attributedPlaceholder = str;
-}
-
-
-- (void)setSecondTextField:(NSString *)placeholder{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:25.0]
-                                                                                                  }];
-    self.passwordTextField.attributedPlaceholder = str;
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"create_account_to_tutorial"]){

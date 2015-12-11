@@ -24,7 +24,6 @@
         barProgress = 0.0;
     }
     self.gradeLabel.text = [NSString stringWithFormat:@"%ld", (long)[class_ getGradeNumber]];
-    //self.progressBar.progress = barProgress;
     self.levelLabel.text = [NSString stringWithFormat:@"%ld", (long)[class_ getLevel]];
     self.numberOfStudentsLabel.text = [NSString stringWithFormat:@"%ld  Students", (long)classCount];
 }
@@ -32,8 +31,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 

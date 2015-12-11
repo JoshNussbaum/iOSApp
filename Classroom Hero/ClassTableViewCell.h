@@ -11,11 +11,17 @@
 #import "class.h"
 
 @interface ClassTableViewCell : UITableViewCell
+
 @property (strong, nonatomic) IBOutlet UILabel *levelLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *numberOfStudentsLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *totalPointsLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *schoolName;
+
 @property (strong, nonatomic) IBOutlet UILabel *gradeLabel;
 
 - (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount :(NSString *)schoolName;

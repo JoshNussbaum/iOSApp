@@ -34,32 +34,28 @@ static NSString * const classCell = @"classCell";
 @implementation ClassTableViewController
 
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    editingEnabled = NO;
     
+    [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
     [self.tableView setBounces:NO];
     
+    
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
-    
-    UIColor *CHBlueColor = [UIColor colorWithRed:85.0/255.0 green:200.0/255.0 blue:255.0/255.0 alpha:1.0] ;
-    
-    [self.navigationController.navigationBar setBarTintColor:CHBlueColor];
-  
     currentUser = [user getInstance];
     classes = [[DatabaseHandler getSharedInstance] getClasses];
-    
+    editingEnabled = NO;
+
     NSMutableArray *classIds = [[NSMutableArray alloc]init];
     for (class *class_ in classes){
         NSNumber *classId = [NSNumber numberWithInteger:[class_ getId]];
         [classIds addObject:classId];
     }
     
-
-    
     studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
+
 }
+
 
 - (void)viewDidAppear:(BOOL)animated{
     if (addingClass){
@@ -83,60 +79,31 @@ static NSString * const classCell = @"classCell";
     }
 }
 
-- (void)dataReady:(NSDictionary *)data :(NSInteger)type{
-    if (data == nil){
-        [hud hide:YES];
-        [Utilities alertStatusNoConnection];
-        return;
-    }
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    if (type == EDIT_CLASS){
-        if([successNumber boolValue] == YES)
-        {
-            [[DatabaseHandler getSharedInstance] editClass:tmpClass];
-            [classes replaceObjectAtIndex:index withObject:tmpClass];
-            [self.tableView reloadData];
-            [hud hide:YES];
 
-            
-        } else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+- (IBAction)addClassClicked:(id)sender {
+    addingClass = YES;
+    [self performSegueWithIdentifier:@"class_to_add_class" sender:nil];
+}
 
-            [hud hide:YES];
-            return;
-        }
 
-    }
-
-    else if (type == DELETE_CLASS){
-        if([successNumber boolValue] == YES)
-        {
-      
-            [[DatabaseHandler getSharedInstance]deleteClass:[tmpClass getId]];
-            NSInteger row = index + 1;
-
-            [classes removeObjectAtIndex:index];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            NSArray *indexPaths = @[indexPath];
-            [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [hud hide:YES];
-            
-        } else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error deleting class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
-            return;
-        }
+- (IBAction)editClicked:(id)sender {
+    if (self.editing) {
+        [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.tableView setEditing:NO animated:YES];
+        self.editing = NO;
+    } else {
+        [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
+        [self.tableView setEditing:YES animated:YES];
+        self.editing = YES;
     }
 }
+
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
     if (alertView.tag == 1){
-        // Edit class
         NSString *newClassName = [alertView textFieldAtIndex:0].text;
         NSString *newClassGrade = [alertView textFieldAtIndex:1].text;
         NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
@@ -159,13 +126,72 @@ static NSString * const classCell = @"classCell";
         }
     }
     else if (alertView.tag == 2){
-        // Delete class
         [self activityStart:@"Deleting class..."];
         [webHandler deleteClass:[tmpClass getId]];
     }
 
 }
 
+
+- (void)dataReady:(NSDictionary *)data :(NSInteger)type{
+    [hud hide:YES];
+
+    if (data == nil){
+        [Utilities alertStatusNoConnection];
+        return;
+    }
+    
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+    NSString *message = [data objectForKey:@"message"];
+    
+    if (type == EDIT_CLASS){
+        if([successNumber boolValue] == YES)
+        {
+            [[DatabaseHandler getSharedInstance] editClass:tmpClass];
+            [classes replaceObjectAtIndex:index withObject:tmpClass];
+            [self.tableView reloadData];
+            
+        } else {
+            [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            return;
+        }
+        
+    }
+    
+    else if (type == DELETE_CLASS){
+        if([successNumber boolValue] == YES)
+        {
+            
+            [[DatabaseHandler getSharedInstance]deleteClass:[tmpClass getId]];
+            NSInteger row = index + 1;
+            
+            [classes removeObjectAtIndex:index];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            NSArray *indexPaths = @[indexPath];
+            [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+        } else {
+            NSString *message = [data objectForKey:@"message"];
+            [Utilities alertStatusWithTitle:@"Error deleting class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            return;
+        }
+    }
+}
+
+
+- (class *)getClassByIndexPath:(NSIndexPath *)indexPath{
+    index = indexPath.row - 1;
+    class *selectedClass = [classes objectAtIndex:index];
+    return selectedClass;
+}
+
+
+- (void) activityStart :(NSString *)message {
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+    [hud show:YES];
+}
 
 
 #pragma mark - Table view data source
@@ -185,7 +211,6 @@ static NSString * const classCell = @"classCell";
 }
 
 
-
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -193,17 +218,6 @@ static NSString * const classCell = @"classCell";
     
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
-
-
-- (void)viewDidLayoutSubviews{
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
 
@@ -227,15 +241,18 @@ static NSString * const classCell = @"classCell";
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0 ) return 74;
     else return 150;
 }
+
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) return NO;
     return YES;
 }
+
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -277,34 +294,19 @@ static NSString * const classCell = @"classCell";
 }
 
 
-- (void) activityStart :(NSString *)message {
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = message;
-    [hud show:YES];
-}
-
-
-- (IBAction)addClassClicked:(id)sender {
-    addingClass = YES;
-    [self performSegueWithIdentifier:@"class_to_add_class" sender:nil];
-}
-
-
-- (IBAction)unwindToClassTableView:(UIStoryboardSegue *)unwindSegue{
+- (void)viewDidLayoutSubviews{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
     
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
-
-- (class *)getClassByIndexPath:(NSIndexPath *)indexPath{
-    index = indexPath.row - 1;
-    class *selectedClass = [classes objectAtIndex:index];
-    return selectedClass;
-}
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"class_to_register_students"]){
         RegisterStudentsViewController *vc = [segue destinationViewController];
@@ -317,16 +319,10 @@ static NSString * const classCell = @"classCell";
     
 }
 
-- (IBAction)editClicked:(id)sender {
-    if (self.editing) {
-        [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
-        [self.tableView setEditing:NO animated:YES];
-        self.editing = NO;
-    } else {
-        [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
-        [self.tableView setEditing:YES animated:YES];
-        self.editing = YES;
-    }
+
+- (IBAction)unwindToClassTableView:(UIStoryboardSegue *)unwindSegue{
+    
 }
+
 
 @end

@@ -33,28 +33,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title  = @"Home Screen";
     currentUser = [user getInstance];
-    NSArray *buttons = @[self.settingsButton, self.classesButton, self.settingsButton, self.attendanceButton];
-    for (UIButton *button in buttons){
-        [Utilities makeRoundedButton:button :nil];
-    }
+    
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
     self.teacherNameLabel.text = name;
     self.classNameLabel.text = [currentUser.currentClass getName];
     self.schoolNameLabel.text = [[DatabaseHandler getSharedInstance] getSchoolName:[currentUser.currentClass getSchoolId]];
-    self.title  = @"Home Screen";
+    [self configureProgressBars];
+    
+    NSArray *buttons = @[self.settingsButton, self.classesButton, self.settingsButton, self.attendanceButton];
+    for (UIButton *button in buttons){
+        [Utilities makeRoundedButton:button :nil];
+    }
 }
 
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     currentUser = [user getInstance];
     
     classjar *jar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     
+    [self.jarProgressBar setProgress:((float)[jar getProgress] / (float)[jar getTotal]) animated:YES ];
     
-    self.jarProgressBar.progress = (float)[jar getProgress] / (float)[jar getTotal];
+    [self.classProgressBar setProgress:(float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel] animated:YES];
     
-    self.classLevelProgressBar.progress = (float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel];
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     
     if (!currentUser.serial || unregisteredStudents > 0 || currentUser.accountStatus < 2){
@@ -69,17 +72,33 @@
     
     self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averageLevel"] integerValue]];
     self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averagePoints"] integerValue]];
-
-
 }
 
 
-- (void)setFlag:(NSInteger)flag_{
-    flag = flag_;
+- (IBAction)classesClicked:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
+- (IBAction)settingsClicked:(id)sender {
+    [self performSegueWithIdentifier:@"home_to_settings" sender:self];
+}
 
+
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
+}
+
+
+- (IBAction)attendanceClicked:(id)sender {
+    [self performSegueWithIdentifier:@"home_to_attendance" sender:self];
+}
 
 
 - (IBAction)awardClicked:(id)sender {
@@ -108,29 +127,37 @@
 
 }
 
-- (IBAction)settingsClicked:(id)sender {
-    [self performSegueWithIdentifier:@"home_to_settings" sender:self];
+
+- (void)configureProgressBars{
+    BOOL customized = NO;
+    [self.classProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
+    [self.classProgressBar setProgressBarWidth:(6.0f)];
+    [self.classProgressBar  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
+    [self.classProgressBar setBackgroundColor:[UIColor clearColor]];
+    
+    [self.classProgressBar  setHintViewSpacing:(customized ? 10.0f : 0)];
+    [self.classProgressBar  setHintViewBackgroundColor:[UIColor clearColor]];
+    [self.classProgressBar  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
+    [self.classProgressBar  setHintTextColor:[UIColor blackColor]];
+    [self.classProgressBar  setHintTextGenerationBlock:(customized ? ^NSString *(CGFloat progress) {
+        return [NSString stringWithFormat:@"%.0f / 255", progress * 255];
+    } : nil)];
+    
+    
+    [self.jarProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
+    [self.jarProgressBar setProgressBarWidth:(6.0f)];
+    [self.jarProgressBar  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
+    [self.jarProgressBar setBackgroundColor:[UIColor clearColor]];
+    
+    
+    [self.jarProgressBar  setHintViewSpacing:(customized ? 10.0f : 0)];
+    [self.jarProgressBar  setHintViewBackgroundColor:[UIColor clearColor]];
+    [self.jarProgressBar  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
+    [self.jarProgressBar  setHintTextColor:[UIColor blackColor]];
+    [self.jarProgressBar  setHintTextGenerationBlock:(customized ? ^NSString *(CGFloat progress) {
+        return [NSString stringWithFormat:@"%.0f / 255", progress * 255];
+    } : nil)];
 }
-
-- (IBAction)studentListClicked:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.2;
-    transition.type = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
-    [self.navigationController pushViewController:stvc animated:NO];
-}
-
-- (IBAction)attendanceClicked:(id)sender {
-    [self performSegueWithIdentifier:@"home_to_attendance" sender:self];
-}
-
-
-- (IBAction)classesClicked:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -145,6 +172,12 @@
 - (IBAction)unwindToHome:(UIStoryboardSegue *)unwindSegue {
     
 }
+
+
+- (void)setFlag:(NSInteger)flag_{
+    flag = flag_;
+}
+
 
 
 @end

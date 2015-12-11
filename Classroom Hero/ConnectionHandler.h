@@ -65,7 +65,7 @@
 - (void)addJar:(NSInteger)id :(NSString *)name :(NSInteger)goal;
 
 
-- (void)editJar:(NSInteger)id :(NSString *)name :(NSInteger)goal;
+- (void)editJar:(NSInteger)id :(NSString *)name :(NSInteger)goal :(NSInteger)progress;
 
 
 - (void)deleteJar:(NSInteger)id;
@@ -132,6 +132,9 @@
 
 
 - (void)checkOutAllStudentsWithclassId:(NSInteger)classId;
+
+
+- (void)getUserBySerialwithSerial:(NSString *)serial;
 
 
 @end

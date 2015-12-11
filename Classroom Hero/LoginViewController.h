@@ -26,12 +26,15 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *pricingButton;
 
+
 - (IBAction)backgroundTap:(id)sender;
 
 - (IBAction)loginClicked:(id)sender;
 
 - (IBAction)createAccountClicked:(id)sender;
+
 - (IBAction)aboutClicked:(id)sender;
+
 - (IBAction)pricingClicked:(id)sender;
 
 

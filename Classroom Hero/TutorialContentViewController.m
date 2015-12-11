@@ -27,25 +27,6 @@ static int screenNumber;
 
 @implementation TutorialContentViewController
 
-- (void)setFirstTextField:(NSString *)placeholder{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
-                                                                                                  }];
-    
-    self.textField1.attributedPlaceholder = str;
-}
-
-
-- (void)setSecondTextField:(NSString *)placeholder{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
-                                                                                                  }];
-    self.textField2.attributedPlaceholder = str;
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     screenNumber = 0;
@@ -53,9 +34,9 @@ static int screenNumber;
     
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
-
+    
     [Utilities makeRoundedButton:self.button :[UIColor blackColor]];
-
+    
     
     self.schoolPicker.delegate = self;
     
@@ -63,7 +44,7 @@ static int screenNumber;
     
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
-
+    
     
     
     switch (self.pageIndex) {
@@ -96,126 +77,54 @@ static int screenNumber;
 }
 
 
-- (void)onPage:(NSString *)oneName :(NSString *)twoName :(NSString *)buttonName :(bool)picker :(UIKeyboardType)keyboard1Type :(UIKeyboardType)keyboard2Type{
-    if (oneName){
-        [self setFirstTextField:oneName];
-        self.textField1.hidden = NO;
-    }
-    else {
-       self.textField1.hidden = YES;
-    }
-    if (twoName){
-        [self setSecondTextField:twoName];
-        self.textField2.hidden = NO;
-    }
-    else {
-        self.textField2.hidden = YES;
-    }
-    if (buttonName){
-        [self.button setTitle:buttonName forState:UIControlStateNormal];
-    }
-    else {
-        self.button.hidden = YES;
-    }
-    if (picker){
-        NSMutableAttributedString *titleString;
-        self.stampImage.hidden = YES;
-        self.schoolPicker.hidden = NO;
-        if (self.pageIndex != 1){
-            self.infoButton.hidden = YES;
-            self.infoButton.enabled = NO;
-            if (self.classData.count == 0){
-                self.schoolPicker.hidden = YES;
-                self.classNameLabel.text = @"You  must  add  a  class  first!";
-                self.classNameLabel.hidden = NO;
-            }
-            else {
-                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select  your  class"];
-                [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
-                self.pickerLabel.hidden = NO;
-                for (int i=0; i <self.classData.count; i++){
-                    if ([[self.classData objectAtIndex:i] getId] == [currentUser.currentClass getId]){
-                        [self.schoolPicker selectRow:i inComponent:0 animated:YES];
-                        continue;
-                    }
-                }
-
-                self.classNameLabel.hidden = YES;
-            }
-        }
-        else {
-            self.infoButton.hidden = NO;
-            self.infoButton.enabled = YES;
-            if (self.schoolData.count == 0){
-                self.pickerLabel.hidden = YES;
-                self.schoolPicker.hidden = YES;
-                self.classNameLabel.text = @"Error loading schools";
-                self.classNameLabel.hidden = NO;
-            }
-            else {
-                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select  your  school"];
-                [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
-                self.pickerLabel.hidden = NO;
-                
-                self.classNameLabel.hidden = YES;
-            }
-
-        }
-        self.pickerLabel.text = [titleString string];
-
-    }
-    else {
-        if (self.pageIndex == 0 || self.pageIndex == 6){
-            self.stampImage.hidden = NO;
-            if (self.pageIndex == 6){
-                if (!currentUser.serial){
-                    self.titleLabel.hidden = NO;
-                }
-                else {
-                    self.titleLabel.text = @"You  have  a  stamp  registered  to  your  account.  Unregister  from  the  in  app  settings  menu";
-                    self.titleLabel.hidden =  NO;
-                }
-            }
-            self.pickerLabel.hidden = YES;
-            self.schoolPicker.hidden = YES;
-            self.classNameLabel.hidden = YES;
-
-            
-        }
-        else {
-            self.schoolPicker.hidden = YES;
-     
-        }
-    }
-    self.textField1.keyboardType = keyboard1Type;
-    self.textField2.keyboardType = keyboard2Type;
-    
+- (IBAction)infoButtonClicked:(id)sender {
+    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get it added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
 }
 
 
-- (void)activityStart :(NSString *)message{
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = message;
-    [hud show:YES];
-    
-}
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if (textField == self.textField1) {
-        [self.textField2 becomeFirstResponder];
-    }
-    else {
-        [self.view endEditing:YES];
-    }
-    return YES;
+- (IBAction)backgroundTap:(id)sender{
+    [self hideKeyboard];
 }
 
 
 - (IBAction)buttonClicked:(id)sender {
     [self handleAction];
+    
+}
 
+
+- (void)stampResultDidChange:(NSString *)stampResult{
+    if (self.pageIndex == 6){
+        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        if (resultObject != NULL) {
+            if ([resultObject objectForKey:@"stamp"] != nil){
+                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                
+                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                    if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
+                        serial = stampSerial;
+                        [self activityStart:@"Registering stamp..."];
+                        [webHandler registerStamp:currentUser.id :stampSerial];
+                    }
+                    else {
+                        [Utilities failAnimation:self.stampImage];
+                    }
+                }
+                else{
+                    [Utilities failAnimation:self.stampImage];
+                }
+            }
+        }
+    }
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 0) {
+        return;
+    }
 }
 
 
@@ -238,7 +147,7 @@ static int screenNumber;
                     else {
                         [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be 3 numbers or less" cancel:nil otherTitles:nil tag:0 view:nil];
                     }
-
+                    
                 }
                 else{
                     [Utilities alertStatusWithTitle:@"Error adding class" message:gradeErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -246,18 +155,18 @@ static int screenNumber;
             }
             else {
                 [Utilities alertStatusWithTitle:@"Error adding class" message:[NSString stringWithFormat:@"A class with name \"%@\" already exists", className] cancel:nil otherTitles:nil tag:0 view:nil];
-
+                
             }
         }
         else{
             [Utilities alertStatusWithTitle:@"Error adding class" message:classErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-
+            
         }
     }
     else{
         if ([currentUser.currentClass getId]  != 0){
             currentUser.currentClass = [self getClass];
-
+            
             if (self.pageIndex == 2){
                 NSString *firstName = self.textField1.text;
                 NSString *lastName = self.textField2.text;
@@ -271,13 +180,13 @@ static int screenNumber;
                     }
                     else {
                         [Utilities alertStatusWithTitle:@"Error adding student" message:lastErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-
+                        
                         return;
                     }
                 }
                 else {
                     [Utilities alertStatusWithTitle:@"Error adding student" message:firstErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-
+                    
                 }
             }
             else if (self.pageIndex == 3){
@@ -320,13 +229,13 @@ static int screenNumber;
                     }
                     else {
                         [Utilities alertStatusWithTitle:@"Error adding item" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-
+                        
                         return;
                     }
                 }
                 else {
                     [Utilities alertStatusWithTitle:@"Error adding item" message:nameErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-
+                    
                 }
             }
             else if (self.pageIndex == 5){
@@ -357,16 +266,8 @@ static int screenNumber;
         else {
             [Utilities alertStatusWithTitle:@"Procedural Error" message:@"You must create a class first!" cancel:nil otherTitles:nil tag:0 view:nil];
         }
-     
+        
     }
-}
-
-
-- (void)setTitleAndClear:(NSString *)title{
-    self.titleLabel.text = title;
-    self.textField1.text=@"";
-    self.textField2.text=@"";
-
 }
 
 
@@ -375,7 +276,7 @@ static int screenNumber;
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
-                
+        
         return;
     }
     NSString * compliment;
@@ -383,7 +284,7 @@ static int screenNumber;
     if (successNumber == 1 && type != GET_SCHOOLS){
         AudioServicesPlaySystemSound([Utilities getAwardSound]);
         compliment = [Utilities getRandomCompliment];
-
+        
     }
     if (type == ADD_CLASS){
         if(successNumber == 1)
@@ -439,7 +340,7 @@ static int screenNumber;
             [hud hide:YES];
         }
         
-
+        
     }
     else if (type == ADD_ITEM){
         if (successNumber == 1){
@@ -460,7 +361,7 @@ static int screenNumber;
         }
         
     }
-  
+    
     else if (type == ADD_JAR){
         if (successNumber == 1){
             NSString *jarName = self.textField1.text;
@@ -499,48 +400,177 @@ static int screenNumber;
 }
 
 
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (self.pageIndex == 6){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-            
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
-                        serial = stampSerial;
-                        [self activityStart:@"Registering stamp..."];
-                        [webHandler registerStamp:currentUser.id :stampSerial];
-                    }
-                    else {
-                        [Utilities failAnimation:self.stampImage];
+- (void)onPage:(NSString *)oneName :(NSString *)twoName :(NSString *)buttonName :(bool)picker :(UIKeyboardType)keyboard1Type :(UIKeyboardType)keyboard2Type{
+    if (oneName){
+        [self setFirstTextField:oneName];
+        self.textField1.hidden = NO;
+    }
+    else {
+        self.textField1.hidden = YES;
+    }
+    if (twoName){
+        [self setSecondTextField:twoName];
+        self.textField2.hidden = NO;
+    }
+    else {
+        self.textField2.hidden = YES;
+    }
+    if (buttonName){
+        [self.button setTitle:buttonName forState:UIControlStateNormal];
+    }
+    else {
+        self.button.hidden = YES;
+    }
+    if (picker){
+        NSMutableAttributedString *titleString;
+        self.stampImage.hidden = YES;
+        self.schoolPicker.hidden = NO;
+        if (self.pageIndex != 1){
+            self.infoButton.hidden = YES;
+            self.infoButton.enabled = NO;
+            if (self.classData.count == 0){
+                self.schoolPicker.hidden = YES;
+                self.classNameLabel.text = @"You  must  add  a  class  first!";
+                self.classNameLabel.hidden = NO;
+            }
+            else {
+                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select  your  class"];
+                [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
+                self.pickerLabel.hidden = NO;
+                for (int i=0; i <self.classData.count; i++){
+                    if ([[self.classData objectAtIndex:i] getId] == [currentUser.currentClass getId]){
+                        [self.schoolPicker selectRow:i inComponent:0 animated:YES];
+                        continue;
                     }
                 }
-                else{
-                    [Utilities failAnimation:self.stampImage];
-                }
+                
+                self.classNameLabel.hidden = YES;
             }
         }
+        else {
+            self.infoButton.hidden = NO;
+            self.infoButton.enabled = YES;
+            if (self.schoolData.count == 0){
+                self.pickerLabel.hidden = YES;
+                self.schoolPicker.hidden = YES;
+                self.classNameLabel.text = @"Error loading schools";
+                self.classNameLabel.hidden = NO;
+            }
+            else {
+                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select  your  school"];
+                [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
+                self.pickerLabel.hidden = NO;
+                
+                self.classNameLabel.hidden = YES;
+            }
+            
+        }
+        self.pickerLabel.text = [titleString string];
+        
     }
+    else {
+        if (self.pageIndex == 0 || self.pageIndex == 6){
+            self.stampImage.hidden = NO;
+            if (self.pageIndex == 6){
+                if (!currentUser.serial){
+                    self.titleLabel.hidden = NO;
+                }
+                else {
+                    self.titleLabel.text = @"You  have  a  stamp  registered  to  your  account.  Unregister  from  the  in  app  settings  menu";
+                    self.titleLabel.hidden =  NO;
+                }
+            }
+            self.pickerLabel.hidden = YES;
+            self.schoolPicker.hidden = YES;
+            self.classNameLabel.hidden = YES;
+            
+            
+        }
+        else {
+            self.schoolPicker.hidden = YES;
+            
+        }
+    }
+    self.textField1.keyboardType = keyboard1Type;
+    self.textField2.keyboardType = keyboard2Type;
+    
 }
 
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 0) {
-        return;
+- (NSInteger)getSchoolId{
+    NSInteger schoolIndex = index ;
+    school *ss = [self.schoolData objectAtIndex:schoolIndex];
+    NSInteger schoolId = [ss getId];
+    return schoolId;
+}
+
+
+- (class *)getClass{
+    NSInteger classIndex = index ;
+    class *cc = [self.classData objectAtIndex:classIndex];
+    return cc;
+}
+
+
+- (void)alertStatus:(NSString *)title :(NSString *)message{
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:self
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:nil,nil];
+    [alertView show];
+}
+
+
+- (void)setFirstTextField:(NSString *)placeholder{
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
+                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
+                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
+                                                                                                  }];
+    
+    self.textField1.attributedPlaceholder = str;
+}
+
+
+- (void)setSecondTextField:(NSString *)placeholder{
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
+                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
+                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
+                                                                                                  }];
+    self.textField2.attributedPlaceholder = str;
+}
+
+
+- (void)activityStart :(NSString *)message{
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+    [hud show:YES];
+    
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == self.textField1) {
+        [self.textField2 becomeFirstResponder];
     }
+    else {
+        [self.view endEditing:YES];
+    }
+    return YES;
+}
+
+
+- (void)setTitleAndClear:(NSString *)title{
+    self.titleLabel.text = title;
+    self.textField1.text=@"";
+    self.textField2.text=@"";
+
 }
 
 
 - (void)hideKeyboard{
     [self.view endEditing:YES];
-}
-
-
-- (IBAction)backgroundTap:(id)sender{
-    [self hideKeyboard];
 }
 
 
@@ -584,34 +614,7 @@ static int screenNumber;
 }
 
 
-- (NSInteger)getSchoolId{
-    NSInteger schoolIndex = index ;
-    school *ss = [self.schoolData objectAtIndex:schoolIndex];
-    NSInteger schoolId = [ss getId];
-    return schoolId;
-}
 
-
-- (class *)getClass{
-    NSInteger classIndex = index ;
-    class *cc = [self.classData objectAtIndex:classIndex];
-    return cc;
-}
-
-
-- (void)alertStatus:(NSString *)title :(NSString *)message{
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:self
-                                             cancelButtonTitle:nil
-                                             otherButtonTitles:nil,nil];
-    [alertView show];
-}
-
-
-- (IBAction)infoButtonClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get it added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
-}
 
 
 @end

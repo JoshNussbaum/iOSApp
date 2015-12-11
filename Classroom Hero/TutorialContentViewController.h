@@ -11,6 +11,7 @@
 #import "ConnectionHandler.h"
 
 @interface TutorialContentViewController : SnowShoeViewController <UIPickerViewDataSource, UIPickerViewDelegate,  ConnectionHandlerDelegate>
+
 @property NSMutableArray *schoolData;
 @property NSMutableArray *classData;
 @property NSUInteger pageIndex;
@@ -22,13 +23,16 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *schoolPicker;
 @property (strong, nonatomic) IBOutlet UIButton *button;
 
-- (IBAction)buttonClicked:(id)sender;
-- (IBAction)backgroundTap:(id)sender;
-
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;	
 @property (strong, nonatomic) IBOutlet UILabel *pickerLabel;
 @property (strong, nonatomic) IBOutlet UIButton *infoButton;
+
+
 - (IBAction)infoButtonClicked:(id)sender;
+
+- (IBAction)buttonClicked:(id)sender;
+
+- (IBAction)backgroundTap:(id)sender;
 
 @end

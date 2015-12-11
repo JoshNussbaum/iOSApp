@@ -11,7 +11,8 @@
 
 @interface StudentAttendanceTableViewCell : UITableViewCell
 
-- (void)initializeWithStudent:(student *)student;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+
+- (void)initializeWithStudent:(student *)student;
 
 @end

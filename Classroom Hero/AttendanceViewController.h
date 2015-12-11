@@ -14,14 +14,19 @@
 
 
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;
+
 @property (strong, nonatomic) IBOutlet UIButton *studentsButton;
 
 @property (strong, nonatomic) IBOutlet UITableView *studentsTableView;
 
 @property (weak, nonatomic) IBOutlet UILabel *studentNameLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *studentPointsLabel;
 
+
 - (IBAction)studentsClicked:(id)sender;
+
 - (IBAction)backClicked:(id)sender;
+
 
 @end

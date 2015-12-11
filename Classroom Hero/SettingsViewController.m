@@ -62,6 +62,7 @@
     
 }
 
+
 - (void)viewDidAppear:(BOOL)animated{
     currentUser = [user getInstance];
     [self checkAccountStatus];
@@ -76,6 +77,101 @@
         badgeView3.badgeBackgroundColor = [UIColor redColor];
     }
 }
+
+
+- (IBAction)orderStampsClicked:(id)sender {
+    [self performSegueWithIdentifier:@"settings_to_order_stamps" sender:self];
+}
+
+
+- (IBAction)classTutorialClicked:(id)sender {
+    [self performSegueWithIdentifier:@"settings_to_tutorial" sender:self];
+}
+
+
+- (IBAction)registerStudentsClicked:(id)sender {
+    if (flag == 1){
+        if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
+            [self performSegueWithIdentifier:@"settings_unwind_to_register_students" sender:self];
+        }
+    }
+    else if (flag == 2){
+        if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
+            [self performSegueWithIdentifier:@"settings_to_register_students" sender:nil];
+        }
+    }
+}
+
+
+- (IBAction)registerTeacherStampClicked:(id)sender {
+    [self performSegueWithIdentifier:@"settings_to_register_teacher_stamp" sender:self];
+}
+
+
+- (IBAction)backClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
+}
+
+
+- (IBAction)stampIdentifierClicked:(id)sender {
+    [self performSegueWithIdentifier:@"settings_to_stamp_identifier" sender:self];
+}
+
+
+- (IBAction)unregisterAllStampsClicked:(id)sender {
+    [Utilities alertStatusWithTitle:@"Confirm unregister" message:@"Unregister all stamps from your class?" cancel:@"Cancel" otherTitles:@[@"Unregister"] tag:1 view:self];
+}
+
+
+- (IBAction)editTeacherClicked:(id)sender {
+    [self performSegueWithIdentifier:@"settings_to_edit_teacher" sender:self];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == [alertView cancelButtonIndex]) {
+        return;
+    }
+    else{
+        //[self activityStart:@"Unregistering all stamps..."];
+        
+    }
+}
+
+
+- (void)dataReady:(NSDictionary*)data :(NSInteger)type{
+    [hud hide:YES];
+
+    if (data == nil){
+        [Utilities alertStatusNoConnection];
+        return;
+    }
+    if (type == UNREGISTER_ALL_STUDENTS){
+        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+        
+        if([successNumber boolValue] == YES)
+        {
+      
+            
+        }
+        else {
+            NSString *message = [data objectForKey:@"message"];
+            [Utilities alertStatusWithTitle:@"Error unregistering all students" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+        }
+    }
+}
+
 
 - (void)checkAccountStatus{
     [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
@@ -96,90 +192,9 @@
         [badgeView removeFromSuperview];
         [badgeView2 removeFromSuperview];
     }
-
+    
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == [alertView cancelButtonIndex]) {
-        return;
-    }
-    else{
-        //[self activityStart:@"Unregistering all stamps..."];
-        
-    }
-}
-
-- (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    if (data == nil){
-        [Utilities alertStatusNoConnection];
-    }
-    if (type == UNREGISTER_ALL_STUDENTS){
-        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        
-        if([successNumber boolValue] == YES)
-        {
-      
-            
-        }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error unregistering all students" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-        }
-    }
-    [hud hide:YES];
-}
-
-
-- (IBAction)orderStampsClicked:(id)sender {
-    [self performSegueWithIdentifier:@"settings_to_order_stamps" sender:self];
-}
-
-- (IBAction)classTutorialClicked:(id)sender {
-    [self performSegueWithIdentifier:@"settings_to_tutorial" sender:self];
-}
-
-- (IBAction)registerStudentsClicked:(id)sender {
-    if (flag == 1){
-        if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
-            [self performSegueWithIdentifier:@"settings_unwind_to_register_students" sender:self];
-        }
-    }
-    else if (flag == 2){
-        if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
-            [self performSegueWithIdentifier:@"settings_to_register_students" sender:nil];
-        }
-    }
-}
-
-- (IBAction)registerTeacherStampClicked:(id)sender {
-    [self performSegueWithIdentifier:@"settings_to_register_teacher_stamp" sender:self];
-}
-
-- (IBAction)backClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)studentListClicked:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.2;
-    transition.type = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
-    [self.navigationController pushViewController:stvc animated:NO];
-}
-
-- (IBAction)stampIdentifierClicked:(id)sender {
-    [self performSegueWithIdentifier:@"settings_to_stamp_identifier" sender:self];
-}
-
-- (IBAction)unregisterAllStampsClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"Confirm unregister" message:@"Unregister all stamps from your class?" cancel:@"Cancel" otherTitles:@[@"Unregister"] tag:1 view:self];
-}
-
-- (IBAction)editTeacherClicked:(id)sender {
-    [self performSegueWithIdentifier:@"settings_to_edit_teacher" sender:self];
-}
 
 - (void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -188,10 +203,10 @@
     [hud show:YES];
 }
 
+
 - (void)setFlag:(NSInteger)flag_{
     flag = flag_;
 }
-
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

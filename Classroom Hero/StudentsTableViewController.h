@@ -12,6 +12,7 @@
 @interface StudentsTableViewController : UITableViewController <ConnectionHandlerDelegate>
 
 - (IBAction)backClicked:(id)sender;
+
 - (IBAction)addStudentClicked:(id)sender;
 
 @end

@@ -1,5 +1,6 @@
 PODS:
   - BBBadgeBarButtonItem (1.2)
+  - CircleProgressBar (0.21)
   - gtm-oauth (0.0.1):
     - gtm-oauth/nibs (= 0.0.1)
   - gtm-oauth/nibs (0.0.1)
@@ -13,6 +14,7 @@ PODS:
 
 DEPENDENCIES:
   - BBBadgeBarButtonItem
+  - CircleProgressBar (~> 0.21)
   - JSBadgeView
   - MBProgressHUD (~> 0.9.1)
   - snowshoe (~> 1.11)
@@ -20,6 +22,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   BBBadgeBarButtonItem: c2fbca0bff18e21b70defc9438a8a5048008e7ca
+  CircleProgressBar: 4ce12ddcdc5673cc9f0fb83f6ec7b2a53ecb28df
   gtm-oauth: 34a7210eb8e2dd00a977f42af7d99f994c1e7917
   JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad

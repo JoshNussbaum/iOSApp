@@ -8,22 +8,30 @@
 
 #import <UIKit/UIKit.h>
 #import "JSBadgeView.h"
+#import "CircleProgressBar.h"
 
 
 @interface HomeViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UILabel *teacherNameLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *totalClassPointsLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
+
 @property (strong, nonatomic) IBOutlet UIView *settingsView;
+
 @property (strong, nonatomic) IBOutlet UIButton *settingsButton;
 
 @property (strong, nonatomic) IBOutlet UILabel *schoolNameLabel;
+
 @property (strong, nonatomic) IBOutlet UIButton *classesButton;
-@property (strong, nonatomic) IBOutlet UIProgressView *classLevelProgressBar;
-@property (strong, nonatomic) IBOutlet UIProgressView *jarProgressBar;
+
 @property (strong, nonatomic) IBOutlet UIButton *attendanceButton;
+
+@property (weak, nonatomic) IBOutlet CircleProgressBar *classProgressBar;
+
+@property (weak, nonatomic) IBOutlet CircleProgressBar *jarProgressBar;
 
 
 // Class Stats
@@ -35,7 +43,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *schoolAvgLevelLabel;
 @property (strong, nonatomic) IBOutlet UILabel *schoolAvgPointsLabel;
 
-
 @property (strong, nonatomic) IBOutlet UIView *classTotalStampsView;
 @property (strong, nonatomic) IBOutlet UIView *classAvgLevelView;
 @property (strong, nonatomic) IBOutlet UIView *classAvgPointsView;
@@ -45,14 +52,20 @@
 @property (strong, nonatomic) IBOutlet UIView *schoolAvgPointsView;
 
 
-
 - (void)setFlag:(NSInteger)flag_;
+
 - (IBAction)classesClicked:(id)sender;
+
 - (IBAction)awardClicked:(id)sender;
+
 - (IBAction)classJarClicked:(id)sender;
+
 - (IBAction)marketClicked:(id)sender;
+
 - (IBAction)settingsClicked:(id)sender;
+
 - (IBAction)studentListClicked:(id)sender;
+
 - (IBAction)attendanceClicked:(id)sender;
 
 @end

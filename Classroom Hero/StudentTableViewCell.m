@@ -11,9 +11,7 @@
 
 @implementation StudentTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
+
 
 - (void)initializeWithStudent:(student *)currentStudent{
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
@@ -30,7 +28,6 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
 }
 
 @end

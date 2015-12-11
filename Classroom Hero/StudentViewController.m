@@ -14,12 +14,11 @@
 @interface StudentViewController (){
     user *currentUser;
     student *currentStudent;
-    bool isRegistered;
+    BOOL isRegistered;
+    BOOL isStamping;
     MBProgressHUD *hud;
-    bool isStamping;
     NSString *newStudentFirstName;
     NSString *newStudentLastName;
-    
     ConnectionHandler *webHandler;
     
 }
@@ -30,49 +29,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [Utilities makeRoundedButton:self.studentButton :[UIColor blackColor]];
     
+    isStamping = NO;
     currentUser = [user getInstance];
-    
-    
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
     self.appKey = snowshoe_app_key;
     self.appSecret = snowshoe_app_secret;
     
-    [currentStudent printStudent];
+    [Utilities makeRoundedButton:self.studentButton :[UIColor blackColor]];
     
     [self setStudentLabels];
     
 }
 
 
-- (void)setStudentLabels{
-    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
-    self.levelLabel.text = [NSString stringWithFormat:@"Level  %ld", (long)[currentStudent getLvl]];
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Coins", (long)[currentStudent getPoints]];
-    self.levelBar.progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-    self.progressLabel.text = [NSString stringWithFormat:@"+%ld  to  Level  %ld", (long)([currentStudent getLvlUpAmount] - [currentStudent getProgress]), (long)([currentStudent getLvl]+1) ];
-    isRegistered = ((![currentStudent.getSerial isEqualToString:@""]) || ![currentStudent getSerial]);
-    
-    if (isRegistered){
-        self.studentButton.hidden = NO;
-        self.stampToRegisterLabel.hidden = YES;
-    }
-    else {
-        self.stampToRegisterLabel.hidden = NO;
-        self.studentButton.hidden = YES;
-    }
-}
-
-
 - (IBAction)backClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-- (void)setStudent:(student *)currentStudent_{
-    currentStudent = currentStudent_;
 }
 
 
@@ -86,7 +59,6 @@
         [Utilities alertStatusWithTitle:@"Unregister student stamp" message:[NSString stringWithFormat:@"Really unregister %@?", [currentStudent getFirstName]] cancel:@"Cancel" otherTitles:@[@"Unregister"] tag:2 view:self];
     }
 }
-
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -136,12 +108,16 @@
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type {
+    [hud hide:YES];
+    isStamping = NO;
+
     if (data == nil){
-        [hud hide:YES];
         [Utilities alertStatusNoConnection];
-        isStamping = NO;
     }
+    
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+    NSString *message = [data objectForKey:@"message"];
+
     if (type == EDIT_STUDENT){
         
         if([successNumber boolValue] == YES){
@@ -152,10 +128,7 @@
             [self setStudentLabels];
         }
         else {
-            NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error editing student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            
-            [hud hide:YES];
             return;
         }
     }
@@ -168,28 +141,28 @@
         if ([successNumber boolValue] == YES){
             [[DatabaseHandler getSharedInstance] registerStudent:[currentStudent getId] :[currentStudent getSerial]];
 
-            [hud hide:YES];
             [Utilities wiggleImage:self.stampImage sound:YES];
             self.studentButton.hidden = NO;
             self.stampToRegisterLabel.hidden = YES;
             isRegistered = YES;
         }
         else {
-            [Utilities failAnimation:self.stampImage];
+            [Utilities alertStatusWithTitle:@"Error registering student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            return;
         }
         isStamping = NO;
     }
     else if (type == UNREGISTER_STAMP){
         if ([successNumber boolValue] == YES){
             [[DatabaseHandler getSharedInstance] unregisterStudent:[currentStudent getId]];
-            [hud hide:YES];
             [Utilities wiggleImage:self.stampImage sound:YES];
             self.stampToRegisterLabel.hidden = NO;
             self.studentButton.hidden = YES;
             isRegistered = NO;
         }
         else {
-            [Utilities alertStatusNoConnection];
+            [Utilities alertStatusWithTitle:@"Error unregistering student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            return;
         }
     
     }
@@ -238,17 +211,24 @@
 }
 
 
-
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)setStudentLabels{
+    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
+    self.levelLabel.text = [NSString stringWithFormat:@"Level  %ld", (long)[currentStudent getLvl]];
+    self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Coins", (long)[currentStudent getPoints]];
+    self.levelBar.progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+    self.progressLabel.text = [NSString stringWithFormat:@"+%ld  to  Level  %ld", (long)([currentStudent getLvlUpAmount] - [currentStudent getProgress]), (long)([currentStudent getLvl]+1) ];
+    isRegistered = ((![currentStudent.getSerial isEqualToString:@""]) || ![currentStudent getSerial]);
+    
+    if (isRegistered){
+        self.studentButton.hidden = NO;
+        self.stampToRegisterLabel.hidden = YES;
+    }
+    else {
+        self.stampToRegisterLabel.hidden = NO;
+        self.studentButton.hidden = YES;
+    }
 }
-    
-    
+
 
 - (void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -258,5 +238,9 @@
     
 }
 
+
+- (void)setStudent:(student *)currentStudent_{
+    currentStudent = currentStudent_;
+}
 
 @end

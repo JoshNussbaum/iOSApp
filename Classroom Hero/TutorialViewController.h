@@ -14,21 +14,24 @@
 
 @interface TutorialViewController : UIViewController <UIPageViewControllerDataSource>
 
-- (IBAction)startTutorial:(id)sender;
-
 @property (strong, nonatomic) NSArray *pageTitles;
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
+@property (strong, nonatomic) IBOutlet UIButton *skipButton;
+
+@property (strong, nonatomic) IBOutlet UIButton *startOverButton;
+
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
+
+
+- (IBAction)startTutorial:(id)sender;
 
 - (IBAction)backClicked:(id)sender;
 
 - (IBAction)skipClicked:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UIButton *skipButton;
-@property (strong, nonatomic) IBOutlet UIButton *startOverButton;
-@property (strong, nonatomic) IBOutlet UIButton *backButton;
-
 - (void)setFlag:(NSInteger)flag_;
+
 
 @end

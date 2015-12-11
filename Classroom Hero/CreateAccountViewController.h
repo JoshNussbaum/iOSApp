@@ -15,16 +15,24 @@
 #import "user.h"
 
 @interface CreateAccountViewController : UIViewController <ConnectionHandlerDelegate>
+
 @property (strong, nonatomic) IBOutlet nameTextField *firstNameTextField;
+
 @property (strong, nonatomic) IBOutlet nameTextField *lastNameTextField;
+
 @property (strong, nonatomic) IBOutlet emailTextField *emailTextField;
+
 @property (strong, nonatomic) IBOutlet passwordTextField *passwordTextField;
+
 @property (strong, nonatomic) IBOutlet passwordTextField *confirmPasswordTextField;
+
 @property (strong, nonatomic) IBOutlet UIButton *createAccountButton;
+
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 
 - (IBAction)createAccountClicked:(id)sender;
+
 - (IBAction)backClicked:(id)sender;
 
 - (IBAction)backgroundTap:(id)sender;

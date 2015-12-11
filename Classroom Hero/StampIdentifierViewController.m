@@ -41,6 +41,41 @@
     [Utilities makeRoundedButton:self.unregisterStampButton :nil];
 }
 
+
+- (IBAction)unregisterStampClicked:(id)sender {
+    [self activityStart:@"Unregistering stamp..."];
+    [webHandler unregisterStampWithid:[currentStudent getId]];
+}
+
+
+- (IBAction)backClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)stampResultDidChange:(NSString *)stampResult{
+    if (!isStamping){
+        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        if (resultObject != NULL) {
+            if ([resultObject objectForKey:@"stamp"] != nil){
+                isStamping = YES;
+                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                    [self activityStart:@"Examining stamp..."];
+                    [webHandler getUserBySerialwithSerial:stampSerial];
+                }
+                else{
+                    [Utilities failAnimation:self.stampImage];
+                    isStamping = NO;
+                }
+            }
+        }
+    }
+}
+
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
@@ -63,6 +98,7 @@
         
         if([successNumber boolValue] == YES)
         {
+            [Utilities wiggleImage:self.stampImage sound:YES];
             [[DatabaseHandler getSharedInstance]unregisterStudent:[currentStudent getId]];
             self.studentNameLabel.hidden = YES;
             self.stampSerialLabel.hidden = YES;
@@ -74,33 +110,24 @@
             [Utilities failAnimation:self.stampImage];
         }
     }
-    else if (type == GET_STUDENT_BY_STAMP){
+    else if (type == GET_USER_BY_STAMP){
         if([successNumber boolValue] == YES)
         {
-            NSDictionary *studentDictionary = [data objectForKey:@"student"];
+            NSDictionary *studentDictionary = [data objectForKey:@"user"];
             
-            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
             NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
-            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-            NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
-            
             currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
             
-            if (currentStudent != nil){
-                [currentStudent setPoints:pointsNumber.integerValue];
-                [currentStudent setLevel:levelNumber.integerValue];
-                [currentStudent setProgress:progressNumber.integerValue];
-                [currentStudent setLevelUpAmount:lvlUpAmount];
-                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-            }
-            else{
+            if (currentStudent == nil){
                 NSString *stamp = [studentDictionary objectForKey:@"stamp"];
                 NSString * fname = [studentDictionary objectForKey: @"fname"];
                 NSString * lname = [studentDictionary objectForKey: @"lname"];
                 
-                currentStudent = [[student alloc]initWithid:idNumber.integerValue firstName:fname lastName:lname serial:stamp lvl:levelNumber.integerValue progress:progressNumber.integerValue lvlupamount:lvlUpAmount points:pointsNumber.integerValue totalpoints:totalPoints.integerValue checkedin:NO];
+                currentStudent = [[student alloc] init];
+                [currentStudent setId:idNumber.integerValue];
+                [currentStudent setSerial:stamp];
+                [currentStudent setFirstName:fname];
+                [currentStudent setLastName:lname];
                 
                 [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
             }
@@ -120,43 +147,6 @@
     self.studentNameLabel.hidden = NO;
     self.stampSerialLabel.hidden = NO;
     self.unregisterStampButton.hidden = NO;
-}
-
-
-- (IBAction)unregisterStampClicked:(id)sender {
-    [self activityStart:@"Unregistering stamp..."];
-    
-    [webHandler unregisterStampWithid:[currentStudent getId]];
-}
-
-
-
-
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                isStamping = YES;
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    [self activityStart:@"Examining stamp..."];
-                    [webHandler getStudentBySerialwithserial:stampSerial :[currentUser.currentClass getSchoolId]];
-                }
-                else{
-                    [Utilities failAnimation:self.stampImage];
-                    isStamping = NO;
-                }
-            }
-        }
-    }
-}
-
-
-- (IBAction)backClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

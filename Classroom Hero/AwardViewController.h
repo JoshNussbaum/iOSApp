@@ -15,13 +15,9 @@
 
 @interface AwardViewController : SnowShoeViewController <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ConnectionHandlerDelegate>
 
-
-- (IBAction)homeClicked:(id)sender;
-- (IBAction)classJarClicked:(id)sender;
-- (IBAction)marketClicked:(id)sender;
-
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerValue;
+@property (strong, nonatomic) IBOutlet UIButton *editReinforcerButton;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIView *levelView;
 @property (strong, nonatomic) IBOutlet UILabel *levelLabel;
@@ -41,7 +37,11 @@
 
 - (IBAction)addReinforcerClicked:(id)sender;
 - (IBAction)editReinforcerClicked:(id)sender;
-@property (strong, nonatomic) IBOutlet UIButton *editReinforcerButton;
 - (IBAction)studentListClicked:(id)sender;
+
+- (IBAction)homeClicked:(id)sender;
+- (IBAction)classJarClicked:(id)sender;
+- (IBAction)marketClicked:(id)sender;
+
 
 @end

@@ -37,35 +37,6 @@
 }
 
 
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if (textField == self.lastNameTextField) {
-        [self.view endEditing:YES];
-        return YES;
-    }
-    else if (textField == self.firstNameTextField) {
-        [self.lastNameTextField becomeFirstResponder];
-        
-    }
-    else if (textField == self.currentPasswordTextField) {
-        [self.editPasswordTextField becomeFirstResponder];
-        
-    }
-    else if (textField == self.editPasswordTextField) {
-        [self.confirmNewPasswordTextField becomeFirstResponder];
-        
-    }
-    return YES;
-}
-
-
-- (void)activityStart:(NSString *)message {
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = message;
-    [hud show:YES];
-}
-
 - (IBAction)editNameClicked:(id)sender {
     [self hideKeyboard];
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, nil];
@@ -89,6 +60,7 @@
     }
     
 }
+
 
 - (IBAction)editPasswordClicked:(id)sender {
     [self hideKeyboard];
@@ -115,6 +87,11 @@
         [webHandler editTeacherPasswordWithid:currentUser.id password:self.editPasswordTextField.text];
         
     }
+}
+
+
+- (IBAction)backClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -169,17 +146,44 @@
     }
 }
 
-- (IBAction)backClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+
+- (IBAction)backgroundTap:(id)sender {
+    [self hideKeyboard];
 }
+
 
 - (void)hideKeyboard{
     [self.view endEditing:YES];
 }
 
 
-- (IBAction)backgroundTap:(id)sender {
-    [self hideKeyboard];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == self.lastNameTextField) {
+        [self.view endEditing:YES];
+        return YES;
+    }
+    else if (textField == self.firstNameTextField) {
+        [self.lastNameTextField becomeFirstResponder];
+        
+    }
+    else if (textField == self.currentPasswordTextField) {
+        [self.editPasswordTextField becomeFirstResponder];
+        
+    }
+    else if (textField == self.editPasswordTextField) {
+        [self.confirmNewPasswordTextField becomeFirstResponder];
+        
+    }
+    return YES;
 }
+
+
+- (void)activityStart:(NSString *)message {
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+    [hud show:YES];
+}
+
 
 @end

@@ -18,8 +18,6 @@
     user *currentUser;
     ConnectionHandler *webHandler;
     class *newClass;
-
-
 }
 
 @end
@@ -28,10 +26,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
-    self.schoolPicker.delegate = self;
     schoolData = [[DatabaseHandler getSharedInstance] getSchools];
+    
+    self.schoolPicker.delegate = self;
+    
+    [Utilities setTextFieldPlaceholder:self.classNameTextField :@"Class name" :[Utilities CHBlueColor]];
+    [Utilities setTextFieldPlaceholder:self.classGradeTextField :@"Class grade" :[Utilities CHBlueColor]];
+    
+    [Utilities makeRoundedButton:self.addClassButton :nil];
+    [Utilities makeRoundedButton:self.backButton :nil];
+    [Utilities makeRoundedButton:self.helpButton :nil];
+
     if (schoolData.count == 0){
         self.schoolPicker.hidden = YES;
         self.errorLabel.hidden = NO;
@@ -40,38 +48,6 @@
         self.schoolPicker.hidden = NO;
         [self.schoolPicker selectRow:floor(schoolData.count/2) inComponent:0 animated:YES];
     }
-    [Utilities setTextFieldPlaceholder:self.classNameTextField :@"Class name" :[Utilities CHBlueColor]];
-    [Utilities setTextFieldPlaceholder:self.classGradeTextField :@"Class grade" :[Utilities CHBlueColor]];
-    
-    [Utilities makeRoundedButton:self.addClassButton :nil];
-    [Utilities makeRoundedButton:self.backButton :nil];
-    [Utilities makeRoundedButton:self.helpButton :nil];
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;
-}
-
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return schoolData.count;
-}
-
-
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return [[schoolData objectAtIndex:row] getName];
-    
-}
-
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    index = row;
-    
-}
-
-
-- (void)hideKeyboard{
-    [self.view endEditing:YES];
 }
 
 
@@ -96,12 +72,12 @@
         if (![errorMessage isEqualToString:@""]){
             [Utilities alertStatusWithTitle:@"Error adding class" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
             return;
-
+            
         }
         if (self.classGradeTextField.text.length > 3){
             [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be 3 numbers or less"  cancel:nil otherTitles:nil tag:0 view:nil];
             return;
-
+            
         }
         [self activityStart:@"Adding class..."];
         NSString *className = self.classNameTextField.text;
@@ -114,7 +90,17 @@
     else {
         [Utilities alertStatusNoConnection];
     }
+    
+}
 
+
+- (IBAction)helpClicked:(id)sender {
+    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
+}
+
+
+- (IBAction)backgroundTap:(id)sender {
+    [self hideKeyboard];
 }
 
 
@@ -127,46 +113,49 @@
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
-}	
+}
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
+    [hud hide:YES];
+
     if (data == nil){
-        [hud hide:YES];
         [Utilities alertStatusNoConnection];
         return;
     }
+    
+    NSString *message = [data objectForKey:@"message"];
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+
     if (type == ADD_CLASS){
-        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
         
         if([successNumber boolValue] == YES)
         {
             AudioServicesPlaySystemSound([Utilities getTheSoundOfSuccess]);
+            
             NSInteger cid = [[data objectForKey:@"id"] integerValue];
             [newClass setId:cid];
             [[DatabaseHandler getSharedInstance]addClass:newClass];
-            [hud hide:YES];
+            
             self.classNameTextField.text = @"";
             self.classGradeTextField.text = @"";
+            
             [Utilities alertStatusWithTitle:@"Successfully added class!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
             
-            
-            
         } else {
-            NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-
-            [hud hide:YES];
             return;
         }
         
     }
-    else if (type == ADD_CLASS){
-        
-    }
-    else if (type == DELETE_CLASS){
-        
-    }
+}
+
+
+- (NSInteger)getSchoolId{
+    NSInteger schoolIndex = index ;
+    school *ss = [schoolData objectAtIndex:schoolIndex];
+    NSInteger schoolId = [ss getId];
+    return schoolId;
 }
 
 
@@ -176,19 +165,6 @@
     hud.labelText = message;
     [hud show:YES];
     
-}
-
-
-- (IBAction)backgroundTap:(id)sender {
-    [self hideKeyboard];
-}
-
-
-- (NSInteger)getSchoolId{
-    NSInteger schoolIndex = index ;
-    school *ss = [schoolData objectAtIndex:schoolIndex];
-    NSInteger schoolId = [ss getId];
-    return schoolId;
 }
 
 
@@ -205,9 +181,37 @@
 }
 
 
-
-
-- (IBAction)helpClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
+- (void)hideKeyboard{
+    [self.view endEditing:YES];
 }
+
+
+#pragma mark - Picker view
+
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return schoolData.count;
+}
+
+
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    return [[schoolData objectAtIndex:row] getName];
+    
+}
+
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    index = row;
+    
+}
+
+
+
+
+
 @end

@@ -38,6 +38,51 @@
     [self setLabels];
 }
 
+
+- (IBAction)unreigsterClicked:(id)sender {
+    if (currentUser.serial){
+        [Utilities alertStatusWithTitle:@"Confirm unregister" message:@"Really unregister your teacher stamp?" cancel:@"Cancel" otherTitles:@[@"Unregister"] tag:0 view:self];
+    }
+}
+
+
+- (IBAction)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)stampResultDidChange:(NSString *)stampResult{
+    if (!currentUser.serial){
+        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        if (resultObject != NULL) {
+            if ([resultObject objectForKey:@"stamp"] != nil){
+                isStamping = YES;
+                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                    if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
+                        serial = stampSerial;
+                        [self activityStart:@"Registering stamp..."];
+                        [webHandler registerStamp:currentUser.id :stampSerial];
+                    }
+                    else {
+                        [Utilities failAnimation:self.stampImage];
+                        isStamping = NO;
+                    }
+                }
+                else{
+                    [Utilities failAnimation:self.stampImage];
+                    isStamping = NO;
+                }
+                
+            }
+        }
+    }
+    
+}
+
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
@@ -52,6 +97,7 @@
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
     isStamping = NO;
+    
     if (data == nil){
         [Utilities alertStatusNoConnection];
     }
@@ -84,6 +130,7 @@
 
 }
 
+
 - (void)setLabels{
     if (!currentUser.serial){
         self.topLabel.text = [NSString stringWithFormat:@"%@,  stamp  the  apple  to  register  your  teacher  stamp", currentUser.firstName];
@@ -94,50 +141,6 @@
         self.unregisterStampButton.hidden = NO;
     }
 }
-
-
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (!currentUser.serial){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                isStamping = YES;
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
-                        serial = stampSerial;
-                        [self activityStart:@"Registering stamp..."];
-                        [webHandler registerStamp:currentUser.id :stampSerial];
-                    }
-                    else {
-                        [Utilities failAnimation:self.stampImage];
-                        isStamping = NO;
-                    }
-                }
-                else{
-                    [Utilities failAnimation:self.stampImage];
-                    isStamping = NO;
-                }
-                
-            }
-        }
-    }
-
-}
-
-
-- (IBAction)unreigsterClicked:(id)sender {
-    if (currentUser.serial){
-        [Utilities alertStatusWithTitle:@"Confirm unregister" message:@"Really unregister your teacher stamp?" cancel:@"Cancel" otherTitles:@[@"Unregister"] tag:0 view:self];
-    }
-}
-
-- (IBAction)backButtonClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 
 
 - (void) activityStart :(NSString *)message {

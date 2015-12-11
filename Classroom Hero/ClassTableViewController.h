@@ -13,8 +13,11 @@
 
 @interface ClassTableViewController : UITableViewController <ConnectionHandlerDelegate>
 
-- (IBAction)editClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
+
+
+- (IBAction)editClicked:(id)sender;
+
 - (IBAction)addClassClicked:(id)sender;
 
 @end

@@ -50,6 +50,7 @@ NSInteger STUDENT_CHECK_IN = 37;
 NSInteger STUDENT_CHECK_OUT = 38;
 NSInteger ALL_STUDENT_CHECK_IN = 39;
 NSInteger ALL_STUDENT_CHECK_OUT = 40;
+NSInteger GET_USER_BY_STAMP = 41;
 
 
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType{
@@ -174,9 +175,12 @@ NSInteger ALL_STUDENT_CHECK_OUT = 40;
         case 40:
             return @"ALL_STUDENT_CHECK_OUT";
             break;
+        case 41:
+            return @"GET_USER_BY_STAMP";
+            break;
  
         default:
-            return nil;
+            return @"Connection result";
             break;
     }
 }

@@ -19,7 +19,6 @@
     student *currentStudent;
     ConnectionHandler *webHandler;
     MBProgressHUD *hud;
-    
     NSString *studentFirstName;
     NSString *studentLastName;
     bool editingStudent;
@@ -32,14 +31,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView setBounces:NO];
-    
     currentUser = [user getInstance];
-    
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
-    
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
+    [self.tableView setBounces:NO];
 }
 
 
@@ -52,66 +48,14 @@
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return studentsData.count;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    StudentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentCell" forIndexPath:indexPath];
-    if (studentsData.count > 0){
-        student *student_ = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
-        [cell initializeWithStudent:student_];
-    }
-    
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (studentsData.count > 0){
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
-        [self performSegueWithIdentifier:@"student_segue" sender:self];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
-
-
-- (void)viewDidLayoutSubviews{
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
-
 
 - (IBAction)addStudentClicked:(id)sender {
     [Utilities editAlertAddStudentWithtitle:@"Add student" message:nil cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
+}
+
+
+- (IBAction)backClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 
@@ -142,13 +86,18 @@
     }
 }
 
+
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
+    [hud hide:YES];
+
     if (data == nil){
-        [hud hide:YES];
         [Utilities alertStatusNoConnection];
         return;
     }
+    
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+    NSString *message = [data objectForKey:@"message"];
+
     if (type == ADD_STUDENT){
         
         if([successNumber boolValue] == YES)
@@ -158,14 +107,9 @@
             [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
             [studentsData addObject:newStudent];
             [self.tableView reloadData];
-            [hud hide:YES];
-            
         }
         else {
-            NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error adding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            
-            [hud hide:YES];
             return;
         }
     }
@@ -181,6 +125,62 @@
 }
 
 
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return studentsData.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    StudentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentCell" forIndexPath:indexPath];
+    if (studentsData.count > 0){
+        student *student_ = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        [cell initializeWithStudent:student_];
+    }
+    
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (studentsData.count > 0){
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        [self performSegueWithIdentifier:@"student_segue" sender:self];
+    }
+}
+
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+
+- (void)viewDidLayoutSubviews{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -192,9 +192,6 @@
 }
 
 
-- (IBAction)backClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:NO];
-}
 
 
 @end

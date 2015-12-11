@@ -60,6 +60,7 @@ extern NSInteger STUDENT_CHECK_IN;
 extern NSInteger STUDENT_CHECK_OUT;
 extern NSInteger ALL_STUDENT_CHECK_IN;
 extern NSInteger ALL_STUDENT_CHECK_OUT;
+extern NSInteger GET_USER_BY_STAMP;
 
 
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType;

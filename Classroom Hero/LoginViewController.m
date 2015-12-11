@@ -38,19 +38,22 @@ NSArray *fakeStudents;
 
 - (void)viewDidAppear:(BOOL)animated{
     [currentUser reset];
-    isStamping = NO;
-    self.emailTextField.text = @"nussbaum.joshua@gmail.com";
-    self.passwordTextField.text = @"Punkzor";
     
+    isStamping = NO;
     self.appKey = snowshoe_app_key;
     self.appSecret = snowshoe_app_secret;
+    
+    self.emailTextField.text = @"nussbaum.joshua@gmail.com";
+    self.passwordTextField.text = @"Punkzor";
 }
 
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    
     [Utilities setTextFieldPlaceholder:self.emailTextField :@"Email" :[Utilities CHBlueColor]];
     [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[Utilities CHBlueColor]];
     
@@ -73,35 +76,51 @@ NSArray *fakeStudents;
 }
 
 
-- (void)activityStart :(NSString *)message {
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = message;
-    [hud show:YES];
+- (IBAction)loginClicked:(id)sender{
+    [self hideKeyboard];
+    [[DatabaseHandler getSharedInstance] resetDatabase];
+    //[self loginSuccess:fakeLoginDict];
+
+    textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
+    errorMessage = @"";
+    for (int i =0; i < [textFields count]; i++){
+        NSString *error = [[textFields objectAtIndex:i] validate];
+        if ( ![error isEqualToString:@""] ){
+            errorMessage = [errorMessage stringByAppendingString:error];
+            break;
+        }
+    }
+    
+    if (![errorMessage isEqualToString:@""]){
+        [Utilities alertStatusWithTitle:@"Error logging in" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+    }
+    
+    else {
+        [self activityStart:@"Logging in..."];
+        [[DatabaseHandler getSharedInstance] resetDatabase];
+        [webHandler logIn:self.emailTextField.text :self.passwordTextField.text :[[NSDate date] timeIntervalSince1970]];
+    }
 }
 
 
-- (void)hideKeyboard{
-    [self.view endEditing:YES];
+- (IBAction)createAccountClicked:(id)sender{
+    [self performSegueWithIdentifier:@"login_to_account_creation" sender:self];
+}
+
+
+- (IBAction)aboutClicked:(id)sender{
+    [self performSegueWithIdentifier:@"login_to_about" sender:self];
+}
+
+
+- (IBAction)pricingClicked:(id)sender{
+    [self performSegueWithIdentifier:@"login_to_pricing" sender:self];
 }
 
 
 - (IBAction)backgroundTap:(id)sender{
     [self hideKeyboard];
-}
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if (textField == self.passwordTextField) {
-        [self.view endEditing:YES];
-        return YES;
-    }
-    else if (textField == self.emailTextField) {
-        [self.passwordTextField becomeFirstResponder];
-        
-    }
-    return YES;
 }
 
 
@@ -139,53 +158,27 @@ NSArray *fakeStudents;
 }
 
 
-- (IBAction)loginClicked:(id)sender{
-    [self hideKeyboard];
-    [[DatabaseHandler getSharedInstance] resetDatabase];
-    //å[self loginSuccess:fakeLoginDict];
-    
-
-    
-    textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
-    
-    errorMessage = @"";
-    for (int i =0; i < [textFields count]; i++){
-        NSString *error = [[textFields objectAtIndex:i] validate];
-        if ( ![error isEqualToString:@""] ){
-            errorMessage = [errorMessage stringByAppendingString:error];
-            break;
-        }
-    }
-    
-    if (![errorMessage isEqualToString:@""]){
-        [Utilities alertStatusWithTitle:@"Error logging in" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-    }
-    else {
-        [self activityStart:@"Logging in..."];
-        [[DatabaseHandler getSharedInstance] resetDatabase];
-        [webHandler logIn:self.emailTextField.text :self.passwordTextField.text :[[NSDate date] timeIntervalSince1970]];
-    }
-     
-}
-
-
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
+    [hud hide:YES];
+    if (data == nil){
+        [Utilities alertStatusNoConnection];
+        return;
+    }
+    
     if (type == LOGIN || type == STAMP_TO_LOGIN){
         NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        
+        NSString *message = [data objectForKey:@"message"];
+
         if([successNumber boolValue] == YES)
         {
             [Utilities wiggleImage:self.stampImage sound:NO];
             [self loginSuccess:data];
         }
         else {
-            NSString *message = [data objectForKey:@"message"];
-            [hud hide:YES];
             if (!message){
                 message = @"Connection error. Please try again.";
             }
             [Utilities alertStatusWithTitle:@"Error logging in" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-
         }
     }
    
@@ -226,18 +219,30 @@ NSArray *fakeStudents;
 }
 
 
-- (IBAction)createAccountClicked:(id)sender{
-    [self performSegueWithIdentifier:@"login_to_account_creation" sender:self];
+- (void)hideKeyboard{
+    [self.view endEditing:YES];
 }
 
 
-- (IBAction)aboutClicked:(id)sender{
-    [self performSegueWithIdentifier:@"login_to_about" sender:self];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == self.passwordTextField) {
+        [self.view endEditing:YES];
+        return YES;
+    }
+    else if (textField == self.emailTextField) {
+        [self.passwordTextField becomeFirstResponder];
+        
+    }
+    return YES;
 }
 
 
-- (IBAction)pricingClicked:(id)sender{
-    [self performSegueWithIdentifier:@"login_to_pricing" sender:self];
+- (void)activityStart :(NSString *)message {
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+    [hud show:YES];
+    
 }
 
 
@@ -245,24 +250,6 @@ NSArray *fakeStudents;
     
 }
 
-
-- (void)setFirstTextField:(NSString *)placeholder{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:25.0]
-                                                                                                  }];
-    
-    self.emailTextField.attributedPlaceholder = str;
-}
-
-
-- (void)setSecondTextField:(NSString *)placeholder{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
-                                                                                                  }];
-    self.passwordTextField.attributedPlaceholder = str;
-}
 
 
 @end

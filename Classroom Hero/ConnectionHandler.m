@@ -39,6 +39,7 @@ static NSString * const CHECK_IN_STUDENT_URL = @"http://73.231.27.167:8080/dev.c
 static NSString * const CHECK_OUT_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/checkout";
 static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
 static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
+static NSString * const GET_USER_BY_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user";
 
 static NSString * const STUDENT_TRANSACTION_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/transaction";
 
@@ -162,9 +163,9 @@ static NSInteger connectionType;
 }
 
 
-- (void)editJar:(NSInteger)id :(NSString *)name :(NSInteger)cost{
+- (void)editJar:(NSInteger)id :(NSString *)name :(NSInteger)cost :(NSInteger)progress{
     connectionType = EDIT_JAR;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld,\"name\":\"%@\", \"total\":%ld}", (long)id, name, (long)cost];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld,\"name\":\"%@\", \"total\":%ld, \"progress\":%ld}", (long)id, name, (long)cost, (long)progress];
     
     [self asynchronousWebCall:jsonRequest :EDIT_JAR_URL :PUT];
 }
@@ -395,6 +396,14 @@ static NSInteger connectionType;
     
     [self asynchronousWebCall:nil :url :POST];
 
+}
+
+- (void)getUserBySerialwithSerial:(NSString *)serial{
+    connectionType = GET_USER_BY_STAMP;
+    
+    NSString *url = [NSString stringWithFormat:@"%@/%@/get", GET_USER_BY_STAMP_URL, serial];
+    
+    [self asynchronousWebCall:nil :url :GET];
 }
 
 

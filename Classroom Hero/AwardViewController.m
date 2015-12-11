@@ -136,16 +136,39 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (void)setReinforcerName{
-    index = [self.categoryPicker selectedRowInComponent:0];
-    currentReinforcer = [reinforcerData objectAtIndex:index];
-    self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
-    self.reinforcerValue.text = [NSString stringWithFormat:@"+ %ld", (long)[currentReinforcer getValue]];
+- (void)viewDidAppear:(BOOL)animated{
+    isStamping = NO;
 }
 
 
-- (void)viewDidAppear:(BOOL)animated{
-    isStamping = NO;
+- (IBAction)homeClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (IBAction)classJarClicked:(id)sender {
+    [self performSegueWithIdentifier:@"award_to_class_jar" sender:nil];
+}
+
+
+- (IBAction)marketClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    
+    ClassJarViewController *cjvc = [storyboard instantiateViewControllerWithIdentifier:@"ClassJarViewController"];
+    MarketViewController *mvc = [storyboard instantiateViewControllerWithIdentifier:@"MarketViewController"];
+    [self.navigationController pushViewController:cjvc animated:NO];
+    [self.navigationController pushViewController:mvc animated:NO];
+}
+
+
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
 }
 
 
@@ -164,10 +187,50 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    UITextPosition *beginning = [textField beginningOfDocument];
-    [textField setSelectedTextRange:[textField textRangeFromPosition:beginning
-                                                          toPosition:beginning]];
+- (void)stampResultDidChange:(NSString *)stampResult{
+    if (!isStamping && (reinforcerData.count > 0)){
+        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        if (resultObject != NULL) {
+            if ([resultObject objectForKey:@"stamp"] != nil){
+                isStamping = YES;
+                self.nameLabel.hidden = YES;
+                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                NSLog(@"Stamp serial -> %@", stampSerial);
+                if (currentUser.serial){
+                    if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                        if ([stampSerial isEqualToString:currentUser.serial]){
+                            [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
+                        }
+                        else{
+                            [Utilities wiggleImage:self.stampImage sound:NO];
+                            [webHandler rewardStudentWithserial:stampSerial pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId]];
+                        }
+                    }
+                    else {
+                        [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];
+                        isStamping = NO;
+                    }
+                }
+                else {
+                    [Utilities alertStatusWithTitle:@"Error awarding points" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
+                    isStamping = NO;
+                }
+                
+            }
+            else {
+                AudioServicesPlaySystemSound(failSound);
+                self.nameLabel.text=@"Try  Stamping  Again";
+                self.nameLabel.hidden = NO;
+                isStamping = NO;
+            }
+        }
+        else {
+            isStamping  =  NO;
+        }
+    }
+    
 }
 
 
@@ -197,13 +260,12 @@ static NSInteger coinHeight = 250;
             else {
                 [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
             }
-            
         }
         else if (buttonIndex == 2){
             NSString *deleteMessage = [NSString stringWithFormat:@"Really delete %@?", [currentReinforcer getName]];
             [Utilities alertStatusWithTitle:@"Confirm delete" message:deleteMessage cancel:@"Cancel" otherTitles:@[@"Delete"] tag:3 view:self];
         }
-
+        
     }
     else if (alertView.tag == 2){
         tmpName = [alertView textFieldAtIndex:0].text;
@@ -234,10 +296,11 @@ static NSInteger coinHeight = 250;
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
+    [hud hide:YES];
+    isStamping = NO;
+
     if (data == nil){
-        [hud hide:YES];
         [Utilities alertStatusNoConnection];
-        isStamping = NO;
         self.nameLabel.hidden=YES;
         self.pointsLabel.hidden=YES;
         self.levelLabel.hidden=YES;
@@ -255,13 +318,11 @@ static NSInteger coinHeight = 250;
             [reinforcerData replaceObjectAtIndex:index withObject:currentReinforcer];
             [self.categoryPicker reloadAllComponents];
             [self setReinforcerName];
-            [hud hide:YES];
-
+            
         }
         else {
             NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
             return;
         }
     }
@@ -276,21 +337,16 @@ static NSInteger coinHeight = 250;
             [self.categoryPicker reloadAllComponents];
             
             [self.categoryPicker selectRow:0 inComponent:0 animated:NO];
-
+            
             [self setReinforcerName];
-
-            [hud hide:YES];
+            
             self.editReinforcerButton.hidden = NO;
             self.categoryPicker.hidden = NO;
             
-
-
         }
         else {
             NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            
-            [hud hide:YES];
             return;
         }
     }
@@ -310,7 +366,7 @@ static NSInteger coinHeight = 250;
                 [self setReinforcerName];
             }
         }
-
+        
     }
     else if (type == REWARD_STUDENT){
         if([successNumber boolValue] == YES)
@@ -324,7 +380,7 @@ static NSInteger coinHeight = 250;
             NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
             NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
             NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
-
+            
             currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
             
             if (currentStudent != nil){
@@ -333,7 +389,7 @@ static NSInteger coinHeight = 250;
                 [currentStudent setProgress:progressNumber.integerValue];
                 [currentStudent setLevelUpAmount:lvlUpAmount];
                 [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-
+                
             }
             else{
                 NSString *stamp = [studentDictionary objectForKey:@"stamp"];
@@ -348,10 +404,10 @@ static NSInteger coinHeight = 250;
             tmpPoints = ([currentStudent getPoints] - pointsAwarded);
             [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
         }
+        
         else {
             NSString *message = [data objectForKey:@"message"];
             [Utilities alertStatusWithTitle:@"Error rewarding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            isStamping = NO;
             return;
         }
     }
@@ -410,7 +466,6 @@ static NSInteger coinHeight = 250;
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)([currentStudent getPoints] - pointsAwarded)];
     self.pointsLabel.hidden = NO;
     
-    
     NSInteger level;
     if ([currentStudent getProgress] == 0){
         level = [currentStudent getLvl] - 1;
@@ -419,11 +474,11 @@ static NSInteger coinHeight = 250;
     else {
         level = [currentStudent getLvl];
         self.levelBar.progress = (float)(([currentStudent getProgress]-1) / (float)[currentStudent getLvlUpAmount]);
-
+        
     }
     self.levelBar.hidden = NO;
     NSString * levelDisplay = [NSString stringWithFormat:@"Level %ld", (long)level];
-
+    
     self.levelLabel.text=levelDisplay;
     self.levelLabel.hidden = NO;
     
@@ -431,56 +486,32 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping && (reinforcerData.count > 0)){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                isStamping = YES;
-                self.nameLabel.hidden = YES;
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                NSLog(@"Stamp serial -> %@", stampSerial);
-                if (currentUser.serial){
-                    if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                        if ([stampSerial isEqualToString:currentUser.serial]){
-                            [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
-                        }
-                        else{
-                            [Utilities wiggleImage:self.stampImage sound:NO];
-                            [webHandler rewardStudentWithserial:stampSerial pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId]];
-                        }
-                    }
-                    else {
-                        [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];
-                        isStamping = NO;
-                    }
-                }
-                else {
-                    [Utilities alertStatusWithTitle:@"Error awarding points" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
-                    isStamping = NO;
-                }
-       
-            }
-            else {
-                AudioServicesPlaySystemSound(failSound);
-                self.nameLabel.text=@"Try  Stamping  Again";
-                self.nameLabel.hidden = NO;
-                isStamping = NO;
-            }
-        }
-        else {
-            isStamping  =  NO;
-        }
-    }
+- (void)setReinforcerName{
+    index = [self.categoryPicker selectedRowInComponent:0];
+    currentReinforcer = [reinforcerData objectAtIndex:index];
+    self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
+    self.reinforcerValue.text = [NSString stringWithFormat:@"+ %ld", (long)[currentReinforcer getValue]];
+}
 
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    UITextPosition *beginning = [textField beginningOfDocument];
+    [textField setSelectedTextRange:[textField textRangeFromPosition:beginning
+                                                          toPosition:beginning]];
+}
+
+
+- (void) activityStart :(NSString *)message {
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+    [hud show:YES];
+    
 }
 
 
 
 /* Animations for Awarding Points */
-
 
 
 - (void)addPoints:(NSInteger)points levelup:(bool)levelup{
@@ -593,7 +624,7 @@ static NSInteger coinHeight = 250;
         [coinImages addObject:coinImage];
         [self.view addSubview:coinImage];
     }
-    [UIView animateWithDuration:1.0
+    [UIView animateWithDuration:0.5
                      animations:^{
                          for (UIImageView *coinImage in coinImages){
                              coinImage.alpha =1.0;
@@ -872,6 +903,8 @@ static NSInteger coinHeight = 250;
 }
 
 
+#pragma Picker view
+
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
@@ -896,49 +929,11 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (IBAction)homeClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-- (IBAction)classJarClicked:(id)sender {
-    [self performSegueWithIdentifier:@"award_to_class_jar" sender:nil];
-}
-
-
-- (IBAction)marketClicked:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    
-    ClassJarViewController *cjvc = [storyboard instantiateViewControllerWithIdentifier:@"ClassJarViewController"];
-    MarketViewController *mvc = [storyboard instantiateViewControllerWithIdentifier:@"MarketViewController"];
-    [self.navigationController pushViewController:cjvc animated:NO];
-    [self.navigationController pushViewController:mvc animated:NO];
-}
-
-
-- (IBAction)studentListClicked:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.2;
-    transition.type = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
-    [self.navigationController pushViewController:stvc animated:NO];
-}
-
 
 - (IBAction)unwindToAward:(UIStoryboardSegue *)unwindSegue {
     
 }
 
-
-- (void) activityStart :(NSString *)message {
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = message;
-    [hud show:YES];
-    
-}
 
 
 @end

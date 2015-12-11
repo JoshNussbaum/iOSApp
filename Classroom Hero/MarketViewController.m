@@ -76,6 +76,32 @@
 }
 
 
+- (IBAction)homeClicked:(id)sender {
+    [self performSegueWithIdentifier:@"market_to_home" sender:nil];
+}
+
+
+- (IBAction)awardClicked:(id)sender {
+    [self performSegueWithIdentifier:@"market_to_award" sender:nil];
+}
+
+
+- (IBAction)classJarClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
+}
+
+
 - (IBAction)addItemClicked:(id)sender {
     [Utilities editAlertTextWithtitle:@"Add item" message:nil cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
 }
@@ -83,6 +109,45 @@
 
 - (IBAction)editItemClicked:(id)sender {
     [Utilities editTextWithtitle:@"Edit item" message:nil cancel:nil done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
+}
+
+
+- (void)stampResultDidChange:(NSString *)stampResult{
+    if (!isStamping && (itemsData.count > 0)){
+        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        if (resultObject != NULL) {
+            if ([resultObject objectForKey:@"stamp"] != nil){
+                stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                if (![stampSerial isEqualToString:currentUser.serial]){
+                    if (currentUser.serial){
+                        if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                            [Utilities wiggleImage:self.stampImage sound:NO];
+                            isStamping = YES;
+                            self.picker.hidden = YES;
+                            [webHandler getStudentBySerialwithserial:stampSerial :[currentUser.currentClass getSchoolId]];
+                        }
+                        else{
+                            [Utilities failAnimation:self.stampImage];
+                        }
+                        
+                    }
+                    else {
+                        [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
+                        isStamping = NO;
+                    }
+                }
+                else {
+                    isStamping = NO;
+                }
+            }
+            else{
+                [Utilities failAnimation:self.stampImage];
+                isStamping = NO;
+            }
+        }
+    }
 }
 
 
@@ -163,6 +228,7 @@
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+    NSString *message = [data objectForKey:@"message"];
     if (type == ADD_ITEM){
         
         if([successNumber boolValue] == YES){
@@ -183,7 +249,7 @@
             
         }
         else {
-            [self showErrorMessageWithtitle:@"Error editing item" message:[data objectForKey:@"student"]];
+            [self showErrorMessageWithtitle:@"Error editing item" message:message];
             return;
         }
     }
@@ -204,7 +270,7 @@
             
         }
         else {
-            [self showErrorMessageWithtitle:@"Error editing item" message:[data objectForKey:@"student"]];
+            [self showErrorMessageWithtitle:@"Error editing item" message:message];
             
             return;
         }
@@ -256,7 +322,7 @@
             [self sellItemAnimation:scores];
         }
         else {
-            [self showErrorMessageWithtitle:@"Error selling item" message:[data objectForKey:@"student"]];
+            [self showErrorMessageWithtitle:@"Error selling item" message:message];
 
             return;
         }
@@ -301,7 +367,7 @@
             }
         }
         else {
-            [self showErrorMessageWithtitle:@"Error selling item" message:[data objectForKey:@"student"]];
+            [self showErrorMessageWithtitle:@"Error selling item" message:message];
             return;
         }
 
@@ -309,53 +375,6 @@
 
 }
 
-- (void)showErrorMessageWithtitle:(NSString *)title message:(NSString *)message{
-    [hud hide:YES];
-    [Utilities alertStatusWithTitle:title message:message cancel:nil otherTitles:nil tag:0 view:nil];
-    self.picker.hidden = NO;
-    isStamping = NO;
-}
-
-
-
-
--(void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping && (itemsData.count > 0)){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if (![stampSerial isEqualToString:currentUser.serial]){
-                    if (currentUser.serial){
-                        if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                            [Utilities wiggleImage:self.stampImage sound:NO];
-                            isStamping = YES;
-                            self.picker.hidden = YES;
-                            [webHandler getStudentBySerialwithserial:stampSerial :[currentUser.currentClass getSchoolId]];
-                        }
-                        else{
-                            [Utilities failAnimation:self.stampImage];
-                        }
-                        
-                    }
-                    else {
-                        [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
-                        isStamping = NO;
-                    }
-                }
-                else {
-                    isStamping = NO;
-                }
-            }
-            else{
-                [Utilities failAnimation:self.stampImage];
-                isStamping = NO;
-            }
-        }
-    }
-}
 
 - (void)displayStudent{
     self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
@@ -365,6 +384,7 @@
     self.studentPointsLabel.hidden = NO;
     self.sackImage.hidden = NO;
 }
+
 
 - (void)hideStudent{
     self.studentNameLabel.hidden = YES;
@@ -376,7 +396,8 @@
     isStamping = NO;
 }
 
--(void)sellItem{
+
+- (void)sellItem{
     NSString *alertMsg = [NSString stringWithFormat:@"%@, buy %@?",[currentStudent getFirstName], [currentItem getName]];
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"Confirm Purchase"
                                                        message:alertMsg
@@ -389,7 +410,7 @@
 }
 
 
--(void) sellItemAnimation:(NSMutableArray *)scores{
+- (void) sellItemAnimation:(NSMutableArray *)scores{
     AudioServicesPlaySystemSound(sellSound);
     [Utilities wiggleImage:self.stampImage sound:NO];
     NSInteger score = [[scores objectAtIndex:0]integerValue];
@@ -419,7 +440,7 @@
 }
 
 
--(void) decrementScore:(NSMutableArray *)scores{
+- (void) decrementScore:(NSMutableArray *)scores{
     NSInteger score = [[scores objectAtIndex:0]integerValue];
     NSInteger newScore = [[scores objectAtIndex:1]integerValue];
     if (score != newScore)
@@ -431,6 +452,33 @@
     }
     
 }
+
+
+- (void)showErrorMessageWithtitle:(NSString *)title message:(NSString *)message{
+    [hud hide:YES];
+    [Utilities alertStatusWithTitle:title message:message cancel:nil otherTitles:nil tag:0 view:nil];
+    self.picker.hidden = NO;
+    isStamping = NO;
+}
+
+
+- (void)setItemLabel {
+    index = [self.picker selectedRowInComponent:0];
+    currentItem = [itemsData objectAtIndex:index];
+    self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
+    self.pointsLabel.text=[NSString stringWithFormat:@"%li", (long)[currentItem getCost]];
+}
+
+
+- (void) activityStart :(NSString *)message {
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+    [hud show:YES];
+}
+
+
+# pragma Picker view
 
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -454,45 +502,5 @@
 }
 
 
-- (void)setItemLabel {
-    index = [self.picker selectedRowInComponent:0];
-    currentItem = [itemsData objectAtIndex:index];
-    self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
-    self.pointsLabel.text=[NSString stringWithFormat:@"%li", (long)[currentItem getCost]];
-}
 
-
-- (IBAction)homeClicked:(id)sender {
-    [self performSegueWithIdentifier:@"market_to_home" sender:nil];
-}
-
-
-- (IBAction)awardClicked:(id)sender {
-    [self performSegueWithIdentifier:@"market_to_award" sender:nil];
-}
-
-
-- (IBAction)classJarClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-- (void) activityStart :(NSString *)message {
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = message;
-    [hud show:YES];
-    
-}
-
-
-- (IBAction)studentListClicked:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.2;
-    transition.type = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
-    [self.navigationController pushViewController:stvc animated:NO];
-}
 @end

@@ -39,46 +39,6 @@
 }
 
 
-
-
-- (void)textFieldDidChange:(UITextField *)textfield{
-    NSString *input = textfield.text;
-    if ([input isEqualToString:@""]){
-        self.costLabel.text = @"";
-        return;
-    }
-    NSString *errorMessage = [Utilities isNumeric:input];
-    if (!errorMessage){
-        stamps = input.integerValue;
-        if (stamps < 10 && ![input isEqualToString:@""]){
-            price = stamps;
-            self.costLabel.text = @"Must  order  at  least  10  stamps";
-            return;
-        }
-        
-        self.costLabel.text = [NSString stringWithFormat:@"$%.2ld/year", (long)[self getPrice]];
-    }
-    else {
-        self.costLabel.text = errorMessage;
-    }
-}
-
-
--(NSInteger)getPrice{
-    if (stamps > 60){
-        price = stamps * .9;
-    }
-    else if (stamps > 120){
-        price = stamps * .8;
-    }
-    else if (stamps > 300){
-        price = stamps * .7;
-    }
-    else price = stamps;
-    return price;
-}
-
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
@@ -176,6 +136,55 @@
     }
 }
 
+
+- (IBAction)backClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (IBAction)backgroundTap:(id)sender{
+    [self hideKeyboard];
+}
+
+
+- (void)textFieldDidChange:(UITextField *)textfield{
+    NSString *input = textfield.text;
+    if ([input isEqualToString:@""]){
+        self.costLabel.text = @"";
+        return;
+    }
+    NSString *errorMessage = [Utilities isNumeric:input];
+    if (!errorMessage){
+        stamps = input.integerValue;
+        if (stamps < 10 && ![input isEqualToString:@""]){
+            price = stamps;
+            self.costLabel.text = @"Must  order  at  least  10  stamps";
+            return;
+        }
+        
+        self.costLabel.text = [NSString stringWithFormat:@"$%.2ld/year", (long)[self getPrice]];
+    }
+    else {
+        self.costLabel.text = errorMessage;
+    }
+}
+
+
+- (NSInteger)getPrice{
+    if (stamps > 60){
+        price = stamps * .9;
+    }
+    else if (stamps > 120){
+        price = stamps * .8;
+    }
+    else if (stamps > 300){
+        price = stamps * .7;
+    }
+    else price = stamps;
+    return price;
+}
+
+
 - (void)handlePaymentAuthorizationWithPayment:(PKPayment *)payment
                                    completion:(void (^)(PKPaymentAuthorizationStatus))completion {
     [[STPAPIClient sharedClient] createTokenWithPayment:payment
@@ -196,6 +205,7 @@
                                              }];
 }
 
+
 - (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
                        didAuthorizePayment:(PKPayment *)payment
                                 completion:(void (^)(PKPaymentAuthorizationStatus))completion {
@@ -203,9 +213,11 @@
     [self handlePaymentAuthorizationWithPayment:payment completion:completion];
 }
 
+
 - (void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 - (void)createBackendChargeWithToken:(STPToken *)token
                           completion:(void (^)(PKPaymentAuthorizationStatus))completion {
@@ -240,31 +252,6 @@
 }
 
 
-
-- (IBAction)backClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-- (void)hideKeyboard{
-    [self.view endEditing:YES];
-}
-
-
-- (IBAction)backgroundTap:(id)sender{
-    [self hideKeyboard];
-}
-
-
-- (void) activityStart :(NSString *)message {
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.layer.zPosition = 200.0;
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = message;
-    [hud show:YES];
-}
-
-
 - (bool)canMakePayments{
     if ([PKPaymentAuthorizationViewController canMakePayments]) {
         NSLog(@"Can Make Payments");
@@ -284,6 +271,20 @@
         }
     }
     return NO;
+}
+
+
+- (void)hideKeyboard{
+    [self.view endEditing:YES];
+}
+
+
+- (void) activityStart :(NSString *)message {
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.layer.zPosition = 200.0;
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+    [hud show:YES];
 }
 
 

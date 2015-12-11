@@ -119,7 +119,7 @@
 		03F46FB51B69CBAD00A695B2 /* DatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03F46FB81B69CC2700A695B2 /* class.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FB71B69CC2700A695B2 /* class.m */; };
 		03F46FBB1B6B54C200A695B2 /* student.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FBA1B6B54C200A695B2 /* student.m */; };
-		A17E4EDB59CDBCAAB9970E59 /* libPods-Classroom Hero.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69081795A95CEC3C7FD7EAB4 /* libPods-Classroom Hero.a */; };
+		1E176CA6C15AB3C2E141F607 /* Pods_Classroom_Hero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441F4DA1FC04E7E49EF32436 /* Pods_Classroom_Hero.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,7 +293,7 @@
 		03F46FB91B6B54C200A695B2 /* student.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = student.h; sourceTree = "<group>"; };
 		03F46FBA1B6B54C200A695B2 /* student.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = student.m; sourceTree = "<group>"; };
 		105E0C9B80A80F5BA11576C5 /* Pods-Classroom Hero.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Classroom Hero.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Classroom Hero/Pods-Classroom Hero.debug.xcconfig"; sourceTree = "<group>"; };
-		69081795A95CEC3C7FD7EAB4 /* libPods-Classroom Hero.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Classroom Hero.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		441F4DA1FC04E7E49EF32436 /* Pods_Classroom_Hero.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Classroom_Hero.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,7 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03DCFFD51B6C63FC00C451CC /* libsqlite3.dylib in Frameworks */,
-				A17E4EDB59CDBCAAB9970E59 /* libPods-Classroom Hero.a in Frameworks */,
+				1E176CA6C15AB3C2E141F607 /* Pods_Classroom_Hero.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,15 +351,85 @@
 			path = AppIcon.appiconset;
 			sourceTree = "<group>";
 		};
-		036811531B8C498700690294 /* Login */ = {
+		0338C8EE1C19366A0081F5F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0399AAF31B8472EA00972F21 /* TableViewCells */,
+				038545201B6359A30053C169 /* Textfields */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		0338C8EF1C1936870081F5F5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				036811531B8C498700690294 /* Sign in/ Sign up */,
+				03A2C1D61BB8FFFD0073EBF8 /* Administrative */,
+				0338C8F01C1936FD0081F5F5 /* Class */,
+				0338C8F11C19370D0081F5F5 /* Student */,
+				03492CF01B8863DB0015CD78 /* HomeViewController.h */,
+				03492CF11B8863DB0015CD78 /* HomeViewController.m */,
+				03BD411F1BCAE5AE00879B46 /* AttendanceViewController.h */,
+				03BD41201BCAE5AE00879B46 /* AttendanceViewController.m */,
+				034075D51B980A60008E14B2 /* AwardViewController.h */,
+				034075D61B980A60008E14B2 /* AwardViewController.m */,
+				034075D81B980CBA008E14B2 /* ClassJarViewController.h */,
+				034075D91B980CBA008E14B2 /* ClassJarViewController.m */,
+				036E4ED21B9832EA00A06B25 /* MarketViewController.h */,
+				036E4ED31B9832EA00A06B25 /* MarketViewController.m */,
+				0399AAEF1B845E9F00972F21 /* Tutorial */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		0338C8F01C1936FD0081F5F5 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				0399AAF01B846C6500972F21 /* ClassTableViewController.h */,
+				0399AAF11B846C6500972F21 /* ClassTableViewController.m */,
+				0338556F1B8996D400173600 /* CreateClassViewController.h */,
+				033855701B8996D400173600 /* CreateClassViewController.m */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
+		0338C8F11C19370D0081F5F5 /* Student */ = {
+			isa = PBXGroup;
+			children = (
+				03B421E51B9198380062A7E4 /* RegisterStudentsViewController.h */,
+				03B421E61B9198380062A7E4 /* RegisterStudentsViewController.m */,
+				038898351BB3AC4A00D12468 /* StudentsTableViewController.h */,
+				038898361BB3AC4A00D12468 /* StudentsTableViewController.m */,
+				0388983B1BB3CCDA00D12468 /* StudentViewController.h */,
+				0388983C1BB3CCDA00D12468 /* StudentViewController.m */,
+			);
+			name = Student;
+			sourceTree = "<group>";
+		};
+		0338C8F21C19376F0081F5F5 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				03AA9A591B633B8100750758 /* ConnectionHandler.h */,
+				03AA9A5A1B633B8100750758 /* ConnectionHandler.m */,
+				03F46FB31B69CBAD00A695B2 /* DatabaseHandler.h */,
+				03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
+		036811531B8C498700690294 /* Sign in/ Sign up */ = {
+			isa = PBXGroup;
+			children = (
+				03AA9A0A1B6336FE00750758 /* LoginViewController.h */,
+				03AA9A0B1B6336FE00750758 /* LoginViewController.m */,
 				036811541B8C49B400690294 /* AboutViewController.h */,
 				036811551B8C49B400690294 /* AboutViewController.m */,
 				036811571B8C49C300690294 /* PricingViewController.h */,
 				036811581B8C49C300690294 /* PricingViewController.m */,
+				038545361B636BB20053C169 /* CreateAccountViewController.h */,
+				038545371B636BB20053C169 /* CreateAccountViewController.m */,
 			);
-			name = Login;
+			name = "Sign in/ Sign up";
 			sourceTree = "<group>";
 		};
 		038545201B6359A30053C169 /* Textfields */ = {
@@ -382,6 +452,7 @@
 		038F7B311B643FCC0026F679 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0338C8F21C19376F0081F5F5 /* Singletons */,
 				03DCFFDC1B6C6FDA00C451CC /* school.h */,
 				03DCFFDD1B6C6FDA00C451CC /* school.m */,
 				038F7B321B643FE30026F679 /* user.h */,
@@ -469,37 +540,11 @@
 				03AA99E81B6333C300750758 /* AppDelegate.h */,
 				03AA99E91B6333C300750758 /* AppDelegate.m */,
 				03AA99EE1B6333C300750758 /* Main.storyboard */,
-				03AA9A0A1B6336FE00750758 /* LoginViewController.h */,
-				03AA9A0B1B6336FE00750758 /* LoginViewController.m */,
-				038545361B636BB20053C169 /* CreateAccountViewController.h */,
-				038545371B636BB20053C169 /* CreateAccountViewController.m */,
-				0399AAF01B846C6500972F21 /* ClassTableViewController.h */,
-				0399AAF11B846C6500972F21 /* ClassTableViewController.m */,
-				0338556F1B8996D400173600 /* CreateClassViewController.h */,
-				033855701B8996D400173600 /* CreateClassViewController.m */,
-				03B421E51B9198380062A7E4 /* RegisterStudentsViewController.h */,
-				03B421E61B9198380062A7E4 /* RegisterStudentsViewController.m */,
-				038898351BB3AC4A00D12468 /* StudentsTableViewController.h */,
-				038898361BB3AC4A00D12468 /* StudentsTableViewController.m */,
-				0388983B1BB3CCDA00D12468 /* StudentViewController.h */,
-				0388983C1BB3CCDA00D12468 /* StudentViewController.m */,
-				03BD411F1BCAE5AE00879B46 /* AttendanceViewController.h */,
-				03BD41201BCAE5AE00879B46 /* AttendanceViewController.m */,
-				03492CF01B8863DB0015CD78 /* HomeViewController.h */,
-				03492CF11B8863DB0015CD78 /* HomeViewController.m */,
-				034075D51B980A60008E14B2 /* AwardViewController.h */,
-				034075D61B980A60008E14B2 /* AwardViewController.m */,
-				034075D81B980CBA008E14B2 /* ClassJarViewController.h */,
-				034075D91B980CBA008E14B2 /* ClassJarViewController.m */,
-				036E4ED21B9832EA00A06B25 /* MarketViewController.h */,
-				036E4ED31B9832EA00A06B25 /* MarketViewController.m */,
-				03A2C1D61BB8FFFD0073EBF8 /* Administrative */,
-				03AA9A5C1B633BAF00750758 /* Handlers */,
-				036811531B8C498700690294 /* Login */,
-				0399AAF31B8472EA00972F21 /* TableViewCells */,
-				0399AAEF1B845E9F00972F21 /* Tutorial */,
+				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
+				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
+				0338C8EF1C1936870081F5F5 /* Controllers */,
+				0338C8EE1C19366A0081F5F5 /* Views */,
 				038F7B311B643FCC0026F679 /* Models */,
-				038545201B6359A30053C169 /* Textfields */,
 				03AA99F11B6333C300750758 /* Images.xcassets */,
 				03AA99E41B6333C300750758 /* Supporting Files */,
 			);
@@ -509,8 +554,6 @@
 		03AA99E41B6333C300750758 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
-				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
 				034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */,
 				034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */,
 				03AA99F31B6333C400750758 /* LaunchScreen.xib */,
@@ -588,17 +631,6 @@
 			path = img;
 			sourceTree = "<group>";
 		};
-		03AA9A5C1B633BAF00750758 /* Handlers */ = {
-			isa = PBXGroup;
-			children = (
-				03AA9A591B633B8100750758 /* ConnectionHandler.h */,
-				03AA9A5A1B633B8100750758 /* ConnectionHandler.m */,
-				03F46FB31B69CBAD00A695B2 /* DatabaseHandler.h */,
-				03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */,
-			);
-			name = Handlers;
-			sourceTree = "<group>";
-		};
 		03DC9D811B732C7F005C7562 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -621,7 +653,7 @@
 			isa = PBXGroup;
 			children = (
 				03DCFFD41B6C63FC00C451CC /* libsqlite3.dylib */,
-				69081795A95CEC3C7FD7EAB4 /* libPods-Classroom Hero.a */,
+				441F4DA1FC04E7E49EF32436 /* Pods_Classroom_Hero.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

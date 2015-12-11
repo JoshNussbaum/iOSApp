@@ -14,14 +14,25 @@
 @interface CreateClassViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIPickerView *schoolPicker;
-- (IBAction)addClassClicked:(id)sender;
+
 @property (strong, nonatomic) IBOutlet nameTextField *classNameTextField;
+
 @property (strong, nonatomic) IBOutlet numberTextField *classGradeTextField;
-- (IBAction)backgroundTap:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
+
 @property (strong, nonatomic) IBOutlet UIButton *addClassButton;
+
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
+
 @property (strong, nonatomic) IBOutlet UIButton *helpButton;
+
+
+- (IBAction)backgroundTap:(id)sender;
+
+- (IBAction)addClassClicked:(id)sender;
+
 - (IBAction)helpClicked:(id)sender;
+
 
 @end
