@@ -10,6 +10,7 @@
 #import "DatabaseHandler.h"
 #import "ConnectionHandler.h"
 #import "SnowShoeViewController.h"
+#import "CircleProgressBar.h"
 
 @interface StudentViewController : SnowShoeViewController <ConnectionHandlerDelegate>
 
@@ -19,11 +20,9 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 
-@property (strong, nonatomic) IBOutlet UIProgressView *levelBar;
-
 @property (strong, nonatomic) IBOutlet UIButton *studentButton;
 
-@property (strong, nonatomic) IBOutlet UILabel *progressLabel;
+@property (weak, nonatomic) IBOutlet CircleProgressBar *progressView;
 
 @property (strong, nonatomic) IBOutlet UILabel *stampToRegisterLabel;
 

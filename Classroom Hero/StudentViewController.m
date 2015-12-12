@@ -38,7 +38,7 @@
     self.appSecret = snowshoe_app_secret;
     
     [Utilities makeRoundedButton:self.studentButton :[UIColor blackColor]];
-    
+    [self configureProgressBar];
     [self setStudentLabels];
     
 }
@@ -215,8 +215,8 @@
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.levelLabel.text = [NSString stringWithFormat:@"Level  %ld", (long)[currentStudent getLvl]];
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Coins", (long)[currentStudent getPoints]];
-    self.levelBar.progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-    self.progressLabel.text = [NSString stringWithFormat:@"+%ld  to  Level  %ld", (long)([currentStudent getLvlUpAmount] - [currentStudent getProgress]), (long)([currentStudent getLvl]+1) ];
+    [self.progressView setProgress:(float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount] animated:YES];
+    
     isRegistered = ((![currentStudent.getSerial isEqualToString:@""]) || ![currentStudent getSerial]);
     
     if (isRegistered){
@@ -230,7 +230,26 @@
 }
 
 
-- (void) activityStart :(NSString *)message {
+- (void)configureProgressBar{
+    BOOL customized = NO;
+    [self.progressView setProgressBarTrackColor:[Utilities CHBlueColor]];
+    [self.progressView setProgressBarWidth:(6.0f)];
+    [self.progressView  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
+    [self.progressView setBackgroundColor:[UIColor clearColor]];
+    
+    [self.progressView  setHintViewSpacing:(customized ? 10.0f : 0)];
+    [self.progressView  setHintViewBackgroundColor:[UIColor clearColor]];
+    [self.progressView  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
+    [self.progressView  setHintTextColor:[UIColor blackColor]];
+    [self.progressView  setHintTextGenerationBlock:(customized ? ^NSString *(CGFloat progress) {
+        return [NSString stringWithFormat:@" %.0f / 255", progress * 255];
+    } : nil)];
+    
+    
+}
+
+
+- (void)activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
