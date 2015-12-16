@@ -154,4 +154,7 @@ extern NSInteger GET_USER_BY_STAMP;
 
 + (id) getStudentWitharray:(NSMutableArray *)searchArray propertyName:(NSString *)propertyName searchString:(NSString *)searchString;
 
+
++ (NSString *)getPackageDescriptionWithpackageId:(NSInteger)packageId stamps:(NSInteger)stamps;
+
 @end

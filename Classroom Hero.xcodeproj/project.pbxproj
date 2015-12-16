@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0312C3211C1EAC3200BD3F88 /* CitiesAndStates.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312C3201C1EAC3200BD3F88 /* CitiesAndStates.m */; };
 		0315AB051BD5F08C00C77F2F /* StampIdentifierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		031A31691C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031A31681C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m */; };
 		033855711B8996D400173600 /* CreateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033855701B8996D400173600 /* CreateClassViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		033855741B89984500173600 /* numberTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 033855731B89984500173600 /* numberTextField.m */; };
 		0338558B1B89C97E00173600 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 033855771B89C97D00173600 /* Contents.json */; };
@@ -56,6 +58,7 @@
 		038545321B635B1F0053C169 /* baseTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545311B635B1F0053C169 /* baseTextField.m */; };
 		038545381B636BB20053C169 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545371B636BB20053C169 /* CreateAccountViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0385453B1B636BFF0053C169 /* nameTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385453A1B636BFF0053C169 /* nameTextField.m */; };
+		0387DB231C1BF27A00021DB3 /* AuthorizePaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0387DB221C1BF27A00021DB3 /* AuthorizePaymentViewController.m */; };
 		038898371BB3AC4A00D12468 /* StudentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038898361BB3AC4A00D12468 /* StudentsTableViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0388983A1BB3B6ED00D12468 /* StudentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038898391BB3B6ED00D12468 /* StudentTableViewCell.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0388983D1BB3CCDA00D12468 /* StudentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0388983C1BB3CCDA00D12468 /* StudentViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -109,6 +112,7 @@
 		03B2B0F91BBA3AA900191B54 /* EditTeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B2B0F81BBA3AA900191B54 /* EditTeacherViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03B3A02E1B71D0A800B42E09 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3A02D1B71D0A800B42E09 /* Utilities.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03B421E71B9198380062A7E4 /* RegisterStudentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B421E61B9198380062A7E4 /* RegisterStudentsViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		03BB725C1C1CD2BE001D4F0B /* CreditCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BB725B1C1CD2BE001D4F0B /* CreditCardTableViewCell.m */; };
 		03BD41211BCAE5AE00879B46 /* AttendanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BD41201BCAE5AE00879B46 /* AttendanceViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03DC9D991B7334F6005C7562 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = 03DC9D981B7334F6005C7562 /* Notes */; };
 		03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFD21B6C5A1900C451CC /* reinforcer.m */; };
@@ -134,8 +138,12 @@
 
 /* Begin PBXFileReference section */
 		003C81B540498279E6B276D7 /* Pods-Classroom Hero.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Classroom Hero.release.xcconfig"; path = "Pods/Target Support Files/Pods-Classroom Hero/Pods-Classroom Hero.release.xcconfig"; sourceTree = "<group>"; };
+		0312C31F1C1EAC3200BD3F88 /* CitiesAndStates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesAndStates.h; sourceTree = "<group>"; };
+		0312C3201C1EAC3200BD3F88 /* CitiesAndStates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesAndStates.m; sourceTree = "<group>"; };
 		0315AB031BD5F08C00C77F2F /* StampIdentifierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StampIdentifierViewController.h; sourceTree = "<group>"; };
 		0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StampIdentifierViewController.m; sourceTree = "<group>"; };
+		031A31671C1CC78400ACBEB2 /* CheckoutInputTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutInputTableViewCell.h; sourceTree = "<group>"; };
+		031A31681C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutInputTableViewCell.m; sourceTree = "<group>"; };
 		0338556F1B8996D400173600 /* CreateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateClassViewController.h; sourceTree = "<group>"; };
 		033855701B8996D400173600 /* CreateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateClassViewController.m; sourceTree = "<group>"; };
 		033855721B89984500173600 /* numberTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = numberTextField.h; sourceTree = "<group>"; };
@@ -201,6 +209,8 @@
 		038545371B636BB20053C169 /* CreateAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAccountViewController.m; sourceTree = "<group>"; };
 		038545391B636BFF0053C169 /* nameTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nameTextField.h; sourceTree = "<group>"; };
 		0385453A1B636BFF0053C169 /* nameTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nameTextField.m; sourceTree = "<group>"; };
+		0387DB211C1BF27A00021DB3 /* AuthorizePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizePaymentViewController.h; sourceTree = "<group>"; };
+		0387DB221C1BF27A00021DB3 /* AuthorizePaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizePaymentViewController.m; sourceTree = "<group>"; };
 		038898351BB3AC4A00D12468 /* StudentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentsTableViewController.h; sourceTree = "<group>"; };
 		038898361BB3AC4A00D12468 /* StudentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentsTableViewController.m; sourceTree = "<group>"; };
 		038898381BB3B6ED00D12468 /* StudentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentTableViewCell.h; sourceTree = "<group>"; };
@@ -274,6 +284,8 @@
 		03B3A02D1B71D0A800B42E09 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		03B421E51B9198380062A7E4 /* RegisterStudentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterStudentsViewController.h; sourceTree = "<group>"; };
 		03B421E61B9198380062A7E4 /* RegisterStudentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterStudentsViewController.m; sourceTree = "<group>"; };
+		03BB725A1C1CD2BE001D4F0B /* CreditCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditCardTableViewCell.h; sourceTree = "<group>"; };
+		03BB725B1C1CD2BE001D4F0B /* CreditCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditCardTableViewCell.m; sourceTree = "<group>"; };
 		03BD411F1BCAE5AE00879B46 /* AttendanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceViewController.h; sourceTree = "<group>"; };
 		03BD41201BCAE5AE00879B46 /* AttendanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceViewController.m; sourceTree = "<group>"; };
 		03DC9D981B7334F6005C7562 /* Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
@@ -491,6 +503,10 @@
 				038898391BB3B6ED00D12468 /* StudentTableViewCell.m */,
 				0369CF8B1BE082EC00E8857D /* StudentAttendanceTableViewCell.h */,
 				0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */,
+				031A31671C1CC78400ACBEB2 /* CheckoutInputTableViewCell.h */,
+				031A31681C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m */,
+				03BB725A1C1CD2BE001D4F0B /* CreditCardTableViewCell.h */,
+				03BB725B1C1CD2BE001D4F0B /* CreditCardTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -504,6 +520,8 @@
 				03B2B0F81BBA3AA900191B54 /* EditTeacherViewController.m */,
 				03A2C1DA1BB901C20073EBF8 /* OrderStampsViewController.h */,
 				03A2C1DB1BB901C20073EBF8 /* OrderStampsViewController.m */,
+				0387DB211C1BF27A00021DB3 /* AuthorizePaymentViewController.h */,
+				0387DB221C1BF27A00021DB3 /* AuthorizePaymentViewController.m */,
 				036AAD641BBF9245007AF0A8 /* RegisterTeacherStampViewController.h */,
 				036AAD651BBF9245007AF0A8 /* RegisterTeacherStampViewController.m */,
 				0315AB031BD5F08C00C77F2F /* StampIdentifierViewController.h */,
@@ -542,6 +560,8 @@
 				03AA99EE1B6333C300750758 /* Main.storyboard */,
 				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
 				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
+				0312C31F1C1EAC3200BD3F88 /* CitiesAndStates.h */,
+				0312C3201C1EAC3200BD3F88 /* CitiesAndStates.m */,
 				0338C8EF1C1936870081F5F5 /* Controllers */,
 				0338C8EE1C19366A0081F5F5 /* Views */,
 				038F7B311B643FCC0026F679 /* Models */,
@@ -891,11 +911,13 @@
 			files = (
 				03DCFFD81B6C67F300C451CC /* item.m in Sources */,
 				0399AAF21B846C6500972F21 /* ClassTableViewController.m in Sources */,
+				0387DB231C1BF27A00021DB3 /* AuthorizePaymentViewController.m in Sources */,
 				038F7B341B643FE30026F679 /* user.m in Sources */,
 				033855741B89984500173600 /* numberTextField.m in Sources */,
 				03DCFFDB1B6C6C8A00C451CC /* classjar.m in Sources */,
 				0399AAF61B84731E00972F21 /* ClassTableViewCell.m in Sources */,
 				03B421E71B9198380062A7E4 /* RegisterStudentsViewController.m in Sources */,
+				031A31691C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m in Sources */,
 				038545381B636BB20053C169 /* CreateAccountViewController.m in Sources */,
 				038545261B6359DD0053C169 /* emailTextField.m in Sources */,
 				034075DA1B980CBB008E14B2 /* ClassJarViewController.m in Sources */,
@@ -905,6 +927,7 @@
 				038545321B635B1F0053C169 /* baseTextField.m in Sources */,
 				034C92B81BF19A7B0090667C /* NSString+FontAwesome.m in Sources */,
 				034075D71B980A60008E14B2 /* AwardViewController.m in Sources */,
+				0312C3211C1EAC3200BD3F88 /* CitiesAndStates.m in Sources */,
 				03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */,
 				0388983D1BB3CCDA00D12468 /* StudentViewController.m in Sources */,
 				0315AB051BD5F08C00C77F2F /* StampIdentifierViewController.m in Sources */,
@@ -931,6 +954,7 @@
 				0388983A1BB3B6ED00D12468 /* StudentTableViewCell.m in Sources */,
 				036811591B8C49C300690294 /* PricingViewController.m in Sources */,
 				03B2B0F91BBA3AA900191B54 /* EditTeacherViewController.m in Sources */,
+				03BB725C1C1CD2BE001D4F0B /* CreditCardTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

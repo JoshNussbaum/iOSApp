@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "Stripe.h"
 #import "User.h"
+#import "AuthorizePaymentViewController.h"
 
 
 @interface OrderStampsViewController (){
@@ -43,29 +44,31 @@
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
+    
     else{
-        //[self activityStart:@"Placing order..."];
-        
+        [self performSegueWithIdentifier:@"order_to_authorize" sender:self];
+        return;
+
         PKPaymentRequest *request = [Stripe
                                      paymentRequestWithMerchantIdentifier:merchant_id];
         // Configure your request here.
-        NSString *description;
-        switch (packageId) {
-            case 0:
-                description = [NSString stringWithFormat:@"Hero package with %ld stamps", (long)stamps];
-                break;
-            case 1:
-                description = [NSString stringWithFormat:@"Recruit package with 40 stamps"];
-                break;
-            case 2:
-                description = [NSString stringWithFormat:@"Epic package with 120 stamps"];
-                break;
-            case 3:
-                description = [NSString stringWithFormat:@"Legendary package with 500 stamps"];
-                break;
-            default:
-                break;
-        }
+        NSString *description = [Utilities getPackageDescriptionWithpackageId:packageId stamps:stamps];
+//        switch (packageId) {
+//            case 0:
+//                description = [NSString stringWithFormat:@"Hero package with %ld stamps", (long)stamps];
+//                break;
+//            case 1:
+//                description = [NSString stringWithFormat:@"Recruit package with 40 stamps"];
+//                break;
+//            case 2:
+//                description = [NSString stringWithFormat:@"Epic package with 120 stamps"];
+//                break;
+//            case 3:
+//                description = [NSString stringWithFormat:@"Legendary package with 500 stamps"];
+//                break;
+//            default:
+//                break;
+//        }
         NSString *amountString = [NSString stringWithFormat:@"%f", price];
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:amountString];
         request.paymentSummaryItems = @[
@@ -81,8 +84,7 @@
             [self presentViewController:paymentController animated:YES completion:nil];
             //
         } else {
-            // Show the user your own credit card form (see options 2 or 3)
-            NSLog(@"Er nah");
+            [self performSegueWithIdentifier:@"order_to_authorize" sender:self];
         }
         
     }
@@ -97,8 +99,8 @@
 - (IBAction)recruitClicked:(id)sender {
     stamps = 40;
     packageId = 1;
-    price = 40;
-    [Utilities alertStatusWithTitle:@"Confirm purchase" message:@"Recruit package: 40 stamps for $40/year" cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:1 view:self];
+    price = 36;
+    [Utilities alertStatusWithTitle:@"Confirm purchase" message:@"Recruit package: 36 stamps for $40/year" cancel:@"Cancel" otherTitles:@[@"Confirm"] tag:1 view:self];
     
 }
 
@@ -162,7 +164,7 @@
             return;
         }
         
-        self.costLabel.text = [NSString stringWithFormat:@"$%.2ld/year", (long)[self getPrice]];
+        self.costLabel.text = [NSString stringWithFormat:@"$%.02f/year", [self getPrice]];
     }
     else {
         self.costLabel.text = errorMessage;
@@ -170,7 +172,7 @@
 }
 
 
-- (NSInteger)getPrice{
+- (float)getPrice{
     if (stamps > 60){
         price = stamps * .9;
     }
@@ -243,6 +245,7 @@
                                if (error) {
                                    completion(PKPaymentAuthorizationStatusFailure);
                                } else {
+                                   NSLog(@"Heres the data -> %@", data);
                                    completion(PKPaymentAuthorizationStatusSuccess);
                                    [Utilities alertStatusWithTitle:@"Order successfully placed" message:@"Check your email for confirmation details" cancel:nil otherTitles:nil tag:0 view:self];
                                }
@@ -279,12 +282,23 @@
 }
 
 
+
 - (void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.layer.zPosition = 200.0;
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
     [hud show:YES];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"order_to_authorize"]){
+        AuthorizePaymentViewController *vc = [segue destinationViewController];
+        
+        [vc setPurchaseInfoWithpackageType:packageId cost:price stamps:stamps];
+        
+    }
 }
 
 

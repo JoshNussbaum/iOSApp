@@ -131,7 +131,7 @@
 - (void)configureProgressBars{
     BOOL customized = NO;
     [self.classProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
-    [self.classProgressBar setProgressBarWidth:(6.0f)];
+    [self.classProgressBar setProgressBarWidth:(5.0f)];
     [self.classProgressBar  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
     [self.classProgressBar setBackgroundColor:[UIColor clearColor]];
     
@@ -145,7 +145,7 @@
     
     
     [self.jarProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
-    [self.jarProgressBar setProgressBarWidth:(6.0f)];
+    [self.jarProgressBar setProgressBarWidth:(5.0f)];
     [self.jarProgressBar  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
     [self.jarProgressBar setBackgroundColor:[UIColor clearColor]];
     

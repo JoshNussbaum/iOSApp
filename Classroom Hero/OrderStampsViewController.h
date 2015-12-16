@@ -9,7 +9,7 @@
 #import <PassKit/PassKit.h>
 #import <UIKit/UIKit.h>
 
-@interface OrderStampsViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate>
+@interface OrderStampsViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *recruitButton;
 @property (strong, nonatomic) IBOutlet UIButton *heroicButton;

@@ -659,5 +659,28 @@ NSInteger GET_USER_BY_STAMP = 41;
 }
 
 
++ (NSString *)getPackageDescriptionWithpackageId:(NSInteger)packageId stamps:(NSInteger)stamps{
+    NSString *description;
+    switch (packageId) {
+        case 0:
+            description = [NSString stringWithFormat:@"Hero package with %ld stamps", (long)stamps];
+            break;
+        case 1:
+            description = [NSString stringWithFormat:@"Recruit package with 40 stamps"];
+            break;
+        case 2:
+            description = [NSString stringWithFormat:@"Epic package with 120 stamps"];
+            break;
+        case 3:
+            description = [NSString stringWithFormat:@"Legendary package with 500 stamps"];
+            break;
+        default:
+            break;
+    }
+    
+    return description;
+}
+
+
 
 @end
