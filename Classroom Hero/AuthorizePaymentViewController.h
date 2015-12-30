@@ -29,16 +29,4 @@
 - (void)setPurchaseInfoWithpackageType:(NSInteger)packageType_ cost:(float)cost_ stamps:(NSInteger)stamps_;
 
 
-- (IBAction)dinersClicked:(id)sender;
-
-- (IBAction)amexClicked:(id)sender;
-
-- (IBAction)visaClicked:(id)sender;
-
-- (IBAction)masterCardClicked:(id)sender;
-
-- (IBAction)jcbCardClicked:(id)sender;
-
-- (IBAction)discoverClicked:(id)sender;
-
 @end

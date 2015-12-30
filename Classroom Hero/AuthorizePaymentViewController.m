@@ -21,6 +21,8 @@
     float price;
     NSInteger stamps;
     NSArray *monthArray;
+    NSArray *cardArray;
+    
     NSArray *countryArray;
     NSArray *stateArray;
     NSArray *cityArray;
@@ -68,6 +70,8 @@
     monthArray = @[@"01 - January", @"02 - February", @"03 - March",
                         @"04 - April", @"05 - May", @"06 - June", @"07 - July", @"08 - August", @"09 - September",
                         @"10 - October", @"11 - November", @"12 - December"];
+    
+    cardArray = @[@"Visa", @"MasterCard", @"Amex", @"Diners", @"JCB", @"Discover"];
     stateArray = [CitiesAndStates getAllStates];
     countryArray = @[@"USA", @"Russia"];
 }
@@ -207,7 +211,7 @@ heightForFooterInSection:(NSInteger)section {
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (section == 0) ? 8 : 5;
+    return (section == 0) ? 8 : 4;
 }
 
 
@@ -295,7 +299,7 @@ heightForFooterInSection:(NSInteger)section {
     else if (section == 1 && row == 1) {
         CreditCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cardInfoCell" forIndexPath:indexPath];
         [cell initializeCellWithname:@"Expiration date" placeholder:@"Required" protected:NO];
-        cell.inputTextField.userInteractionEnabled = NO;
+        cell.inputTextField.allowsEditingTextAttributes = NO;
         cell.inputTextField.tag = 9;
         expirationDateTextField = cell.inputTextField;
         [self pickerView:self.expirationDatePicker didSelectRow:0 inComponent:0];
@@ -312,7 +316,7 @@ heightForFooterInSection:(NSInteger)section {
     else if (section == 1 && row == 3) {
         CreditCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cardInfoCell" forIndexPath:indexPath];
         [cell initializeCellWithname:@"Card type" placeholder:@"Required" protected:NO];
-        cell.inputTextField.userInteractionEnabled = NO;
+        cell.inputTextField.allowsEditingTextAttributes = NO;
         cell.inputTextField.tag = 11;
         cell.inputTextField.returnKeyType = UIReturnKeyDone;
         cardTypeTextField = cell.inputTextField;
@@ -332,52 +336,89 @@ heightForFooterInSection:(NSInteger)section {
 #pragma mark - UIPicker data source
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 2;
+    if (pickerFlag == 1) return 2;
+    else if (pickerFlag == 2) return 1;
+    else return 0;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return (component == 0) ? 12 : 10;
+    if (pickerFlag == 1){
+        return (component == 0) ? 12 : 10;
+    }
+    else if (pickerFlag == 2){
+        return cardArray.count;
+    }
+    return 0;
 }
 
 #pragma mark - UIPicker delegate
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (component == 0) {
-        //Expiration month
-        return monthArray[row];
+    if (pickerFlag == 1){
+        if (component == 0) {
+            //Expiration month
+            return monthArray[row];
+        }
+        else {
+            //Expiration year
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy"];
+            NSInteger currentYear = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
+            return [NSString stringWithFormat:@"%i", currentYear + row];
+        }
     }
-    else {
-        //Expiration year
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy"];
-        NSInteger currentYear = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
-        return [NSString stringWithFormat:@"%i", currentYear + row];
-    }  
+    else if (pickerFlag == 2){
+        return cardArray[row];
+    }
+
     return nil;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (component == 0) {
-        selectedMonth = @(row + 1);
+    if (pickerFlag == 1){
+        if (component == 0) {
+            selectedMonth = @(row + 1);
+        }
+        else {
+            NSString *yearString = [self pickerView:self.expirationDatePicker titleForRow:row forComponent:1];
+            selectedYear = @([yearString integerValue]);
+        }
+        
+        
+        if (!selectedMonth) {
+            [self.expirationDatePicker selectRow:0 inComponent:0 animated:YES];
+            selectedMonth = @(1); //Default to January if no selection
+        }
+        
+        if (!selectedYear) {
+            [self.expirationDatePicker selectRow:0 inComponent:1 animated:YES];
+            NSString *yearString = [self pickerView:self.expirationDatePicker titleForRow:0 forComponent:1];
+            selectedYear = @([yearString integerValue]); //Default to current year if no selection
+        }
+        expirationDateTextField.text = [NSString stringWithFormat:@"%@/%@", selectedMonth, selectedYear];
+        expirationDateTextField.textColor = [UIColor blackColor];
     }
-    else {
-        NSString *yearString = [self pickerView:self.expirationDatePicker titleForRow:row forComponent:1];
-        selectedYear = @([yearString integerValue]);
+    else if (pickerFlag == 2){
+        NSString *cardType = [cardArray objectAtIndex:row];
+        cardTypeTextField.text = cardType;
+        brand = [self getCardBrand:row];
     }
+
     
-    
-    if (!selectedMonth) {
-        [self.expirationDatePicker selectRow:0 inComponent:0 animated:YES];
-        selectedMonth = @(1); //Default to January if no selection
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == expirationDateTextField){
+        pickerFlag = 1;
+        [self.expirationDatePicker reloadAllComponents];
+        return NO;
     }
-    
-    if (!selectedYear) {
-        [self.expirationDatePicker selectRow:0 inComponent:1 animated:YES];
-        NSString *yearString = [self pickerView:self.expirationDatePicker titleForRow:0 forComponent:1];
-        selectedYear = @([yearString integerValue]); //Default to current year if no selection
+    else if (textField == cardTypeTextField){
+        pickerFlag = 2;
+        [self.expirationDatePicker reloadAllComponents];
+        return NO;
     }
-    expirationDateTextField.text = [NSString stringWithFormat:@"%@/%@", selectedMonth, selectedYear];
-    expirationDateTextField.textColor = [UIColor blackColor];
+    return YES;
     
 }
 
@@ -439,34 +480,27 @@ heightForFooterInSection:(NSInteger)section {
     stamps = stamps_;
 }
 
-- (IBAction)dinersClicked:(id)sender {
-    brand = STPCardBrandDinersClub;
-    cardTypeTextField.text = @"Diners Club";
-}
-
-- (IBAction)amexClicked:(id)sender {
-    brand = STPCardBrandAmex;
-    cardTypeTextField.text = @"Amex";
-}
-
-- (IBAction)visaClicked:(id)sender {
-    brand = STPCardBrandVisa;
-    cardTypeTextField.text = @"Visa";
-}
-
-- (IBAction)masterCardClicked:(id)sender {
-    brand = STPCardBrandMasterCard;
-    cardTypeTextField.text = @"MasterCard";
-}
-
-- (IBAction)jcbCardClicked:(id)sender {
-    brand = STPCardBrandJCB;
-    cardTypeTextField.text = @"JCB";
-}
-
-- (IBAction)discoverClicked:(id)sender {
-    brand = STPCardBrandDiscover;
-    cardTypeTextField.text = @"Discover";
+//cardArray = @[@"Visa", @"MasterCard", @"Amex", @"Diners Club", @"JCB", @"Discover"];
+- (STPCardBrand)getCardBrand:(NSInteger)index{
+    if (index == 0){
+        return STPCardBrandVisa;
+    }
+    else if (index == 1){
+        return STPCardBrandMasterCard;
+    }
+    else if (index == 2){
+        return STPCardBrandAmex;
+    }
+    else if (index == 3){
+        return STPCardBrandDinersClub;
+    }
+    else if (index == 4){
+        return STPCardBrandJCB;
+    }
+    else if (index == 5){
+        return STPCardBrandDiscover;
+    }
+    else return STPCardBrandUnknown;
 }
 
 

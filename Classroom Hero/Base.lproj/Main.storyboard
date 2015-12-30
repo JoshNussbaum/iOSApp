@@ -1514,6 +1514,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62J-M0-e0U">
+                                <rect key="frame" x="0.0" y="889" width="768" height="135"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Package Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kyb-dw-2UP">
+                                        <rect key="frame" x="220" y="8" width="328" height="31"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0a-ZK-3qs">
+                                        <rect key="frame" x="274" y="79" width="220" height="42"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Complete">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="completeClicked:" destination="V0R-tf-hnb" eventType="touchUpInside" id="ij7-aL-geN"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g15-Fi-pXI">
+                                        <rect key="frame" x="290" y="45" width="188" height="26"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yZh-hU-alc">
+                                <rect key="frame" x="159" y="777" width="450" height="97"/>
+                                <animations/>
+                                <connections>
+                                    <outlet property="dataSource" destination="V0R-tf-hnb" id="pTF-XO-IdS"/>
+                                    <outlet property="delegate" destination="V0R-tf-hnb" id="3Xv-j5-yby"/>
+                                </connections>
+                            </pickerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="LMR-dY-29O">
                                 <rect key="frame" x="0.0" y="64" width="768" height="705"/>
                                 <animations/>
@@ -1585,67 +1625,6 @@
                                             <outlet property="nameLabel" destination="2Pz-C6-H0I" id="lxK-SQ-WRF"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="creditCardsCell" rowHeight="50" id="8Gl-mA-mxF">
-                                        <rect key="frame" x="0.0" y="150" width="768" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Gl-mA-mxF" id="C5X-u2-mYW">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="49"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4N-dy-xns">
-                                                    <rect key="frame" x="35" y="0.0" width="50" height="50"/>
-                                                    <animations/>
-                                                    <state key="normal" title="Button" image="stp_card_discover.png"/>
-                                                    <connections>
-                                                        <action selector="discoverClicked:" destination="V0R-tf-hnb" eventType="touchUpInside" id="LRM-Sr-eny"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S4X-8C-ECf">
-                                                    <rect key="frame" x="159" y="0.0" width="50" height="50"/>
-                                                    <animations/>
-                                                    <state key="normal" title="Button" image="stp_card_jcb.png"/>
-                                                    <connections>
-                                                        <action selector="jcbCardClicked:" destination="V0R-tf-hnb" eventType="touchUpInside" id="3ct-iw-Adb"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CW0-Z5-GaS">
-                                                    <rect key="frame" x="291" y="0.0" width="50" height="50"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                    <state key="normal" title="Button" image="stp_card_mastercard.png"/>
-                                                    <connections>
-                                                        <action selector="masterCardClicked:" destination="V0R-tf-hnb" eventType="touchUpInside" id="VvL-xg-a8w"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eg2-I2-EDL">
-                                                    <rect key="frame" x="571" y="0.0" width="50" height="50"/>
-                                                    <animations/>
-                                                    <state key="normal" title="Button" image="stp_card_amex.png"/>
-                                                    <connections>
-                                                        <action selector="amexClicked:" destination="V0R-tf-hnb" eventType="touchUpInside" id="Vov-Bj-cYp"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="liu-7H-eEe">
-                                                    <rect key="frame" x="683" y="0.0" width="50" height="50"/>
-                                                    <animations/>
-                                                    <state key="normal" title="Button" image="stp_card_diners.png"/>
-                                                    <connections>
-                                                        <action selector="dinersClicked:" destination="V0R-tf-hnb" eventType="touchUpInside" id="R5r-Bz-k3e"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaI-Aq-ynx">
-                                                    <rect key="frame" x="436" y="0.0" width="50" height="50"/>
-                                                    <animations/>
-                                                    <state key="normal" title="Button" image="stp_card_visa.png"/>
-                                                    <connections>
-                                                        <action selector="visaClicked:" destination="V0R-tf-hnb" eventType="touchUpInside" id="W68-jB-hOn"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <animations/>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                    </tableViewCell>
                                 </prototypes>
                                 <sections/>
                                 <connections>
@@ -1653,46 +1632,6 @@
                                     <outlet property="delegate" destination="V0R-tf-hnb" id="PmZ-cb-TYC"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62J-M0-e0U">
-                                <rect key="frame" x="0.0" y="889" width="768" height="135"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Package Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kyb-dw-2UP">
-                                        <rect key="frame" x="220" y="8" width="328" height="31"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0a-ZK-3qs">
-                                        <rect key="frame" x="274" y="79" width="220" height="42"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Complete">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="completeClicked:" destination="V0R-tf-hnb" eventType="touchUpInside" id="ij7-aL-geN"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g15-Fi-pXI">
-                                        <rect key="frame" x="290" y="45" width="188" height="26"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yZh-hU-alc">
-                                <rect key="frame" x="159" y="777" width="450" height="97"/>
-                                <animations/>
-                                <connections>
-                                    <outlet property="dataSource" destination="V0R-tf-hnb" id="pTF-XO-IdS"/>
-                                    <outlet property="delegate" destination="V0R-tf-hnb" id="3Xv-j5-yby"/>
-                                </connections>
-                            </pickerView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3449,12 +3388,6 @@
         <image name="jar_coin.png" width="720" height="720"/>
         <image name="login button.png" width="509" height="284"/>
         <image name="star.png" width="720" height="720"/>
-        <image name="stp_card_amex.png" width="32" height="20"/>
-        <image name="stp_card_diners.png" width="32" height="20"/>
-        <image name="stp_card_discover.png" width="32" height="20"/>
-        <image name="stp_card_jcb.png" width="32" height="20"/>
-        <image name="stp_card_mastercard.png" width="32" height="20"/>
-        <image name="stp_card_visa.png" width="32" height="20"/>
         <image name="theLOGO.png" width="792" height="792"/>
         <image name="treasure_chest.png" width="832" height="867"/>
     </resources>
