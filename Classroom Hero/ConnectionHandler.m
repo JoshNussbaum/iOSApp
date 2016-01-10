@@ -61,6 +61,9 @@ static NSString * const IDENTIFY_STAMP_URL = @"http://73.231.27.167:8080/dev.cla
 
 static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/unregisterAllStudents";
 
+static NSString * const RESET_PASSWORD_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/resetpassword";
+
+
 //[[NSDate date] timeIntervalSince1970];
 static NSString *POST = @"POST";
 static NSString *PUT = @"PUT";
@@ -398,12 +401,16 @@ static NSInteger connectionType;
 
 }
 
-- (void)getUserBySerialwithSerial:(NSString *)serial{
+- (void)getUserBySerialWithserial:(NSString *)serial{
     connectionType = GET_USER_BY_STAMP;
     
     NSString *url = [NSString stringWithFormat:@"%@/%@/get", GET_USER_BY_STAMP_URL, serial];
     
     [self asynchronousWebCall:nil :url :GET];
+}
+
+- (void)resetPasswordWithemail:(NSString *)serial{
+    connectionType = RESET_PASSWORD;
 }
 
 

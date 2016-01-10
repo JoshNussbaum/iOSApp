@@ -37,5 +37,6 @@
 
 - (IBAction)pricingClicked:(id)sender;
 
+- (IBAction)forgotPasswordClicked:(id)sender;
 
 @end

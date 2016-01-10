@@ -54,10 +54,16 @@
     
     classjar *jar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     
-    [self.jarProgressBar setProgress:((float)[jar getProgress] / (float)[jar getTotal]) animated:YES ];
+    if (jar != nil){
+        [self.jarProgressBar setProgress:((float)[jar getProgress] / (float)[jar getTotal]) animated:YES ];
+        
+    }
+    else {
+        [self.jarProgressBar setProgress:0.0f animated:YES ];
+    }
     
     [self.classProgressBar setProgress:(float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel] animated:YES];
-    
+
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     
     if (!currentUser.serial || unregisteredStudents > 0 || currentUser.accountStatus < 2){

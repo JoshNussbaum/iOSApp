@@ -15,6 +15,7 @@
 @interface AttendanceViewController (){
     BOOL showingStudents;
     BOOL isStamping;
+    BOOL didManuallyCheckIn;
     NSMutableArray *studentsData;
     user *currentUser;
     student *currentStudent;
@@ -22,6 +23,8 @@
     MBProgressHUD *hud;
     ConnectionHandler *webHandler;
     NSString *stampSerial;
+    CGRect coinRect;
+    SystemSoundID coins;
 }
 
 @end
@@ -41,10 +44,12 @@
     // Check to see if it's a different day.
     if (!([[Utilities getCurrentDate] isEqualToString:[currentUser.currentClass getCurrentDate]])){
         [[DatabaseHandler getSharedInstance]updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:NO];
+        [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
     }
     
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
-    
+    coins = [Utilities getCoinShakeSound];
+
     self.studentNameLabel.hidden = YES;
     self.studentPointsLabel.hidden = YES;
 
@@ -87,8 +92,8 @@
                         else {
                             [Utilities wiggleImage:self.stampImage sound:NO];
                             [self setStudentLabels];
-                            [self activityStart:@"Checking in..."];
                             [self checkNewDay];
+                            didManuallyCheckIn = NO;
                             [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
                         }
                         
@@ -117,10 +122,12 @@
     }
     
     if (alertView.tag == 1){
+        didManuallyCheckIn = YES;
         [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
     }
     
     else if (alertView.tag == 2){
+        didManuallyCheckIn = YES;
         [webHandler checkOutStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
     }
 }
@@ -155,7 +162,6 @@
         
         if([successNumber boolValue] == YES)
         {
-            [Utilities wiggleImage:self.stampImage sound:YES];
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
             NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
@@ -165,22 +171,24 @@
             NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
             NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
             
-
             [currentStudent setPoints:pointsNumber.integerValue];
             [currentStudent setLevel:levelNumber.integerValue];
             [currentStudent setProgress:progressNumber.integerValue];
             [currentStudent setLevelUpAmount:lvlUpAmount];
             [currentStudent setCheckedIn:YES];
+            [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-    
-
-            self.studentPointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
-            [self reloadTable];
-            [self performSelector:@selector(hideLabels) withObject:nil afterDelay:2.0];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             
+            if (!didManuallyCheckIn){
+                [self coinAnimation];
+            }
+
+            [self reloadTable];
         }
         else {
             [Utilities alertStatusWithTitle:@"Error checking student in" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [self hideLabels];
             return;
         }
     }
@@ -226,6 +234,7 @@
     if (errorMessage != nil){
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
     }
+    [self hideLabels];
 
 
 }
@@ -234,6 +243,7 @@
 - (void)hideLabels{
     self.studentNameLabel.hidden = YES;
     self.studentPointsLabel.hidden = YES;
+    self.sackImage.hidden = YES;
 }
 
 
@@ -243,6 +253,7 @@
 
     self.studentPointsLabel.hidden = NO;
     self.studentNameLabel.hidden = NO;
+    self.sackImage.hidden = NO;
 }
 
 
@@ -289,6 +300,62 @@
     hud.labelText = message;
     [hud show:YES];
     
+}
+
+- (void)coinAnimation{
+    [UIView animateWithDuration:.4
+                     animations:^{
+                         self.coinImage.alpha = 1.0;
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         double delayInSeconds = .5;
+                         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                             [UIView animateWithDuration:.5
+                                              animations:^{
+                                                  
+                                                  [self animateCoinToSack:self.coinImage];
+                                                  
+                                              }
+                                              completion:^(BOOL finished) {
+                                                  self.studentPointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
+                                                  [Utilities sackWiggle:self.sackImage];
+                                                  AudioServicesPlaySystemSound(coins);
+                     
+                                                  [UIView animateWithDuration:.3
+                                                                   animations:^{
+                                                                       [self.coinImage setFrame:coinRect];
+                                                                       float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+                                                
+                                                                   }
+                                                                   completion:^(BOOL finished) {
+                                                                       double delayInSeconds = 1.0;
+                                                                       dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                                                                       dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                                                           [UIView animateWithDuration:.5
+                                                                                            animations:^{
+                                                                                                [self hideLabels];
+                                                                                            }
+                                                                                            completion:^(BOOL finished) {
+                                                                                                isStamping = NO;
+                                                                                            }
+                                                                            ];
+                                                                       });
+                                                                   }
+                                                   ];
+                                              }
+                              ];
+                         });
+                         
+                     }
+     ];
+    
+}
+
+- (void)animateCoinToSack:(UIImageView *)coin{
+    [coin setFrame:CGRectMake(self.sackImage.frame.origin.x + self.sackImage.frame.size.width/2 - 30, self.sackImage.frame.origin.y+50, self.sackImage.frame.size.width-75, self.sackImage.frame.size.height-75)];
+    coin.alpha = 0.0;
 }
 
 

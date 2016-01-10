@@ -29,7 +29,7 @@
     currentUser = [user getInstance];
     [Utilities makeRoundedButton:self.editNameButton :[UIColor whiteColor]];
     [Utilities makeRoundedButton:self.editPasswordButton :[UIColor whiteColor]];
-    
+    [Utilities makeRoundedButton:self.resetPasswordButton :nil];
     self.firstNameTextField.placeholder = currentUser.firstName;
     self.lastNameTextField.placeholder = currentUser.lastName;
     
@@ -88,6 +88,12 @@
         
     }
 }
+
+
+- (IBAction)resetPasswordClicked:(id)sender {
+    
+}
+
 
 
 - (IBAction)backClicked:(id)sender {

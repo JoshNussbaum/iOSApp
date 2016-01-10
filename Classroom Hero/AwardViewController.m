@@ -624,7 +624,7 @@ static NSInteger coinHeight = 250;
         [coinImages addObject:coinImage];
         [self.view addSubview:coinImage];
     }
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:0.75
                      animations:^{
                          for (UIImageView *coinImage in coinImages){
                              coinImage.alpha =1.0;

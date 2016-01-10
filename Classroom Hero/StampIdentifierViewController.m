@@ -64,7 +64,7 @@
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                     [self activityStart:@"Examining stamp..."];
-                    [webHandler getUserBySerialwithSerial:stampSerial];
+                    [webHandler getUserBySerialWithserial:stampSerial];
                 }
                 else{
                     [Utilities failAnimation:self.stampImage];

@@ -134,7 +134,10 @@
 - (void)checkOutAllStudentsWithclassId:(NSInteger)classId;
 
 
-- (void)getUserBySerialwithSerial:(NSString *)serial;
+- (void)getUserBySerialWithserial:(NSString *)serial;
+
+
+- (void)resetPasswordWithemail:(NSString *)serial;
 
 
 @end
