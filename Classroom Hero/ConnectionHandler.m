@@ -52,8 +52,10 @@ static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/dev.classro
 
 static NSString * const ORDER_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/order";
 
-static NSString * const EDIT_TEACHER_NAME_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/order";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/order";
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/settings/editName";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/settings/changePassword";
+static NSString * const RESET_PASSWORD_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/settings/recoverPassword";
+
 
 static NSString * const GET_CLASS_STATS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/stats";
 
@@ -61,7 +63,6 @@ static NSString * const IDENTIFY_STAMP_URL = @"http://73.231.27.167:8080/dev.cla
 
 static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/unregisterAllStudents";
 
-static NSString * const RESET_PASSWORD_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/resetpassword";
 
 
 //[[NSDate date] timeIntervalSince1970];
@@ -244,10 +245,10 @@ static NSInteger connectionType;
 }
 
 
-- (void)rewardStudentWithserial:(NSString *)serial pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId{
+- (void)rewardStudentWithserial:(NSString *)serial pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId classId:(NSInteger)classId{
     connectionType = REWARD_STUDENT;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"stamp\":\"%@\", \"pointsearned\":%ld, \"reinforcerId\":%ld, \"schoolId\":%ld}", serial, (long)pointsEarned, (long)reinforcerId, (long)schoolId];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"stamp\":\"%@\", \"pointsearned\":%ld, \"reinforcerId\":%ld, \"schoolId\":%ld, \"cid\":%ld}", serial, (long)pointsEarned, (long)reinforcerId, (long)schoolId, (long)classId];
     
     [self asynchronousWebCall:jsonRequest :REWARD_STUDENT_URL :POST];
 }
@@ -310,20 +311,21 @@ static NSInteger connectionType;
     
     connectionType = EDIT_TEACHER_NAME;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld, \"firstName\":\"%@\", \"lastName\":\"%@\"}", (long)id, firstName, lastName];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"uid\":%ld, \"fname\":\"%@\", \"lname\":\"%@\"}", (long)id, firstName, lastName];
     
     [self asynchronousWebCall:jsonRequest :EDIT_TEACHER_NAME_URL :PUT];
 
 }
 
 
-- (void)editTeacherPasswordWithid:(NSInteger)id password:(NSString *)password{
+- (void)editTeacherPasswordWithemail:(NSString *)email oldPassword:(NSString *)oldPassword newPassword:(NSString *)newPassword{
     connectionType = EDIT_TEACHER_PASSWORD;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld, \"password\":\"%@\"}", (long)id, password];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"email\":\"%@\", \"password\":\"%@\", \"newPassword\":\"%@\"}", email, oldPassword, newPassword];
     
     [self asynchronousWebCall:jsonRequest :EDIT_TEACHER_PASSWORD_URL :PUT];
 }
+
 
 - (void)stampToLogin:(NSString *)stampSerial{
     NSString *url = [NSString stringWithFormat:@"%@/%@", STAMP_TO_LOGIN_URL, stampSerial];
@@ -409,8 +411,12 @@ static NSInteger connectionType;
     [self asynchronousWebCall:nil :url :GET];
 }
 
-- (void)resetPasswordWithemail:(NSString *)serial{
+- (void)resetPasswordWithemail:(NSString *)email{
     connectionType = RESET_PASSWORD;
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"email\":\"%@\"}", email];
+    
+    [self asynchronousWebCall:jsonRequest :RESET_PASSWORD_URL :POST];
 }
 
 
@@ -457,7 +463,7 @@ static NSInteger connectionType;
     [request setTimeoutInterval:20];
     
     if (jsonRequest != nil){
-        NSLog(@"Json Request -> %@", jsonRequest );
+        NSLog(@"Json Request -> %@\n Url string -> %@", jsonRequest, urlString);
         NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
         [request setHTTPBody: requestData];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];

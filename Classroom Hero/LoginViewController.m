@@ -79,8 +79,8 @@ NSArray *fakeStudents;
 - (IBAction)loginClicked:(id)sender{
     [self hideKeyboard];
     [[DatabaseHandler getSharedInstance] resetDatabase];
-    [self loginSuccess:fakeLoginDict];
-    return;
+//    [self loginSuccess:fakeLoginDict];
+//    return;
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
     errorMessage = @"";
@@ -183,26 +183,26 @@ NSArray *fakeStudents;
         [Utilities alertStatusNoConnection];
         return;
     }
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     
-    if (type == LOGIN || type == STAMP_TO_LOGIN){
-        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        NSString *message = [data objectForKey:@"message"];
-
-        if([successNumber boolValue] == YES)
-        {
+    if ([successNumber boolValue] == YES){
+        if (type == LOGIN || type == STAMP_TO_LOGIN){
+            
             [Utilities wiggleImage:self.stampImage sound:NO];
             [self loginSuccess:data];
         }
-        else {
-            if (!message){
-                message = @"Connection error. Please try again.";
-            }
-            [Utilities alertStatusWithTitle:@"Error logging in" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-        }
     }
-   
     else {
-        [Utilities alertStatusNoConnection];
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        if (type == LOGIN){
+            errorMessage = @"Error logging in";
+        }
+        else if (type == STAMP_TO_LOGIN){
+            errorMessage = @"Error stamping to log in";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:nil];
+        isStamping = NO;
     }
     
 }

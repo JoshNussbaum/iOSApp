@@ -89,15 +89,13 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-    isStamping = NO;
     if (data == nil){
         [Utilities alertStatusNoConnection];
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    if (type == UNREGISTER_STAMP){
-        
-        if([successNumber boolValue] == YES)
-        {
+    if([successNumber boolValue] == YES)
+    {
+        if (type == UNREGISTER_STAMP){
             [Utilities wiggleImage:self.stampImage sound:YES];
             [[DatabaseHandler getSharedInstance]unregisterStudent:[currentStudent getId]];
             self.studentNameLabel.hidden = YES;
@@ -106,13 +104,7 @@
             [Utilities alertStatusWithTitle:@"Successfully unregistered stamp" message:nil cancel:nil otherTitles:nil tag:0 view:self];
             
         }
-        else{
-            [Utilities failAnimation:self.stampImage];
-        }
-    }
-    else if (type == GET_USER_BY_STAMP){
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == GET_USER_BY_STAMP){
             NSDictionary *studentDictionary = [data objectForKey:@"user"];
             
             NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
@@ -133,10 +125,21 @@
             }
             [self displayStudent];
         }
-        else{
-            [Utilities alertStatusWithTitle:@"No student owns this stamp" message:nil cancel:nil otherTitles:nil tag:0 view:self];
-        }
+        
     }
+    else {
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        
+        if (type == UNREGISTER_STAMP){
+            errorMessage = @"Error unregistering stamp";
+        }
+        else if (type == GET_USER_BY_STAMP){
+            errorMessage = @"Error retrieving student";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+    }
+    isStamping = NO;
 }
 
 

@@ -66,7 +66,7 @@
 
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     
-    if (!currentUser.serial || unregisteredStudents > 0 || currentUser.accountStatus < 2){
+    if (!currentUser.serial || unregisteredStudents > 0){
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.settingsView alignment:JSBadgeViewAlignmentTopRight];
         badgeView.badgeText = @"!";
@@ -135,6 +135,8 @@
 
 
 - (void)configureProgressBars{
+    self.classLevelLabel.text = [NSString stringWithFormat:@"Class  Level:  %ld", [currentUser.currentClass getLevel]];
+    
     BOOL customized = NO;
     [self.classProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
     [self.classProgressBar setProgressBarWidth:(5.0f)];

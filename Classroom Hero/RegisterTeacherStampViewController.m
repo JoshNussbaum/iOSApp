@@ -96,38 +96,38 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-    isStamping = NO;
-    
     if (data == nil){
         [Utilities alertStatusNoConnection];
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    if (type == UNREGISTER_STAMP){
-        
-        if([successNumber boolValue] == YES)
-        {
-            
+    
+    if([successNumber boolValue] == YES)
+    {
+        if (type == UNREGISTER_STAMP){
             currentUser.serial = nil;
             [self setLabels];
-
         }
-        else{
-            [Utilities failAnimation:self.stampImage];
-        }
-    }
-    else if (type == REGISTER_STAMP){
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == REGISTER_STAMP){
             currentUser.serial = serial;
             currentUser.accountStatus = 2;
             [self setLabels];
             [Utilities alertStatusWithTitle:@"Successfully registered stamp" message:nil cancel:nil otherTitles:nil tag:0 view:self];
         }
-        else{
-            [Utilities failAnimation:self.stampImage];
-        }
+        
     }
-
+    else {
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        
+        if (type == UNREGISTER_STAMP){
+            errorMessage = @"Error unregistering stamp";
+        }
+        else if (type == REGISTER_STAMP){
+            errorMessage = @"Error registering stamp";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+    }
+    isStamping = NO;
 }
 
 

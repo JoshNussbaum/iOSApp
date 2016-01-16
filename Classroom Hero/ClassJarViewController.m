@@ -6,11 +6,22 @@
 //  Copyright (c) 2015 Josh Nussbaum. All rights reserved.
 //
 
+
+
+
+// Set up jar Coins right below the jar, and
+// and just do the negative multiply thing with it starting at
+// 0 and just alter the height and have everything else adjust dyanmically
+// with autolayout
+
+
+
 #import "ClassJarViewController.h"
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "StudentsTableViewController.h"
+
 
 @interface ClassJarViewController (){
     user *currentUser;
@@ -31,6 +42,14 @@
 
     double currentPoints;
     BOOL isStamping;
+    
+    float jarImageX;
+    float jarImageY;
+    float jarImageWidth;
+    float jarImageHeight;
+    float jarCoinsX;
+    float jarCoinsY;
+    float jarCoinsWidth;
 }
 
 @property UIImageView *jarCoins;
@@ -72,21 +91,35 @@
     corkRect = self.corkImage.frame;
     
     currentPoints = 1;
+
 }
 
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     currentUser = [user getInstance];
-    
+
     UIImage *image = [UIImage imageNamed:@"jar_progress_coins.png"];
+    
+    jarImageX = self.jarImage.frame.origin.x;
+    jarImageY = self.jarImage.frame.origin.y;
+    jarImageWidth = self.jarImage.frame.size.width;
+    jarImageHeight = self.jarImage.frame.size.height;
+    
+    jarCoinsWidth = jarImageX + jarImageWidth/2;
+
+    
+    jarCoinsX = 45 + ((jarImageX + jarImageWidth ) / 2) - jarCoinsWidth/2;
+    jarCoinsY = jarImageHeight + jarImageY - 50;
     
     self.jarCoins = [[UIImageView alloc] initWithImage:image];
     self.jarCoins.layer.zPosition = -1;
-    self.jarCoins.frame = CGRectMake(194, 840, 381, 0);
+    self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
     self.jarCoins.contentMode = UIViewContentModeTop;
     self.jarCoins.clipsToBounds = YES;
     [self.view addSubview:self.jarCoins];
     
+    self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
+
     self.corkImage.hidden = YES;
     float prog = (float)[currentClassJar getProgress] / (float)[currentClassJar getTotal];
     
@@ -99,12 +132,11 @@
         newProg = prog * (-420);
         
     }
-    CGRect finalFrame = CGRectMake(194, 840, 381, newProg);
-    [UIView animateWithDuration:0.0 animations:^{
+    CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
+    [UIView animateWithDuration:0.5 animations:^{
         self.jarCoins.frame = finalFrame;
         
     }];
-    
 }
 
 
@@ -114,6 +146,7 @@
 
 
 - (IBAction)valueChanged:(id)sender {
+    
     if (!isStamping && currentClassJar) {
         self.pointsLabel.text = [NSString stringWithFormat:@"+ %.f",self.stepper.value];
         currentPoints = [(UIStepper*)sender value];
@@ -165,8 +198,8 @@
         NSError *error;
         NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
         if (resultObject != NULL) {
+            isStamping = YES;
             if ([resultObject objectForKey:@"stamp"] != nil){
-                isStamping = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 NSLog(@"We stamped with -> %@", stampSerial);
                 
@@ -185,6 +218,7 @@
                         
                     }
                     else {
+                        AudioServicesPlaySystemSound(fail);
                         self.stepper.enabled = YES;
                         isStamping = NO;
                     }
@@ -202,6 +236,9 @@
                     }];
                     isStamping = NO;
                 }
+            }
+            else {
+                isStamping = NO;
             }
         }
     }
@@ -260,30 +297,52 @@
     
     if (data == nil){
         [Utilities alertStatusNoConnection];
+        isStamping = NO;
         return;
     }
-    if (type == ADD_JAR){
-        NSInteger jarId = [[data objectForKey:@"id"] integerValue];
-        currentClassJar = [[classjar alloc] initWithid:jarId cid:[currentUser.currentClass getId] name:newClassJarName progress:0 total:newClassJarTotal.integerValue];
-        [[DatabaseHandler getSharedInstance] addClassJar:(currentClassJar)];
-        [self displayClassJar];	
-        self.addJarButton.enabled = NO;
-        self.addJarButton.hidden = YES;
-        self.stepper.enabled = YES;
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
 
+    if([successNumber boolValue] == YES)
+    {
+        if (type == ADD_JAR){
+            NSInteger jarId = [[data objectForKey:@"id"] integerValue];
+            currentClassJar = [[classjar alloc] initWithid:jarId cid:[currentUser.currentClass getId] name:newClassJarName progress:0 total:newClassJarTotal.integerValue];
+            [[DatabaseHandler getSharedInstance] addClassJar:(currentClassJar)];
+            [self displayClassJar];
+            self.addJarButton.enabled = NO;
+            self.addJarButton.hidden = YES;
+            self.stepper.enabled = YES;
+            
+        }
+        else if (type == EDIT_JAR){
+            [currentClassJar setName:newClassJarName];
+            [currentClassJar setTotal:newClassJarTotal.integerValue];
+            [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
+            [self displayClassJar];
+        }
+        else if (type == ADD_TO_JAR){
+            tmpProgress = [currentClassJar getProgress];
+            [currentClassJar updateJar:currentPoints];
+            [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
+            [self addCoins];
+        }
     }
-    else if (type == EDIT_JAR){
-        [currentClassJar setName:newClassJarName];
-        [currentClassJar setTotal:newClassJarTotal.integerValue];
-        [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
-        [self displayClassJar];
+    else {
+        NSString *errorMessage;
+        NSString *message = [data objectForKey:@"message"];
+        if (type == ADD_JAR) {
+            errorMessage = @"Error adding jar";
+        }
+        else if (type == EDIT_JAR){
+            errorMessage = @"Error editing jar";
+        }
+        else if (type == ADD_TO_JAR){
+            errorMessage = @"Error adding to jar";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        isStamping = NO;
     }
-    else if (type == ADD_TO_JAR){
-        tmpProgress = [currentClassJar getProgress];
-        [currentClassJar updateJar:currentPoints];
-        [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
-        [self addCoins];
-    }
+
 }
 
 
@@ -354,7 +413,7 @@
                              finalFrame.size.height = newProg;
                              
                              [UIView animateWithDuration:time animations:^{
-                                 self.jarCoins.frame = CGRectMake(194, 840, 381, newProg);
+                                 self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
                              }];
                          }
          ];

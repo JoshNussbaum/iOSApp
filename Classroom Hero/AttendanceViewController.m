@@ -147,7 +147,6 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-    isStamping = NO;
     
     if (data == nil){
         [Utilities alertStatusNoConnection];
@@ -155,13 +154,8 @@
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     
-    NSString *errorMessage = nil;
-    NSString *message = [data objectForKey:@"message"];
-
-    if (type == STUDENT_CHECK_IN){
-        
-        if([successNumber boolValue] == YES)
-        {
+    if ([successNumber boolValue] == YES){
+        if (type == STUDENT_CHECK_IN){
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
             NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
@@ -183,59 +177,38 @@
             if (!didManuallyCheckIn){
                 [self coinAnimation];
             }
-
+            
             [self reloadTable];
         }
-        else {
-            [Utilities alertStatusWithTitle:@"Error checking student in" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [self hideLabels];
-            return;
-        }
-    }
-    
-    else if (type == STUDENT_CHECK_OUT){
         
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == STUDENT_CHECK_OUT){
             [[DatabaseHandler getSharedInstance] updateStudentCheckedIn:[currentStudent getId] :NO];
             [currentStudent setCheckedIn:NO];
+            isStamping = NO;
             [self reloadTable];
-            
         }
-        else {
-            [Utilities alertStatusWithTitle:@"Error checking student out" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
-        }
-    }
-    
-    else if (type == ALL_STUDENT_CHECK_IN){
         
-        if([successNumber boolValue] == YES)
-        {
-            
+        else if (type == ALL_STUDENT_CHECK_IN){
             
         }
-        else {
-            errorMessage = @"Error checking students in";
+        else if (type == ALL_STUDENT_CHECK_OUT){
+            
         }
     }
-    else if (type == ALL_STUDENT_CHECK_OUT){
+    else {
+        NSString *errorMessage = nil;
+        NSString *message = [data objectForKey:@"message"];
         
-        if([successNumber boolValue] == YES)
-        {
-            
-            
+        if (type == STUDENT_CHECK_IN){
+            errorMessage = @"Error checking in";
         }
-        else {
-            errorMessage = @"Error checking students out";
+        else if (type == STUDENT_CHECK_OUT){
+            errorMessage = @"Error checkout out";
         }
-    }
-    
-    if (errorMessage != nil){
+        
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        isStamping = NO;
     }
-    [self hideLabels];
-
 
 }
 
@@ -353,7 +326,7 @@
     
 }
 
-- (void)animateCoinToSack:(UIImageView *)coin{
+- (void)animateCoinToSack:(UIView *)coin{
     [coin setFrame:CGRectMake(self.sackImage.frame.origin.x + self.sackImage.frame.size.width/2 - 30, self.sackImage.frame.origin.y+50, self.sackImage.frame.size.width-75, self.sackImage.frame.size.height-75)];
     coin.alpha = 0.0;
 }

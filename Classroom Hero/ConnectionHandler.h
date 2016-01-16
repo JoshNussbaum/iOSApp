@@ -86,7 +86,7 @@
 - (void)registerStamp:(NSInteger)id :(NSString *)serial;
 
 
-- (void)rewardStudentWithserial:(NSString *)serial pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId;
+- (void)rewardStudentWithserial:(NSString *)serial pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId classId:(NSInteger)classId;
 
 
 - (void)rewardAllStudentsWithcid:(NSInteger)cid;
@@ -104,7 +104,7 @@
 - (void)editTeacherNameWithid:(NSInteger)id firstName:(NSString *)firstName lastName:(NSString *)lastName;
 
 
-- (void)editTeacherPasswordWithid:(NSInteger)id password:(NSString *)password;
+- (void)editTeacherPasswordWithemail:(NSString *)email oldPassword:(NSString *)oldPassword newPassword:(NSString *)newPassword;
 
 
 - (void)stampToLogin:(NSString *)stampSerial;
@@ -137,7 +137,7 @@
 - (void)getUserBySerialWithserial:(NSString *)serial;
 
 
-- (void)resetPasswordWithemail:(NSString *)serial;
+- (void)resetPasswordWithemail:(NSString *)email;
 
 
 @end

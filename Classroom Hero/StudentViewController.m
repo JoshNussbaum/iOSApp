@@ -109,63 +109,59 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type {
     [hud hide:YES];
-    isStamping = NO;
-
     if (data == nil){
         [Utilities alertStatusNoConnection];
     }
     
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    NSString *message = [data objectForKey:@"message"];
-
-    if (type == EDIT_STUDENT){
-        
-        if([successNumber boolValue] == YES){
+    if([successNumber boolValue] == YES){
+        if (type == EDIT_STUDENT){
             [currentStudent setFirstName:newStudentFirstName];
             [currentStudent setLastName:newStudentLastName];
             [hud hide:YES];
             [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
             [self setStudentLabels];
         }
-        else {
-            [Utilities alertStatusWithTitle:@"Error editing student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
+        else if (type == DELETE_STUDENT){
+            [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
+            [hud hide:YES];
+            [self.navigationController popViewControllerAnimated:YES];
         }
-    }
-    else if (type == DELETE_STUDENT){
-        [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
-        [hud hide:YES];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    else if (type == REGISTER_STAMP){
-        if ([successNumber boolValue] == YES){
+        else if (type == REGISTER_STAMP){
             [[DatabaseHandler getSharedInstance] registerStudent:[currentStudent getId] :[currentStudent getSerial]];
-
+            
             [Utilities wiggleImage:self.stampImage sound:YES];
             self.studentButton.hidden = NO;
             self.stampToRegisterLabel.hidden = YES;
             isRegistered = YES;
         }
-        else {
-            [Utilities alertStatusWithTitle:@"Error registering student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
-        }
-        isStamping = NO;
-    }
-    else if (type == UNREGISTER_STAMP){
-        if ([successNumber boolValue] == YES){
+        else if (type == UNREGISTER_STAMP){
             [[DatabaseHandler getSharedInstance] unregisterStudent:[currentStudent getId]];
             [Utilities wiggleImage:self.stampImage sound:YES];
             self.stampToRegisterLabel.hidden = NO;
             self.studentButton.hidden = YES;
             isRegistered = NO;
         }
-        else {
-            [Utilities alertStatusWithTitle:@"Error unregistering student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
-        }
-    
     }
+    else {
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        
+        if (type == EDIT_STUDENT){
+            errorMessage = @"Error editing student";
+        }
+        else if (type == DELETE_STUDENT){
+            errorMessage = @"Error deleting student";
+        }
+        else if (type == REGISTER_STAMP){
+            errorMessage = @"Error registering student";
+        }
+        else if (type == UNREGISTER_STAMP){
+            errorMessage = @"Error unregistering student";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+    }
+    isStamping = NO;
 }
 
 

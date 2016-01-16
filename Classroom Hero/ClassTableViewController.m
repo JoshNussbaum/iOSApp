@@ -143,25 +143,15 @@ static NSString * const classCell = @"classCell";
     
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     NSString *message = [data objectForKey:@"message"];
-    
-    if (type == EDIT_CLASS){
-        if([successNumber boolValue] == YES)
-        {
+    if([successNumber boolValue] == YES)
+    {
+        if (type == EDIT_CLASS){
             [[DatabaseHandler getSharedInstance] editClass:tmpClass];
             [classes replaceObjectAtIndex:index withObject:tmpClass];
             [self.tableView reloadData];
-            
-        } else {
-            [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
         }
         
-    }
-    
-    else if (type == DELETE_CLASS){
-        if([successNumber boolValue] == YES)
-        {
-            
+        else if (type == DELETE_CLASS){
             [[DatabaseHandler getSharedInstance]deleteClass:[tmpClass getId]];
             NSInteger row = index + 1;
             
@@ -170,12 +160,21 @@ static NSString * const classCell = @"classCell";
             NSArray *indexPaths = @[indexPath];
             [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
             
-        } else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error deleting class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
         }
     }
+    else {
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        
+        if (type == EDIT_CLASS){
+            errorMessage = @"Error editing class";
+        }
+        else if (type == DELETE_CLASS){
+            errorMessage = @"Error deleting class";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+    }
+
 }
 
 

@@ -34,6 +34,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *bOne;
 @property (strong, nonatomic) IBOutlet UIImageView *bTwo;
 @property (strong, nonatomic) IBOutlet UIImageView *cOne;
+@property (strong, nonatomic) IBOutlet UIImageView *coinImage;
+@property (strong, nonatomic) IBOutlet UILabel *coinPointsLabel;
 
 - (IBAction)addReinforcerClicked:(id)sender;
 - (IBAction)editReinforcerClicked:(id)sender;
@@ -42,6 +44,5 @@
 - (IBAction)homeClicked:(id)sender;
 - (IBAction)classJarClicked:(id)sender;
 - (IBAction)marketClicked:(id)sender;
-
 
 @end
