@@ -228,16 +228,17 @@
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    NSString *message = [data objectForKey:@"message"];
-    if (type == ADD_ITEM){
+    
+    if([successNumber boolValue] == YES)
+    {
         
-        if([successNumber boolValue] == YES){
+        if (type == ADD_ITEM){
             NSInteger itemId = [[data objectForKey:@"id"] integerValue];
-
+            
             item *newItem = [[item alloc]init:itemId :[currentUser.currentClass getId] :newItemName :newItemCost.integerValue];
             self.picker.hidden = NO;
             self.editItemButton.hidden = NO;
-
+            
             [[DatabaseHandler getSharedInstance] addItem:newItem];
             
             [itemsData insertObject:newItem atIndex:0];
@@ -245,39 +246,21 @@
             [self.picker selectRow:0 inComponent:0 animated:NO];
             [hud hide:YES];
             [self setItemLabel];
-
-            
         }
-        else {
-            [self showErrorMessageWithtitle:@"Error editing item" message:message];
-            return;
-        }
-    }
-    else if (type == EDIT_ITEM){
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == EDIT_ITEM){
             [currentItem setName:newItemName];
             [currentItem setCost:newItemCost.integerValue];
             [[DatabaseHandler getSharedInstance] editItem:currentItem];
-
+            
             [itemsData replaceObjectAtIndex:index withObject:currentItem];
             [self.picker reloadAllComponents];
-
+            
             self.itemNameLabel.text = newItemName;
             self.pointsLabel.text = [NSString stringWithFormat:@"%@", newItemCost];
             
             [hud hide:YES];
-            
         }
-        else {
-            [self showErrorMessageWithtitle:@"Error editing item" message:message];
-            
-            return;
-        }
-    }
-    else if (type == DELETE_ITEM){
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == DELETE_ITEM){
             [[DatabaseHandler getSharedInstance]deleteItem:[currentItem getId]];
             [itemsData removeObjectAtIndex:index];
             [self.picker reloadAllComponents];
@@ -291,12 +274,10 @@
             else {
                 [self setItemLabel];
             }
-
+            
         }
-    }
-    else if (type == STUDENT_TRANSACTION){
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == STUDENT_TRANSACTION){
+            
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
             NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
@@ -309,7 +290,7 @@
             [currentStudent setPoints:pointsNumber.integerValue];
             NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
             [currentStudent setLevelUpAmount:lvlUpAmount];
-        
+            
             
             NSMutableArray *scores = [NSMutableArray array];
             NSInteger score = [currentStudent getPoints];
@@ -321,15 +302,9 @@
             [[DatabaseHandler getSharedInstance] updateStudent:currentStudent];
             [self sellItemAnimation:scores];
         }
-        else {
-            [self showErrorMessageWithtitle:@"Error selling item" message:message];
 
-            return;
-        }
-    }
-    else if (type == GET_STUDENT_BY_STAMP){
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == GET_STUDENT_BY_STAMP){
+            
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
             NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
@@ -366,13 +341,30 @@
                 [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must earn more coins first" cancel:nil otherTitles:nil tag:0 view:self];
             }
         }
-        else {
-            [self showErrorMessageWithtitle:@"Error selling item" message:message];
-            return;
-        }
-
     }
-
+    else {
+        NSString *errorMessage;
+        NSString *message = [data objectForKey:@"message"];
+        
+        if (type == ADD_ITEM){
+            errorMessage = @"Error adding item";
+        }
+        else if (type == EDIT_ITEM){
+            errorMessage = @"Error editing item";
+        }
+        else if (type == DELETE_ITEM){
+            errorMessage = @"Error deleting item";
+        }
+        else if (type == STUDENT_TRANSACTION){
+            errorMessage = @"Error selling item";
+        }
+        else if (type == GET_STUDENT_BY_STAMP){
+            errorMessage = @"Error identifying student";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        isStamping = NO;
+    }
+    
 }
 
 

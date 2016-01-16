@@ -79,8 +79,8 @@ NSArray *fakeStudents;
 - (IBAction)loginClicked:(id)sender{
     [self hideKeyboard];
     [[DatabaseHandler getSharedInstance] resetDatabase];
-    //[self loginSuccess:fakeLoginDict];
-
+//    [self loginSuccess:fakeLoginDict];
+//    return;
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
     errorMessage = @"";
@@ -119,8 +119,27 @@ NSArray *fakeStudents;
 }
 
 
+- (IBAction)forgotPasswordClicked:(id)sender {
+    [Utilities editAlertTextWithtitle:@"Forgot password" message:@"Enter your email to reset your password" cancel:@"Cancel" done:@"Confirm" delete:NO input:@"Email" tag:1 view:self];
+}
+
+
 - (IBAction)backgroundTap:(id)sender{
     [self hideKeyboard];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *email = [alertView textFieldAtIndex:0].text;
+    if (buttonIndex == [alertView cancelButtonIndex]) {
+        return;
+    }
+    
+    if (alertView.tag == 1){
+        // RESET PASSWORD CONNETION HERE
+        // Check to make sure its an email
+        [webHandler resetPasswordWithemail:email];
+    }
+
 }
 
 
@@ -164,32 +183,33 @@ NSArray *fakeStudents;
         [Utilities alertStatusNoConnection];
         return;
     }
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     
-    if (type == LOGIN || type == STAMP_TO_LOGIN){
-        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        NSString *message = [data objectForKey:@"message"];
-
-        if([successNumber boolValue] == YES)
-        {
+    if ([successNumber boolValue] == YES){
+        if (type == LOGIN || type == STAMP_TO_LOGIN){
+            
             [Utilities wiggleImage:self.stampImage sound:NO];
             [self loginSuccess:data];
         }
-        else {
-            if (!message){
-                message = @"Connection error. Please try again.";
-            }
-            [Utilities alertStatusWithTitle:@"Error logging in" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-        }
     }
-   
     else {
-        [Utilities alertStatusNoConnection];
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        if (type == LOGIN){
+            errorMessage = @"Error logging in";
+        }
+        else if (type == STAMP_TO_LOGIN){
+            errorMessage = @"Error stamping to log in";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:nil];
+        isStamping = NO;
     }
     
 }
 
 
 - (void)loginSuccess:(NSDictionary *)data{
+    NSLog([NSString stringWithFormat:@"Here's the login info\n %@", data ]);
     // Set all the user stuff and query the database
     [[DatabaseHandler getSharedInstance] login:data];
     currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];

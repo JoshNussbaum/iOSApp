@@ -128,7 +128,6 @@
 
 - (TutorialContentViewController *)viewControllerAtIndex:(NSUInteger)index{
     if (([self.pageTitles count] == 0) || (index >= [self.pageTitles count])){
-        NSLog(@"In heree");
         return nil;
     }
     TutorialContentViewController *tutorialContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TutorialContentViewController"];

@@ -29,7 +29,7 @@
     currentUser = [user getInstance];
     [Utilities makeRoundedButton:self.editNameButton :[UIColor whiteColor]];
     [Utilities makeRoundedButton:self.editPasswordButton :[UIColor whiteColor]];
-    
+    [Utilities makeRoundedButton:self.resetPasswordButton :[UIColor whiteColor]];
     self.firstNameTextField.placeholder = currentUser.firstName;
     self.lastNameTextField.placeholder = currentUser.lastName;
     
@@ -41,6 +41,10 @@
     [self hideKeyboard];
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, nil];
     errorMessage = @"";
+    if ([self.firstNameTextField.text isEqualToString:currentUser.firstName] && [self.lastNameTextField.text isEqualToString:currentUser.lastName]){
+        [Utilities alertStatusWithTitle:@"Error editing name" message:@"Names are the same" cancel:nil otherTitles:nil tag:0 view:self];
+        return;
+    }
     for (int i =0; i < [textFields count]; i++){
         NSString *error = [[textFields objectAtIndex:i] validate];
         if ( ![error isEqualToString:@""] ){
@@ -63,31 +67,58 @@
 
 
 - (IBAction)editPasswordClicked:(id)sender {
+    NSString *pass = currentUser.password;
     [self hideKeyboard];
     textFields = [[NSMutableArray alloc]initWithObjects:self.currentPasswordTextField, self.editPasswordTextField, self.confirmNewPasswordTextField, nil];
-    errorMessage = @"";
-    for (int i =0; i < [textFields count]; i++){
-        NSString *error = [[textFields objectAtIndex:i] validate];
-        if ( ![error isEqualToString:@""] ){
-            errorMessage = [errorMessage stringByAppendingString:error];
-            break;
+    if ([self.currentPasswordTextField.text isEqualToString:currentUser.password]){
+        errorMessage = @"";
+        for (int i =0; i < [textFields count]; i++){
+            NSString *error = [[textFields objectAtIndex:i] validate];
+            if ( ![error isEqualToString:@""] ){
+                errorMessage = [errorMessage stringByAppendingString:error];
+                break;
+            }
+        }
+        if (![errorMessage isEqualToString:@""]){
+            
+            [hud hide:YES];
+            [Utilities alertStatusWithTitle:@"Error editing password" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+        }
+        else if (![self.editPasswordTextField.text isEqualToString:self.confirmNewPasswordTextField.text]){
+            [Utilities alertStatusWithTitle:@"Error editing password" message:@"Passwords don't match" cancel:nil otherTitles:nil tag:0 view:nil];
+            
+        }
+        else {
+            [self activityStart:@"Editing password..."];
+            [webHandler editTeacherPasswordWithemail:currentUser.email oldPassword:self.currentPasswordTextField.text newPassword:self.confirmNewPasswordTextField.text];
+            
         }
     }
-    if (![errorMessage isEqualToString:@""]){
-        
-        [hud hide:YES];
-        [Utilities alertStatusWithTitle:@"Error editing password" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-    }
-    else if (![self.editPasswordTextField.text isEqualToString:self.confirmNewPasswordTextField.text]){
-        [Utilities alertStatusWithTitle:@"Error editing password" message:@"Passwords don't match" cancel:nil otherTitles:nil tag:0 view:nil];
-        
-    }
     else {
-        [self activityStart:@"Editing password..."];
-        [webHandler editTeacherPasswordWithid:currentUser.id password:self.editPasswordTextField.text];
-        
+        [Utilities alertStatusWithTitle:@"Error editing password" message:@"Your original password does not match" cancel:nil otherTitles:nil tag:0 view:self];
+    }
+
+}
+
+
+- (IBAction)resetPasswordClicked:(id)sender {
+    [Utilities alertStatusWithTitle:@"Are you sure?" message:@"Send confirmation email to reset password?" cancel:@"Cancel" otherTitles:@[@"Reset"] tag:1 view:self];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == [alertView cancelButtonIndex]) {
+        return;
+    }
+    
+    else if (alertView.tag == 1){
+        [webHandler resetPasswordWithemail:currentUser.email];
+        [self activityStart:@"Recovering password..."];
+
+        return;
     }
 }
+
 
 
 - (IBAction)backClicked:(id)sender {
@@ -102,48 +133,52 @@
         
         return;
     }
-    if (type == EDIT_TEACHER_NAME){
-        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        
-        if([successNumber boolValue] == YES)
-        {
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+    if ([successNumber boolValue] == YES){
+        if (type == EDIT_TEACHER_NAME){
             currentUser.firstName = self.firstNameTextField.text;
             currentUser.lastName = self.lastNameTextField.text;
             [hud hide:YES];
+            self.firstNameTextField.text = @"";
+            self.lastNameTextField.text = @"";
             [Utilities alertStatusWithTitle:@"Successfully edited name!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
             self.firstNameTextField.placeholder = currentUser.firstName;
             self.lastNameTextField.placeholder = currentUser.lastName;
-
+            
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error editing name" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
-            return;
-        }
-    }
-    else if (type == EDIT_TEACHER_PASSWORD){
-        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == EDIT_TEACHER_PASSWORD){
             currentUser.password = self.editPasswordTextField.text;
             [hud hide:YES];
             self.editPasswordTextField.text = @"";
             self.confirmNewPasswordTextField.text = @"";
             self.currentPasswordTextField.text = @"";
             [Utilities alertStatusWithTitle:@"Successfully edited password!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
-
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error editing name" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+        
+        else if (type == RESET_PASSWORD){
             [hud hide:YES];
-            return;
+            [Utilities alertStatusWithTitle:@"Password recovery email sent" message:@"Check your inbox for an email containing instructions to reset your password" cancel:nil otherTitles:nil tag:0 view:nil];
+        }
+        else{
+            [Utilities alertStatusNoConnection];
         }
     }
-    else{
-        [Utilities alertStatusNoConnection];
+    else {
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        
+        if (type == EDIT_TEACHER_NAME){
+            errorMessage = @"Error editing name";
+        }
+        else if (type == EDIT_TEACHER_PASSWORD){
+            errorMessage = @"Error editing password";
+        }
+        else if (type == RESET_PASSWORD){
+            errorMessage = @"Error resetting password";
+        }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
     }
+
 }
 
 

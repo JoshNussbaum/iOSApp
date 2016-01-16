@@ -51,6 +51,7 @@ NSInteger STUDENT_CHECK_OUT = 38;
 NSInteger ALL_STUDENT_CHECK_IN = 39;
 NSInteger ALL_STUDENT_CHECK_OUT = 40;
 NSInteger GET_USER_BY_STAMP = 41;
+NSInteger RESET_PASSWORD = 42;
 
 
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType{
@@ -177,6 +178,9 @@ NSInteger GET_USER_BY_STAMP = 41;
             break;
         case 41:
             return @"GET_USER_BY_STAMP";
+            break;
+        case 42:
+            return @"RESET_PASSWORD";
             break;
  
         default:

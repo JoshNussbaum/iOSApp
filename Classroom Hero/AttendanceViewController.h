@@ -23,6 +23,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *studentPointsLabel;
 
+@property (strong, nonatomic) IBOutlet UIImageView *coinImage;
+
+@property (strong, nonatomic) IBOutlet UIImageView *sackImage;
+
 
 - (IBAction)studentsClicked:(id)sender;
 

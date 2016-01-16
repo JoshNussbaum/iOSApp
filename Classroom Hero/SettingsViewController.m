@@ -23,6 +23,7 @@
     JSBadgeView *badgeView2;
     MBProgressHUD *hud;
     NSInteger flag;
+    ConnectionHandler *webHandler;
 }
 
 @end
@@ -31,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     NSArray *buttons = @[self.orderStampsButton, self.registerStudentsButton, self.registerTeacherStamp, self.studentListButton, self.stampIdentifierButton, self.unregisterAllStampsButton, self.classTutorialButton, self.registerStudentsButton];
     
     NSArray *icons = @[self.registerTeacherIcon, self.registerTeacherIcon, self.studentListIcon, self.stampIdentifierIcon, self.unregisterAllStampsIcon, self.classTutorialIcon, self.registerStudentsIcon, self.orderStampsIcon];
@@ -144,8 +146,8 @@
         return;
     }
     else{
-        //[self activityStart:@"Unregistering all stamps..."];
-        
+        [self activityStart:@"Unregistering all stamps..."];
+        [webHandler unregisterAllStampsWithClassId:[currentUser.currentClass getId]];
     }
 }
 
@@ -157,18 +159,23 @@
         [Utilities alertStatusNoConnection];
         return;
     }
-    if (type == UNREGISTER_ALL_STUDENTS){
-        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-        
-        if([successNumber boolValue] == YES)
-        {
-      
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+
+    if([successNumber boolValue] == YES)
+    {
+        if (type == UNREGISTER_ALL_STUDENTS){
             
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error unregistering all students" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+        
+    }
+    
+    else {
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        if (type == UNREGISTER_ALL_STUDENTS){
+            errorMessage = @"Error unregistering all students";
         }
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:nil];
     }
 }
 

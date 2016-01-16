@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *editNameButton;
 @property (strong, nonatomic) IBOutlet UIButton *editPasswordButton;
+@property (strong, nonatomic) IBOutlet UIButton *resetPasswordButton;
 @property (strong, nonatomic) IBOutlet nameTextField *lastNameTextField;
 @property (strong, nonatomic) IBOutlet nameTextField *firstNameTextField;
 @property (strong, nonatomic) IBOutlet passwordTextField *currentPasswordTextField;
@@ -24,5 +25,6 @@
 - (IBAction)editNameClicked:(id)sender;
 - (IBAction)editPasswordClicked:(id)sender;
 - (IBAction)backClicked:(id)sender;
+- (IBAction)resetPasswordClicked:(id)sender;
 
 @end

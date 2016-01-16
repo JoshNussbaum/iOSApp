@@ -54,13 +54,19 @@
     
     classjar *jar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     
-    [self.jarProgressBar setProgress:((float)[jar getProgress] / (float)[jar getTotal]) animated:YES ];
+    if (jar != nil){
+        [self.jarProgressBar setProgress:((float)[jar getProgress] / (float)[jar getTotal]) animated:YES ];
+        
+    }
+    else {
+        [self.jarProgressBar setProgress:0.0f animated:YES ];
+    }
     
     [self.classProgressBar setProgress:(float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel] animated:YES];
-    
+
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     
-    if (!currentUser.serial || unregisteredStudents > 0 || currentUser.accountStatus < 2){
+    if (!currentUser.serial || unregisteredStudents > 0){
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.settingsView alignment:JSBadgeViewAlignmentTopRight];
         badgeView.badgeText = @"!";
@@ -129,6 +135,8 @@
 
 
 - (void)configureProgressBars{
+    self.classLevelLabel.text = [NSString stringWithFormat:@"Class  Level:  %ld", [currentUser.currentClass getLevel]];
+    
     BOOL customized = NO;
     [self.classProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
     [self.classProgressBar setProgressBarWidth:(5.0f)];

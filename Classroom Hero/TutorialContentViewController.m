@@ -21,6 +21,7 @@ static int screenNumber;
     MBProgressHUD *hud;
     ConnectionHandler *webHandler;
     NSString *serial;
+    BOOL isStamping;
 }
 
 @end
@@ -30,6 +31,7 @@ static int screenNumber;
 - (void)viewDidLoad {
     [super viewDidLoad];
     screenNumber = 0;
+    isStamping = NO;
     currentUser = [user getInstance];
     
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
@@ -94,11 +96,12 @@ static int screenNumber;
 
 
 - (void)stampResultDidChange:(NSString *)stampResult{
-    if (self.pageIndex == 6){
+    if (self.pageIndex == 6 && !isStamping && !currentUser.serial){
         NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
         NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
         if (resultObject != NULL) {
+            isStamping = YES;
             if ([resultObject objectForKey:@"stamp"] != nil){
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 
@@ -110,11 +113,16 @@ static int screenNumber;
                     }
                     else {
                         [Utilities failAnimation:self.stampImage];
+                        
                     }
                 }
                 else{
                     [Utilities failAnimation:self.stampImage];
+                    isStamping = NO;
                 }
+            }
+            else {
+                isStamping = NO;
             }
         }
     }
@@ -276,19 +284,19 @@ static int screenNumber;
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
-        
+        isStamping = NO;
         return;
     }
     NSString * compliment;
-    NSInteger successNumber = [[data objectForKey: @"success"]integerValue];
-    if (successNumber == 1 && type != GET_SCHOOLS){
-        AudioServicesPlaySystemSound([Utilities getAwardSound]);
-        compliment = [Utilities getRandomCompliment];
+    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+    
+    if ([successNumber boolValue] == YES){
+        if (type != GET_SCHOOLS){
+            AudioServicesPlaySystemSound([Utilities getAwardSound]);
+            compliment = [Utilities getRandomCompliment];
+        }
         
-    }
-    if (type == ADD_CLASS){
-        if(successNumber == 1)
-        {
+        if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
             NSInteger schoolId = [self getSchoolId];
             class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :1 :0 :30 :[Utilities getCurrentDate]];
@@ -298,16 +306,8 @@ static int screenNumber;
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   class   or   swipe   left   to    continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error adding class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
-        }
-    }
-    
-    else if (type == ADD_STUDENT){
-        if(successNumber == 1)
-        {
+        
+        else if (type == ADD_STUDENT){
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
             student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
@@ -315,16 +315,8 @@ static int screenNumber;
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   student   or   swipe   left   to   continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error adding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
-        }
-    }
-    
-    else if (type == ADD_REINFORCER){
-        if(successNumber == 1)
-        {
+        
+        else if (type == ADD_REINFORCER){
             NSString *reinforcerName = self.textField1.text;
             NSInteger reinforcerValue = self.textField2.text.integerValue;
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
@@ -334,16 +326,7 @@ static int screenNumber;
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   reinforcer   or   swipe   left   to   continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
-        }
-        
-        
-    }
-    else if (type == ADD_ITEM){
-        if (successNumber == 1){
+        else if (type == ADD_ITEM){
             NSString *itemName = self.textField1.text;
             NSInteger itemCost = self.textField2.text.integerValue;
             NSInteger itemId = [[data objectForKey:@"id"] integerValue];
@@ -352,18 +335,9 @@ static int screenNumber;
             [hud hide:YES];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   item   or   swipe   left   to   continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            
-        }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error adding item" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
         }
         
-    }
-    
-    else if (type == ADD_JAR){
-        if (successNumber == 1){
+        else if (type == ADD_JAR){
             NSString *jarName = self.textField1.text;
             NSInteger jarTotal = self.textField2.text.integerValue;
             NSInteger jarId = [[data objectForKey:@"id"] integerValue];
@@ -373,30 +347,42 @@ static int screenNumber;
             [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   jar   or   swipe   left   to   continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error adding item" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
-        }
-        
-        
-    }
-    else if (type == REGISTER_STAMP){
-        if (successNumber == 1){
+        else if (type == REGISTER_STAMP){
             currentUser.serial = serial;
+            isStamping = NO;
             [self performSegueWithIdentifier:@"tutorial_to_class" sender:nil];
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error adding stamp" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            [hud hide:YES];
+        
+        else{
+            [Utilities alertStatusNoConnection];
         }
     }
-    
-    else{
-        [Utilities alertStatusNoConnection];
+    else {
+        NSString *errorMessage = nil;
+        NSString *message = [data objectForKey:@"message"];
+        
+        if (type == ADD_CLASS){
+            errorMessage = @"Error adding class";
+        }
+        else if (type == ADD_STUDENT){
+            errorMessage = @"Error adding student";
+        }
+        else if (type == ADD_REINFORCER){
+            errorMessage = @"Error adding reinforcer";
+        }
+        else if (type == ADD_ITEM){
+            errorMessage = @"Error adding item";
+        }
+        else if (type == ADD_JAR){
+            errorMessage = @"Error adding jar";
+        }
+        else if (type == REGISTER_STAMP){
+            errorMessage = @"Error registering stamp";
+        }
+        isStamping = NO;
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
     }
-    
+
 }
 
 

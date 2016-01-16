@@ -376,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				036811531B8C498700690294 /* Sign in/ Sign up */,
+				0399AAEF1B845E9F00972F21 /* Tutorial */,
 				03A2C1D61BB8FFFD0073EBF8 /* Administrative */,
 				0338C8F01C1936FD0081F5F5 /* Class */,
 				0338C8F11C19370D0081F5F5 /* Student */,
@@ -389,7 +390,6 @@
 				034075D91B980CBA008E14B2 /* ClassJarViewController.m */,
 				036E4ED21B9832EA00A06B25 /* MarketViewController.h */,
 				036E4ED31B9832EA00A06B25 /* MarketViewController.m */,
-				0399AAEF1B845E9F00972F21 /* Tutorial */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

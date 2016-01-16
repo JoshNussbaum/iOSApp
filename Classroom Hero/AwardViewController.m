@@ -41,6 +41,10 @@ static NSInteger coinHeight = 250;
     // 1 Coin Rect
     CGRect cOneRect;
     
+    // Any Coin Rect
+    CGRect coinViewRect;
+    CGRect coinLabelRect;
+    
     CGRect coinRect;
     CGRect levelRect;
     CGRect awardRect;
@@ -102,6 +106,8 @@ static NSInteger coinHeight = 250;
     
     // 1 Coin Rect
     cOneRect = self.cOne.frame;
+    coinViewRect = self.coinImage.frame;
+    coinLabelRect = self.coinPointsLabel.frame;
     
     coinRect = self.aTwo.frame;
     if (reinforcerData.count > 0){
@@ -188,13 +194,13 @@ static NSInteger coinHeight = 250;
 
 
 - (void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping && (reinforcerData.count > 0)){
+    if (!isStamping && reinforcerData.count > 0){
         NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
         NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
         if (resultObject != NULL) {
+            isStamping = YES;
             if ([resultObject objectForKey:@"stamp"] != nil){
-                isStamping = YES;
                 self.nameLabel.hidden = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 NSLog(@"Stamp serial -> %@", stampSerial);
@@ -205,7 +211,7 @@ static NSInteger coinHeight = 250;
                         }
                         else{
                             [Utilities wiggleImage:self.stampImage sound:NO];
-                            [webHandler rewardStudentWithserial:stampSerial pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId]];
+                            [webHandler rewardStudentWithserial:stampSerial pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
                         }
                     }
                     else {
@@ -220,14 +226,12 @@ static NSInteger coinHeight = 250;
                 
             }
             else {
+
                 AudioServicesPlaySystemSound(failSound);
                 self.nameLabel.text=@"Try  Stamping  Again";
                 self.nameLabel.hidden = NO;
                 isStamping = NO;
             }
-        }
-        else {
-            isStamping  =  NO;
         }
     }
     
@@ -297,8 +301,6 @@ static NSInteger coinHeight = 250;
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-    isStamping = NO;
-
     if (data == nil){
         [Utilities alertStatusNoConnection];
         self.nameLabel.hidden=YES;
@@ -307,28 +309,20 @@ static NSInteger coinHeight = 250;
         self.sackImage.hidden=YES;
         self.levelBar.hidden=YES;
         self.categoryPicker.hidden = NO;
+        isStamping = NO;
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    if (type == EDIT_REINFORCER){
-        
-        if([successNumber boolValue] == YES)
-        {
+    if([successNumber boolValue] == YES)
+    {
+        if (type == EDIT_REINFORCER){
             [[DatabaseHandler getSharedInstance] editReinforcer:currentReinforcer];
             [reinforcerData replaceObjectAtIndex:index withObject:currentReinforcer];
             [self.categoryPicker reloadAllComponents];
             [self setReinforcerName];
             
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
-        }
-    }
-    else if (type == ADD_REINFORCER){
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == ADD_REINFORCER){
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
             reinforcer *rr = [[reinforcer alloc] init:reinforcerId :[currentUser.currentClass getId] :tmpName :tmpValue.integerValue];
             
@@ -344,14 +338,7 @@ static NSInteger coinHeight = 250;
             self.categoryPicker.hidden = NO;
             
         }
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
-        }
-    }
-    else if (type == DELETE_REINFORCER){
-        if([successNumber boolValue] == YES){
+        else if (type == DELETE_REINFORCER){
             [[DatabaseHandler getSharedInstance]deleteReinforcer:[currentReinforcer getId]];
             [reinforcerData removeObjectAtIndex:index];
             [self.categoryPicker reloadAllComponents];
@@ -362,15 +349,8 @@ static NSInteger coinHeight = 250;
                 self.reinforcerValue.text = @"";
                 self.editReinforcerButton.hidden = YES;
             }
-            else {
-                [self setReinforcerName];
-            }
         }
-        
-    }
-    else if (type == REWARD_STUDENT){
-        if([successNumber boolValue] == YES)
-        {
+        else if (type == REWARD_STUDENT){
             pointsAwarded = [currentReinforcer getValue];
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
@@ -400,24 +380,49 @@ static NSInteger coinHeight = 250;
                 
                 [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
             }
+            [currentUser.currentClass addPoints:1];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             [self displayStudent];
             tmpPoints = ([currentStudent getPoints] - pointsAwarded);
             [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
+            
         }
-        
-        else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error rewarding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
-        }
-    }
-    else if (type == REWARD_ALL_STUDENTS){
-        if ([successNumber boolValue] == YES){
+        else if (type == REWARD_ALL_STUDENTS){
             AudioServicesPlaySystemSound(teacherStamp);
             [[DatabaseHandler getSharedInstance] rewardAllStudentsInClassWithid:[currentUser.currentClass getId]];
             [self awardAllStudents];
+            
+        }
+        else {
+            [Utilities alertStatusNoConnection];
+            isStamping = NO;
         }
     }
+    else {
+        NSString *message = [data objectForKey:@"message"];
+        NSString *errorMessage;
+        
+        if (type == ADD_REINFORCER){
+            errorMessage = @"Error adding reinforcer";
+        }
+        else if (type == EDIT_REINFORCER){
+            errorMessage = @"Error editing reinforcer";
+        }
+        else if (type == DELETE_REINFORCER){
+            errorMessage = @"Error deleting reinforcer";
+        }
+        else if (type == REWARD_STUDENT){
+            errorMessage = @"Error rewarding student";
+        }
+        else if (type == REWARD_ALL_STUDENTS){
+            errorMessage = @"Error rewarding class";
+        }
+        
+        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        isStamping = NO;
+        return;
+    }
+
 }
 
 
@@ -510,7 +515,6 @@ static NSInteger coinHeight = 250;
 }
 
 
-
 /* Animations for Awarding Points */
 
 
@@ -551,21 +555,36 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (void)animateCoinToSack:(UIImageView *)coin{
-    [coin setFrame:CGRectMake(self.sackImage.frame.origin.x + self.sackImage.frame.size.width/2 - 30, self.sackImage.frame.origin.y+50, self.sackImage.frame.size.width-75, self.sackImage.frame.size.height-75)];
+- (void)animateCoinToSack:(UIView *)coin :(BOOL)label{
+    NSInteger sackImageX = self.sackImage.frame.origin.x;
+    NSInteger sackImageY = self.sackImage.frame.origin.y;
+    NSInteger sackImageWidth = self.sackImage.frame.size.width;
+    
+    [coin setFrame:CGRectMake(sackImageX + sackImageWidth/2, self.sackImage.frame.origin.y+self.sackImage.frame.size.height/1.8, 20, 20)];
     coin.alpha = 0.0;
+    
+    if (label){
+        [self.coinPointsLabel setFrame:CGRectMake((sackImageX + sackImageWidth/2) - self.coinPointsLabel.frame.size.width/2, self.sackImage.frame.origin.y+self.sackImage.frame.size.height/1.8, self.coinPointsLabel.frame.size.width, self.coinPointsLabel.frame.size.height)];
+        self.coinPointsLabel.alpha = 0.0;
+    }
 }
 
 
 - (void)showLevelView{
-    self.levelUpLabel.text = [NSString stringWithFormat:@"Level :%li", (long)[currentStudent getLvl]];
+    self.levelUpLabel.text = [NSString stringWithFormat:@"Level %li", (long)[currentStudent getLvl]];
     self.levelView.alpha = 1.0;
+    NSInteger levelViewXPosition = self.levelView.frame.origin.x;
+    NSInteger levelViewWidth = self.levelView.frame.size.width;
+    NSInteger levelViewHeight = self.levelView.frame.size.height;
+    NSInteger levelViewYPosition1 = self.view.frame.size.height / 1.5;
+    NSInteger levelViewYPosition2 = self.view.frame.size.height * 1.2;
+    
     AudioServicesPlaySystemSound(levelUp);
     [UIView animateWithDuration:.6
                      animations:^{
                          self.levelView.hidden = NO;
                          
-                         [self.levelView setFrame:CGRectMake(40,475, 689, 88)];
+                         [self.levelView setFrame:CGRectMake(levelViewXPosition,levelViewYPosition1 + 350, levelViewWidth, levelViewHeight)];
                          
                      }completion:^(BOOL finished) {
                          
@@ -574,7 +593,7 @@ static NSInteger coinHeight = 250;
                          dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                              [UIView animateWithDuration:.5
                                               animations:^{
-                                                  [self.levelView setFrame:CGRectMake(40,1200, 689, 88)];
+                                                  [self.levelView setFrame:CGRectMake(levelViewXPosition,levelViewYPosition2, levelViewWidth, levelViewHeight)];
                                                   self.levelView.alpha = 0;
                                               }
                                               completion:^(BOOL finished) {
@@ -609,82 +628,62 @@ static NSInteger coinHeight = 250;
 
 
 - (void)coinAnimationWithlevelup:(bool)levelup coins:(NSInteger)points{
-    
-    NSMutableArray *coinImages = [[NSMutableArray alloc]init];
-    if (points > 50){
-        points = 50;
+    self.coinPointsLabel.text = [NSString stringWithFormat:@"%ld", (long)points];
+    self.coinPointsLabel.alpha = 0.0;
+    self.coinPointsLabel.hidden = NO;
+    self.coinImage.alpha = 0.0;
+    self.coinImage.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.coinImage.alpha = 1.0;
+        self.coinPointsLabel.alpha = 1.0;
     }
-    for (int i = 1; i < (points+1); i++){
-        UIImageView *coinImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"star.png"]];
-
-        coinImage.frame = [self getRandomCoinRect:counter];
-        if (counter == 2) counter = 0;
-        else counter++;
-        coinImage.alpha = 0.0;
-        [coinImages addObject:coinImage];
-        [self.view addSubview:coinImage];
-    }
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         for (UIImageView *coinImage in coinImages){
-                             coinImage.alpha =1.0;
-                         }
-                     }
-                     completion:^(BOOL finished) {
-                         [UIView animateWithDuration:.5
-                                          animations:^{
-                                              for (UIImageView *coinImage in coinImages){
-                                                  [self animateCoinToSack:coinImage];
-                                              }
-                                          }
-                                          completion:^(BOOL finished) {
-                                              [Utilities sackWiggle:self.sackImage];
-                                              AudioServicesPlaySystemSound(coins);
-                                              [Utilities sackWiggle:self.sackImage];
-                                              for (UIImageView *coinImage in coinImages){
-                                                  coinImage.hidden = YES;
-                                              }
-                                              float t = .5;
-                                              if (levelup) t = .7;
-                                              [UIView animateWithDuration:t
-                                                               animations:^{
-                                                                   float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                                   [self.levelBar setProgress:progress animated:YES];
-                                                                   [self incrementPoints];
-                                                                   if (levelup){
-                                                                       self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
-                                                                       [UIView animateWithDuration:.6 animations:^{
-                                                                           [self showLevelView];
-                                                                       }];
-                                                                   }
-                                                               }
-                                                               completion:^(BOOL finished) {
-                                                                   double delayInSeconds = 1.0;
-                                                                   if (levelup) delayInSeconds = 2.6;
-                                                                   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-                                                                   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                                                       [UIView animateWithDuration:.5
-                                                                                        animations:^{
-                                                                                            [self hideStudent];
-                                                                                        }
-                                                                                        completion:^(BOOL finished) {
-                                                                                            self.categoryPicker.hidden = NO;
-                                                                                            isStamping = NO;
-                                                                                        }
-                                                                        ];
-                                                                   });
-                                                               }
-                                               ];
-                                          }
-                          ];
-                     }
-     ];
-    
-
-    
-    // Generate a ton of coins and put them in an array
-    
-    // For every coin in the array, animate it to the sack
+     completion:^(BOOL finished) {
+         double delayInSeconds = .8;
+         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+             [UIView animateWithDuration:1.0 animations:^{
+                 [self animateCoinToSack:self.coinImage :YES];
+                 
+             }
+                              completion:^(BOOL finished) {
+                                  [Utilities sackWiggle:self.sackImage];
+                                  AudioServicesPlaySystemSound(coins);
+                                  float t = .15;
+                                  if (levelup) t = .6;
+                                  [UIView animateWithDuration:t
+                                                   animations:^{
+                                                       [self.coinImage setFrame:coinViewRect];
+                                                       [self.coinPointsLabel setFrame:coinLabelRect];
+                                                       float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+                                                       [self.levelBar setProgress:progress animated:YES];
+                                                       [self incrementPoints];
+                                                       if (levelup){
+                                                           self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
+                                                           [UIView animateWithDuration:.6 animations:^{
+                                                               [self showLevelView];
+                                                           }];
+                                                       }
+                                                   }
+                                                   completion:^(BOOL finished) {
+                                                       double delayInSeconds = 1.0;
+                                                       if (levelup) delayInSeconds = 2.6;
+                                                       dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                                                       dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                                           [UIView animateWithDuration:.5
+                                                                            animations:^{
+                                                                                [self hideStudent];
+                                                                            }
+                                                                            completion:^(BOOL finished) {
+                                                                                self.categoryPicker.hidden = NO;
+                                                                                isStamping = NO;
+                                                                            }
+                                                            ];
+                                                       });
+                                                   }
+                                   ];
+                              }];
+         });
+     }];
 }
 
 
@@ -709,13 +708,13 @@ static NSInteger coinHeight = 250;
                              [UIView animateWithDuration:.5
                                               animations:^{
                                                   
-                                                  [self animateCoinToSack:self.cOne];
+                                                  [self animateCoinToSack:self.cOne :NO];
                                                   
                                               }
                                               completion:^(BOOL finished) {
                                                   [Utilities sackWiggle:self.sackImage];
                                                   AudioServicesPlaySystemSound(coins);
-                                                  float t = pointsAwarded * .15;
+                                                  float t = .15;
                                                   if (levelup) t = .6;
                                                   [UIView animateWithDuration:t
                                                                    animations:^{
@@ -770,13 +769,13 @@ static NSInteger coinHeight = 250;
                              [UIView animateWithDuration:.2
                                               animations:^{
                                                   
-                                                  [self animateCoinToSack:self.bOne];
+                                                  [self animateCoinToSack:self.bOne :NO];
                                               }
                                               completion:^(BOOL finished) {
                                                   [Utilities sackWiggle:self.sackImage];
                                                   [UIView animateWithDuration:.2
                                                                    animations:^{
-                                                                       [self animateCoinToSack:self.bTwo];
+                                                                       [self animateCoinToSack:self.bTwo :NO];
                                                                    }
                                                                    completion:^(BOOL finished) {
                                                                        [Utilities sackWiggle:self.sackImage];
@@ -840,18 +839,18 @@ static NSInteger coinHeight = 250;
                          dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                              [UIView animateWithDuration:.2
                                               animations:^{
-                                                  [self animateCoinToSack:self.aOne];
+                                                  [self animateCoinToSack:self.aOne :NO];
                                               }
                                               completion:^(BOOL finished) {
                                                   [Utilities sackWiggle:self.sackImage];
                                                   [UIView animateWithDuration:.2
                                                                    animations:^{
-                                                                       [self animateCoinToSack:self.aTwo];
+                                                                       [self animateCoinToSack:self.aTwo :NO];
                                                                    }
                                                                    completion:^(BOOL finished) {
                                                                        [UIView animateWithDuration:.2
                                                                                         animations:^{
-                                                                                            [self animateCoinToSack:self.aThree];
+                                                                                            [self animateCoinToSack:self.aThree :NO];
                                                                                         }
                                                                                         completion:^(BOOL finished) {
                                                                                             [Utilities sackWiggle:self.sackImage];
@@ -934,6 +933,10 @@ static NSInteger coinHeight = 250;
     
 }
 
+- (IBAction)WOAH:(id)sender {
+    int i = arc4random() % 10;
+    [self coinAnimationWithlevelup:i < 5? YES: NO coins:i];
+}
 
 
 @end

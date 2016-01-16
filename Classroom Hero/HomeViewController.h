@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *teacherNameLabel;
 
-@property (strong, nonatomic) IBOutlet UILabel *totalClassPointsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *classLevelLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
 

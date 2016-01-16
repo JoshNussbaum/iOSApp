@@ -95,7 +95,7 @@
 
 
 - (IBAction)helpClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
+    [Utilities alertStatusWithTitle:@"Class Creation" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
 }
 
 

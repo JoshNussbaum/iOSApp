@@ -217,6 +217,8 @@
             [unregisteredStudents removeObjectAtIndex:registerIndex];
             
             count--;
+            [currentUser.currentClass addPoints:1];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             
             if (count == 0) {
                 self.swipeLabel.text = @"All  Students  Registered";
