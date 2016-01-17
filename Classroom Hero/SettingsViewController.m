@@ -160,11 +160,13 @@
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-
+    NSString *message = [data objectForKey:@"message"];
+    
     if([successNumber boolValue] == YES)
     {
         if (type == UNREGISTER_ALL_STUDENTS){
-            
+            [[DatabaseHandler getSharedInstance]unregisterAllStudentsInClassWithid:[currentUser.currentClass getId]];
+            [Utilities alertStatusWithTitle:@"Unregister successful" message:message cancel:nil otherTitles:nil tag:0 view:self];
         }
         
     }
@@ -203,7 +205,7 @@
 }
 
 
-- (void) activityStart :(NSString *)message {
+- (void)activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
