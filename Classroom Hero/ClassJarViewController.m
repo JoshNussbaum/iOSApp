@@ -97,7 +97,7 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     if (!coinsShowing){
         coinsShowing = YES;
         UIImage *image = [UIImage imageNamed:@"jar_progress_coins.png"];
@@ -110,7 +110,7 @@
         jarCoinsWidth = jarImageX + jarImageWidth/2;
         
         
-        jarCoinsX = 45 + ((jarImageX + jarImageWidth ) / 2) - jarCoinsWidth/2;
+        jarCoinsX = (jarImageX + jarImageWidth/2) - jarCoinsWidth/2;
         jarCoinsY = jarImageHeight + jarImageY - 50;
         
         self.jarCoins = [[UIImageView alloc] initWithImage:image];

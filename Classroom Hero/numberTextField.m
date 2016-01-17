@@ -15,6 +15,9 @@
 - (NSString *)validate{
     // check if name has anything but letters
     if (self.text.length >= 1){
+        if ([self.text integerValue] > 999){
+            return @"Number must be less than 1000";
+        }
         NSString *classErrorMessage = [Utilities isNumeric:self.text];
         if (!classErrorMessage){
             return @"";

@@ -225,6 +225,9 @@ NSInteger RESET_PASSWORD = 42;
     
     if ( [sc scanFloat:NULL] && input.integerValue >= 0)
     {
+        if (input.integerValue > 999){
+            return @"Number must be less than 1000";
+        }
         bool numeric = [sc isAtEnd];
         if (!numeric){
             return [NSString stringWithFormat:@"\"%@\" is not a positive number", input];
@@ -248,6 +251,9 @@ NSInteger RESET_PASSWORD = 42;
     }
     if (input.length < 1){
         return [NSString stringWithFormat:@"%@ must contain at least 1 character", inputName];
+    }
+    if (input.length >= 45){
+        return [NSString stringWithFormat:@"%@ may not exceed 45 characters", inputName];
     }
     return nil;
 }

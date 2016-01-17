@@ -166,7 +166,7 @@
     {
         if (type == UNREGISTER_ALL_STUDENTS){
             [[DatabaseHandler getSharedInstance]unregisterAllStudentsInClassWithid:[currentUser.currentClass getId]];
-            [Utilities alertStatusWithTitle:@"Unregister successful" message:message cancel:nil otherTitles:nil tag:0 view:self];
+            [Utilities alertStatusWithTitle:@"Successfully unregistered all students" message:message cancel:nil otherTitles:nil tag:0 view:self];
         }
         
     }

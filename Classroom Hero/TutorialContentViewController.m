@@ -153,7 +153,7 @@ static int screenNumber;
                         [webHandler addClass:currentUser.id :className :gradeNumber.integerValue :schoolId];
                     }
                     else {
-                        [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be 3 numbers or less" cancel:nil otherTitles:nil tag:0 view:nil];
+                        [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be less than 1000" cancel:nil otherTitles:nil tag:0 view:nil];
                     }
                     
                 }
