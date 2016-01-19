@@ -209,7 +209,7 @@
 
 - (void)setStudentLabels{
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
-    self.levelLabel.text = [NSString stringWithFormat:@"Level  %ld", (long)[currentStudent getLvl]];
+    self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Coins", (long)[currentStudent getPoints]];
     [self.progressView setProgress:(float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount] animated:YES];
     
@@ -237,6 +237,7 @@
     [self.progressView  setHintViewBackgroundColor:[UIColor clearColor]];
     [self.progressView  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
     [self.progressView  setHintTextColor:[UIColor blackColor]];
+    [self.progressView  setHintViewSpacing:40.0f];
     [self.progressView  setHintTextGenerationBlock:(customized ? ^NSString *(CGFloat progress) {
         return [NSString stringWithFormat:@" %.0f / 255", progress * 255];
     } : nil)];

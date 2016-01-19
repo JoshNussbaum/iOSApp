@@ -41,7 +41,7 @@ static sqlite3_stmt *statement = nil;
     //Create filemanager and use it to check if database file already exists
     NSFileManager *filemgr = [NSFileManager defaultManager];
     
-    if ([filemgr fileExistsAtPath: databasePath ] == YES)
+    if ([filemgr fileExistsAtPath: databasePath ] == NO)
     {
         const char *dbpath = [databasePath UTF8String];
         if (sqlite3_open(dbpath, &database) == SQLITE_OK)
@@ -1365,9 +1365,10 @@ static sqlite3_stmt *statement = nil;
             sqlite3_finalize(statement);
         }
         
-        NSString *deleteStudentTimestamp = [NSString stringWithFormat:
-                                            @"DELETE FROM StudentTimestamp"];
-        const char *delete_stmt6 = [deleteStudentTimestamp UTF8String];
+        
+        NSString *deleteStudentClassMatch = [NSString stringWithFormat:
+                                             @"DELETE FROM StudentClassMatch"];
+        const char *delete_stmt6 = [deleteStudentClassMatch UTF8String];
         
         if (sqlite3_prepare_v2(database,
                                delete_stmt6, -1, &statement, NULL) == SQLITE_OK)
@@ -1376,10 +1377,9 @@ static sqlite3_stmt *statement = nil;
             sqlite3_finalize(statement);
         }
         
-        
-        NSString *deleteStudentClassMatch = [NSString stringWithFormat:
-                                             @"DELETE FROM StudentClassMatch"];
-        const char *delete_stmt7 = [deleteStudentClassMatch UTF8String];
+        NSString *deleteStudents = [NSString stringWithFormat:
+                                    @"DELETE FROM Student"];
+        const char *delete_stmt7 = [deleteStudents UTF8String];
         
         if (sqlite3_prepare_v2(database,
                                delete_stmt7, -1, &statement, NULL) == SQLITE_OK)
@@ -1388,9 +1388,9 @@ static sqlite3_stmt *statement = nil;
             sqlite3_finalize(statement);
         }
         
-        NSString *deleteStudents = [NSString stringWithFormat:
-                                    @"DELETE FROM Student"];
-        const char *delete_stmt8 = [deleteStudents UTF8String];
+        NSString *deleteReinforcers = [NSString stringWithFormat:
+                                       @"DELETE FROM Reinforcer"];
+        const char *delete_stmt8 = [deleteReinforcers UTF8String];
         
         if (sqlite3_prepare_v2(database,
                                delete_stmt8, -1, &statement, NULL) == SQLITE_OK)
@@ -1399,24 +1399,13 @@ static sqlite3_stmt *statement = nil;
             sqlite3_finalize(statement);
         }
         
-        NSString *deleteReinforcers = [NSString stringWithFormat:
-                                       @"DELETE FROM Reinforcer"];
+        
+        NSString *deleteStudentSchoolMatch = [NSString stringWithFormat:
+                                       @"DELETE FROM StudentSchoolMatch"];
         const char *delete_stmt9 = [deleteReinforcers UTF8String];
         
         if (sqlite3_prepare_v2(database,
                                delete_stmt9, -1, &statement, NULL) == SQLITE_OK)
-        {
-            sqlite3_step(statement);
-            sqlite3_finalize(statement);
-        }
-        
-        
-        NSString *deleteStudentSchoolMatch = [NSString stringWithFormat:
-                                       @"DELETE FROM StudentSchoolMatch"];
-        const char *delete_stmt10 = [deleteReinforcers UTF8String];
-        
-        if (sqlite3_prepare_v2(database,
-                               delete_stmt10, -1, &statement, NULL) == SQLITE_OK)
         {
             sqlite3_step(statement);
             sqlite3_finalize(statement);
