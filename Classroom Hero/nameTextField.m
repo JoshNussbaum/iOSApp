@@ -14,9 +14,6 @@
 - (NSString *)validate{
     // check if name has anything but letters
     if (self.text.length >= 1){
-        if (self.text.length >= 35){
-            return @"Name may not exceed 35 characters";
-        }
         NSString *classErrorMessage = [Utilities isInputValid:self.text :@"Name"];
         if (!classErrorMessage){
             return @"";

@@ -572,31 +572,21 @@ static NSInteger coinHeight = 250;
 
 
 - (void)showLevelView{
-    
-//    UIView *levelUpView = [[UIView alloc]initWithFrame:CGRectMake(0, -100, self.view.frame.size.width, 50)]d;
-//    UILabel *levelUpLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 60, 20)];
-//    levelUpLabel.text = @"Level up!";
-//    [levelUpView addSubview:levelUpLabel];
-//    
-//    [self.view addSubview:levelUpView];
     self.levelView.alpha = 0;
     self.levelUpLabel.text = [NSString stringWithFormat:@"Level %li", (long)[currentStudent getLvl]];
     self.levelView.hidden = NO;
-    NSLog(@"LEVEL VIEW Y POSITION -> %ld", self.levelView.frame.origin.y);
     NSInteger levelViewXPosition = self.levelView.frame.origin.x;
     NSInteger levelViewWidth = self.levelView.frame.size.width;
     NSInteger levelViewHeight = self.levelView.frame.size.height;
-    NSInteger levelViewYPosition1 = self.view.frame.size.height / 2.5;
     NSInteger levelViewYPosition2 = self.view.frame.size.height + 50;
     AudioServicesPlaySystemSound(levelUp);
-    [UIView animateWithDuration:.6
+    [UIView animateWithDuration:.3
                      animations:^{
-                         NSLog(@"Setting the frame to (%ld, %ld, %ld, %ld)", (long)levelViewXPosition, (long)levelViewYPosition1, (long)levelViewWidth, (long)levelViewHeight );
                          self.levelView.alpha = 1.0;
                          
                      }completion:^(BOOL finished) {
                          
-                         double delayInSeconds = 1.5;
+                         double delayInSeconds = 1.8;
                          dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                          dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                              [UIView animateWithDuration:.5
