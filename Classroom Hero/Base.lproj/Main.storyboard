@@ -4234,7 +4234,7 @@
                                     <constraint firstAttribute="width" secondItem="PKY-bC-m3E" secondAttribute="height" multiplier="616:767" id="NhV-vk-deb"/>
                                 </constraints>
                             </imageView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="tHH-bU-t83">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin.png" translatesAutoresizingMaskIntoConstraints="NO" id="tHH-bU-t83">
                                 <rect key="frame" x="297" y="0.0" width="175" height="175"/>
                                 <animations/>
                                 <constraints>
@@ -4853,13 +4853,12 @@
         <image name="itemsIcon.png" width="300" height="300"/>
         <image name="jar_coin.png" width="720" height="720"/>
         <image name="login button.png" width="509" height="284"/>
-        <image name="star.png" width="720" height="720"/>
         <image name="treasure_chest.png" width="832" height="867"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SR2-9x-ZVn"/>
         <segue reference="hcw-Vj-VJR"/>
-        <segue reference="Zt9-YX-YdQ"/>
+        <segue reference="5Qb-t8-igW"/>
         <segue reference="asf-xD-FDq"/>
     </inferredMetricsTieBreakers>
 </document>

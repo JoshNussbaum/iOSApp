@@ -381,7 +381,7 @@
     {
         pointsEarned--;
         UIImageView *coin = [[UIImageView alloc] initWithFrame:coinRect];
-        coin.image = [UIImage imageNamed:@"star.png"];
+        coin.image = [UIImage imageNamed:@"coin.png"];
         coin.alpha=1.0;
         coin.layer.zPosition = -50;
         [self.view addSubview:coin];

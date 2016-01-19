@@ -327,7 +327,7 @@
 }
 
 - (void)animateCoinToSack:(UIView *)coin{
-    [coin setFrame:CGRectMake(self.sackImage.frame.origin.x + self.sackImage.frame.size.width/2 - 30, self.sackImage.frame.origin.y+50, self.sackImage.frame.size.width-75, self.sackImage.frame.size.height-75)];
+    [coin setFrame:CGRectMake(self.sackImage.frame.origin.x + self.sackImage.frame.size.width/2 - 30, self.sackImage.frame.origin.y+self.sackImage.frame.size.height/2, self.sackImage.frame.size.width-75, self.sackImage.frame.size.height-75)];
     coin.alpha = 0.0;
 }
 
