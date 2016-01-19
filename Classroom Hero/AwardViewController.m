@@ -95,21 +95,6 @@ static NSInteger coinHeight = 250;
     self.appSecret = snowshoe_app_secret;
     
     
-    // 3 Coins Rects
-    aOneRect = self.aOne.frame;
-    aTwoRect = self.aTwo.frame;
-    aThreeRect = self.aThree.frame;
-    
-    // 2 Coins Rects
-    bOneRect = self.bOne.frame;
-    bTwoRect = self.bTwo.frame;
-    
-    // 1 Coin Rect
-    cOneRect = self.cOne.frame;
-    coinViewRect = self.coinImage.frame;
-    coinLabelRect = self.coinPointsLabel.frame;
-    
-    coinRect = self.aTwo.frame;
     if (reinforcerData.count > 0){
         [self.categoryPicker selectRow:index inComponent:0 animated:YES];
         self.categoryPicker.hidden = NO;
@@ -130,7 +115,6 @@ static NSInteger coinHeight = 250;
     else {
         self.editReinforcerButton.hidden = NO;
     }
-    self.levelView.layer.zPosition = 5.0;
     center = self.stampImage.center.x;
     counter = 0;
 
@@ -143,7 +127,24 @@ static NSInteger coinHeight = 250;
 
 
 - (void)viewDidAppear:(BOOL)animated{
+    levelRect = CGRectMake(self.levelView.frame.origin.x, self.levelView.frame.origin.y, self.levelView.frame.size.width, self.levelView.frame.size.height);
     isStamping = NO;
+    
+    // 3 Coins Rects
+    aOneRect = self.aOne.frame;
+    aTwoRect = self.aTwo.frame;
+    aThreeRect = self.aThree.frame;
+    
+    // 2 Coins Rects
+    bOneRect = self.bOne.frame;
+    bTwoRect = self.bTwo.frame;
+    
+    // 1 Coin Rect
+    cOneRect = self.cOne.frame;
+    coinViewRect = self.coinImage.frame;
+    coinLabelRect = self.coinPointsLabel.frame;
+    
+    coinRect = self.aTwo.frame;
 }
 
 
@@ -521,7 +522,6 @@ static NSInteger coinHeight = 250;
 - (void)addPoints:(NSInteger)points levelup:(bool)levelup{
     AudioServicesPlaySystemSound(award);
     if (levelup){
-        levelRect = CGRectMake(self.levelView.frame.origin.x, self.levelView.frame.origin.y, self.levelView.frame.size.width, self.levelView.frame.size.height);
         [self.levelBar setProgress:1.0f animated:YES];
     }
     if (points == 3){
@@ -564,41 +564,38 @@ static NSInteger coinHeight = 250;
     coin.alpha = 0.0;
     
     if (label){
-        [self.coinPointsLabel setFrame:CGRectMake((sackImageX + sackImageWidth/2) - self.coinPointsLabel.frame.size.width/2, self.sackImage.frame.origin.y+self.sackImage.frame.size.height/1.8, self.coinPointsLabel.frame.size.width, self.coinPointsLabel.frame.size.height)];
+        [self.coinPointsLabel setFrame:CGRectMake((sackImageX + sackImageWidth/2) - self.coinPointsLabel.frame.size.width/2.0, self.sackImage.frame.origin.y+self.sackImage.frame.size.height/2.5, self.coinPointsLabel.frame.size.width, self.coinPointsLabel.frame.size.height)];
         self.coinPointsLabel.alpha = 0.0;
     }
 }
 
 
 - (void)showLevelView{
+    self.levelView.alpha = 0;
     self.levelUpLabel.text = [NSString stringWithFormat:@"Level %li", (long)[currentStudent getLvl]];
-    self.levelView.alpha = 1.0;
+    self.levelView.hidden = NO;
     NSInteger levelViewXPosition = self.levelView.frame.origin.x;
     NSInteger levelViewWidth = self.levelView.frame.size.width;
     NSInteger levelViewHeight = self.levelView.frame.size.height;
-    NSInteger levelViewYPosition1 = self.view.frame.size.height / 1.5;
-    NSInteger levelViewYPosition2 = self.view.frame.size.height * 1.2;
-    
+    NSInteger levelViewYPosition2 = self.view.frame.size.height + 50;
     AudioServicesPlaySystemSound(levelUp);
-    [UIView animateWithDuration:.6
+    [UIView animateWithDuration:.3
                      animations:^{
-                         self.levelView.hidden = NO;
-                         
-                         [self.levelView setFrame:CGRectMake(levelViewXPosition,levelViewYPosition1 + 350, levelViewWidth, levelViewHeight)];
+                         self.levelView.alpha = 1.0;
                          
                      }completion:^(BOOL finished) {
                          
-                         double delayInSeconds = 1.25;
+                         double delayInSeconds = 1.8;
                          dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                          dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                              [UIView animateWithDuration:.5
                                               animations:^{
                                                   [self.levelView setFrame:CGRectMake(levelViewXPosition,levelViewYPosition2, levelViewWidth, levelViewHeight)];
-                                                  self.levelView.alpha = 0;
                                               }
                                               completion:^(BOOL finished) {
                                                   [self.levelBar setProgress:0.0f animated:NO];
                                                   self.levelView.hidden = YES;
+                                                  self.levelView.alpha = 0;
                                                   [self.levelView setFrame:levelRect];
                                               }
                               ];
@@ -649,7 +646,11 @@ static NSInteger coinHeight = 250;
                                   [Utilities sackWiggle:self.sackImage];
                                   AudioServicesPlaySystemSound(coins);
                                   float t = .15;
-                                  if (levelup) t = .6;
+                                  if (levelup) {
+                                      self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
+                                      [self showLevelView];
+                                      t = .5;
+                                  }
                                   [UIView animateWithDuration:t
                                                    animations:^{
                                                        [self.coinImage setFrame:coinViewRect];
@@ -657,12 +658,6 @@ static NSInteger coinHeight = 250;
                                                        float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
                                                        [self.levelBar setProgress:progress animated:YES];
                                                        [self incrementPoints];
-                                                       if (levelup){
-                                                           self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
-                                                           [UIView animateWithDuration:.6 animations:^{
-                                                               [self showLevelView];
-                                                           }];
-                                                       }
                                                    }
                                                    completion:^(BOOL finished) {
                                                        double delayInSeconds = 1.0;
@@ -715,19 +710,17 @@ static NSInteger coinHeight = 250;
                                                   [Utilities sackWiggle:self.sackImage];
                                                   AudioServicesPlaySystemSound(coins);
                                                   float t = .15;
-                                                  if (levelup) t = .6;
+                                                  if (levelup){
+                                                      self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
+                                                      [self showLevelView];
+                                                      t = .5;
+                                                  }
                                                   [UIView animateWithDuration:t
                                                                    animations:^{
                                                                        [self.cOne setFrame:cOneRect];
                                                                        float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
                                                                        [self.levelBar setProgress:progress animated:YES];
                                                                        [self incrementPoints];
-                                                                       if (levelup){
-                                                                           self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
-                                                                           [UIView animateWithDuration:.6 animations:^{
-                                                                               [self showLevelView];
-                                                                            }];
-                                                                       }
                                                                    }
                                                                    completion:^(BOOL finished) {
                                                                        double delayInSeconds = 1.0;
@@ -781,19 +774,17 @@ static NSInteger coinHeight = 250;
                                                                        [Utilities sackWiggle:self.sackImage];
                                                                        AudioServicesPlaySystemSound(coins);
                                                                        float t = pointsAwarded * .15;
-                                                                       if (levelup) t = .6;
+                                                                       if (levelup) {
+                                                                           self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
+                                                                            [self showLevelView];
+                                                                           t = .5;
+                                                                       }
                                                                        [UIView animateWithDuration:t
                                                                                         animations:^{
                                                                                             [self.bOne setFrame:bOneRect];
                                                                                             [self.bTwo setFrame:bTwoRect];
                                                                                             
                                                                                             [self incrementPoints];
-                                                                                            if (levelup){
-                                                                                                self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
-                                                                                                [UIView animateWithDuration:.6 animations:^{
-                                                                                                    [self showLevelView];
-                                                                                                }];
-                                                                                            }
                                                                                         }
                                                                                         completion:^(BOOL finished) {
                                                                                             float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
@@ -856,7 +847,11 @@ static NSInteger coinHeight = 250;
                                                                                             [Utilities sackWiggle:self.sackImage];
                                                                                             AudioServicesPlaySystemSound(coins);
                                                                                             float t = pointsAwarded * .15;
-                                                                                            if (levelup) t = .6;
+                                                                                            if (levelup) {
+                                                                                                self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
+                                                                                                [self showLevelView];
+                                                                                                t = .5;
+                                                                                            }
                                                                                             [UIView animateWithDuration:t
                                                                                                              animations:^{
                                                                                                                  [self.aOne setFrame:aOneRect];
@@ -865,12 +860,6 @@ static NSInteger coinHeight = 250;
                                                                                                                  float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
                                                                                                                  [self.levelBar setProgress:progress animated:YES];
                                                                                                                  [self incrementPoints];
-                                                                                                                 if (levelup){
-                                                                                                                     self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
-                                                                                                                     [UIView animateWithDuration:.6 animations:^{
-                                                                                                                         [self showLevelView];
-                                                                                                                     }];
-                                                                                                                 }
                                                                                                              }
                                                                                                              completion:^(BOOL finished) {
                                                                                                                  double delayInSeconds = 1.0;
@@ -922,21 +911,15 @@ static NSInteger coinHeight = 250;
 
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    // This method is triggered whenever the user makes a change to the picker selection.
-    // The parameter named row and component represents what was selected.
+
     [self setReinforcerName];
 }
-
 
 
 - (IBAction)unwindToAward:(UIStoryboardSegue *)unwindSegue {
     
 }
 
-- (IBAction)WOAH:(id)sender {
-    int i = arc4random() % 10;
-    [self coinAnimationWithlevelup:i < 5? YES: NO coins:i];
-}
 
 
 @end

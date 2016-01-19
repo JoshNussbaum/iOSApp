@@ -112,7 +112,7 @@
 
 #pragma mark - Update
 -(void) addPoints:(NSInteger)points{
-    self->progress += 5;
+    self->progress += 1;
     
     if (self->progress >= self->nextLevel)
     {

@@ -42,6 +42,7 @@
 
     double currentPoints;
     BOOL isStamping;
+    BOOL coinsShowing;
     
     float jarImageX;
     float jarImageY;
@@ -62,6 +63,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    coinsShowing = NO;
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     currentClassJar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
@@ -96,47 +98,50 @@
 
 
 - (void)viewDidAppear:(BOOL)animated{
-    currentUser = [user getInstance];
-
-    UIImage *image = [UIImage imageNamed:@"jar_progress_coins.png"];
-    
-    jarImageX = self.jarImage.frame.origin.x;
-    jarImageY = self.jarImage.frame.origin.y;
-    jarImageWidth = self.jarImage.frame.size.width;
-    jarImageHeight = self.jarImage.frame.size.height;
-    
-    jarCoinsWidth = jarImageX + jarImageWidth/2;
-
-    
-    jarCoinsX = 45 + ((jarImageX + jarImageWidth ) / 2) - jarCoinsWidth/2;
-    jarCoinsY = jarImageHeight + jarImageY - 50;
-    
-    self.jarCoins = [[UIImageView alloc] initWithImage:image];
-    self.jarCoins.layer.zPosition = -1;
-    self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
-    self.jarCoins.contentMode = UIViewContentModeTop;
-    self.jarCoins.clipsToBounds = YES;
-    [self.view addSubview:self.jarCoins];
-    
-    self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
-
-    self.corkImage.hidden = YES;
-    float prog = (float)[currentClassJar getProgress] / (float)[currentClassJar getTotal];
-    
-    float newProg;
-    if ([currentClassJar getProgress] == 0){
-        self.jarCoins.hidden = YES;
-        newProg = 0;
-    }
-    else {
-        newProg = prog * (-420);
+    if (!coinsShowing){
+        coinsShowing = YES;
+        UIImage *image = [UIImage imageNamed:@"jar_progress_coins.png"];
         
-    }
-    CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
-    [UIView animateWithDuration:0.5 animations:^{
-        self.jarCoins.frame = finalFrame;
+        jarImageX = self.jarImage.frame.origin.x;
+        jarImageY = self.jarImage.frame.origin.y;
+        jarImageWidth = self.jarImage.frame.size.width;
+        jarImageHeight = self.jarImage.frame.size.height;
         
-    }];
+        jarCoinsWidth = jarImageX + jarImageWidth/2;
+        
+        
+        jarCoinsX = (jarImageX + jarImageWidth/2) - jarCoinsWidth/2;
+        jarCoinsY = jarImageHeight + jarImageY - 50;
+        
+        self.jarCoins = [[UIImageView alloc] initWithImage:image];
+        self.jarCoins.layer.zPosition = -1;
+        self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
+        self.jarCoins.contentMode = UIViewContentModeTop;
+        self.jarCoins.clipsToBounds = YES;
+        [self.view addSubview:self.jarCoins];
+        
+        self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
+        
+        self.corkImage.hidden = YES;
+        float prog = (float)[currentClassJar getProgress] / (float)[currentClassJar getTotal];
+        
+        float newProg;
+        if ([currentClassJar getProgress] == 0){
+            self.jarCoins.hidden = YES;
+            newProg = 0;
+        }
+        else {
+            newProg = prog * (-420);
+            
+        }
+        CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
+        [UIView animateWithDuration:0.5 animations:^{
+            self.jarCoins.frame = finalFrame;
+            
+        }];
+    }
+
+
 }
 
 
@@ -376,7 +381,7 @@
     {
         pointsEarned--;
         UIImageView *coin = [[UIImageView alloc] initWithFrame:coinRect];
-        coin.image = [UIImage imageNamed:@"star.png"];
+        coin.image = [UIImage imageNamed:@"coin.png"];
         coin.alpha=1.0;
         coin.layer.zPosition = -50;
         [self.view addSubview:coin];

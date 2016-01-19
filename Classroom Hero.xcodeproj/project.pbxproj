@@ -10,6 +10,7 @@
 		0312C3211C1EAC3200BD3F88 /* CitiesAndStates.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312C3201C1EAC3200BD3F88 /* CitiesAndStates.m */; };
 		0315AB051BD5F08C00C77F2F /* StampIdentifierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		031A31691C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031A31681C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m */; };
+		0324E7EF1C4B51690079A441 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 0324E7EE1C4B51690079A441 /* coin.png */; };
 		033855711B8996D400173600 /* CreateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033855701B8996D400173600 /* CreateClassViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		033855741B89984500173600 /* numberTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 033855731B89984500173600 /* numberTextField.m */; };
 		0338558B1B89C97E00173600 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 033855771B89C97D00173600 /* Contents.json */; };
@@ -47,7 +48,6 @@
 		034075DA1B980CBB008E14B2 /* ClassJarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034075D91B980CBA008E14B2 /* ClassJarViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03492CF21B8863DB0015CD78 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03492CF11B8863DB0015CD78 /* HomeViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		034C92B81BF19A7B0090667C /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */; };
-		0362C7FC1B89CD9300C93682 /* theLOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = 0362C7F91B89CD9300C93682 /* theLOGO.png */; };
 		036811561B8C49B400690294 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811551B8C49B400690294 /* AboutViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		036811591B8C49C300690294 /* PricingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811581B8C49C300690294 /* PricingViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0369CF8D1BE082EC00E8857D /* StudentAttendanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -65,8 +65,6 @@
 		038F7B341B643FE30026F679 /* user.m in Sources */ = {isa = PBXBuildFile; fileRef = 038F7B331B643FE30026F679 /* user.m */; };
 		039567C71BCE141100AFF48A /* coinsack.png in Resources */ = {isa = PBXBuildFile; fileRef = 039567C31BCE141100AFF48A /* coinsack.png */; };
 		039567C81BCE141100AFF48A /* jar_coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 039567C41BCE141100AFF48A /* jar_coin.png */; };
-		039567C91BCE141100AFF48A /* newJar.png in Resources */ = {isa = PBXBuildFile; fileRef = 039567C51BCE141100AFF48A /* newJar.png */; };
-		039567CA1BCE141100AFF48A /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 039567C61BCE141100AFF48A /* star.png */; };
 		0399AAF21B846C6500972F21 /* ClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0399AAF11B846C6500972F21 /* ClassTableViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0399AAF61B84731E00972F21 /* ClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0399AAF51B84731E00972F21 /* ClassTableViewCell.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03A01ED71B68A33F0037110E /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A01ED61B68A33F0037110E /* TutorialViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -88,8 +86,6 @@
 		03AA9A391B63399D00750758 /* backgroundImg1.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A171B63399D00750758 /* backgroundImg1.png */; };
 		03AA9A3A1B63399D00750758 /* backLid.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A181B63399D00750758 /* backLid.png */; };
 		03AA9A3B1B63399D00750758 /* ch-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A191B63399D00750758 /* ch-logo.png */; };
-		03AA9A3D1B63399D00750758 /* CH_coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A1B1B63399D00750758 /* CH_coin.png */; };
-		03AA9A3E1B63399D00750758 /* ch_coin_flare.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A1C1B63399D00750758 /* ch_coin_flare.png */; };
 		03AA9A3F1B63399D00750758 /* classroom_hero_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A1D1B63399D00750758 /* classroom_hero_text.png */; };
 		03AA9A401B63399D00750758 /* cork.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A1E1B63399D00750758 /* cork.png */; };
 		03AA9A411B63399D00750758 /* homeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A1F1B63399D00750758 /* homeIcon.png */; };
@@ -97,16 +93,9 @@
 		03AA9A431B63399D00750758 /* intact_jar.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A211B63399D00750758 /* intact_jar.png */; };
 		03AA9A441B63399D00750758 /* itemsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A221B63399D00750758 /* itemsIcon.png */; };
 		03AA9A451B63399D00750758 /* jar.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A231B63399D00750758 /* jar.png */; };
-		03AA9A461B63399D00750758 /* jar_full.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A241B63399D00750758 /* jar_full.png */; };
 		03AA9A471B63399D00750758 /* jar_progress_coins.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A251B63399D00750758 /* jar_progress_coins.png */; };
-		03AA9A481B63399D00750758 /* jarcoins.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A261B63399D00750758 /* jarcoins.png */; };
 		03AA9A491B63399D00750758 /* lid.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A271B63399D00750758 /* lid.png */; };
 		03AA9A4A1B63399D00750758 /* login button.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A281B63399D00750758 /* login button.png */; };
-		03AA9A4B1B63399D00750758 /* money_sack.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A291B63399D00750758 /* money_sack.png */; };
-		03AA9A541B63399D00750758 /* student_coin_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A321B63399D00750758 /* student_coin_blank.png */; };
-		03AA9A551B63399D00750758 /* teacher_coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A331B63399D00750758 /* teacher_coin.png */; };
-		03AA9A561B63399D00750758 /* teacher_coin_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A341B63399D00750758 /* teacher_coin_blank.png */; };
-		03AA9A571B63399D00750758 /* teachers_coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A351B63399D00750758 /* teachers_coin.png */; };
 		03AA9A581B63399D00750758 /* treasure_chest.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A361B63399D00750758 /* treasure_chest.png */; };
 		03AA9A5B1B633B8100750758 /* ConnectionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA9A5A1B633B8100750758 /* ConnectionHandler.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03B2B0F91BBA3AA900191B54 /* EditTeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B2B0F81BBA3AA900191B54 /* EditTeacherViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -144,6 +133,7 @@
 		0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StampIdentifierViewController.m; sourceTree = "<group>"; };
 		031A31671C1CC78400ACBEB2 /* CheckoutInputTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutInputTableViewCell.h; sourceTree = "<group>"; };
 		031A31681C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutInputTableViewCell.m; sourceTree = "<group>"; };
+		0324E7EE1C4B51690079A441 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
 		0338556F1B8996D400173600 /* CreateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateClassViewController.h; sourceTree = "<group>"; };
 		033855701B8996D400173600 /* CreateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateClassViewController.m; sourceTree = "<group>"; };
 		033855721B89984500173600 /* numberTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = numberTextField.h; sourceTree = "<group>"; };
@@ -187,7 +177,6 @@
 		03492CF11B8863DB0015CD78 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
-		0362C7F91B89CD9300C93682 /* theLOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theLOGO.png; sourceTree = "<group>"; };
 		036811541B8C49B400690294 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		036811551B8C49B400690294 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		036811571B8C49C300690294 /* PricingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PricingViewController.h; sourceTree = "<group>"; };
@@ -221,8 +210,6 @@
 		038F7B331B643FE30026F679 /* user.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = user.m; sourceTree = "<group>"; };
 		039567C31BCE141100AFF48A /* coinsack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coinsack.png; sourceTree = "<group>"; };
 		039567C41BCE141100AFF48A /* jar_coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jar_coin.png; sourceTree = "<group>"; };
-		039567C51BCE141100AFF48A /* newJar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newJar.png; sourceTree = "<group>"; };
-		039567C61BCE141100AFF48A /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		0399AAF01B846C6500972F21 /* ClassTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTableViewController.h; sourceTree = "<group>"; };
 		0399AAF11B846C6500972F21 /* ClassTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassTableViewController.m; sourceTree = "<group>"; };
 		0399AAF41B84731E00972F21 /* ClassTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTableViewCell.h; sourceTree = "<group>"; };
@@ -256,8 +243,6 @@
 		03AA9A171B63399D00750758 /* backgroundImg1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundImg1.png; sourceTree = "<group>"; };
 		03AA9A181B63399D00750758 /* backLid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backLid.png; sourceTree = "<group>"; };
 		03AA9A191B63399D00750758 /* ch-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ch-logo.png"; sourceTree = "<group>"; };
-		03AA9A1B1B63399D00750758 /* CH_coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CH_coin.png; sourceTree = "<group>"; };
-		03AA9A1C1B63399D00750758 /* ch_coin_flare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ch_coin_flare.png; sourceTree = "<group>"; };
 		03AA9A1D1B63399D00750758 /* classroom_hero_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = classroom_hero_text.png; sourceTree = "<group>"; };
 		03AA9A1E1B63399D00750758 /* cork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cork.png; sourceTree = "<group>"; };
 		03AA9A1F1B63399D00750758 /* homeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeIcon.png; sourceTree = "<group>"; };
@@ -265,16 +250,9 @@
 		03AA9A211B63399D00750758 /* intact_jar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intact_jar.png; sourceTree = "<group>"; };
 		03AA9A221B63399D00750758 /* itemsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = itemsIcon.png; sourceTree = "<group>"; };
 		03AA9A231B63399D00750758 /* jar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jar.png; sourceTree = "<group>"; };
-		03AA9A241B63399D00750758 /* jar_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jar_full.png; sourceTree = "<group>"; };
 		03AA9A251B63399D00750758 /* jar_progress_coins.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jar_progress_coins.png; sourceTree = "<group>"; };
-		03AA9A261B63399D00750758 /* jarcoins.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jarcoins.png; sourceTree = "<group>"; };
 		03AA9A271B63399D00750758 /* lid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lid.png; sourceTree = "<group>"; };
 		03AA9A281B63399D00750758 /* login button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login button.png"; sourceTree = "<group>"; };
-		03AA9A291B63399D00750758 /* money_sack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = money_sack.png; sourceTree = "<group>"; };
-		03AA9A321B63399D00750758 /* student_coin_blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = student_coin_blank.png; sourceTree = "<group>"; };
-		03AA9A331B63399D00750758 /* teacher_coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teacher_coin.png; sourceTree = "<group>"; };
-		03AA9A341B63399D00750758 /* teacher_coin_blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teacher_coin_blank.png; sourceTree = "<group>"; };
-		03AA9A351B63399D00750758 /* teachers_coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teachers_coin.png; sourceTree = "<group>"; };
 		03AA9A361B63399D00750758 /* treasure_chest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = treasure_chest.png; sourceTree = "<group>"; };
 		03AA9A591B633B8100750758 /* ConnectionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionHandler.h; sourceTree = "<group>"; };
 		03AA9A5A1B633B8100750758 /* ConnectionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionHandler.m; sourceTree = "<group>"; };
@@ -617,18 +595,14 @@
 		03AA9A141B63399D00750758 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				0324E7EE1C4B51690079A441 /* coin.png */,
 				039567C31BCE141100AFF48A /* coinsack.png */,
 				039567C41BCE141100AFF48A /* jar_coin.png */,
-				039567C51BCE141100AFF48A /* newJar.png */,
-				039567C61BCE141100AFF48A /* star.png */,
-				0362C7F91B89CD9300C93682 /* theLOGO.png */,
 				03AA9A151B63399D00750758 /* app icon.png */,
 				03AA9A161B63399D00750758 /* apple hero.png */,
 				03AA9A171B63399D00750758 /* backgroundImg1.png */,
 				03AA9A181B63399D00750758 /* backLid.png */,
 				03AA9A191B63399D00750758 /* ch-logo.png */,
-				03AA9A1B1B63399D00750758 /* CH_coin.png */,
-				03AA9A1C1B63399D00750758 /* ch_coin_flare.png */,
 				03AA9A1D1B63399D00750758 /* classroom_hero_text.png */,
 				03AA9A1E1B63399D00750758 /* cork.png */,
 				03AA9A1F1B63399D00750758 /* homeIcon.png */,
@@ -636,16 +610,9 @@
 				03AA9A211B63399D00750758 /* intact_jar.png */,
 				03AA9A221B63399D00750758 /* itemsIcon.png */,
 				03AA9A231B63399D00750758 /* jar.png */,
-				03AA9A241B63399D00750758 /* jar_full.png */,
 				03AA9A251B63399D00750758 /* jar_progress_coins.png */,
-				03AA9A261B63399D00750758 /* jarcoins.png */,
 				03AA9A271B63399D00750758 /* lid.png */,
 				03AA9A281B63399D00750758 /* login button.png */,
-				03AA9A291B63399D00750758 /* money_sack.png */,
-				03AA9A321B63399D00750758 /* student_coin_blank.png */,
-				03AA9A331B63399D00750758 /* teacher_coin.png */,
-				03AA9A341B63399D00750758 /* teacher_coin_blank.png */,
-				03AA9A351B63399D00750758 /* teachers_coin.png */,
 				03AA9A361B63399D00750758 /* treasure_chest.png */,
 			);
 			path = img;
@@ -785,21 +752,15 @@
 				033855901B89C97E00173600 /* Icon-60@3x.png in Resources */,
 				0338558D1B89C97E00173600 /* Icon-40@2x.png in Resources */,
 				033A4DA71B75B25B006E90D6 /* award.mp3 in Resources */,
-				0362C7FC1B89CD9300C93682 /* theLOGO.png in Resources */,
 				0338559C1B89C97E00173600 /* Icon@2x.png in Resources */,
 				0338559B1B89C97E00173600 /* Icon.png in Resources */,
 				03AA9A381B63399D00750758 /* apple hero.png in Resources */,
-				039567C91BCE141100AFF48A /* newJar.png in Resources */,
 				03AA9A111B63381B00750758 /* AmaticSC-Bold.ttf in Resources */,
-				039567CA1BCE141100AFF48A /* star.png in Resources */,
 				033855951B89C97E00173600 /* Icon-Small@3x.png in Resources */,
 				033855991B89C97E00173600 /* Icon-Small-50.png in Resources */,
 				03AA9A421B63399D00750758 /* homeIconPressed.png in Resources */,
-				03AA9A461B63399D00750758 /* jar_full.png in Resources */,
-				03AA9A541B63399D00750758 /* student_coin_blank.png in Resources */,
 				033855911B89C97E00173600 /* Icon-76.png in Resources */,
 				033A4DAD1B75B25B006E90D6 /* positive.wav in Resources */,
-				03AA9A481B63399D00750758 /* jarcoins.png in Resources */,
 				03AA9A491B63399D00750758 /* lid.png in Resources */,
 				0338558F1B89C97E00173600 /* Icon-60@2x.png in Resources */,
 				033A4DAE1B75B25B006E90D6 /* register_fail.wav in Resources */,
@@ -807,13 +768,13 @@
 				0338558B1B89C97E00173600 /* Contents.json in Resources */,
 				033855961B89C97E00173600 /* Icon-60.png in Resources */,
 				033A4DAA1B75B25B006E90D6 /* correct.wav in Resources */,
+				0324E7EF1C4B51690079A441 /* coin.png in Resources */,
 				033A4DAC1B75B25B006E90D6 /* pop.wav in Resources */,
 				033A4DAB1B75B25B006E90D6 /* jarsuccess.wav in Resources */,
 				03AA9A3A1B63399D00750758 /* backLid.png in Resources */,
 				039567C81BCE141100AFF48A /* jar_coin.png in Resources */,
 				03AA99F01B6333C300750758 /* Main.storyboard in Resources */,
 				033855981B89C97E00173600 /* Icon-72@2x.png in Resources */,
-				03AA9A4B1B63399D00750758 /* money_sack.png in Resources */,
 				0338558C1B89C97E00173600 /* Icon-40.png in Resources */,
 				03AA9A4A1B63399D00750758 /* login button.png in Resources */,
 				033A4DA81B75B25B006E90D6 /* bloop.wav in Resources */,
@@ -823,20 +784,15 @@
 				03AA9A411B63399D00750758 /* homeIcon.png in Resources */,
 				03AA9A3B1B63399D00750758 /* ch-logo.png in Resources */,
 				033A4DA61B75B25B006E90D6 /* achievement.wav in Resources */,
-				03AA9A561B63399D00750758 /* teacher_coin_blank.png in Resources */,
-				03AA9A3D1B63399D00750758 /* CH_coin.png in Resources */,
 				03DC9D991B7334F6005C7562 /* Notes in Resources */,
 				03AA99F51B6333C400750758 /* LaunchScreen.xib in Resources */,
 				033A4DAF1B75B25B006E90D6 /* sale.mp3 in Resources */,
 				03AA9A401B63399D00750758 /* cork.png in Resources */,
-				03AA9A3E1B63399D00750758 /* ch_coin_flare.png in Resources */,
 				03AA9A3F1B63399D00750758 /* classroom_hero_text.png in Resources */,
-				03AA9A571B63399D00750758 /* teachers_coin.png in Resources */,
 				03AA9A371B63399D00750758 /* app icon.png in Resources */,
 				03AA99F21B6333C300750758 /* Images.xcassets in Resources */,
 				033855931B89C97E00173600 /* Icon-Small.png in Resources */,
 				03AA9A431B63399D00750758 /* intact_jar.png in Resources */,
-				03AA9A551B63399D00750758 /* teacher_coin.png in Resources */,
 				03AA9A131B63381B00750758 /* FontAwesome.ttf in Resources */,
 				033A4DB01B75B25B006E90D6 /* teacherstamp.wav in Resources */,
 				03AA9A581B63399D00750758 /* treasure_chest.png in Resources */,

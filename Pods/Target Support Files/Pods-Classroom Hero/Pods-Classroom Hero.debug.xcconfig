@@ -1,6 +1,0 @@
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/BBBadgeBarButtonItem.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/CircleProgressBar.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/JSBadgeView.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/MBProgressHUD.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Stripe.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/gtm_oauth.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/snowshoe.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "BBBadgeBarButtonItem" -framework "CircleProgressBar" -framework "JSBadgeView" -framework "MBProgressHUD" -framework "Stripe" -framework "gtm_oauth" -framework "snowshoe"
-PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-Classroom Hero
-PODS_ROOT = ${SRCROOT}/Pods

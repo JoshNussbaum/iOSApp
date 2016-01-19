@@ -364,7 +364,7 @@ heightForFooterInSection:(NSInteger)section {
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy"];
             NSInteger currentYear = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
-            return [NSString stringWithFormat:@"%li", currentYear + row];
+            return [NSString stringWithFormat:@"%i", currentYear + row];
         }
     }
     else if (pickerFlag == 2){

@@ -33,6 +33,7 @@
 
 @property (weak, nonatomic) IBOutlet CircleProgressBar *jarProgressBar;
 
+@property (strong, nonatomic) IBOutlet UIImageView *classLevelIcon;
 
 // Class Stats
 @property (strong, nonatomic) IBOutlet UILabel *classTotalStampsLabel;

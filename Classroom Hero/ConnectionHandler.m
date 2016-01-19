@@ -61,7 +61,7 @@ static NSString * const GET_CLASS_STATS_URL = @"http://73.231.27.167:8080/dev.cl
 
 static NSString * const IDENTIFY_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/identify";
 
-static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/unregisterAllStudents";
+static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
 
 
 
@@ -350,11 +350,11 @@ static NSInteger connectionType;
     [self asynchronousWebCall:nil :url :GET];
 }
 
-- (void)unregisterAllStudentsInClassWithid:(NSInteger)classId{
-    NSString *url = [NSString stringWithFormat:@"%@/%ld", UNREGISTER_ALL_STUDENTS_URL, (long)classId];
+- (void)unregisterAllStampsWithClassId:(NSInteger)classId{
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/unregisterAllStamps", UNREGISTER_ALL_STUDENTS_URL, (long)classId];
     connectionType = UNREGISTER_ALL_STUDENTS;
     
-    [self asynchronousWebCall:nil :url :GET];
+    [self asynchronousWebCall:nil :url :PUT];
 }
 
 - (void)getStudentBySerialwithserial:(NSString *)serial :(NSInteger)schoolId{
