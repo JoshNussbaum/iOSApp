@@ -115,7 +115,6 @@ static NSInteger coinHeight = 250;
     else {
         self.editReinforcerButton.hidden = NO;
     }
-    //self.levelView.layer.zPosition = 5.0;
     center = self.stampImage.center.x;
     counter = 0;
 
@@ -912,8 +911,7 @@ static NSInteger coinHeight = 250;
 
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    // This method is triggered whenever the user makes a change to the picker selection.
-    // The parameter named row and component represents what was selected.
+
     [self setReinforcerName];
 }
 
