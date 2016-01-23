@@ -31,6 +31,7 @@
 
 @implementation AttendanceViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentUser = [user getInstance];
@@ -275,6 +276,7 @@
     
 }
 
+
 - (void)coinAnimation{
     [UIView animateWithDuration:.4
                      animations:^{
@@ -326,8 +328,9 @@
     
 }
 
+
 - (void)animateCoinToSack:(UIView *)coin{
-    [coin setFrame:CGRectMake(self.sackImage.frame.origin.x + self.sackImage.frame.size.width/2 - 30, self.sackImage.frame.origin.y+self.sackImage.frame.size.height/2, self.sackImage.frame.size.width-75, self.sackImage.frame.size.height-75)];
+    [coin setFrame:CGRectMake(self.sackImage.frame.origin.x + self.sackImage.frame.size.width/2 - 30, self.sackImage.frame.origin.y+self.sackImage.frame.size.height/2, 25, 25)];
     coin.alpha = 0.0;
 }
 
@@ -339,6 +342,7 @@
     // Return the number of sections.
     return 1;
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
@@ -355,6 +359,7 @@
     
     return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (studentsData.count > 0){
@@ -382,6 +387,7 @@
         }
     }
 }
+
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
