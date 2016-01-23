@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Flurry-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JSBadgeView-JSBadgeView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,22 +62,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>37117C25314C65B0C6EB0E7C2B6F14F5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>37BF5062A4D2BE015CBD77812A7EFF99</key>
+		<key>113E65216857D50C72C7C57E08AD4DEC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>5BB69D3F3BE24BC6BE2B1DE2E5BD3B36</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>69A6175EC9507C4F1B577F3AF1E558EE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,12 +82,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>BF25D0814E592EEA668590F4BA64C9E2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>E6436056422A0D2E22AC84EC5F47CBCC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F194304CFC17C4F3C6CB20896F68B0D9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FEC0B981E85E2595CCB485D55636BA2F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
