@@ -1790,7 +1790,7 @@
                                     <constraint firstItem="x1X-cM-A2A" firstAttribute="width" secondItem="cqC-Ux-j30" secondAttribute="height" multiplier="173:200" id="IIk-cK-6GP"/>
                                     <constraint firstAttribute="width" secondItem="cqC-Ux-j30" secondAttribute="height" multiplier="1:1" id="gpZ-eN-0nB"/>
                                     <constraint firstItem="x1X-cM-A2A" firstAttribute="centerX" secondItem="cqC-Ux-j30" secondAttribute="centerX" id="iyZ-0w-JMN"/>
-                                    <constraint firstAttribute="bottom" secondItem="x1X-cM-A2A" secondAttribute="bottom" constant="139" id="yw4-RN-S6z"/>
+                                    <constraint firstItem="x1X-cM-A2A" firstAttribute="top" secondItem="cqC-Ux-j30" secondAttribute="top" constant="32" id="oHe-rg-Hvz"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hh3-92-U36">
