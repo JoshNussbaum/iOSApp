@@ -47,7 +47,7 @@ static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/dev.classr
 static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/stamp";
 static NSString * const UNREGISTER_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/unregisterStamp";
 
-static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/rewardAllStudents";
+static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
 static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/fill";
 
 static NSString * const ORDER_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/order";
@@ -255,7 +255,7 @@ static NSInteger connectionType;
 
 
 - (void)rewardAllStudentsWithcid:(NSInteger)cid{
-    NSString *url = [NSString stringWithFormat:@"%@/%ld", REWARD_ALL_STUDENTS_URL, (long)cid];
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/rewardAllStudents", REWARD_ALL_STUDENTS_URL, (long)cid];
     connectionType = REWARD_ALL_STUDENTS;
     
     [self asynchronousWebCall:nil :url :PUT];

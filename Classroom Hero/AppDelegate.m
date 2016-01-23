@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "Utilities.h"
 #import "Stripe.h"
+#import "Flurry.h"
 
 @interface AppDelegate ()
 
@@ -44,6 +45,8 @@ NSString * const StripePublishableKey = @" pk_test_0k5cvVSHQihOyTbRCUHXm9T2 ";
     } else {
         [[UINavigationBar appearance] setTintColor:[Utilities CHBlueColor]];
     }
+    
+    [Flurry startSession:@"646YZ8K3TTSHHSK43QKZ"];
     
     return YES;
 }

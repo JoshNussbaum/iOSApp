@@ -37,6 +37,8 @@
     
     NSArray *icons = @[self.registerTeacherIcon, self.registerTeacherIcon, self.studentListIcon, self.stampIdentifierIcon, self.unregisterAllStampsIcon, self.classTutorialIcon, self.registerStudentsIcon, self.orderStampsIcon];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
+
     
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
