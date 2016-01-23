@@ -236,10 +236,10 @@ static NSInteger connectionType;
     
 }
 
-- (void)registerStamp:(NSInteger)id :(NSString *)serial{
+- (void)registerStamp:(NSInteger)id :(NSString *)serial :(NSInteger)cid{
     connectionType = REGISTER_STAMP;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"uid\":%ld, \"stamp\":\"%@\"}", (long)id, serial];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"uid\":%ld, \"stamp\":\"%@\", \"cid\":%ld}", (long)id, serial, (long)cid];
     
     [self asynchronousWebCall:jsonRequest :REGISTER_STAMP_URL :POST];
 }

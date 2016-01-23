@@ -180,7 +180,7 @@
                     if (![[DatabaseHandler getSharedInstance] isSerialRegistered:stampSerial] && ![stampSerial isEqualToString:currentUser.serial]){
                         [currentStudent setSerial:stampSerial];
                         [self activityStart:@"Registering student..."];
-                        [webHandler registerStamp:[currentStudent getId] :stampSerial];
+                        [webHandler registerStamp:[currentStudent getId] :stampSerial :[currentUser.currentClass getId]];
                     }
                     else {
                         [Utilities failAnimation:self.stampImage];

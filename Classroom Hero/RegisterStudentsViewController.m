@@ -172,7 +172,7 @@
                             [Utilities wiggleImage:self.stampImage sound:NO];
                             student *ss = [unregisteredStudents objectAtIndex:registerIndex];
                             [ss setSerial:stampSerial];
-                            [webHandler registerStamp:[ss getId] :stampSerial];
+                            [webHandler registerStamp:[ss getId] :stampSerial :[currentUser.currentClass getId]];
                             
                         }
                         else {

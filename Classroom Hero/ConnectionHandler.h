@@ -83,7 +83,7 @@
 - (void)getSchools;
 
 
-- (void)registerStamp:(NSInteger)id :(NSString *)serial;
+- (void)registerStamp:(NSInteger)id :(NSString *)serial :(NSInteger)cid;
 
 
 - (void)rewardStudentWithserial:(NSString *)serial pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId classId:(NSInteger)classId;

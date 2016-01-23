@@ -68,18 +68,8 @@
 
 
 - (void)viewDidAppear:(BOOL)animated{
-    currentUser = [user getInstance];
     [self checkAccountStatus];
     
-    
-    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
-    if (unregisteredStudents > 0){
-        [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
-        JSBadgeView *badgeView3 = [[JSBadgeView alloc] initWithParentView:self.registerStudentsView alignment:JSBadgeViewAlignmentTopRight];
-        badgeView3.badgeText = [NSString stringWithFormat:@"%ld", (long)unregisteredStudents];
-        badgeView3.badgeTextColor=[UIColor whiteColor];
-        badgeView3.badgeBackgroundColor = [UIColor redColor];
-    }
 }
 
 
@@ -169,6 +159,7 @@
         if (type == UNREGISTER_ALL_STUDENTS){
             [[DatabaseHandler getSharedInstance]unregisterAllStudentsInClassWithid:[currentUser.currentClass getId]];
             [Utilities alertStatusWithTitle:@"Successfully unregistered all students" message:message cancel:nil otherTitles:nil tag:0 view:self];
+            [self checkAccountStatus];
         }
         
     }
@@ -185,6 +176,7 @@
 
 
 - (void)checkAccountStatus{
+    currentUser = [user getInstance];
     [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
     if (!currentUser.serial){
         badgeView = [[JSBadgeView alloc] initWithParentView:self.registerTeacherStampView alignment:JSBadgeViewAlignmentTopRight];
@@ -202,6 +194,15 @@
     else {
         [badgeView removeFromSuperview];
         [badgeView2 removeFromSuperview];
+    }
+    
+    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
+    if (unregisteredStudents > 0){
+        [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
+        JSBadgeView *badgeView3 = [[JSBadgeView alloc] initWithParentView:self.registerStudentsView alignment:JSBadgeViewAlignmentTopRight];
+        badgeView3.badgeText = [NSString stringWithFormat:@"%ld", (long)unregisteredStudents];
+        badgeView3.badgeTextColor=[UIColor whiteColor];
+        badgeView3.badgeBackgroundColor = [UIColor redColor];
     }
     
 }

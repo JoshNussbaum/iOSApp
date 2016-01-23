@@ -109,7 +109,7 @@ static int screenNumber;
                     if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
                         serial = stampSerial;
                         [self activityStart:@"Registering stamp..."];
-                        [webHandler registerStamp:currentUser.id :stampSerial];
+                        [webHandler registerStamp:currentUser.id :stampSerial :[currentUser.currentClass getId]];
                     }
                     else {
                         [Utilities failAnimation:self.stampImage];
