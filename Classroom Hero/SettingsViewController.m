@@ -49,19 +49,19 @@
 
     
     //self.studentListButton.titleLabel.text = [NSString stringWithFormat:@"Student List %@", [NSString fontAwesomeIconStringForEnum:FAList]];
-    [self.studentListButton setTitle:@"          Student List" forState:UIControlStateNormal ];
+    [self.studentListButton setTitle:@"Student List" forState:UIControlStateNormal ];
     self.studentListIcon.text = [NSString fontAwesomeIconStringForEnum:FAList];
-    [self.classTutorialButton setTitle:@"          Class Tutorial" forState:UIControlStateNormal];
+    [self.classTutorialButton setTitle:@"Class Tutorial" forState:UIControlStateNormal];
     self.classTutorialIcon.text = [NSString fontAwesomeIconStringForEnum:FAQuestionCircle];
-    [self.registerTeacherStamp setTitle:@"          Register Teacher Stamp" forState:UIControlStateNormal];
+    [self.registerTeacherStamp setTitle:@"Register Teacher Stamp" forState:UIControlStateNormal];
     self.registerTeacherIcon.text = [NSString fontAwesomeIconStringForEnum:FAStar];
-    [self.unregisterAllStampsButton setTitle:@"          Unregister All Stamps" forState:UIControlStateNormal];
+    [self.unregisterAllStampsButton setTitle:@"Unregister All Stamps" forState:UIControlStateNormal];
     self.unregisterAllStampsIcon.text = [NSString fontAwesomeIconStringForEnum:FAExclamationTriangle];
-    [self.stampIdentifierButton setTitle:@"          Stamp Identifier" forState:UIControlStateNormal];
+    [self.stampIdentifierButton setTitle:@"Stamp Identifier" forState:UIControlStateNormal];
     self.stampIdentifierIcon.text = [NSString fontAwesomeIconStringForEnum:FALightbulbO];
-    [self.registerStudentsButton setTitle:@"          Register Students" forState:UIControlStateNormal];
+    [self.registerStudentsButton setTitle:@"Register Students" forState:UIControlStateNormal];
     self.registerStudentsIcon.text = [NSString fontAwesomeIconStringForEnum:FAchild];
-    [self.orderStampsButton setTitle:@"          Order Stamps" forState:UIControlStateNormal];
+    [self.orderStampsButton setTitle:@"Order Stamps" forState:UIControlStateNormal];
     self.orderStampsIcon.text = [NSString fontAwesomeIconStringForEnum:FAShoppingCart];
     
 }
