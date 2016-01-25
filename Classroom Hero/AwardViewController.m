@@ -129,7 +129,7 @@ static NSInteger coinHeight = 250;
 
     self.progressView.hidden = YES;
     self.progressView.hideStripes = YES;
-    self.progressView.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeProgress;
+    //self.progressView.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeProgress;
     self.progressView.type = YLProgressBarTypeRounded;
     self.progressView.tintColor = [UIColor clearColor];
     self.progressView.progressTintColor = [Utilities CHBlueColor];
