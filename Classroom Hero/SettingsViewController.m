@@ -42,6 +42,7 @@
     
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
+        button.exclusiveTouch = YES;
     }
     for (UILabel *icon in icons){
         icon.font = [UIFont fontWithName:kFontAwesomeFamilyName size:25];

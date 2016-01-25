@@ -12,6 +12,7 @@ PODS:
   - Stripe (6.0.1):
     - Stripe/Core (= 6.0.1)
   - Stripe/Core (6.0.1)
+  - YLProgressBar (3.8.0)
 
 DEPENDENCIES:
   - BBBadgeBarButtonItem
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.9.1)
   - snowshoe (~> 1.11)
   - Stripe
+  - YLProgressBar (~> 3.8.0)
 
 SPEC CHECKSUMS:
   BBBadgeBarButtonItem: c2fbca0bff18e21b70defc9438a8a5048008e7ca
@@ -31,5 +33,6 @@ SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   snowshoe: a552178bc8d5cf4cdbe561e411ff31a845810726
   Stripe: 04f215191702c268b89fe0cdf28dc24a9688a71b
+  YLProgressBar: b6ec76bea4a1b8d6bdfd2995d828055a7e5f3e9a
 
 COCOAPODS: 0.39.0

@@ -81,7 +81,10 @@
     self.appSecret = snowshoe_app_secret;
     
     
-    
+    NSArray *menuButtons = @[self.homeButton, self.awardButton, self.jarButton, self.marketButton];
+    for (UIButton *button in menuButtons){
+        button.exclusiveTouch = YES;
+    }
     
     award = [Utilities getAwardSound];
     cork = [Utilities getCorkSound];

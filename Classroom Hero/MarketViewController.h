@@ -28,6 +28,12 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 
+// Menu
+@property (strong, nonatomic) IBOutlet UIButton *homeButton;
+@property (strong, nonatomic) IBOutlet UIButton *awardButton;
+@property (strong, nonatomic) IBOutlet UIButton *jarButton;
+@property (strong, nonatomic) IBOutlet UIButton *marketButton;
+
 
 - (IBAction)homeClicked:(id)sender;
 

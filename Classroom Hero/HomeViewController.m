@@ -45,6 +45,11 @@
     NSArray *buttons = @[self.settingsButton, self.classesButton, self.settingsButton, self.attendanceButton];
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
+        button.exclusiveTouch = YES;
+    }
+    NSArray *menuButtons = @[self.homeButton, self.awardButton, self.jarButton, self.marketButton];
+    for (UIButton *button in menuButtons){
+        button.exclusiveTouch = YES;
     }
 }
 

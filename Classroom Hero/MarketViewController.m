@@ -73,6 +73,10 @@
         self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]];
     }
     
+    NSArray *menuButtons = @[self.homeButton, self.awardButton, self.jarButton, self.marketButton];
+    for (UIButton *button in menuButtons){
+        button.exclusiveTouch = YES;
+    }
 }
 
 

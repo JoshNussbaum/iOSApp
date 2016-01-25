@@ -11,6 +11,7 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "ConnectionHandler.h"
+#import "YLProgressBar.h"
 
 
 @interface AwardViewController : SnowShoeViewController <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ConnectionHandlerDelegate>
@@ -36,6 +37,13 @@
 @property (strong, nonatomic) IBOutlet UIImageView *cOne;
 @property (strong, nonatomic) IBOutlet UIImageView *coinImage;
 @property (strong, nonatomic) IBOutlet UILabel *coinPointsLabel;
+@property (strong, nonatomic) YLProgressBar *progressView;
+
+// Menu
+@property (strong, nonatomic) IBOutlet UIButton *homeButton;
+@property (strong, nonatomic) IBOutlet UIButton *awardButton;
+@property (strong, nonatomic) IBOutlet UIButton *jarButton;
+@property (strong, nonatomic) IBOutlet UIButton *marketButton;
 
 - (IBAction)addReinforcerClicked:(id)sender;
 - (IBAction)editReinforcerClicked:(id)sender;

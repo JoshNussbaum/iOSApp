@@ -35,6 +35,13 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *classLevelIcon;
 
+// Menu
+@property (strong, nonatomic) IBOutlet UIButton *homeButton;
+@property (strong, nonatomic) IBOutlet UIButton *awardButton;
+@property (strong, nonatomic) IBOutlet UIButton *jarButton;
+@property (strong, nonatomic) IBOutlet UIButton *marketButton;
+
+
 // Class Stats
 @property (strong, nonatomic) IBOutlet UILabel *classTotalStampsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *classAvgLevelLabel;

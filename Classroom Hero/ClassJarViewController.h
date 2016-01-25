@@ -29,6 +29,11 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *addJarButton;
 
+// Menu
+@property (strong, nonatomic) IBOutlet UIButton *homeButton;
+@property (strong, nonatomic) IBOutlet UIButton *awardButton;
+@property (strong, nonatomic) IBOutlet UIButton *jarButton;
+@property (strong, nonatomic) IBOutlet UIButton *marketButton;
 
 - (IBAction)valueChanged:(id)sender;
 

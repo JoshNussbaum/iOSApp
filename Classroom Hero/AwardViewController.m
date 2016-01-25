@@ -117,7 +117,24 @@ static NSInteger coinHeight = 250;
     }
     center = self.stampImage.center.x;
     counter = 0;
+    
+    NSArray *menuButtons = @[self.homeButton, self.awardButton, self.jarButton, self.marketButton];
+    for (UIButton *button in menuButtons){
+        button.exclusiveTouch = YES;
+    }
+    
+    CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 30);
+    
+    self.progressView = [[YLProgressBar alloc]initWithFrame:levelRect];
 
+    self.progressView.hidden = YES;
+    self.progressView.hideStripes = YES;
+    self.progressView.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeProgress;
+    self.progressView.type = YLProgressBarTypeRounded;
+    self.progressView.tintColor = [UIColor clearColor];
+    self.progressView.progressTintColor = [Utilities CHBlueColor];
+    self.progressView.indicatorTextLabel.font = [UIFont fontWithName:@"Gil Sans Light" size:15.0];
+    [self.view addSubview:self.progressView];
 }
 
 
@@ -308,7 +325,7 @@ static NSInteger coinHeight = 250;
         self.pointsLabel.hidden=YES;
         self.levelLabel.hidden=YES;
         self.sackImage.hidden=YES;
-        self.levelBar.hidden=YES;
+        self.progressView.hidden=YES;
         self.categoryPicker.hidden = NO;
         isStamping = NO;
         return;
@@ -475,14 +492,14 @@ static NSInteger coinHeight = 250;
     NSInteger level;
     if ([currentStudent getProgress] == 0){
         level = [currentStudent getLvl] - 1;
-        self.levelBar.progress = (float)([currentStudent getLvlUpAmount]-3)/(float)([currentStudent getLvlUpAmount]-2);
+        self.progressView.progress = (float)([currentStudent getLvlUpAmount]-3)/(float)([currentStudent getLvlUpAmount]-2);
     }
     else {
         level = [currentStudent getLvl];
-        self.levelBar.progress = (float)(([currentStudent getProgress]-1) / (float)[currentStudent getLvlUpAmount]);
+        self.progressView.progress = (float)(([currentStudent getProgress]-1) / (float)[currentStudent getLvlUpAmount]);
         
     }
-    self.levelBar.hidden = NO;
+    self.progressView.hidden = NO;
     NSString * levelDisplay = [NSString stringWithFormat:@"Level %ld", (long)level];
     
     self.levelLabel.text=levelDisplay;
@@ -522,7 +539,7 @@ static NSInteger coinHeight = 250;
 - (void)addPoints:(NSInteger)points levelup:(bool)levelup{
     AudioServicesPlaySystemSound(award);
     if (levelup){
-        [self.levelBar setProgress:1.0f animated:YES];
+        [self.progressView setProgress:1.0f animated:YES];
     }
     if (points == 3){
         [self threeCoinsAnimationWithlevelup:levelup];
@@ -593,7 +610,7 @@ static NSInteger coinHeight = 250;
                                                   [self.levelView setFrame:CGRectMake(levelViewXPosition,levelViewYPosition2, levelViewWidth, levelViewHeight)];
                                               }
                                               completion:^(BOOL finished) {
-                                                  [self.levelBar setProgress:0.0f animated:NO];
+                                                  [self.progressView setProgress:0.0f animated:NO];
                                                   self.levelView.hidden = YES;
                                                   self.levelView.alpha = 0;
                                                   [self.levelView setFrame:levelRect];
@@ -656,11 +673,11 @@ static NSInteger coinHeight = 250;
                                                        [self.coinImage setFrame:coinViewRect];
                                                        [self.coinPointsLabel setFrame:coinLabelRect];
                                                        float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                       [self.levelBar setProgress:progress animated:YES];
+                                                       [self.progressView setProgress:progress animated:YES];
                                                        [self incrementPoints];
                                                    }
                                                    completion:^(BOOL finished) {
-                                                       double delayInSeconds = 1.0;
+                                                       double delayInSeconds = 1.5;
                                                        if (levelup) delayInSeconds = 2.6;
                                                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                                                        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -687,7 +704,7 @@ static NSInteger coinHeight = 250;
     self.pointsLabel.hidden=YES;
     self.levelLabel.hidden=YES;
     self.sackImage.hidden=YES;
-    self.levelBar.hidden=YES;
+    self.progressView.hidden=YES;
 }
 
 
@@ -719,11 +736,11 @@ static NSInteger coinHeight = 250;
                                                                    animations:^{
                                                                        [self.cOne setFrame:cOneRect];
                                                                        float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                                       [self.levelBar setProgress:progress animated:YES];
+                                                                       [self.progressView setProgress:progress animated:YES];
                                                                        [self incrementPoints];
                                                                    }
                                                                    completion:^(BOOL finished) {
-                                                                       double delayInSeconds = 1.0;
+                                                                       double delayInSeconds = 1.5;
                                                                        if (levelup) delayInSeconds = 2.6;
                                                                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                                                                        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -788,8 +805,8 @@ static NSInteger coinHeight = 250;
                                                                                         }
                                                                                         completion:^(BOOL finished) {
                                                                                             float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                                                            [self.levelBar setProgress:progress animated:YES];
-                                                                                            double delayInSeconds = 1.0;
+                                                                                            [self.progressView setProgress:progress animated:YES];
+                                                                                            double delayInSeconds = 1.5;
                                                                                             if (levelup) delayInSeconds = 2.6;
                                                                                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                                                                                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -858,11 +875,11 @@ static NSInteger coinHeight = 250;
                                                                                                                  [self.aTwo setFrame:aTwoRect];
                                                                                                                  [self.aThree setFrame:aThreeRect];
                                                                                                                  float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                                                                                 [self.levelBar setProgress:progress animated:YES];
+                                                                                                                 [self.progressView setProgress:progress animated:YES];
                                                                                                                  [self incrementPoints];
                                                                                                              }
                                                                                                              completion:^(BOOL finished) {
-                                                                                                                 double delayInSeconds = 1.0;
+                                                                                                                 double delayInSeconds = 1.5;
                                                                                                                  if (levelup) delayInSeconds = 2.6;
                                                                                                                  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                                                                                                                  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
