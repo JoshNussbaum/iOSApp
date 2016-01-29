@@ -196,7 +196,7 @@ static NSInteger coinHeight = 250;
 
 
 - (IBAction)addReinforcerClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Add Reinforcer" message:nil cancel:nil  done:nil delete:NO textfields:@[@"Reinforcer name", @"Reinforcer value"] tag:2 view:self];
+    [Utilities editAlertTextWithtitle:@"Add Reinforcer" message:nil cancel:@"Cancel"  done:nil delete:NO textfields:@[@"Reinforcer name", @"Reinforcer value"] tag:2 view:self];
 }
 
 

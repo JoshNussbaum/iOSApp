@@ -112,7 +112,7 @@
 
 
 - (IBAction)editItemClicked:(id)sender {
-    [Utilities editTextWithtitle:@"Edit item" message:nil cancel:nil done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
+    [Utilities editTextWithtitle:@"Edit item" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
 }
 
 

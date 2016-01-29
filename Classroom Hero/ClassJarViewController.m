@@ -192,7 +192,7 @@
 
 - (IBAction)editJarClicked:(id)sender {
     if (currentClassJar){
-        [Utilities editTextWithtitle:@"Edit Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
+        [Utilities editTextWithtitle:@"Edit Class Jar" message:nil cancel:@"Cancel" done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
     }
 }
 
