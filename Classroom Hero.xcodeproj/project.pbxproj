@@ -396,17 +396,6 @@
 			name = Student;
 			sourceTree = "<group>";
 		};
-		0338C8F21C19376F0081F5F5 /* Singletons */ = {
-			isa = PBXGroup;
-			children = (
-				03AA9A591B633B8100750758 /* ConnectionHandler.h */,
-				03AA9A5A1B633B8100750758 /* ConnectionHandler.m */,
-				03F46FB31B69CBAD00A695B2 /* DatabaseHandler.h */,
-				03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */,
-			);
-			name = Singletons;
-			sourceTree = "<group>";
-		};
 		036811531B8C498700690294 /* Sign in/ Sign up */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,7 +431,6 @@
 		038F7B311B643FCC0026F679 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0338C8F21C19376F0081F5F5 /* Singletons */,
 				03DCFFDC1B6C6FDA00C451CC /* school.h */,
 				03DCFFDD1B6C6FDA00C451CC /* school.m */,
 				038F7B321B643FE30026F679 /* user.h */,
@@ -538,6 +526,10 @@
 				03AA99EE1B6333C300750758 /* Main.storyboard */,
 				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
 				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
+				03AA9A591B633B8100750758 /* ConnectionHandler.h */,
+				03AA9A5A1B633B8100750758 /* ConnectionHandler.m */,
+				03F46FB31B69CBAD00A695B2 /* DatabaseHandler.h */,
+				03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */,
 				0312C31F1C1EAC3200BD3F88 /* CitiesAndStates.h */,
 				0312C3201C1EAC3200BD3F88 /* CitiesAndStates.m */,
 				0338C8EF1C1936870081F5F5 /* Controllers */,

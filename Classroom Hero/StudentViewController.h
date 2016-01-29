@@ -28,6 +28,8 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;
 
+@property (strong, nonatomic) IBOutlet UILabel *stampIdLabel;
+
 
 - (IBAction)backClicked:(id)sender;
 

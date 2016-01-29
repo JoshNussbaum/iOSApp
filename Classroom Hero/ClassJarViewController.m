@@ -71,10 +71,12 @@
     if (!currentClassJar){
         self.addJarButton.hidden = NO;
         self.addJarButton.enabled = YES;
+        self.editJarButton.hidden = YES;
     }
     else {
         self.addJarButton.hidden = YES;
         self.addJarButton.enabled = NO;
+        self.editJarButton.hidden = NO;
     }
     [self displayClassJar];
     self.appKey = snowshoe_app_key ;
@@ -320,7 +322,7 @@
             self.addJarButton.enabled = NO;
             self.addJarButton.hidden = YES;
             self.stepper.enabled = YES;
-            
+            self.editJarButton.hidden = NO;
         }
         else if (type == EDIT_JAR){
             [currentClassJar setName:newClassJarName];

@@ -29,6 +29,8 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *addJarButton;
 
+@property (strong, nonatomic) IBOutlet UIButton *editJarButton;
+
 // Menu
 @property (strong, nonatomic) IBOutlet UIButton *homeButton;
 @property (strong, nonatomic) IBOutlet UIButton *awardButton;
@@ -42,7 +44,6 @@
 - (IBAction)addJarClicked:(id)sender;
 
 - (IBAction)studentListClicked:(id)sender;
-
 
 - (IBAction)homeClicked:(id)sender;
 

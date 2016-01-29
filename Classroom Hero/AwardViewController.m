@@ -126,7 +126,6 @@ static NSInteger coinHeight = 250;
     CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 30);
     
     self.progressView = [[YLProgressBar alloc]initWithFrame:levelRect];
-
     self.progressView.hidden = YES;
     self.progressView.hideStripes = YES;
     //self.progressView.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeProgress;
@@ -205,7 +204,7 @@ static NSInteger coinHeight = 250;
     if (reinforcerData.count > 0){
         index = [self.categoryPicker selectedRowInComponent:0];
         currentReinforcer = [reinforcerData objectAtIndex:index];
-        [Utilities editTextWithtitle:@"Edit Reinforcer" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%li", (long)[currentReinforcer getValue]]] tag:1 view:self];
+        [Utilities editTextWithtitle:@"Edit Reinforcer" message:nil cancel:nil done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
     }
     
 }

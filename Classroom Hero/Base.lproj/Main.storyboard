@@ -773,23 +773,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Y0U-cW-1ye">
-                                <rect key="frame" x="44" y="175" width="680" height="299"/>
+                                <rect key="frame" x="44" y="175" width="680" height="348"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Y0U-cW-1ye" secondAttribute="height" multiplier="680:299" id="Shr-iI-gXP"/>
+                                    <constraint firstAttribute="width" secondItem="Y0U-cW-1ye" secondAttribute="height" multiplier="680:299" constant="-111.4381270903009" id="Shr-iI-gXP"/>
                                 </constraints>
-                                <string key="text">Classroom  Hero  is  the  ultimate  tool  for  teachers  and  students.  Motivate  students  to  work  harder  and  demonstrate  better  behavior.  Manage  an  engaging  token  economy;  Give  out  points,  sell  items, and fill up a classroom jar.  Start  your  class  by taking  attendance  as  students  arrive.  Give  out  points  to  motivate  students  throughout  the  day.  Add  points  to  your  jar  to  moviate  the  entire  class. </string>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="esv-iN-fIN">
-                                <rect key="frame" x="44" y="561" width="680" height="228"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="esv-iN-fIN" secondAttribute="height" multiplier="170:57" id="krY-Ls-0iW"/>
-                                </constraints>
-                                <string key="text">Created   by  students  and  teachers,  made  for  students  and  teachers.  Classroom  Hero  started  as  a  project  designed  to  motivate  students  to  do  better  in  school  and  evolved  to  be  a  much  more  robust  tool  for  teachers</string>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
+                                <string key="text">Classroom  Hero  is  the  ultimate  tool  for  teachers.  Motivate  students  to  work  harder  and  demonstrate  better  behavior.  Manage  an  engaging  token  economy;  Give  out  points,  sell  items, and fill up a classroom jar.  Start  your  class  by taking  attendance  as  students  arrive.  Give  out  points  to  motivate  students  throughout  the  day.  Add  points  to  your  jar  to  moviate  the  entire  class.  Use  the  marketplace  to  sell  items  to  students  for  their  hard  earned points</string>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="29"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L4W-6Y-Ba1">
@@ -810,7 +800,7 @@
                                             <constraint firstAttribute="width" secondItem="FJO-Xr-3Ao" secondAttribute="height" multiplier="406:71" id="WPs-4d-rNF"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="56"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN6-zu-37u">
@@ -847,13 +837,23 @@
                                     <constraint firstAttribute="trailing" secondItem="GCf-qb-6cH" secondAttribute="trailing" id="znA-B7-9h3"/>
                                 </constraints>
                             </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="esv-iN-fIN">
+                                <rect key="frame" x="44" y="585" width="680" height="228"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="esv-iN-fIN" secondAttribute="height" multiplier="170:57" id="krY-Ls-0iW"/>
+                                </constraints>
+                                <string key="text">Classroom  Hero  works  with  Snowshoe  Stamps.  The  positive  interaction  between  the  student  and  teacher  is  what  really  makes  the  system  great,  so  each  student  needs  a  stamp  to  participate  in  Classroom  Hero.  Order  stamps  within  the  app.</string>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="29"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.37476593339999997" green="0.64913119239999995" blue="0.33134224220000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="esv-iN-fIN" firstAttribute="width" secondItem="4tT-75-KmE" secondAttribute="height" multiplier="85:128" id="19G-y6-XPm"/>
                             <constraint firstItem="Y0U-cW-1ye" firstAttribute="width" secondItem="4tT-75-KmE" secondAttribute="height" multiplier="85:128" id="6Ee-V5-BoG"/>
-                            <constraint firstItem="esv-iN-fIN" firstAttribute="top" secondItem="Y0U-cW-1ye" secondAttribute="bottom" constant="87" id="8M9-gQ-392"/>
+                            <constraint firstItem="esv-iN-fIN" firstAttribute="top" secondItem="Y0U-cW-1ye" secondAttribute="bottom" constant="62" id="8M9-gQ-392"/>
                             <constraint firstItem="Y0U-cW-1ye" firstAttribute="centerX" secondItem="4tT-75-KmE" secondAttribute="centerX" id="8mG-YN-1ft"/>
                             <constraint firstItem="esv-iN-fIN" firstAttribute="centerX" secondItem="4tT-75-KmE" secondAttribute="centerX" id="9hp-U2-W5G"/>
                             <constraint firstItem="L4W-6Y-Ba1" firstAttribute="top" secondItem="Ouy-Ff-fe9" secondAttribute="bottom" id="LDZ-0K-IWE"/>
@@ -1756,14 +1756,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coinsack.png" translatesAutoresizingMaskIntoConstraints="NO" id="dql-nu-kcC">
-                                <rect key="frame" x="207" y="347" width="80" height="79"/>
+                                <rect key="frame" x="207" y="306" width="80" height="79"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="dql-nu-kcC" secondAttribute="height" multiplier="80:79" id="w6L-3k-aiP"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcs-xr-9EI">
-                                <rect key="frame" x="123" y="298" width="248" height="41"/>
+                                <rect key="frame" x="123" y="257" width="248" height="41"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Lcs-xr-9EI" secondAttribute="height" multiplier="248:41" id="wdE-ZF-eqH"/>
@@ -1773,7 +1773,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqC-Ux-j30" customClass="CircleProgressBar">
-                                <rect key="frame" x="434" y="261" width="200" height="200"/>
+                                <rect key="frame" x="434" y="220" width="200" height="200"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1X-cM-A2A">
                                         <rect key="frame" x="14" y="32" width="173" height="29"/>
@@ -1804,14 +1804,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ch-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="yBO-3B-Uif">
-                                <rect key="frame" x="234" y="527" width="300" height="300"/>
+                                <rect key="frame" x="234" y="575" width="300" height="300"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yBO-3B-Uif" secondAttribute="height" multiplier="1:1" id="dOk-Vl-NG8"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDp-11-WOi">
-                                <rect key="frame" x="370" y="261" width="28" height="115"/>
+                                <rect key="frame" x="370" y="220" width="28" height="115"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1843,6 +1843,16 @@
                                     <action selector="studentButtonClicked:" destination="Xxy-ye-LqB" eventType="touchUpInside" id="zHF-Q7-kMN"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stamp ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wL6-Te-Ppj">
+                                <rect key="frame" x="153" y="491" width="463" height="41"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="wL6-Te-Ppj" secondAttribute="height" multiplier="463:41" id="qhz-iD-fcX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1853,10 +1863,11 @@
                             <constraint firstItem="cqC-Ux-j30" firstAttribute="leading" secondItem="mDp-11-WOi" secondAttribute="trailing" constant="36" id="5wy-x8-a9w"/>
                             <constraint firstItem="yBO-3B-Uif" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="BoA-su-SSn"/>
                             <constraint firstItem="Hh3-92-U36" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="585:1024" id="CkN-2s-J1W"/>
+                            <constraint firstItem="wL6-Te-Ppj" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="463:1024" id="FMB-lC-HYo"/>
                             <constraint firstItem="mDp-11-WOi" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="7:256" id="GDi-Nu-ItH"/>
                             <constraint firstItem="Hh3-92-U36" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="HPf-cb-5mt"/>
                             <constraint firstItem="LPf-tT-cPU" firstAttribute="top" secondItem="jIG-N1-I5E" secondAttribute="bottom" constant="59" id="OFv-tl-Ryg"/>
-                            <constraint firstItem="lzG-h5-HRM" firstAttribute="top" secondItem="yBO-3B-Uif" secondAttribute="bottom" constant="99" id="Px3-Ny-eCs"/>
+                            <constraint firstItem="lzG-h5-HRM" firstAttribute="top" secondItem="yBO-3B-Uif" secondAttribute="bottom" constant="51" id="Px3-Ny-eCs"/>
                             <constraint firstItem="mDp-11-WOi" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="SCr-3B-oMY"/>
                             <constraint firstItem="dql-nu-kcC" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="5:64" id="U4G-3l-o6C"/>
                             <constraint firstItem="cqC-Ux-j30" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="25:128" id="UHI-ot-tez"/>
@@ -1865,12 +1876,14 @@
                             <constraint firstItem="LPf-tT-cPU" firstAttribute="top" secondItem="lzG-h5-HRM" secondAttribute="bottom" constant="56" id="hDj-xP-od0"/>
                             <constraint firstItem="Lcs-xr-9EI" firstAttribute="centerY" secondItem="mDp-11-WOi" secondAttribute="centerY" id="hG7-5D-rta"/>
                             <constraint firstItem="jIG-N1-I5E" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="313:1024" id="j2t-tM-FYV"/>
-                            <constraint firstItem="mDp-11-WOi" firstAttribute="top" secondItem="Hh3-92-U36" secondAttribute="bottom" constant="51" id="lhM-O4-pnS"/>
+                            <constraint firstItem="mDp-11-WOi" firstAttribute="top" secondItem="Hh3-92-U36" secondAttribute="bottom" constant="10" id="lhM-O4-pnS"/>
                             <constraint firstItem="dql-nu-kcC" firstAttribute="centerX" secondItem="Lcs-xr-9EI" secondAttribute="centerX" id="nQ1-Pv-QWr"/>
                             <constraint firstItem="mDp-11-WOi" firstAttribute="leading" secondItem="Lcs-xr-9EI" secondAttribute="trailing" constant="-1" id="qjm-6P-Sqb"/>
                             <constraint firstItem="yBO-3B-Uif" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="75:256" id="sfB-Kq-zkL"/>
                             <constraint firstItem="Lcs-xr-9EI" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="31:128" id="uYT-Eu-VSY"/>
+                            <constraint firstItem="wL6-Te-Ppj" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="vZb-iP-uAv"/>
                             <constraint firstItem="cqC-Ux-j30" firstAttribute="top" secondItem="mDp-11-WOi" secondAttribute="top" id="xb5-0D-B0D"/>
+                            <constraint firstItem="wL6-Te-Ppj" firstAttribute="centerY" secondItem="XsU-bi-HCf" secondAttribute="centerY" id="y32-NB-uUm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Hero Page" id="RQz-w6-CM3">
@@ -1910,6 +1923,7 @@
                         <outlet property="nameLabel" destination="Hh3-92-U36" id="t1x-zT-4w7"/>
                         <outlet property="pointsLabel" destination="Lcs-xr-9EI" id="xHb-VV-RA2"/>
                         <outlet property="progressView" destination="cqC-Ux-j30" id="MNJ-Pj-kAP"/>
+                        <outlet property="stampIdLabel" destination="wL6-Te-Ppj" id="gmR-ie-MLl"/>
                         <outlet property="stampImage" destination="yBO-3B-Uif" id="bOO-WT-UoC"/>
                         <outlet property="stampToRegisterLabel" destination="jIG-N1-I5E" id="o8p-HJ-gYJ"/>
                         <outlet property="studentButton" destination="lzG-h5-HRM" id="vVw-gF-Aoy"/>
@@ -4517,6 +4531,7 @@
                         <outlet property="classJarName" destination="bWL-xq-Wxn" id="1TK-mn-bIa"/>
                         <outlet property="coinImage" destination="tHH-bU-t83" id="Uuk-ur-MUm"/>
                         <outlet property="corkImage" destination="PKY-bC-m3E" id="COB-bc-Iau"/>
+                        <outlet property="editJarButton" destination="CWt-1u-ZJg" id="P2a-p5-iIQ"/>
                         <outlet property="homeButton" destination="RTu-sm-79t" id="HFv-jj-Xff"/>
                         <outlet property="jarButton" destination="RdN-2P-eCE" id="5hv-yn-HkM"/>
                         <outlet property="jarImage" destination="3PS-Y6-N4D" id="4L8-rz-EXa"/>
@@ -4885,8 +4900,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="hcw-Vj-VJR"/>
-        <segue reference="Zt9-YX-YdQ"/>
-        <segue reference="asf-xD-FDq"/>
+        <segue reference="5Qb-t8-igW"/>
         <segue reference="SR2-9x-ZVn"/>
+        <segue reference="Cat-vR-Xx3"/>
     </inferredMetricsTieBreakers>
 </document>

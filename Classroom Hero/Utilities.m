@@ -326,13 +326,6 @@ NSInteger RESET_PASSWORD = 42;
                                              otherButtonTitles:done, delete ? @"Delete" : nil, nil];
     
     [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
-    for (NSInteger i = 0; i < textfields.count; i++){
-        NSString *placeholder = [textfields objectAtIndex:i];
-        UITextField *txtField = [alertView textFieldAtIndex:i];
-        [txtField setText:placeholder];
-        [txtField setPlaceholder:placeholder];
-        
-    }
     [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
     [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
     [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
@@ -341,7 +334,13 @@ NSInteger RESET_PASSWORD = 42;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
     [[alertView textFieldAtIndex:1] setDelegate:(id)view];
     
-
+    for (NSInteger i = 0; i < textfields.count; i++){
+        NSString *placeholder = [textfields objectAtIndex:i];
+        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
+        [[alertView textFieldAtIndex:i] setText:placeholder];
+        
+    }
+    
     alertView.tag = tag;
     [alertView show];
 }
@@ -369,7 +368,7 @@ NSInteger RESET_PASSWORD = 42;
     for (NSInteger i = 0; i < textfields.count; i++){
         NSString *placeholder = [textfields objectAtIndex:i];
         [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
-        
+        [[alertView textFieldAtIndex:i] setText:placeholder];
     }
     alertView.tag = tag;
     [alertView show];
