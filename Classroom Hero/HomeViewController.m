@@ -51,6 +51,13 @@
     for (UIButton *button in menuButtons){
         button.exclusiveTouch = YES;
     }
+    
+    NSArray *statsViews = @[self.classAvgLevelView, self.classAvgPointsView, self.classTotalStampsView];
+    
+    for (UIView *view in statsViews){
+        [view.layer setCornerRadius:30.0f];
+    }
+    
 }
 
 
@@ -80,9 +87,12 @@
     }
     
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
-    
+    NSInteger totalStamps = 0;
+    NSInteger partialProgress = 3 + (([currentUser.currentClass getLevel] - 2) * 2);
+    totalStamps = partialProgress + [currentUser.currentClass getProgress];
     self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averageLevel"] integerValue]];
     self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averagePoints"] integerValue]];
+    self.classTotalStampsLabel.text = [NSString stringWithFormat:@"%ld", (long)totalStamps];
 }
 
 

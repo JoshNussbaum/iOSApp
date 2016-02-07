@@ -368,6 +368,35 @@ NSInteger RESET_PASSWORD = 42;
     for (NSInteger i = 0; i < textfields.count; i++){
         NSString *placeholder = [textfields objectAtIndex:i];
         [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
+
+    }
+    alertView.tag = tag;
+    [alertView show];
+}
+
+
++ (void) editAlertEditStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
+    
+    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeDefault];
+    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
+    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [alertView textFieldAtIndex:1].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    
+    for (NSInteger i = 0; i < textfields.count; i++){
+        NSString *placeholder = [textfields objectAtIndex:i];
+        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
         [[alertView textFieldAtIndex:i] setText:placeholder];
     }
     alertView.tag = tag;

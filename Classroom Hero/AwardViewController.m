@@ -537,9 +537,6 @@ static NSInteger coinHeight = 250;
 
 - (void)addPoints:(NSInteger)points levelup:(bool)levelup{
     AudioServicesPlaySystemSound(award);
-    if (levelup){
-        [self.progressView setProgress:1.0f animated:YES];
-    }
     if (points == 3){
         [self threeCoinsAnimationWithlevelup:levelup];
     }
@@ -671,8 +668,14 @@ static NSInteger coinHeight = 250;
                                                    animations:^{
                                                        [self.coinImage setFrame:coinViewRect];
                                                        [self.coinPointsLabel setFrame:coinLabelRect];
-                                                       float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                       [self.progressView setProgress:progress animated:YES];
+                                                       [self.coinPointsLabel setFont:[UIFont systemFontOfSize:0]];
+                                                       if (levelup){
+                                                           [self.progressView setProgress:1.0f animated:YES];
+                                                       }
+                                                       else {
+                                                           float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+                                                           [self.progressView setProgress:progress animated:YES];
+                                                       }
                                                        [self incrementPoints];
                                                    }
                                                    completion:^(BOOL finished) {
@@ -687,6 +690,7 @@ static NSInteger coinHeight = 250;
                                                                             completion:^(BOOL finished) {
                                                                                 self.categoryPicker.hidden = NO;
                                                                                 isStamping = NO;
+                                                                                [self.coinPointsLabel setFont:[UIFont systemFontOfSize:32]];
                                                                             }
                                                             ];
                                                        });
@@ -734,9 +738,14 @@ static NSInteger coinHeight = 250;
                                                   [UIView animateWithDuration:t
                                                                    animations:^{
                                                                        [self.cOne setFrame:cOneRect];
-                                                                       float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                                       [self.progressView setProgress:progress animated:YES];
                                                                        [self incrementPoints];
+                                                                       if (levelup){
+                                                                           [self.progressView setProgress:1.0f animated:YES];
+                                                                       }
+                                                                       else {
+                                                                           float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+                                                                           [self.progressView setProgress:progress animated:YES];
+                                                                       }
                                                                    }
                                                                    completion:^(BOOL finished) {
                                                                        double delayInSeconds = 1.5;
@@ -801,10 +810,16 @@ static NSInteger coinHeight = 250;
                                                                                             [self.bTwo setFrame:bTwoRect];
                                                                                             
                                                                                             [self incrementPoints];
+                                                                                            if (levelup){
+                                                                                                [self.progressView setProgress:1.0f animated:YES];
+                                                                                            }
+                                                                                            else {
+                                                                                                float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+                                                                                                [self.progressView setProgress:progress animated:YES];
+                                                                                            }
                                                                                         }
                                                                                         completion:^(BOOL finished) {
-                                                                                            float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                                                            [self.progressView setProgress:progress animated:YES];
+                                                                                            
                                                                                             double delayInSeconds = 1.5;
                                                                                             if (levelup) delayInSeconds = 2.6;
                                                                                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
@@ -873,8 +888,13 @@ static NSInteger coinHeight = 250;
                                                                                                                  [self.aOne setFrame:aOneRect];
                                                                                                                  [self.aTwo setFrame:aTwoRect];
                                                                                                                  [self.aThree setFrame:aThreeRect];
-                                                                                                                 float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                                                                                 [self.progressView setProgress:progress animated:YES];
+                                                                                                                 if (levelup){
+                                                                                                                     [self.progressView setProgress:1.0f animated:YES];
+                                                                                                                 }
+                                                                                                                 else {
+                                                                                                                     float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
+                                                                                                                     [self.progressView setProgress:progress animated:YES];
+                                                                                                                 }
                                                                                                                  [self incrementPoints];
                                                                                                              }
                                                                                                              completion:^(BOOL finished) {

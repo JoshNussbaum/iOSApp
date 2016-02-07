@@ -47,17 +47,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *classAvgLevelLabel;
 @property (strong, nonatomic) IBOutlet UILabel *classAvgPointsLabel;
 
-@property (strong, nonatomic) IBOutlet UILabel *schoolTotalStampsLabel;
-@property (strong, nonatomic) IBOutlet UILabel *schoolAvgLevelLabel;
-@property (strong, nonatomic) IBOutlet UILabel *schoolAvgPointsLabel;
-
 @property (strong, nonatomic) IBOutlet UIView *classTotalStampsView;
 @property (strong, nonatomic) IBOutlet UIView *classAvgLevelView;
 @property (strong, nonatomic) IBOutlet UIView *classAvgPointsView;
 
-@property (strong, nonatomic) IBOutlet UIView *schoolTotalStampsView;
-@property (strong, nonatomic) IBOutlet UIView *schoolAvgLevelView;
-@property (strong, nonatomic) IBOutlet UIView *schoolAvgPointsView;
 
 
 - (void)setFlag:(NSInteger)flag_;

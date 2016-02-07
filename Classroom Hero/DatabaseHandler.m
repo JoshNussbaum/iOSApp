@@ -1008,13 +1008,17 @@ static sqlite3_stmt *statement = nil;
 
 
 - (NSMutableDictionary *)getClassStats:(NSInteger)classId{
+    
+// Get Total stamps by students progress
+    
+    
     NSMutableDictionary *stats = [[NSMutableDictionary alloc] init];
     NSMutableArray *students = [self getStudents:classId :NO];
     if (students.count > 0){
         NSInteger totalLevels = 0;
         NSInteger totalPoints = 0;
         for (student *student_ in students){
-            totalPoints += [student_ getProgress];
+            totalPoints += [student_ getPoints];
             totalLevels += [student_ getLvl];
         }
         NSInteger averageLevel = totalLevels / [students count];

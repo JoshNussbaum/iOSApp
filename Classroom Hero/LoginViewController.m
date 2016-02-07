@@ -43,7 +43,7 @@ NSArray *fakeStudents;
     self.appKey = snowshoe_app_key;
     self.appSecret = snowshoe_app_secret;
     
-    self.emailTextField.text = @"joshn@surveymonkey.com";
+    self.emailTextField.text = @"josh@gmail.com";
     self.passwordTextField.text = @"Punkzor";
 }
 
@@ -127,6 +127,7 @@ NSArray *fakeStudents;
 - (IBAction)backgroundTap:(id)sender{
     [self hideKeyboard];
 }
+
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *email = [alertView textFieldAtIndex:0].text;
@@ -269,7 +270,6 @@ NSArray *fakeStudents;
 - (IBAction)unwindToLogin:(UIStoryboardSegue *)unwindSegue{
     
 }
-
 
 
 @end

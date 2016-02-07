@@ -50,7 +50,7 @@
 
 
 - (IBAction)editStudentClicked:(id)sender {
-    [Utilities editAlertAddStudentWithtitle:@"Edit student" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentStudent getFirstName], [currentStudent getLastName]] tag:1 view:self];
+    [Utilities editAlertEditStudentWithtitle:@"Edit student" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentStudent getFirstName], [currentStudent getLastName]] tag:1 view:self];
 }
 
 
