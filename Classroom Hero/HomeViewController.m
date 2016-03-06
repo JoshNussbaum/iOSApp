@@ -88,7 +88,7 @@
     
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
     NSInteger totalStamps = 0;
-    NSInteger partialProgress = 3 + (([currentUser.currentClass getLevel] - 2) * 2);
+    NSInteger partialProgress = 2 + (([currentUser.currentClass getLevel] - 2) * 2);
     totalStamps = partialProgress + [currentUser.currentClass getProgress];
     self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averageLevel"] integerValue]];
     self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averagePoints"] integerValue]];
@@ -155,7 +155,7 @@
     BOOL customized = NO;
     [self.classProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
     [self.classProgressBar setProgressBarWidth:(5.0f)];
-    [self.classProgressBar  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
+    [self.classProgressBar  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.classProgressBar setBackgroundColor:[UIColor clearColor]];
     
     [self.classProgressBar  setHintViewSpacing:(customized ? 10.0f : 0)];
@@ -166,12 +166,10 @@
         return [NSString stringWithFormat:@"%.0f / 255", progress * 255];
     } : nil)];
     
-    
     [self.jarProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
     [self.jarProgressBar setProgressBarWidth:(5.0f)];
-    [self.jarProgressBar  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
+    [self.jarProgressBar  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.jarProgressBar setBackgroundColor:[UIColor clearColor]];
-    
     
     [self.jarProgressBar  setHintViewSpacing:(customized ? 10.0f : 0)];
     [self.jarProgressBar  setHintViewBackgroundColor:[UIColor clearColor]];

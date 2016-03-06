@@ -58,7 +58,7 @@
     failSound = [Utilities getFailSound];
     
     if (itemsData.count == 0){
-        self.itemNameLabel.text = @"Add  items  above";
+        self.itemNameLabel.text = @"Add items above";
         self.picker.hidden = YES;
         self.editItemButton.hidden = YES;
         self.pointsLabel.text = @"";

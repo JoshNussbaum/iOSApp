@@ -198,7 +198,7 @@ NSInteger RESET_PASSWORD = 42;
 
 
 + (UIColor *) CHGreenColor{
-    UIColor *CHGreenColor = [UIColor colorWithRed:96.0/255.0 green:166.0/255.0 blue:84.0/255.0 alpha:1.0] ;
+    UIColor *CHGreenColor = [UIColor colorWithRed:124.0/255.0 green:166.0/255.0 blue:115/255.0 alpha:1.0] ;
     
     return CHGreenColor;
 }
@@ -208,6 +208,13 @@ NSInteger RESET_PASSWORD = 42;
     UIColor *CHRedColor = [UIColor colorWithRed:243.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:0.75];
     
     return CHRedColor;
+}
+
+
++ (UIColor *) CHGoldColor{
+    UIColor *CHGoldColor = [UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0];
+
+    return CHGoldColor;
 }
 
 
@@ -457,7 +464,7 @@ NSInteger RESET_PASSWORD = 42;
 
 
 + (NSString *) getRandomCompliment{
-    NSArray *compliments = @[@"Outstanding!",@"Splendid!",@"Marvelous!",@"Amazing!",@"Impressive!",@"Great!",@"Good   work!",@"Fine   job!",@"Magnificent!",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing!",@"Phenomenal!",@"Terrific!",@"Stupendous!",@"Peachy!",];
+    NSArray *compliments = @[@"Outstanding!",@"Splendid!",@"Marvelous!",@"Amazing!",@"Impressive!",@"Great!",@"Good   work!",@"Fine  job!",@"Magnificent!",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing!",@"Phenomenal!",@"Terrific!",@"Stupendous!",];
     
     NSInteger randomInteger = arc4random() % (compliments.count-1);
     

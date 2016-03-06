@@ -133,11 +133,11 @@
 
 - (void)setLabels{
     if (!currentUser.serial){
-        self.topLabel.text = [NSString stringWithFormat:@"%@,  stamp  the  apple  to  register  your  teacher  stamp", currentUser.firstName];
+        self.topLabel.text = [NSString stringWithFormat:@"%@, stamp to register your teacher stamp", currentUser.firstName];
         self.unregisterStampButton.hidden = YES;
     }
     else {
-        self.topLabel.text = [NSString stringWithFormat:@"%@,  click  the   unregister  stamp  button  below  to  unregister  your  stamp", currentUser.firstName];
+        self.topLabel.text = [NSString stringWithFormat:@"%@, click the unregister stamp button below to unregister your stamp", currentUser.firstName];
         self.unregisterStampButton.hidden = NO;
     }
 }

@@ -10,58 +10,58 @@
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-static NSString * const LOGIN_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/login/auth";
-static NSString * const STAMP_TO_LOGIN_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/login/auth/stamp";
-static NSString * const CREATE_ACCOUNT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/teacher";
+static NSString * const LOGIN_URL = @"http://ehorvat.webfactional.com/services/login/auth";
+static NSString * const STAMP_TO_LOGIN_URL = @"http://ehorvat.webfactional.com/services/login/auth/stamp";
+static NSString * const CREATE_ACCOUNT_URL = @"http://ehorvat.webfactional.com/services/register/teacher";
 
-static NSString * const ADD_CLASS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/add";
-static NSString * const EDIT_CLASS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/edit";
-static NSString * const DELETE_CLASS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/delete";
+static NSString * const ADD_CLASS_URL = @"http://ehorvat.webfactional.com/services/class/add";
+static NSString * const EDIT_CLASS_URL = @"http://ehorvat.webfactional.com/services/class/edit";
+static NSString * const DELETE_CLASS_URL = @"http://ehorvat.webfactional.com/services/class/delete";
 
-static NSString * const ADD_REINFORCER_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/reinforcer/add";
-static NSString * const EDIT_REINFORCER_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/reinforcer/edit";
-static NSString * const DELETE_REINFORCER_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/reinforcer/delete";
+static NSString * const ADD_REINFORCER_URL = @"http://ehorvat.webfactional.com/services/reinforcer/add";
+static NSString * const EDIT_REINFORCER_URL = @"http://ehorvat.webfactional.com/services/reinforcer/edit";
+static NSString * const DELETE_REINFORCER_URL = @"http://ehorvat.webfactional.com/services/reinforcer/delete";
 
-static NSString * const ADD_ITEM_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/item/add";
-static NSString * const EDIT_ITEM_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/item/edit";
-static NSString * const DELETE_ITEM_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/item/delete";
+static NSString * const ADD_ITEM_URL = @"http://ehorvat.webfactional.com/services/item/add";
+static NSString * const EDIT_ITEM_URL = @"http://ehorvat.webfactional.com/services/item/edit";
+static NSString * const DELETE_ITEM_URL = @"http://ehorvat.webfactional.com/services/item/delete";
 
-static NSString * const ADD_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/add";
-static NSString * const EDIT_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/edit";
-static NSString * const DELETE_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/delete";
+static NSString * const ADD_JAR_URL = @"http://ehorvat.webfactional.com/services/jar/add";
+static NSString * const EDIT_JAR_URL = @"http://ehorvat.webfactional.com/services/jar/edit";
+static NSString * const DELETE_JAR_URL = @"http://ehorvat.webfactional.com/services/jar/delete";
 
-static NSString * const ADD_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/add";
-static NSString * const EDIT_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/edit";
-static NSString * const DELETE_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/delete";
-static NSString * const GET_STUDENT_BY_SERIAL_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/get";
-static NSString * const REWARD_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/reward";
-static NSString * const CHECK_IN_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/checkin";
-static NSString * const CHECK_OUT_STUDENT_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/checkout";
-static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
-static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
-static NSString * const GET_USER_BY_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user";
+static NSString * const ADD_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/add";
+static NSString * const EDIT_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/edit";
+static NSString * const DELETE_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/delete";
+static NSString * const GET_STUDENT_BY_SERIAL_URL = @"http://ehorvat.webfactional.com/services/student/get";
+static NSString * const REWARD_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/reward";
+static NSString * const CHECK_IN_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/checkin";
+static NSString * const CHECK_OUT_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/checkout";
+static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/services/class";
+static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/services/class";
+static NSString * const GET_USER_BY_STAMP_URL = @"http://ehorvat.webfactional.com/services/user";
 
-static NSString * const STUDENT_TRANSACTION_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/student/transaction";
+static NSString * const STUDENT_TRANSACTION_URL = @"http://ehorvat.webfactional.com/services/student/transaction";
 
-static NSString * const GET_SCHOOLS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/schools/get";
-static NSString * const REGISTER_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/stamp";
-static NSString * const UNREGISTER_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/unregisterStamp";
+static NSString * const GET_SCHOOLS_URL = @"http://ehorvat.webfactional.com/services/schools/get";
+static NSString * const REGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/services/register/stamp";
+static NSString * const UNREGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/services/register/unregisterStamp";
 
-static NSString * const REWARD_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
-static NSString * const ADD_TO_JAR_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/jar/fill";
+static NSString * const REWARD_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/services/class";
+static NSString * const ADD_TO_JAR_URL = @"http://ehorvat.webfactional.com/services/jar/fill";
 
-static NSString * const ORDER_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/register/order";
+static NSString * const ORDER_URL = @"http://ehorvat.webfactional.com/services/register/order";
 
-static NSString * const EDIT_TEACHER_NAME_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/settings/editName";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/settings/changePassword";
-static NSString * const RESET_PASSWORD_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/settings/recoverPassword";
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://ehorvat.webfactional.com/services/user/settings/editName";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://ehorvat.webfactional.com/services/user/settings/changePassword";
+static NSString * const RESET_PASSWORD_URL = @"http://ehorvat.webfactional.com/services/user/settings/recoverPassword";
 
 
-static NSString * const GET_CLASS_STATS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class/stats";
+static NSString * const GET_CLASS_STATS_URL = @"http://ehorvat.webfactional.com/services/class/stats";
 
-static NSString * const IDENTIFY_STAMP_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/user/identify";
+static NSString * const IDENTIFY_STAMP_URL = @"http://ehorvat.webfactional.com/services/user/identify";
 
-static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://73.231.27.167:8080/dev.classroomhero/services/class";
+static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/services/class";
 
 
 

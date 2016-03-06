@@ -211,8 +211,6 @@
             isStamping = YES;
             if ([resultObject objectForKey:@"stamp"] != nil){
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                NSLog(@"We stamped with -> %@", stampSerial);
-                
                 if (self.corkImage.hidden == YES){
                     self.stepper.enabled = NO;
                     
@@ -278,7 +276,8 @@
             }
             else if (alertView.tag == 2){
                 [self activityStart:@"Editing class jar..."];
-                if (newClassJarTotal <= [currentClassJar getProgress]){
+                NSLog(@"New total-> %@, current progress -> %d", newClassJarTotal, [currentClassJar getProgress] );
+                if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
                     [Utilities alertStatusWithTitle:@"Warning" message:@"Your new total is less than your current progress. Proceeding will reset your progress to 0" cancel:@"Cancel" otherTitles:@[@"Proceed"] tag:3 view:self];
 
                 }
@@ -325,10 +324,20 @@
             self.editJarButton.hidden = NO;
         }
         else if (type == EDIT_JAR){
+            if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
+                [currentClassJar setProgress:0];
+            }
+
             [currentClassJar setName:newClassJarName];
             [currentClassJar setTotal:newClassJarTotal.integerValue];
             [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
             [self displayClassJar];
+            
+            CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
+            [UIView animateWithDuration:0.5 animations:^{
+                self.jarCoins.frame = finalFrame;
+                
+            }];
         }
         else if (type == ADD_TO_JAR){
             tmpProgress = [currentClassJar getProgress];
@@ -417,7 +426,7 @@
                                  newProg = -420;
                              }
                              else {
-                                 newProg = prog * -420;
+                                 newProg = prog * -418;
                                  
                              }
                              finalFrame.size.height = newProg;
@@ -450,7 +459,6 @@
         
         [UIView animateWithDuration:1.2
                          animations:^{
-                             self.jarCoins.frame = CGRectMake(194, 840, 381, -420);
                              [self.corkImage setFrame:CGRectMake(self.corkImage.frame.origin.x, self.corkImage.frame.origin.y+140, self.corkImage.frame.size.width, self.corkImage.frame.size.height)];
                          }
                          completion:^(BOOL finished) {
@@ -467,7 +475,7 @@
     self.classJarName.text = [currentClassJar getName];
     if (currentClassJar == nil){
         self.stepper.enabled = NO;
-        self.classJarName.text = @"Add  a  jar  above";
+        self.classJarName.text = @"Add a jar above";
     }
     else {
         self.stepper.enabled = YES;
@@ -475,6 +483,7 @@
             [currentClassJar setProgress:0];
         }
     }
+
 }
 
 

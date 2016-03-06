@@ -107,7 +107,7 @@ static NSInteger coinHeight = 250;
     
     if (!reinforcerData || [reinforcerData count] == 0) {
         self.categoryPicker.hidden = YES;
-        self.reinforcerLabel.text=@"Add  reinforcers  above";
+        self.reinforcerLabel.text=@"Add reinforcers above";
         self.reinforcerValue.text = @"";
         self.editReinforcerButton.hidden = YES;
 
@@ -123,7 +123,7 @@ static NSInteger coinHeight = 250;
         button.exclusiveTouch = YES;
     }
     
-    CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 30);
+    CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 20);
     
     self.progressView = [[YLProgressBar alloc]initWithFrame:levelRect];
     self.progressView.hidden = YES;

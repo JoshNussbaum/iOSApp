@@ -22,7 +22,7 @@
     NSLog(@"In view did load Tutorial View");
     [super viewDidLoad];
     if (flag == 1){
-        _pageTitles = @[@"Welcome   to   Classroom   Hero!   Swipe   left   to   create  a  class  and  register  your  teacher  stamp", @"Add   a   class   that   belongs   to   your   school", @"Add   students   to   your   selected   class", @"Add   positive   reinforcers   to   categorize   points   awarded   to   students", @"Add   market   place   items   for   students   to   spend   their   points   on", @"Add   a   jar   that   only   your   teacher   stamp   can   add   points   to   for   a   class-wide   reward", @"Stamp   the   apple   to   register   your   teacher   stamp   and   begin   your   journey  with   Classroom   Hero!"];
+        _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  create  a  class  and  register  your  teacher  stamp", @"Create  a  class  for  the  selected  school", @"Add  students  to  your  selected  class", @"Add  positive  reinforcers  to  categorize  points  awarded  to  students  in  your  selected  class", @"Add  market  place  items  for  students  in  your  selected  class  to  spend  points  on", @"Add  a  jar  that  only  your  teacher  stamp  can  add  points  to  for  a  class-wide  reward", @"Stamp  the  apple  to  register  your  teacher  stamp  and  begin  your  journey  with  Classroom  Hero!"];
         self.backButton.enabled = YES;
         self.backButton.hidden = NO;
 
@@ -30,7 +30,7 @@
     if (flag == 2){
         //self.backButton.enabled = NO;
         //self.backButton.hidden = YES;
-        _pageTitles = @[@"Swipe   left   to   create   or   add   to   a   class  and  register  your  teacher  stamp", @"Add   a   class   that   belongs   to   your   school", @"Add   students   to   your   selected   class", @"Add   positive   reinforcers   to   categorize   points   awarded   to   students", @"Add   market   place   items   for   students   to   spend   their   points   on", @"Add   a   jar   that   only   your   teacher   stamp   can   add   points   to   for   a   class-wide   reward", @"Stamp   the   apple   to   register   your   teacher   stamp   and   begin   your   journey  with   Classroom   Hero!"];
+        _pageTitles = @[@"Swipe left to create a class and register a teacher stamp", @"Create  a  class  for  the  selected  school", @"Add  students  to  your  selected  class", @"Add  positive  reinforcers  to  categorize  points  awarded  to  students  in  your  selected  class", @"Add  market  place  items  for  students  in  your  selected  class  to  spend  points  on", @"Add  a  jar  that  only  your  teacher  stamp  can  add  points  to  for  a  class-wide  reward", @"Stamp  the  apple  to  register  your  teacher  stamp  and  begin  your  journey  with  Classroom  Hero!"];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
     currentUser = [user getInstance];

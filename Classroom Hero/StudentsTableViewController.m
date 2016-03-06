@@ -22,6 +22,7 @@
     NSString *studentFirstName;
     NSString *studentLastName;
     bool editingStudent;
+    bool clicked;
 }
 
 @end
@@ -30,7 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     currentUser = [user getInstance];
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
@@ -40,6 +40,7 @@
 
 
 - (void)viewDidAppear:(BOOL)animated{
+    clicked = NO;
     if (editingStudent) {
         studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
         [self.tableView reloadData];
@@ -151,7 +152,8 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (studentsData.count > 0){
+    if (studentsData.count > 0 && !clicked){
+        clicked = YES;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
         [self performSegueWithIdentifier:@"student_segue" sender:self];

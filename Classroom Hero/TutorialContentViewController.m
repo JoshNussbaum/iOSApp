@@ -11,7 +11,7 @@
 #import "MBProgressHUD.h"
 #import "DatabaseHandler.h"
 #import "Utilities.h"
-
+#import "NSString+FontAwesome.h"
 
 static int screenNumber;
 
@@ -46,8 +46,8 @@ static int screenNumber;
     
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
-    
-    
+    self.arrowLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:25];
+    self.arrowLabel.text = [NSString fontAwesomeIconStringForEnum:FAArrowRight];
     
     switch (self.pageIndex) {
         case 0:
@@ -297,7 +297,7 @@ static int screenNumber;
             class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :1 :0 :30 :[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             currentUser.currentClass = newClass;
-            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   class   or   swipe   left   to    continue", compliment]];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another class or swipe left to  continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
         
@@ -305,7 +305,7 @@ static int screenNumber;
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
             student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
-            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   student   or   swipe   left   to   continue", compliment]];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another student or swipe left to continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
         
@@ -315,7 +315,7 @@ static int screenNumber;
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
             reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :[currentUser.currentClass getId] :reinforcerName :reinforcerValue];
             [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
-            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   reinforcer   or   swipe   left   to   continue", compliment]];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another reinforcer or swipe left to continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
         else if (type == ADD_ITEM){
@@ -324,7 +324,7 @@ static int screenNumber;
             NSInteger itemId = [[data objectForKey:@"id"] integerValue];
             item *newItem = [[item alloc]init:itemId :[currentUser.currentClass getId]  :itemName :itemCost];
             [[DatabaseHandler getSharedInstance] addItem:newItem];
-            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   item   or   swipe   left   to   continue", compliment]];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another item or swipe left to continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
         
@@ -334,7 +334,7 @@ static int screenNumber;
             NSInteger jarId = [[data objectForKey:@"id"] integerValue];
             classjar *newJar = [[classjar alloc]initWithid:jarId cid:[currentUser.currentClass getId]  name:jarName progress:0 total:jarTotal];
             [[DatabaseHandler getSharedInstance] addClassJar:newJar];
-            [self setTitleAndClear:[NSString stringWithFormat:@"%@   Add   another   jar   or   swipe   left   to   continue", compliment]];
+            [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another jar or swipe left to continue", compliment]];
             [self.textField1 becomeFirstResponder];
         }
         else if (type == REGISTER_STAMP){
@@ -398,6 +398,7 @@ static int screenNumber;
         self.button.hidden = YES;
     }
     if (picker){
+        self.arrowLabel.hidden = NO;
         NSMutableAttributedString *titleString;
         self.stampImage.hidden = YES;
         self.schoolPicker.hidden = NO;
@@ -410,7 +411,7 @@ static int screenNumber;
                 self.classNameLabel.hidden = NO;
             }
             else {
-                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select  your  class"];
+                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select your class"];
                 [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
                 self.pickerLabel.hidden = NO;
                 for (int i=0; i <self.classData.count; i++){
@@ -433,7 +434,7 @@ static int screenNumber;
                 self.classNameLabel.hidden = NO;
             }
             else {
-                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select  your  school"];
+                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select your school"];
                 [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
                 self.pickerLabel.hidden = NO;
                 
@@ -445,14 +446,16 @@ static int screenNumber;
         
     }
     else {
+        self.arrowLabel.hidden = NO;
         if (self.pageIndex == 0 || self.pageIndex == 6){
             self.stampImage.hidden = NO;
             if (self.pageIndex == 6){
+                self.arrowLabel.hidden = YES;
                 if (!currentUser.serial){
                     self.titleLabel.hidden = NO;
                 }
                 else {
-                    self.titleLabel.text = @"You  have  a  stamp  registered  to  your  account.  Unregister  from  the  in  app  settings  menu";
+                    self.titleLabel.text = @"You have a stamp registered to your account. Unregister from the in app settings menu";
                     self.titleLabel.hidden =  NO;
                 }
             }

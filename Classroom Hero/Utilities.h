@@ -76,6 +76,9 @@ extern NSInteger RESET_PASSWORD;
 + (UIColor *) CHRedColor;
 
 
++ (UIColor *) CHGoldColor;
+
+
 + (NSString *) getDate;
 
 

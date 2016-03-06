@@ -39,55 +39,52 @@ static sqlite3_stmt *statement = nil;
                     [docsDir stringByAppendingPathComponent: @"ClassroomHeroDB.db"]];
     BOOL isSuccess = YES;
     //Create filemanager and use it to check if database file already exists
-    NSFileManager *filemgr = [NSFileManager defaultManager];
-    
-    if ([filemgr fileExistsAtPath: databasePath ] == NO)
+   
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
-        const char *dbpath = [databasePath UTF8String];
-        if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+        //Create Tables
+        char *errMsg;
+        const char *create_tables =
+        "DROP TABLE IF EXISTS School;"
+        "DROP TABLE IF EXISTS Class;"
+        "DROP TABLE IF EXISTS Student;"
+        "DROP TABLE IF EXISTS Reinforcer;"
+        "DROP TABLE IF EXISTS Item;"
+        "DROP TABLE IF EXISTS ClassJar;"
+        "DROP TABLE IF EXISTS Point;"
+        "DROP TABLE IF EXISTS Transactions;"
+        "DROP TABLE IF EXISTS StudentClassMatch;"
+        "DROP TABLE IF EXISTS StudentSchoolMatch;"
+        "CREATE TABLE School (id integer primary key, name text);"
+        "CREATE TABLE Class (id integer primary key, name text, grade integer, schoolid integer, level integer, progress integer, nextlevel integer, currentday text);"
+        "CREATE TABLE Student (id integer primary key, firstname text, lastname text, serial text, lvl integer, progress integer, lvlupamount integer, points integer, totalpoints integer, checkedin integer);"
+        "CREATE TABLE Reinforcer (id integer primary key, cid integer, name text, value integer);"
+        "CREATE TABLE Item (id integer primary key, cid integer, name text, cost integer);"
+        "CREATE TABLE ClassJar (id integer primary key, cid integer, name text, progress integer, total integer);"
+        "CREATE TABLE Point (id integer, cid integer, timestamp text);"
+        "CREATE TABLE Transactions (id integer, iid integer, timestamp text);"
+        "CREATE TABLE StudentClassMatch (sid integer, cid integer);"
+        "CREATE TABLE StudentSchoolMatch (studentId integer, schoolId integer);";
+        
+        if (sqlite3_exec(database, create_tables, NULL, NULL, &errMsg) == SQLITE_OK)
         {
-            //Create Tables
-            char *errMsg;
-            const char *create_tables =
-            "DROP TABLE IF EXISTS School;"
-            "DROP TABLE IF EXISTS Class;"
-            "DROP TABLE IF EXISTS Student;"
-            "DROP TABLE IF EXISTS Reinforcer;"
-            "DROP TABLE IF EXISTS Item;"
-            "DROP TABLE IF EXISTS ClassJar;"
-            "DROP TABLE IF EXISTS Point;"
-            "DROP TABLE IF EXISTS Transactions;"
-            "DROP TABLE IF EXISTS StudentClassMatch;"
-            "DROP TABLE IF EXISTS StudentSchoolMatch;"
-            "CREATE TABLE School (id integer primary key, name text);"
-            "CREATE TABLE Class (id integer primary key, name text, grade integer, schoolid integer, level integer, progress integer, nextlevel integer, currentday text);"
-            "CREATE TABLE Student (id integer primary key, firstname text, lastname text, serial text, lvl integer, progress integer, lvlupamount integer, points integer, totalpoints integer, checkedin integer);"
-            "CREATE TABLE Reinforcer (id integer primary key, cid integer, name text, value integer);"
-            "CREATE TABLE Item (id integer primary key, cid integer, name text, cost integer);"
-            "CREATE TABLE ClassJar (id integer primary key, cid integer, name text, progress integer, total integer);"
-            "CREATE TABLE Point (id integer, cid integer, timestamp text);"
-            "CREATE TABLE Transactions (id integer, iid integer, timestamp text);"
-            "CREATE TABLE StudentClassMatch (sid integer, cid integer);"
-            "CREATE TABLE StudentSchoolMatch (studentId integer, schoolId integer);";
-            
-            if (sqlite3_exec(database, create_tables, NULL, NULL, &errMsg) == SQLITE_OK)
-            {
-                NSLog(@"Created DB");
-                sqlite3_close(database);
-                return  isSuccess;
-            }
-            else
-            {
-                isSuccess = NO;
-                NSLog(@"Failed to create table");
-            }
-            
+            NSLog(@"Created DB");
+            sqlite3_close(database);
+            return  isSuccess;
         }
-        else {
+        else
+        {
             isSuccess = NO;
-            NSLog(@"Failed to open/create database");
+            NSLog(@"Failed to create table");
         }
+        
     }
+    else {
+        isSuccess = NO;
+        NSLog(@"Failed to open/create database");
+    }
+
     sqlite3_close(database);
     return isSuccess;
 }

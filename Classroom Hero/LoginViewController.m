@@ -44,7 +44,7 @@ NSArray *fakeStudents;
     self.appSecret = snowshoe_app_secret;
     
     self.emailTextField.text = @"josh@gmail.com";
-    self.passwordTextField.text = @"Punkzor";
+    self.passwordTextField.text = @"Punkzor1";
 }
 
 
@@ -79,8 +79,7 @@ NSArray *fakeStudents;
 - (IBAction)loginClicked:(id)sender{
     [self hideKeyboard];
     [[DatabaseHandler getSharedInstance] resetDatabase];
-//    [self loginSuccess:fakeLoginDict];
-//    return;
+    
     textFields = [[NSMutableArray alloc]initWithObjects:self.emailTextField, self.passwordTextField, nil];
     
     errorMessage = @"";

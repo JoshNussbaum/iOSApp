@@ -133,6 +133,9 @@
             [Utilities wiggleImage:self.stampImage sound:YES];
             self.studentButton.hidden = NO;
             self.stampToRegisterLabel.hidden = YES;
+            self.stampIdLabel.text = [currentStudent getSerial];
+            [currentUser.currentClass addPoints:1];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             isRegistered = YES;
         }
         else if (type == UNREGISTER_STAMP){
@@ -211,7 +214,13 @@
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Coins", (long)[currentStudent getPoints]];
-    self.stampIdLabel.text = [currentStudent getSerial];
+    NSString *name = [currentStudent getSerial];
+    if (![[currentStudent getSerial] isEqualToString:@""]){
+        self.stampIdLabel.text = [currentStudent getSerial];
+    }
+    else {
+        self.stampIdLabel.text = @"No stamp registered";
+    }
     [self.progressView setProgress:(float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount] animated:YES];
     
     isRegistered = ((![currentStudent.getSerial isEqualToString:@""]) || ![currentStudent getSerial]);
@@ -229,7 +238,7 @@
 
 - (void)configureProgressBar{
     BOOL customized = NO;
-    [self.progressView setProgressBarTrackColor:[Utilities CHBlueColor]];
+    [self.progressView setProgressBarTrackColor:[Utilities CHGreenColor]];
     [self.progressView setProgressBarWidth:(6.0f)];
     [self.progressView  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
     [self.progressView setBackgroundColor:[UIColor clearColor]];
