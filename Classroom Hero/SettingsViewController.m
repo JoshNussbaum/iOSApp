@@ -21,6 +21,7 @@
     user *currentUser;
     JSBadgeView *badgeView;
     JSBadgeView *badgeView2;
+    JSBadgeView *badgeView3;
     MBProgressHUD *hud;
     NSInteger flag;
     ConnectionHandler *webHandler;
@@ -54,7 +55,7 @@
     self.studentListIcon.text = [NSString fontAwesomeIconStringForEnum:FAList];
     [self.classTutorialButton setTitle:@"Class Tutorial" forState:UIControlStateNormal];
     self.classTutorialIcon.text = [NSString fontAwesomeIconStringForEnum:FAQuestionCircle];
-    [self.registerTeacherStamp setTitle:@"Register Teacher Stamp" forState:UIControlStateNormal];
+    [self.registerTeacherStamp setTitle:@"Manage Teacher Stamp" forState:UIControlStateNormal];
     self.registerTeacherIcon.text = [NSString fontAwesomeIconStringForEnum:FAStar];
     [self.unregisterAllStampsButton setTitle:@"Unregister All Stamps" forState:UIControlStateNormal];
     self.unregisterAllStampsIcon.text = [NSString fontAwesomeIconStringForEnum:FAExclamationTriangle];
@@ -179,31 +180,36 @@
 - (void)checkAccountStatus{
     currentUser = [user getInstance];
     [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
-    if (!currentUser.serial){
+    if (currentUser.serial == nil){
         badgeView = [[JSBadgeView alloc] initWithParentView:self.registerTeacherStampView alignment:JSBadgeViewAlignmentTopRight];
         badgeView.badgeText = @"!";
         badgeView.badgeTextColor=[UIColor whiteColor];
         badgeView.badgeBackgroundColor = [UIColor redColor];
     }
-    if (currentUser.accountStatus < 2){
-        badgeView2 = [[JSBadgeView alloc] initWithParentView:self.orderStampsView alignment:JSBadgeViewAlignmentTopRight];
-        badgeView2.badgeText = @"!";
-        badgeView2.badgeTextColor=[UIColor whiteColor];
-        badgeView2.badgeBackgroundColor = [UIColor redColor];
-        
-    }
     else {
         [badgeView removeFromSuperview];
-        [badgeView2 removeFromSuperview];
     }
-    
+//    if (currentUser.accountStatus < 2){
+//        badgeView2 = [[JSBadgeView alloc] initWithParentView:self.orderStampsView alignment:JSBadgeViewAlignmentTopRight];
+//        badgeView2.badgeText = @"!";
+//        badgeView2.badgeTextColor=[UIColor whiteColor];
+//        badgeView2.badgeBackgroundColor = [UIColor redColor];
+//        
+//    }
+//    else {
+//        [badgeView removeFromSuperview];
+//        [badgeView2 removeFromSuperview];
+//    }
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     if (unregisteredStudents > 0){
+        badgeView3 = [[JSBadgeView alloc] initWithParentView:self.registerStudentsView alignment:JSBadgeViewAlignmentTopRight];
         [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
-        JSBadgeView *badgeView3 = [[JSBadgeView alloc] initWithParentView:self.registerStudentsView alignment:JSBadgeViewAlignmentTopRight];
         badgeView3.badgeText = [NSString stringWithFormat:@"%ld", (long)unregisteredStudents];
         badgeView3.badgeTextColor=[UIColor whiteColor];
         badgeView3.badgeBackgroundColor = [UIColor redColor];
+    }
+    else {
+        [badgeView3 removeFromSuperview];
     }
     
 }

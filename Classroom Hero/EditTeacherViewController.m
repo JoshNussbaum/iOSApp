@@ -27,9 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentUser = [user getInstance];
-    [Utilities makeRoundedButton:self.editNameButton :[UIColor whiteColor]];
-    [Utilities makeRoundedButton:self.editPasswordButton :[UIColor whiteColor]];
-    [Utilities makeRoundedButton:self.resetPasswordButton :[UIColor whiteColor]];
+    NSArray *buttons = @[self.editNameButton, self.editPasswordButton, self.resetPasswordButton, self.manageStampButton];
+    for (UIButton *button in buttons){
+        [Utilities makeRoundedButton:button :[UIColor whiteColor]];
+    }
     self.firstNameTextField.placeholder = currentUser.firstName;
     self.lastNameTextField.placeholder = currentUser.lastName;
     
@@ -103,6 +104,10 @@
 
 - (IBAction)resetPasswordClicked:(id)sender {
     [Utilities alertStatusWithTitle:@"Are you sure?" message:@"Send confirmation email to reset password?" cancel:@"Cancel" otherTitles:@[@"Reset"] tag:1 view:self];
+}
+
+- (IBAction)manageStampClicked:(id)sender {
+    [self performSegueWithIdentifier:@"edit_teacher_to_manage_stamp" sender:self];
 }
 
 

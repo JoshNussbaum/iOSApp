@@ -267,12 +267,13 @@ NSInteger RESET_PASSWORD = 42;
 
 
 + (bool)isValidClassroomHeroStamp:(NSString *)serial{
-    if([serial hasPrefix:@"ClassroomHero"]){
-        return YES;
-    }
-    else {
-        return NO;
-    }
+    return YES;
+//    if([serial hasPrefix:@"ClassroomHero"]){
+//        return YES;
+//    }
+//    else {
+//        return NO;
+//    }
 }
 
 
@@ -464,7 +465,7 @@ NSInteger RESET_PASSWORD = 42;
 
 
 + (NSString *) getRandomCompliment{
-    NSArray *compliments = @[@"Outstanding!",@"Splendid!",@"Marvelous!",@"Amazing!",@"Impressive!",@"Great!",@"Good   work!",@"Fine  job!",@"Magnificent!",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing!",@"Phenomenal!",@"Terrific!",@"Stupendous!",];
+    NSArray *compliments = @[@"Outstanding!",@"Splendid!",@"Marvelous!",@"Amazing!",@"Impressive!",@"Great!",@"Good work!",@"Fine  job!",@"Magnificent!",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing!",@"Phenomenal!",@"Terrific!",@"Stupendous!",];
     
     NSInteger randomInteger = arc4random() % (compliments.count-1);
     

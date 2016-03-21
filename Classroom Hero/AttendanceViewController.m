@@ -84,26 +84,32 @@
                 isStamping = YES;
                 stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    
-                    currentStudent = [Utilities getStudentWitharray:studentsData propertyName:@"serial" searchString:stampSerial];
-                    if (currentStudent != nil){
-                        if ([currentStudent getCheckedIn]){
-                            [Utilities alertStatusWithTitle:[NSString stringWithFormat:@"%@ is already checked in", [currentStudent getFirstName]] message:nil cancel:nil otherTitles:nil tag:0 view:self];
-                            isStamping = NO;
+                    if (![stampSerial isEqualToString:currentUser.serial]){
+                        currentStudent = [Utilities getStudentWitharray:studentsData propertyName:@"serial" searchString:stampSerial];
+                        if (currentStudent != nil){
+                            if ([currentStudent getCheckedIn]){
+                                [Utilities alertStatusWithTitle:[NSString stringWithFormat:@"%@ is already checked in", [currentStudent getFirstName]] message:nil cancel:nil otherTitles:nil tag:0 view:self];
+                                isStamping = NO;
+                            }
+                            else {
+                                [Utilities wiggleImage:self.stampImage sound:NO];
+                                [self setStudentLabels];
+                                [self checkNewDay];
+                                didManuallyCheckIn = NO;
+                                [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
+                            }
+                            
                         }
                         else {
-                            [Utilities wiggleImage:self.stampImage sound:NO];
-                            [self setStudentLabels];
-                            [self checkNewDay];
-                            didManuallyCheckIn = NO;
-                            [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
+                            [Utilities failAnimation:self.stampImage];
+                            isStamping = NO;
                         }
-                        
                     }
                     else {
-                        [Utilities failAnimation:self.stampImage];
+                        [Utilities alertStatusWithTitle:@"Attendance error" message:@"Only students can stamp this screen" cancel:nil otherTitles:nil tag:0 view:self];
                         isStamping = NO;
                     }
+                 
                 }
                 else{
                     [Utilities failAnimation:self.stampImage];
@@ -120,6 +126,9 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if (buttonIndex == [alertView cancelButtonIndex]) {
+        self.studentNameLabel.hidden = YES;
+        self.studentPointsLabel.hidden = YES;
+        self.sackImage.hidden = YES;
         return;
     }
     
@@ -151,6 +160,7 @@
     [hud hide:YES];
     
     if (data == nil){
+        isStamping = NO;
         [Utilities alertStatusNoConnection];
         return;
     }

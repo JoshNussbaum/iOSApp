@@ -110,8 +110,8 @@
         else if (type == REGISTER_STAMP){
             currentUser.serial = serial;
             currentUser.accountStatus = 2;
+            [Utilities wiggleImage:self.stampImage sound:YES];
             [self setLabels];
-            [Utilities alertStatusWithTitle:@"Successfully registered stamp" message:nil cancel:nil otherTitles:nil tag:0 view:self];
         }
         
     }

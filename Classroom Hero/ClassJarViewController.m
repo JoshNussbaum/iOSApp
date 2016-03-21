@@ -72,11 +72,15 @@
         self.addJarButton.hidden = NO;
         self.addJarButton.enabled = YES;
         self.editJarButton.hidden = YES;
+        self.stepper.hidden = YES;
+        self.pointsLabel.hidden = YES;
     }
     else {
         self.addJarButton.hidden = YES;
         self.addJarButton.enabled = NO;
         self.editJarButton.hidden = NO;
+        self.stepper.hidden = NO;
+        self.pointsLabel.hidden = NO;
     }
     [self displayClassJar];
     self.appKey = snowshoe_app_key ;
@@ -322,6 +326,8 @@
             self.addJarButton.hidden = YES;
             self.stepper.enabled = YES;
             self.editJarButton.hidden = NO;
+            self.stepper.hidden = NO;
+            self.pointsLabel.hidden = NO;
         }
         else if (type == EDIT_JAR){
             if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){

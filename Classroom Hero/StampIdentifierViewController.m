@@ -20,6 +20,7 @@
     bool isStamping;
     MBProgressHUD *hud;
     ConnectionHandler *webHandler;
+    NSString *stampSerial;
 }
 
 @end
@@ -61,8 +62,9 @@
         if (resultObject != NULL) {
             if ([resultObject objectForKey:@"stamp"] != nil){
                 isStamping = YES;
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
+                stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                    [Utilities wiggleImage:self.stampImage sound:NO];
                     [self activityStart:@"Examining stamp..."];
                     [webHandler getUserBySerialWithserial:stampSerial];
                 }
@@ -70,6 +72,9 @@
                     [Utilities failAnimation:self.stampImage];
                     isStamping = NO;
                 }
+            }
+            else {
+                [Utilities failAnimation:self.stampImage];
             }
         }
     }
@@ -102,6 +107,10 @@
             self.stampSerialLabel.hidden = YES;
             self.unregisterStampButton.hidden = YES;
             [Utilities alertStatusWithTitle:@"Successfully unregistered stamp" message:nil cancel:nil otherTitles:nil tag:0 view:self];
+            if ([stampSerial isEqualToString:currentUser.serial]){
+                currentUser.serial = nil;
+            }
+            [Utilities wiggleImage:self.stampImage sound:NO];
             
         }
         else if (type == GET_USER_BY_STAMP){
@@ -109,18 +118,19 @@
             
             NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
             currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
+            NSString *stamp = [studentDictionary objectForKey:@"stamp"];
             
             if (currentStudent == nil){
-                NSString *stamp = [studentDictionary objectForKey:@"stamp"];
                 NSString * fname = [studentDictionary objectForKey: @"fname"];
                 NSString * lname = [studentDictionary objectForKey: @"lname"];
-                
                 currentStudent = [[student alloc] init];
                 [currentStudent setId:idNumber.integerValue];
                 [currentStudent setSerial:stamp];
                 [currentStudent setFirstName:fname];
                 [currentStudent setLastName:lname];
                 
+            }
+            if (![stampSerial isEqualToString:currentUser.serial]){
                 [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
             }
             [self displayStudent];

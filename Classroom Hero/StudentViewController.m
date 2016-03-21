@@ -144,6 +144,7 @@
             self.stampToRegisterLabel.hidden = NO;
             self.studentButton.hidden = YES;
             isRegistered = NO;
+            self.stampIdLabel.text = @"No stamp registered";
         }
     }
     else {
