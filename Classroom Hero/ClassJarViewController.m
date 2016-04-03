@@ -21,6 +21,7 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "StudentsTableViewController.h"
+#import "Flurry.h"
 
 
 @interface ClassJarViewController (){
@@ -220,7 +221,7 @@
                     
                     if ([stampSerial isEqualToString:currentUser.serial] && ([currentClassJar getTotal] != 0))
                     {
-                        [webHandler addToClassJar:[currentClassJar getId] :currentPoints];
+                        [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
                         
                         /*
                          NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys: currentUser.jarName, @"added", nil];
@@ -328,6 +329,8 @@
             self.editJarButton.hidden = NO;
             self.stepper.hidden = NO;
             self.pointsLabel.hidden = NO;
+            
+            [Flurry logEvent:@"Add Jar - Jar View"];
         }
         else if (type == EDIT_JAR){
             if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
@@ -344,12 +347,17 @@
                 self.jarCoins.frame = finalFrame;
                 
             }];
+            [Flurry logEvent:@"Edit Jar"];
+
         }
         else if (type == ADD_TO_JAR){
             tmpProgress = [currentClassJar getProgress];
             [currentClassJar updateJar:currentPoints];
             [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
             [self addCoins];
+            [Flurry logEvent:@"Add to Jar"];
+            [currentUser.currentClass addPoints:1];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
         }
     }
     else {
@@ -432,7 +440,7 @@
                                  newProg = -420;
                              }
                              else {
-                                 newProg = prog * -418;
+                                 newProg = prog * -500;
                                  
                              }
                              finalFrame.size.height = newProg;

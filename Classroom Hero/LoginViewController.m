@@ -44,7 +44,7 @@ NSArray *fakeStudents;
     self.appSecret = snowshoe_app_secret;
     
     self.emailTextField.text = @"josh@gmail.com";
-    self.passwordTextField.text = @"Punkzor1";
+    self.passwordTextField.text = @"Punkzor";
 }
 
 

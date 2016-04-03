@@ -11,6 +11,7 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
+#import "Flurry.h"
 
 @interface AttendanceViewController (){
     BOOL showingStudents;
@@ -58,6 +59,11 @@
 }
 
 
+- (void)viewDidAppear:(BOOL)animated{
+    [self checkNewDay];
+}
+
+
 - (IBAction)studentsClicked:(id)sender {
     if (self.studentsTableView.hidden){
         [self animateTableView:NO];
@@ -71,6 +77,16 @@
 
 - (IBAction)backClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (IBAction)resetClicked:(id)sender {
+    [Utilities alertStatusWithTitle:@"Confirm action" message:@"Check out all students?" cancel:nil otherTitles:@[@"Confirm"] tag:3 view:self];
+}
+
+
+- (IBAction)checkInAllClicked:(id)sender {
+     [Utilities alertStatusWithTitle:@"Confirm action" message:@"Check in all students?" cancel:nil otherTitles:@[@"Confirm"] tag:4 view:self];
 }
 
 
@@ -96,7 +112,7 @@
                                 [self setStudentLabels];
                                 [self checkNewDay];
                                 didManuallyCheckIn = NO;
-                                [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
+                                [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:YES];
                             }
                             
                         }
@@ -126,20 +142,25 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if (buttonIndex == [alertView cancelButtonIndex]) {
-        self.studentNameLabel.hidden = YES;
-        self.studentPointsLabel.hidden = YES;
-        self.sackImage.hidden = YES;
         return;
     }
     
     if (alertView.tag == 1){
         didManuallyCheckIn = YES;
-        [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
+        [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:NO];
     }
     
     else if (alertView.tag == 2){
         didManuallyCheckIn = YES;
         [webHandler checkOutStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
+    }
+    else if (alertView.tag == 3){
+        [self activityStart:@"Checking out all students"];
+        [webHandler checkOutAllStudentsWithclassId:[currentUser.currentClass getId]];
+    }
+    else if (alertView.tag == 4){
+        [self activityStart:@"Checking in all students"];
+        [webHandler checkInAllStudentsWithclassId:[currentUser.currentClass getId]];
     }
 }
 
@@ -170,27 +191,33 @@
         if (type == STUDENT_CHECK_IN){
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
-            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
-            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
-            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-            NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
-            
-            [currentStudent setPoints:pointsNumber.integerValue];
-            [currentStudent setLevel:levelNumber.integerValue];
-            [currentStudent setProgress:progressNumber.integerValue];
-            [currentStudent setLevelUpAmount:lvlUpAmount];
-            [currentStudent setCheckedIn:YES];
-            [currentUser.currentClass addPoints:1];
-            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-            
             if (!didManuallyCheckIn){
+                NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
+                NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
+                NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
+                NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+                NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
+                NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
+                
+                [currentStudent setPoints:pointsNumber.integerValue];
+                [currentStudent setLevel:levelNumber.integerValue];
+                [currentStudent setProgress:progressNumber.integerValue];
+                [currentStudent setLevelUpAmount:lvlUpAmount];
+                [currentStudent setCheckedIn:YES];
+                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+                [currentUser.currentClass addPoints:1];
+                [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
                 [self coinAnimation];
+                [Flurry logEvent:@"Check In Stamp"];
+            }
+            else {
+                [currentStudent setCheckedIn:YES];
+                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+                [Flurry logEvent:@"Check In Manual"];
             }
             
             [self reloadTable];
+            [self checkNewDay];
         }
         
         else if (type == STUDENT_CHECK_OUT){
@@ -198,13 +225,28 @@
             [currentStudent setCheckedIn:NO];
             isStamping = NO;
             [self reloadTable];
+            [Flurry logEvent:@"Check Out"];
         }
         
-        else if (type == ALL_STUDENT_CHECK_IN){
+        else if (type == ALL_STUDENT_CHECK_IN || type == ALL_STUDENT_CHECK_OUT){
+            BOOL checkedIn = (type == ALL_STUDENT_CHECK_IN ? YES: NO);
+            [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:checkedIn];
             
-        }
-        else if (type == ALL_STUDENT_CHECK_OUT){
+            [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
+            [[DatabaseHandler getSharedInstance] editClass:currentUser.currentClass];
             
+            studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
+            
+            [self.studentsTableView reloadData];
+            NSString *checkedInString;
+            if (checkedIn) {
+                checkedInString = @"in";
+                
+            }
+            else checkedInString = @"out";
+            
+            [Utilities alertStatusWithTitle:@"Success" message:[NSString stringWithFormat:@"Checked %@ all students", checkedInString] cancel:nil otherTitles:nil tag:0 view:self];
+
         }
     }
     else {
@@ -219,6 +261,9 @@
         }
         
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        self.studentNameLabel.hidden = YES;
+        self.studentPointsLabel.hidden = YES;
+        self.sackImage.hidden = YES;
         isStamping = NO;
     }
 
@@ -245,13 +290,10 @@
 - (void)checkNewDay{
     
     if ([Utilities isNewDate:[currentUser.currentClass getCurrentDate]]){
+        [self activityStart:@"Resetting attendance for new day"];
+        [webHandler checkOutAllStudentsWithclassId:[currentUser.currentClass getId]];
+        // Make web call to check out all students here. THen put this stuff in dataReady
         
-        [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:NO];
-        
-        [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
-        [[DatabaseHandler getSharedInstance] editClass:currentUser.currentClass];
-        
-        [self.studentsTableView reloadData];
     }
 }
 
@@ -279,7 +321,7 @@
 }
 
 
-- (void) activityStart :(NSString *)message {
+- (void)activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;

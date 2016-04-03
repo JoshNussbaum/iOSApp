@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "Utilities.h"
 #import "DatabaseHandler.h"
+#import "Flurry.h"
 
 
 
@@ -111,6 +112,7 @@
                 currentUser.serial = nil;
             }
             [Utilities wiggleImage:self.stampImage sound:NO];
+            [Flurry logEvent:@"Unregister Student Stamp - Stamp Identifier"];
             
         }
         else if (type == GET_USER_BY_STAMP){
@@ -134,6 +136,7 @@
                 [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
             }
             [self displayStudent];
+            [Flurry logEvent:@"Get User - Stamp Identifier"];
         }
         
     }

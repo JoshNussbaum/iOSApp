@@ -35,7 +35,6 @@
     
     self.title  = @"Home Screen";
     currentUser = [user getInstance];
-    
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
     self.teacherNameLabel.text = name;
     self.classNameLabel.text = [currentUser.currentClass getName];
@@ -63,7 +62,8 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     currentUser = [user getInstance];
-    
+    NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
+    self.teacherNameLabel.text = name;
     classjar *jar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     
     if (jar != nil){

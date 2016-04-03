@@ -92,10 +92,10 @@
 - (void)rewardAllStudentsWithcid:(NSInteger)cid;
 
 
-- (void)addToClassJar:(NSInteger)cjid :(NSInteger)points;
+- (void)addToClassJar:(NSInteger)cjid :(NSInteger)points :(NSInteger)cid;
 
 
-- (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost;
+- (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost cid:(NSInteger)cid;
 
 
 - (void)unregisterStampWithid:(NSInteger)id;
@@ -122,7 +122,7 @@
 - (void)getStudentBySerialwithserial:(NSString *)serial :(NSInteger)schoolId;
 
 
-- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId;
+- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId stamp:(BOOL)stamp;
 
 
 - (void)checkOutStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId;

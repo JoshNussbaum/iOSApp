@@ -106,6 +106,7 @@
     [Utilities alertStatusWithTitle:@"Are you sure?" message:@"Send confirmation email to reset password?" cancel:@"Cancel" otherTitles:@[@"Reset"] tag:1 view:self];
 }
 
+
 - (IBAction)manageStampClicked:(id)sender {
     [self performSegueWithIdentifier:@"edit_teacher_to_manage_stamp" sender:self];
 }
@@ -113,6 +114,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == [alertView cancelButtonIndex]) {
+        [self hideKeyboard];
         return;
     }
     
@@ -123,7 +125,6 @@
         return;
     }
 }
-
 
 
 - (IBAction)backClicked:(id)sender {
@@ -213,6 +214,9 @@
     else if (textField == self.editPasswordTextField) {
         [self.confirmNewPasswordTextField becomeFirstResponder];
         
+    }
+    else if (textField == self.confirmNewPasswordTextField){
+        [self.view endEditing:YES];
     }
     return YES;
 }

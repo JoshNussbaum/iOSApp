@@ -32,5 +32,8 @@
 
 - (IBAction)backClicked:(id)sender;
 
+- (IBAction)resetClicked:(id)sender;
+
+- (IBAction)checkInAllClicked:(id)sender;
 
 @end

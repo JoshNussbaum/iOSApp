@@ -669,10 +669,10 @@ NSInteger RESET_PASSWORD = 42;
     NSString *newDate = [self getCurrentDate];
     
     if ([newDate isEqualToString:oldDate]){
-        return YES;
+        return NO;
     }
     else {
-        return NO;
+        return YES;
     }
 }
 

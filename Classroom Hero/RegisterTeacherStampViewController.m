@@ -10,6 +10,7 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "DatabaseHandler.h"
+#import "Flurry.h"
 
 
 @interface RegisterTeacherStampViewController (){
@@ -106,12 +107,14 @@
         if (type == UNREGISTER_STAMP){
             currentUser.serial = nil;
             [self setLabels];
+            [Flurry logEvent:@"Unregister Teacher Stamp - Register Teacher"];
         }
         else if (type == REGISTER_STAMP){
             currentUser.serial = serial;
             currentUser.accountStatus = 2;
             [Utilities wiggleImage:self.stampImage sound:YES];
             [self setLabels];
+            [Flurry logEvent:@"Register Teacher Stamp - Register Teacher"];
         }
         
     }

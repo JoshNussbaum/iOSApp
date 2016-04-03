@@ -12,6 +12,7 @@
 #import "HomeViewController.h"
 #import "MBProgressHUD.h"
 #import "SettingsViewController.h"
+#import "Flurry.h"
 
 @interface RegisterStudentsViewController (){
     NSMutableArray *unregisteredStudents;
@@ -230,6 +231,7 @@
                 
             }
             [self displayName:registerIndex];
+            [Flurry logEvent:@"Register Student - Register Students"];
         }
         else{
             [Utilities alertStatusWithTitle:@"Error registering student" message:message cancel:nil otherTitles:nil tag:0 view:nil];

@@ -12,6 +12,7 @@
 #import "MarketViewController.h"
 #import "MBProgressHUD.h"
 #import "StudentsTableViewController.h"
+#import "Flurry.h"
 
 static NSInteger coinWidth = 250;
 static NSInteger coinHeight = 250;
@@ -338,6 +339,9 @@ static NSInteger coinHeight = 250;
             [self.categoryPicker reloadAllComponents];
             [self setReinforcerName];
             
+            [Flurry logEvent:@"Edit Reinforcer"];
+            
+            
         }
         else if (type == ADD_REINFORCER){
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
@@ -354,6 +358,8 @@ static NSInteger coinHeight = 250;
             self.editReinforcerButton.hidden = NO;
             self.categoryPicker.hidden = NO;
             
+            [Flurry logEvent:@"Add Reinforcer - Award View"];
+            
         }
         else if (type == DELETE_REINFORCER){
             [[DatabaseHandler getSharedInstance]deleteReinforcer:[currentReinforcer getId]];
@@ -365,6 +371,8 @@ static NSInteger coinHeight = 250;
                 self.reinforcerLabel.text=@"Add  reinforcers  above";
                 self.reinforcerValue.text = @"";
                 self.editReinforcerButton.hidden = YES;
+                
+                [Flurry logEvent:@"Delete Reinforcer"];
             }
         }
         else if (type == REWARD_STUDENT){
@@ -403,11 +411,15 @@ static NSInteger coinHeight = 250;
             tmpPoints = ([currentStudent getPoints] - pointsAwarded);
             [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
             
+            [Flurry logEvent:@"Reward Student"];
+            
         }
         else if (type == REWARD_ALL_STUDENTS){
             AudioServicesPlaySystemSound(teacherStamp);
             [[DatabaseHandler getSharedInstance] rewardAllStudentsInClassWithid:[currentUser.currentClass getId]];
             [self awardAllStudents];
+            
+            [Flurry logEvent:@"Reward All Students"];
             
         }
         else {
@@ -668,7 +680,7 @@ static NSInteger coinHeight = 250;
                                                    animations:^{
                                                        [self.coinImage setFrame:coinViewRect];
                                                        [self.coinPointsLabel setFrame:coinLabelRect];
-                                                       [self.coinPointsLabel setFont:[UIFont systemFontOfSize:0]];
+                                                       [self.coinPointsLabel setFont:[UIFont systemFontOfSize:40]];
                                                        if (levelup){
                                                            [self.progressView setProgress:1.0f animated:YES];
                                                        }
@@ -690,7 +702,7 @@ static NSInteger coinHeight = 250;
                                                                             completion:^(BOOL finished) {
                                                                                 self.categoryPicker.hidden = NO;
                                                                                 isStamping = NO;
-                                                                                [self.coinPointsLabel setFont:[UIFont systemFontOfSize:32]];
+                                                                                [self.coinPointsLabel setFont:[UIFont systemFontOfSize:40]];
                                                                             }
                                                             ];
                                                        });

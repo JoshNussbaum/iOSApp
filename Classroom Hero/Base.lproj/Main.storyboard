@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="AmaticSC-Bold.ttf">
@@ -782,13 +783,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Y0U-cW-1ye">
-                                <rect key="frame" x="44" y="175" width="680" height="348"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Y0U-cW-1ye">
+                                <rect key="frame" x="44" y="175" width="678" height="359"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Y0U-cW-1ye" secondAttribute="height" multiplier="680:299" constant="-111.4381270903009" id="Shr-iI-gXP"/>
                                 </constraints>
-                                <string key="text">Classroom  Hero  is  the  ultimate  tool  for  teachers.  Motivate  students  to  work  harder  and  demonstrate  better  behavior.  Manage  an  engaging  token  economy;  Give  out  points,  sell  items, and fill up a classroom jar.  Start  your  class  by taking  attendance  as  students  arrive.  Give  out  points  to  motivate  students  throughout  the  day.  Add  points  to  your  jar  to  moviate  the  entire  class.  Use  the  marketplace  to  sell  items  to  students  for  their  hard  earned points</string>
+                                <string key="text">Classroom  Hero  is  an  interactive  and  engaging  class  management  system  designed  to  motivate  students  to  work  harder  with  a  gamified  point  reward  system.  Manage  a  token  economy;  Give  out  points,  sell  items, and fill up a classroom jar.  Take  attendance  as  students  arrive  by  having  them  stamp  the app.  Reward  points  to  motivate  students  throughout  the  day.  Add  points  to  your  jar  to  moviate  the  entire  class.  Use  the  marketplace  to  sell  items  to  students  for  their  hard  earned points</string>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="29"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -1151,7 +1152,7 @@
             </objects>
             <point key="canvasLocation" x="1706" y="906"/>
         </scene>
-        <!--Attendance-->
+        <!--Attendance View Controller-->
         <scene sceneID="4YI-1C-2z4">
             <objects>
                 <viewController id="rrA-d8-rIs" customClass="AttendanceViewController" sceneMemberID="viewController">
@@ -1288,13 +1289,14 @@
                             <outletCollection property="gestureRecognizers" destination="jQI-k1-z5V" appends="YES" id="UIF-ha-PC6"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Attendance" id="KLA-ZQ-03D">
+                    <navigationItem key="navigationItem" id="KLA-ZQ-03D">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" id="Vdz-MR-64k">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="W7g-Y4-PW5">
                                 <rect key="frame" x="20" y="2" width="170" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                 <state key="normal" title="Back">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1304,25 +1306,53 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="B2N-eh-7e0">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sU3-EE-PhM">
-                                <rect key="frame" x="578" y="2" width="170" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Students">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="studentsClicked:" destination="rrA-d8-rIs" eventType="touchUpInside" id="hU7-si-oRB"/>
-                                </connections>
-                            </button>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h02-Kb-W86">
+                            <rect key="frame" x="196" y="7" width="198" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                            <state key="normal" title="Check In All">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
-                                <action selector="studentsClicked:" destination="rrA-d8-rIs" id="vi6-DS-BDr"/>
+                                <action selector="checkInAllClicked:" destination="rrA-d8-rIs" eventType="touchUpInside" id="dWK-2h-jU9"/>
                             </connections>
-                        </barButtonItem>
+                        </button>
+                        <rightBarButtonItems>
+                            <barButtonItem id="B2N-eh-7e0">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sU3-EE-PhM">
+                                    <rect key="frame" x="578" y="2" width="170" height="39"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                    <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Students">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="studentsClicked:" destination="rrA-d8-rIs" eventType="touchUpInside" id="hU7-si-oRB"/>
+                                    </connections>
+                                </button>
+                                <connections>
+                                    <action selector="studentsClicked:" destination="rrA-d8-rIs" id="vi6-DS-BDr"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="Zqi-xo-Ojc">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xeZ-X7-Rgc">
+                                    <rect key="frame" x="400" y="1" width="170" height="41"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                    <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                    <state key="normal" title="Check Out All">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="resetClicked:" destination="rrA-d8-rIs" eventType="touchUpInside" id="1ZK-QR-kTF"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
@@ -2769,36 +2799,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ud-6f-2Ql">
-                                <rect key="frame" x="297" y="828" width="174" height="35"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="9Ud-6f-2Ql" secondAttribute="height" multiplier="77:17" constant="15.470588235294116" id="PoG-je-i42"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
-                                <state key="normal" title="Reset password">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="resetPasswordClicked:" destination="wCL-Ew-G6Q" eventType="touchUpInside" id="9ri-KJ-5xE"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="435-lk-IRA">
-                                <rect key="frame" x="297" y="743" width="174" height="35"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="435-lk-IRA" secondAttribute="height" multiplier="158:37" constant="24.540540540540547" id="BHP-oL-ycO"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
-                                <state key="normal" title="Edit password">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="editPasswordClicked:" destination="wCL-Ew-G6Q" eventType="touchUpInside" id="SYu-bl-Ucc"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YUa-rC-zyq">
                                 <rect key="frame" x="0.0" y="917" width="768" height="2"/>
                                 <animations/>
@@ -2823,6 +2823,36 @@
                                     <action selector="manageStampClicked:" destination="wCL-Ew-G6Q" eventType="touchUpInside" id="fhl-Fa-p0p"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ud-6f-2Ql">
+                                <rect key="frame" x="297" y="846" width="174" height="35"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="9Ud-6f-2Ql" secondAttribute="height" multiplier="77:17" constant="15.470588235294116" id="PoG-je-i42"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Reset password">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetPasswordClicked:" destination="wCL-Ew-G6Q" eventType="touchUpInside" id="9ri-KJ-5xE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="435-lk-IRA">
+                                <rect key="frame" x="297" y="761" width="174" height="35"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="435-lk-IRA" secondAttribute="height" multiplier="158:37" constant="24.540540540540547" id="BHP-oL-ycO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                <state key="normal" title="Edit password">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="editPasswordClicked:" destination="wCL-Ew-G6Q" eventType="touchUpInside" id="SYu-bl-Ucc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.48783856959999999" green="0.64913119239999995" blue="0.45113934220000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -2841,7 +2871,7 @@
                             <constraint firstItem="9Ud-6f-2Ql" firstAttribute="width" secondItem="aTs-pJ-FOQ" secondAttribute="height" multiplier="231:1024" constant="-57" id="BBJ-n9-EbA"/>
                             <constraint firstItem="yp5-Yw-3r7" firstAttribute="centerX" secondItem="aTs-pJ-FOQ" secondAttribute="centerX" id="Bgb-gf-lno"/>
                             <constraint firstItem="Hq6-0w-VXW" firstAttribute="centerX" secondItem="aTs-pJ-FOQ" secondAttribute="centerX" id="Ce8-1k-nVs"/>
-                            <constraint firstItem="YUa-rC-zyq" firstAttribute="top" secondItem="9Ud-6f-2Ql" secondAttribute="bottom" constant="54" id="Dod-jd-SuC"/>
+                            <constraint firstItem="YUa-rC-zyq" firstAttribute="top" secondItem="9Ud-6f-2Ql" secondAttribute="bottom" constant="36" id="Dod-jd-SuC"/>
                             <constraint firstItem="Caf-De-bou" firstAttribute="centerX" secondItem="aTs-pJ-FOQ" secondAttribute="centerX" id="I4C-a7-j4H"/>
                             <constraint firstItem="aNw-hp-T4w" firstAttribute="top" secondItem="yp5-Yw-3r7" secondAttribute="bottom" constant="44" id="IkV-9z-jKQ"/>
                             <constraint firstItem="f01-K8-clh" firstAttribute="centerX" secondItem="aTs-pJ-FOQ" secondAttribute="centerX" id="JZw-nz-EA9"/>
@@ -2855,7 +2885,7 @@
                             <constraint firstItem="YUa-rC-zyq" firstAttribute="centerX" secondItem="aTs-pJ-FOQ" secondAttribute="centerX" id="Pvp-i4-8Vz"/>
                             <constraint firstItem="f01-K8-clh" firstAttribute="top" secondItem="Hq6-0w-VXW" secondAttribute="bottom" constant="44" id="Q3x-7D-9Zp"/>
                             <constraint firstItem="9Ud-6f-2Ql" firstAttribute="centerX" secondItem="aTs-pJ-FOQ" secondAttribute="centerX" id="Vbj-AM-PnG"/>
-                            <constraint firstItem="435-lk-IRA" firstAttribute="top" secondItem="Caf-De-bou" secondAttribute="bottom" constant="38" id="eM7-5e-vzQ"/>
+                            <constraint firstItem="435-lk-IRA" firstAttribute="top" secondItem="Caf-De-bou" secondAttribute="bottom" constant="56" id="eM7-5e-vzQ"/>
                             <constraint firstItem="YUa-rC-zyq" firstAttribute="width" secondItem="aTs-pJ-FOQ" secondAttribute="height" multiplier="3:4" id="etJ-pR-xQG"/>
                             <constraint firstItem="0rL-fG-8cZ" firstAttribute="centerX" secondItem="aTs-pJ-FOQ" secondAttribute="centerX" id="h5z-VK-g3S"/>
                             <constraint firstItem="Xti-oO-LFy" firstAttribute="centerX" secondItem="aTs-pJ-FOQ" secondAttribute="centerX" id="hGX-ZF-ubd"/>
@@ -2951,11 +2981,11 @@
                                     <action selector="unreigsterClicked:" destination="PzN-nE-apu" eventType="touchUpInside" id="cMk-Kq-130"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="mIs-A2-Vp7">
-                                <rect key="frame" x="154" y="233" width="460" height="474"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="0jm-YP-7nx">
+                                <rect key="frame" x="184" y="280" width="400" height="400"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="mIs-A2-Vp7" secondAttribute="height" multiplier="230:237" id="GLL-wm-u73"/>
+                                    <constraint firstAttribute="width" secondItem="0jm-YP-7nx" secondAttribute="height" multiplier="1:1" id="yuH-Ky-2jf"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -2964,14 +2994,14 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="LdT-36-Yf0" firstAttribute="centerX" secondItem="qlD-Y8-0fr" secondAttribute="centerX" id="1dz-FO-FMi"/>
-                            <constraint firstItem="mIs-A2-Vp7" firstAttribute="centerX" secondItem="qlD-Y8-0fr" secondAttribute="centerX" id="HFF-uR-14k"/>
                             <constraint firstItem="HVL-n1-vKD" firstAttribute="width" secondItem="qlD-Y8-0fr" secondAttribute="height" multiplier="5:8" constant="-161" id="MO1-bP-A7G"/>
                             <constraint firstItem="HVL-n1-vKD" firstAttribute="top" secondItem="kUQ-Zp-N9q" secondAttribute="bottom" constant="41" id="Q7H-G2-W2o"/>
-                            <constraint firstItem="mIs-A2-Vp7" firstAttribute="width" secondItem="qlD-Y8-0fr" secondAttribute="height" multiplier="23:48" id="iOv-zS-YKw"/>
+                            <constraint firstItem="0jm-YP-7nx" firstAttribute="width" secondItem="qlD-Y8-0fr" secondAttribute="height" multiplier="5:12" id="WyE-ce-E5V"/>
+                            <constraint firstItem="0jm-YP-7nx" firstAttribute="centerX" secondItem="qlD-Y8-0fr" secondAttribute="centerX" id="iXA-w6-sU4"/>
+                            <constraint firstItem="0jm-YP-7nx" firstAttribute="centerY" secondItem="qlD-Y8-0fr" secondAttribute="centerY" id="m76-aB-bQm"/>
                             <constraint firstItem="HVL-n1-vKD" firstAttribute="centerX" secondItem="qlD-Y8-0fr" secondAttribute="centerX" id="rDh-jd-wbz"/>
-                            <constraint firstItem="mIs-A2-Vp7" firstAttribute="top" secondItem="HVL-n1-vKD" secondAttribute="bottom" constant="63" id="tsd-gE-b3b"/>
-                            <constraint firstItem="LdT-36-Yf0" firstAttribute="top" secondItem="mIs-A2-Vp7" secondAttribute="bottom" constant="115" id="u7O-my-S6H"/>
                             <constraint firstItem="LdT-36-Yf0" firstAttribute="width" secondItem="qlD-Y8-0fr" secondAttribute="height" multiplier="87:320" id="wxo-tc-KTN"/>
+                            <constraint firstItem="0qO-q4-HJe" firstAttribute="top" secondItem="LdT-36-Yf0" secondAttribute="bottom" constant="82" id="xsx-H5-saJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Register Teacher Stamp" id="9Ez-BF-2y1">
@@ -2993,8 +3023,6 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="stampAgainLabel" destination="mIs-A2-Vp7" id="2bZ-F4-7Lc"/>
-                        <outlet property="stampImage" destination="mIs-A2-Vp7" id="o8A-h4-SKE"/>
                         <outlet property="topLabel" destination="HVL-n1-vKD" id="ad9-vW-COE"/>
                         <outlet property="unregisterStampButton" destination="LdT-36-Yf0" id="veg-kC-mj2"/>
                     </connections>
@@ -3137,7 +3165,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fourth Grade" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9b-4G-Sw5">
                                 <rect key="frame" x="224" y="251" width="275" height="80"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
@@ -3163,12 +3191,12 @@
                                 <rect key="frame" x="0.0" y="64" width="768" height="85"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dTa-tA-pxG">
-                                        <rect key="frame" x="286" y="23" width="62" height="39"/>
+                                        <rect key="frame" x="286" y="23" width="69" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="dTa-tA-pxG" secondAttribute="height" multiplier="62:39" id="t1D-Tz-yUj"/>
+                                            <constraint firstAttribute="width" secondItem="dTa-tA-pxG" secondAttribute="height" multiplier="62:39" constant="7.0000000000000071" id="t1D-Tz-yUj"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Award">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3206,7 +3234,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="C1o-bF-uYr" secondAttribute="height" multiplier="30:13" id="LSN-zU-kZ6"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Class Jar">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3229,12 +3257,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJo-GU-4qP">
-                                        <rect key="frame" x="671" y="23" width="68" height="39"/>
+                                        <rect key="frame" x="671" y="23" width="74" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="fJo-GU-4qP" secondAttribute="height" multiplier="68:39" id="7Lh-Yg-5kr"/>
+                                            <constraint firstAttribute="width" secondItem="fJo-GU-4qP" secondAttribute="height" multiplier="68:39" constant="6" id="7Lh-Yg-5kr"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Market">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3257,12 +3285,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A11-Fa-I3v">
-                                        <rect key="frame" x="100" y="21" width="59" height="39"/>
+                                        <rect key="frame" x="100" y="21" width="67" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="A11-Fa-I3v" secondAttribute="height" multiplier="59:39" id="ZBO-Xc-hGP"/>
+                                            <constraint firstAttribute="width" secondItem="A11-Fa-I3v" secondAttribute="height" multiplier="59:39" constant="8" id="ZBO-Xc-hGP"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Home">
                                             <color key="titleColor" red="1" green="0.89386813990000002" blue="0.24416096879999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="0.91372549020000005" green="0.76470588240000004" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -3273,11 +3301,11 @@
                                 <color key="backgroundColor" red="0.48783856961402944" green="0.64913119239999995" blue="0.45113934215215912" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Nv9-Qi-9f2" firstAttribute="top" secondItem="3JN-kB-dwa" secondAttribute="top" id="10b-up-UID"/>
-                                    <constraint firstItem="A11-Fa-I3v" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="59:85" id="2Gp-T5-m0T"/>
+                                    <constraint firstItem="A11-Fa-I3v" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="59:85" constant="8" id="2Gp-T5-m0T"/>
                                     <constraint firstItem="dTa-tA-pxG" firstAttribute="leading" secondItem="M2O-nc-KmX" secondAttribute="trailing" constant="8" id="2q3-p7-OwN"/>
-                                    <constraint firstItem="fJo-GU-4qP" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="4:5" id="3X5-PU-eNo"/>
+                                    <constraint firstItem="fJo-GU-4qP" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="4:5" constant="6" id="3X5-PU-eNo"/>
                                     <constraint firstItem="Nv9-Qi-9f2" firstAttribute="leading" secondItem="3JN-kB-dwa" secondAttribute="leading" constant="20" id="6ML-Dd-5wu"/>
-                                    <constraint firstItem="M2O-nc-KmX" firstAttribute="leading" secondItem="A11-Fa-I3v" secondAttribute="trailing" constant="39" id="CwZ-v0-CDZ"/>
+                                    <constraint firstItem="M2O-nc-KmX" firstAttribute="leading" secondItem="A11-Fa-I3v" secondAttribute="trailing" constant="31" id="CwZ-v0-CDZ"/>
                                     <constraint firstItem="fJo-GU-4qP" firstAttribute="centerY" secondItem="nKi-gY-kF2" secondAttribute="centerY" id="Ijv-Z4-dz1"/>
                                     <constraint firstItem="C1o-bF-uYr" firstAttribute="centerY" secondItem="ZYl-Sm-SD1" secondAttribute="centerY" id="In4-NI-598"/>
                                     <constraint firstItem="A11-Fa-I3v" firstAttribute="centerY" secondItem="Nv9-Qi-9f2" secondAttribute="centerY" id="R82-Dx-4cF"/>
@@ -3285,7 +3313,7 @@
                                     <constraint firstItem="nKi-gY-kF2" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="16:17" id="Reu-FL-CUO"/>
                                     <constraint firstItem="C1o-bF-uYr" firstAttribute="leading" secondItem="ZYl-Sm-SD1" secondAttribute="trailing" constant="-3" id="bhi-o0-8ZN"/>
                                     <constraint firstItem="nKi-gY-kF2" firstAttribute="leading" secondItem="C1o-bF-uYr" secondAttribute="trailing" constant="35" id="e5V-Aj-gGf"/>
-                                    <constraint firstAttribute="trailing" secondItem="fJo-GU-4qP" secondAttribute="trailing" constant="29" id="ehY-JV-MEk"/>
+                                    <constraint firstAttribute="trailing" secondItem="fJo-GU-4qP" secondAttribute="trailing" constant="23" id="ehY-JV-MEk"/>
                                     <constraint firstItem="nKi-gY-kF2" firstAttribute="top" secondItem="3JN-kB-dwa" secondAttribute="top" constant="3" id="eoa-Xe-0CG"/>
                                     <constraint firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="768:85" id="eyP-9n-Al3"/>
                                     <constraint firstItem="Nv9-Qi-9f2" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="16:17" id="fOg-pA-TkP"/>
@@ -3296,13 +3324,13 @@
                                     <constraint firstItem="C1o-bF-uYr" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="18:17" id="rRC-mi-fe3"/>
                                     <constraint firstItem="dTa-tA-pxG" firstAttribute="centerY" secondItem="M2O-nc-KmX" secondAttribute="centerY" id="rvk-0s-woF"/>
                                     <constraint firstItem="A11-Fa-I3v" firstAttribute="leading" secondItem="Nv9-Qi-9f2" secondAttribute="trailing" id="s1w-E8-bmr"/>
-                                    <constraint firstItem="dTa-tA-pxG" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="62:85" id="vWI-jn-9vZ"/>
+                                    <constraint firstItem="dTa-tA-pxG" firstAttribute="width" secondItem="3JN-kB-dwa" secondAttribute="height" multiplier="62:85" constant="7" id="vWI-jn-9vZ"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strawberry Elementary School" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKY-1w-ww8">
                                 <rect key="frame" x="224" y="336" width="275" height="80"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
@@ -3312,29 +3340,29 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="wFg-oq-SLx" secondAttribute="height" multiplier="55:16" id="GZp-VR-cpb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Teacher Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KHr-KV-Flf">
-                                <rect key="frame" x="38" y="180" width="139" height="60"/>
+                                <rect key="frame" x="28" y="180" width="149" height="60"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="KHr-KV-Flf" secondAttribute="height" multiplier="139:60" id="h4l-Dg-qIj"/>
+                                    <constraint firstAttribute="width" secondItem="KHr-KV-Flf" secondAttribute="height" multiplier="139:60" constant="10" id="h4l-Dg-qIj"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="23"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5e4-HG-LIJ">
-                                <rect key="frame" x="38" y="261" width="139" height="60"/>
+                                <rect key="frame" x="28" y="261" width="149" height="60"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="23"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="School Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySx-si-gTq">
-                                <rect key="frame" x="38" y="346" width="139" height="60"/>
+                                <rect key="frame" x="28" y="346" width="149" height="60"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="23"/>
                                 <nil key="highlightedColor"/>
@@ -3349,7 +3377,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="hGs-lu-Fw1" secondAttribute="height" multiplier="7:3" id="3jt-97-smc"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STUDENT AVG. LEVEL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d5o-NN-7QH">
@@ -3358,13 +3386,13 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="d5o-NN-7QH" secondAttribute="height" multiplier="14:5" id="g9R-xW-mys"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.48783856959999999" green="0.64913119239999995" blue="0.45113934220000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="d5o-NN-7QH" firstAttribute="top" secondItem="pw5-bK-UKq" secondAttribute="top" constant="8" id="0e6-3W-1Al"/>
                                     <constraint firstAttribute="bottom" secondItem="hGs-lu-Fw1" secondAttribute="bottom" constant="8" id="5IN-fX-b8x"/>
@@ -3386,7 +3414,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="z5d-5Q-Qio" secondAttribute="height" multiplier="7:3" id="2gt-yG-Y3i"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STUDENT AVG. POINTS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZdY-u4-QM3">
@@ -3395,13 +3423,13 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ZdY-u4-QM3" secondAttribute="height" multiplier="14:5" id="lvp-mv-PcF"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.48783856959999999" green="0.64913119239999995" blue="0.45113934220000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="z5d-5Q-Qio" secondAttribute="bottom" constant="8" id="9n0-14-6kK"/>
                                     <constraint firstItem="ZdY-u4-QM3" firstAttribute="leading" secondItem="bJV-dX-2Hs" secondAttribute="leading" constant="5" id="ORv-bn-DQ2"/>
@@ -3421,7 +3449,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="s4X-wK-A8U" secondAttribute="height" multiplier="7:3" id="uRt-P2-F7e"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL STAMPS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZ3-mB-6r4">
@@ -3430,13 +3458,13 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="wZ3-mB-6r4" secondAttribute="height" multiplier="14:5" id="g4D-wS-uvt"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.48783856959999999" green="0.64913119239999995" blue="0.45113934220000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="s4X-wK-A8U" firstAttribute="centerX" secondItem="wyn-jB-3pv" secondAttribute="centerX" id="3Tk-P2-U22"/>
                                     <constraint firstAttribute="trailing" secondItem="wZ3-mB-6r4" secondAttribute="trailing" constant="5" id="BsJ-6L-Knm"/>
@@ -3449,22 +3477,6 @@
                                     <constraint firstAttribute="width" secondItem="wyn-jB-3pv" secondAttribute="height" multiplier="6:5" id="kkb-NE-FB5"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqF-Jk-HLs">
-                                <rect key="frame" x="517" y="320" width="217" height="41"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="jqF-Jk-HLs" secondAttribute="height" multiplier="219:41" constant="-2" id="rwY-O0-P1b"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
-                                <state key="normal" title="Attendance">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="attendanceClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="1uH-GU-in1"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJH-pe-l3K">
                                 <rect key="frame" x="517" y="220" width="217" height="40"/>
                                 <subviews>
@@ -3475,7 +3487,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="jM2-Cl-51v" secondAttribute="height" multiplier="217:40" id="Q1F-cW-u2K"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
                                         <state key="normal" title="Settings">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3500,7 +3512,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uhr-sx-AST" secondAttribute="height" multiplier="15:2" id="iot-ci-uVU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
@@ -3510,7 +3522,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="EQ0-z4-kEE" secondAttribute="height" multiplier="147:20" id="NBy-vx-KHW"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
@@ -3529,12 +3541,28 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="AIF-ta-iGo">
-                                <rect key="frame" x="323" y="542" width="122" height="122"/>
+                                <rect key="frame" x="312" y="542" width="145" height="145"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="AIF-ta-iGo" secondAttribute="height" multiplier="1:1" id="ZDo-aw-xcI"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqF-Jk-HLs">
+                                <rect key="frame" x="517" y="320" width="217" height="41"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="jqF-Jk-HLs" secondAttribute="height" multiplier="219:41" constant="-2" id="rwY-O0-P1b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="24"/>
+                                <state key="normal" title="Attendance">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="attendanceClicked:" destination="U2R-yA-zyV" eventType="touchUpInside" id="1uH-GU-in1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="1" green="1" blue="0.95666421979865768" alpha="1" colorSpace="calibratedRGB"/>
@@ -3560,9 +3588,9 @@
                             <constraint firstItem="jqF-Jk-HLs" firstAttribute="top" secondItem="sKY-1w-ww8" secondAttribute="top" constant="-16" id="GJk-Qv-FRv"/>
                             <constraint firstAttribute="trailing" secondItem="3JN-kB-dwa" secondAttribute="trailing" id="JG7-gO-o6y"/>
                             <constraint firstItem="bJV-dX-2Hs" firstAttribute="centerY" secondItem="pw5-bK-UKq" secondAttribute="centerY" id="JGJ-bM-18e"/>
-                            <constraint firstItem="AIF-ta-iGo" firstAttribute="width" secondItem="AQx-tv-vEp" secondAttribute="height" multiplier="15:128" constant="2" id="LM0-HA-Ezf"/>
+                            <constraint firstItem="AIF-ta-iGo" firstAttribute="width" secondItem="AQx-tv-vEp" secondAttribute="height" multiplier="15:128" constant="25" id="LM0-HA-Ezf"/>
                             <constraint firstItem="EQ0-z4-kEE" firstAttribute="width" secondItem="AQx-tv-vEp" secondAttribute="height" multiplier="147:512" id="M6h-kb-1cW"/>
-                            <constraint firstItem="KHr-KV-Flf" firstAttribute="width" secondItem="AQx-tv-vEp" secondAttribute="height" multiplier="139:1024" id="MaM-Qx-PJS"/>
+                            <constraint firstItem="KHr-KV-Flf" firstAttribute="width" secondItem="AQx-tv-vEp" secondAttribute="height" multiplier="139:1024" constant="10" id="MaM-Qx-PJS"/>
                             <constraint firstItem="wFg-oq-SLx" firstAttribute="centerY" secondItem="KHr-KV-Flf" secondAttribute="centerY" id="OCT-JM-tbn"/>
                             <constraint firstItem="OJH-pe-l3K" firstAttribute="leading" secondItem="wFg-oq-SLx" secondAttribute="trailing" constant="18" id="RaK-wp-8A6"/>
                             <constraint firstItem="Q9b-4G-Sw5" firstAttribute="top" secondItem="wFg-oq-SLx" secondAttribute="bottom" constant="1" id="SEX-T7-Z6U"/>
@@ -3588,7 +3616,7 @@
                             <constraint firstItem="sKY-1w-ww8" firstAttribute="height" secondItem="Q9b-4G-Sw5" secondAttribute="height" id="lwN-1C-c8f"/>
                             <constraint firstItem="wyn-jB-3pv" firstAttribute="centerY" secondItem="pw5-bK-UKq" secondAttribute="centerY" id="m38-WH-7Mc"/>
                             <constraint firstItem="sKY-1w-ww8" firstAttribute="centerX" secondItem="Q9b-4G-Sw5" secondAttribute="centerX" id="mAX-95-Bdt"/>
-                            <constraint firstItem="AIF-ta-iGo" firstAttribute="centerY" secondItem="DoG-Rn-Q86" secondAttribute="centerY" constant="-16.5" id="mYv-uN-gc5"/>
+                            <constraint firstItem="AIF-ta-iGo" firstAttribute="centerY" secondItem="DoG-Rn-Q86" secondAttribute="centerY" constant="-5" id="mYv-uN-gc5"/>
                             <constraint firstItem="Q9b-4G-Sw5" firstAttribute="centerX" secondItem="wFg-oq-SLx" secondAttribute="centerX" id="naY-zI-s5a"/>
                             <constraint firstItem="ySx-si-gTq" firstAttribute="height" secondItem="5e4-HG-LIJ" secondAttribute="height" id="o6S-MF-8o8"/>
                             <constraint firstItem="pw5-bK-UKq" firstAttribute="leading" secondItem="wyn-jB-3pv" secondAttribute="trailing" constant="79" id="o9e-xf-4EE"/>
@@ -3599,7 +3627,7 @@
                             <constraint firstItem="Q9b-4G-Sw5" firstAttribute="height" secondItem="wFg-oq-SLx" secondAttribute="height" id="sXG-PM-Vmh"/>
                             <constraint firstItem="3JN-kB-dwa" firstAttribute="top" secondItem="gq6-je-AjO" secondAttribute="bottom" id="tIG-kO-zqj"/>
                             <constraint firstItem="5e4-HG-LIJ" firstAttribute="width" secondItem="KHr-KV-Flf" secondAttribute="width" id="v2F-0p-4GI"/>
-                            <constraint firstItem="KHr-KV-Flf" firstAttribute="leading" secondItem="AQx-tv-vEp" secondAttribute="leading" constant="38" id="vvw-nP-rYG"/>
+                            <constraint firstItem="KHr-KV-Flf" firstAttribute="leading" secondItem="AQx-tv-vEp" secondAttribute="leading" constant="28" id="vvw-nP-rYG"/>
                             <constraint firstItem="EQ0-z4-kEE" firstAttribute="top" secondItem="qgt-QL-mh3" secondAttribute="bottom" constant="46" id="wRQ-Lw-XqH"/>
                             <constraint firstItem="J9w-BR-Ibt" firstAttribute="width" secondItem="AQx-tv-vEp" secondAttribute="height" multiplier="161:1024" id="wwX-7S-brd"/>
                             <constraint firstItem="ySx-si-gTq" firstAttribute="centerX" secondItem="5e4-HG-LIJ" secondAttribute="centerX" id="xhf-BJ-pdz"/>
@@ -3698,12 +3726,12 @@
                                 <rect key="frame" x="0.0" y="64" width="768" height="85"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ie-Pm-Gfr">
-                                        <rect key="frame" x="100" y="21" width="59" height="39"/>
+                                        <rect key="frame" x="100" y="21" width="65" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="2Ie-Pm-Gfr" secondAttribute="height" multiplier="59:39" id="Qvi-u1-Jaj"/>
+                                            <constraint firstAttribute="width" secondItem="2Ie-Pm-Gfr" secondAttribute="height" multiplier="59:39" constant="6" id="Qvi-u1-Jaj"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Home">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3713,12 +3741,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jcg-sU-azR">
-                                        <rect key="frame" x="286" y="23" width="62" height="39"/>
+                                        <rect key="frame" x="286" y="23" width="68" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="jcg-sU-azR" secondAttribute="height" multiplier="62:39" id="huz-st-aTY"/>
+                                            <constraint firstAttribute="width" secondItem="jcg-sU-azR" secondAttribute="height" multiplier="62:39" constant="6.0000000000000071" id="huz-st-aTY"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Award">
                                             <color key="titleColor" red="1" green="0.89386813990000002" blue="0.24416096879999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="0.91372549020000005" green="0.76470588240000004" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -3766,7 +3794,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="7Nm-uN-OeA" secondAttribute="height" multiplier="30:13" id="2RK-Mp-bfD"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Class Jar">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3789,12 +3817,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Osd-66-vCh">
-                                        <rect key="frame" x="671" y="23" width="68" height="39"/>
+                                        <rect key="frame" x="671" y="23" width="74" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="Osd-66-vCh" secondAttribute="height" multiplier="68:39" id="YpF-qy-58J"/>
+                                            <constraint firstAttribute="width" secondItem="Osd-66-vCh" secondAttribute="height" multiplier="68:39" constant="6" id="YpF-qy-58J"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Market">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3810,9 +3838,9 @@
                                     <constraint firstItem="Osd-66-vCh" firstAttribute="leading" secondItem="ge1-2V-Yv9" secondAttribute="trailing" constant="1" id="27p-KE-skK"/>
                                     <constraint firstItem="7Nm-uN-OeA" firstAttribute="centerY" secondItem="GeY-sx-NPj" secondAttribute="centerY" id="6MK-YO-0Ka"/>
                                     <constraint firstItem="bDZ-in-RfX" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="16:17" id="7CR-WU-pUG"/>
-                                    <constraint firstItem="jcg-sU-azR" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="62:85" id="8lJ-ZF-T5x"/>
+                                    <constraint firstItem="jcg-sU-azR" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="62:85" constant="6" id="8lJ-ZF-T5x"/>
                                     <constraint firstItem="7Nm-uN-OeA" firstAttribute="leading" secondItem="GeY-sx-NPj" secondAttribute="trailing" constant="-4" id="FSV-oK-nFV"/>
-                                    <constraint firstItem="Osd-66-vCh" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="4:5" id="Irh-Dg-c8I"/>
+                                    <constraint firstItem="Osd-66-vCh" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="4:5" constant="6" id="Irh-Dg-c8I"/>
                                     <constraint firstItem="7Nm-uN-OeA" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="18:17" id="LGg-s2-237"/>
                                     <constraint firstItem="qSX-4F-Mb1" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="16:17" id="Uum-vR-n7P"/>
                                     <constraint firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="768:85" id="WSb-jt-Dzq"/>
@@ -3820,15 +3848,15 @@
                                     <constraint firstItem="GeY-sx-NPj" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="16:17" id="coX-Wc-ooU"/>
                                     <constraint firstItem="bDZ-in-RfX" firstAttribute="top" secondItem="8z2-Rt-FTg" secondAttribute="top" id="eBr-mQ-B2f"/>
                                     <constraint firstItem="2Ie-Pm-Gfr" firstAttribute="leading" secondItem="bDZ-in-RfX" secondAttribute="trailing" id="gyx-2e-OFe"/>
-                                    <constraint firstAttribute="trailing" secondItem="Osd-66-vCh" secondAttribute="trailing" constant="29" id="hPc-Ew-PYI"/>
+                                    <constraint firstAttribute="trailing" secondItem="Osd-66-vCh" secondAttribute="trailing" constant="23" id="hPc-Ew-PYI"/>
                                     <constraint firstItem="jcg-sU-azR" firstAttribute="centerY" secondItem="qSX-4F-Mb1" secondAttribute="centerY" id="mSI-lj-3Mu"/>
                                     <constraint firstItem="ge1-2V-Yv9" firstAttribute="leading" secondItem="7Nm-uN-OeA" secondAttribute="trailing" constant="35" id="n6u-3V-BwB"/>
                                     <constraint firstItem="Osd-66-vCh" firstAttribute="centerY" secondItem="ge1-2V-Yv9" secondAttribute="centerY" id="oy9-vK-kgD"/>
                                     <constraint firstItem="ge1-2V-Yv9" firstAttribute="top" secondItem="8z2-Rt-FTg" secondAttribute="top" constant="3" id="rzM-YX-TUF"/>
                                     <constraint firstItem="GeY-sx-NPj" firstAttribute="top" secondItem="8z2-Rt-FTg" secondAttribute="top" constant="4" id="sW1-lU-WpU"/>
                                     <constraint firstItem="qSX-4F-Mb1" firstAttribute="top" secondItem="8z2-Rt-FTg" secondAttribute="top" constant="3" id="sZa-RI-DG1"/>
-                                    <constraint firstItem="2Ie-Pm-Gfr" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="59:85" id="u0D-Ln-DLS"/>
-                                    <constraint firstItem="qSX-4F-Mb1" firstAttribute="leading" secondItem="2Ie-Pm-Gfr" secondAttribute="trailing" constant="39" id="uH9-Ez-Bxv"/>
+                                    <constraint firstItem="2Ie-Pm-Gfr" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="59:85" constant="6" id="u0D-Ln-DLS"/>
+                                    <constraint firstItem="qSX-4F-Mb1" firstAttribute="leading" secondItem="2Ie-Pm-Gfr" secondAttribute="trailing" constant="33" id="uH9-Ez-Bxv"/>
                                     <constraint firstItem="bDZ-in-RfX" firstAttribute="leading" secondItem="8z2-Rt-FTg" secondAttribute="leading" constant="20" id="uX2-RK-Mof"/>
                                     <constraint firstItem="ge1-2V-Yv9" firstAttribute="width" secondItem="8z2-Rt-FTg" secondAttribute="height" multiplier="16:17" id="vDJ-v8-IgK"/>
                                     <constraint firstItem="jcg-sU-azR" firstAttribute="leading" secondItem="qSX-4F-Mb1" secondAttribute="trailing" constant="8" id="wA4-Dl-SdA"/>
@@ -4222,12 +4250,12 @@
                                 <rect key="frame" x="0.0" y="64" width="768" height="85"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEX-Od-gs2">
-                                        <rect key="frame" x="286" y="23" width="62" height="39"/>
+                                        <rect key="frame" x="286" y="23" width="69" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="qEX-Od-gs2" secondAttribute="height" multiplier="62:39" id="eFo-yQ-Pz7"/>
+                                            <constraint firstAttribute="width" secondItem="qEX-Od-gs2" secondAttribute="height" multiplier="62:39" constant="7.0000000000000071" id="eFo-yQ-Pz7"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Award">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4237,12 +4265,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnT-w3-ymX">
-                                        <rect key="frame" x="671" y="23" width="68" height="39"/>
+                                        <rect key="frame" x="671" y="23" width="73" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="UnT-w3-ymX" secondAttribute="height" multiplier="68:39" id="dMl-S6-WoK"/>
+                                            <constraint firstAttribute="width" secondItem="UnT-w3-ymX" secondAttribute="height" multiplier="68:39" constant="5" id="dMl-S6-WoK"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Market">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4283,19 +4311,19 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="RdN-2P-eCE" secondAttribute="height" multiplier="30:13" id="7ab-Cf-aEZ"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Class Jar">
                                             <color key="titleColor" red="1" green="0.89386813990000002" blue="0.24416096879999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="1" green="0.89386813990000002" blue="0.24416096879999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTu-sm-79t">
-                                        <rect key="frame" x="100" y="21" width="59" height="39"/>
+                                        <rect key="frame" x="100" y="21" width="70" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="RTu-sm-79t" secondAttribute="height" multiplier="59:39" id="Hj5-Nn-iqX"/>
+                                            <constraint firstAttribute="width" secondItem="RTu-sm-79t" secondAttribute="height" multiplier="59:39" constant="11" id="Hj5-Nn-iqX"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Home">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4333,10 +4361,10 @@
                                 <constraints>
                                     <constraint firstItem="RdN-2P-eCE" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="18:17" id="1Wu-JG-pe2"/>
                                     <constraint firstItem="gjP-kd-xTm" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="16:17" id="4DW-5i-hPZ"/>
-                                    <constraint firstItem="qEX-Od-gs2" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="62:85" id="5fK-O3-aCm"/>
-                                    <constraint firstItem="gjP-kd-xTm" firstAttribute="leading" secondItem="RTu-sm-79t" secondAttribute="trailing" constant="39" id="67P-l7-jMm"/>
-                                    <constraint firstItem="UnT-w3-ymX" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="4:5" id="8OI-Ss-60Q"/>
-                                    <constraint firstItem="RTu-sm-79t" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="59:85" id="AVo-j5-5f8"/>
+                                    <constraint firstItem="qEX-Od-gs2" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="62:85" constant="7" id="5fK-O3-aCm"/>
+                                    <constraint firstItem="gjP-kd-xTm" firstAttribute="leading" secondItem="RTu-sm-79t" secondAttribute="trailing" constant="28" id="67P-l7-jMm"/>
+                                    <constraint firstItem="UnT-w3-ymX" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="4:5" constant="5" id="8OI-Ss-60Q"/>
+                                    <constraint firstItem="RTu-sm-79t" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="59:85" constant="11" id="AVo-j5-5f8"/>
                                     <constraint firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="768:85" id="Be7-FZ-JWh"/>
                                     <constraint firstItem="qEX-Od-gs2" firstAttribute="leading" secondItem="gjP-kd-xTm" secondAttribute="trailing" constant="8" id="Gzh-gl-Sis"/>
                                     <constraint firstItem="RTu-sm-79t" firstAttribute="centerY" secondItem="GdD-1B-y5z" secondAttribute="centerY" id="Hyq-C9-TpR"/>
@@ -4351,7 +4379,7 @@
                                     <constraint firstItem="wsH-Eo-HIK" firstAttribute="top" secondItem="alx-ai-xsj" secondAttribute="top" constant="4" id="e6P-9t-Wd4"/>
                                     <constraint firstItem="wsH-Eo-HIK" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="16:17" id="ktQ-si-TcW"/>
                                     <constraint firstItem="UnT-w3-ymX" firstAttribute="leading" secondItem="a1L-w8-9oA" secondAttribute="trailing" constant="1" id="lJR-0F-LxC"/>
-                                    <constraint firstAttribute="trailing" secondItem="UnT-w3-ymX" secondAttribute="trailing" constant="29" id="ofj-z8-aW7"/>
+                                    <constraint firstAttribute="trailing" secondItem="UnT-w3-ymX" secondAttribute="trailing" constant="24" id="ofj-z8-aW7"/>
                                     <constraint firstItem="GdD-1B-y5z" firstAttribute="width" secondItem="alx-ai-xsj" secondAttribute="height" multiplier="16:17" id="pD2-st-ds4"/>
                                     <constraint firstItem="gjP-kd-xTm" firstAttribute="top" secondItem="alx-ai-xsj" secondAttribute="top" constant="3" id="q9r-Sb-kd7"/>
                                     <constraint firstItem="RdN-2P-eCE" firstAttribute="leading" secondItem="wsH-Eo-HIK" secondAttribute="trailing" constant="-3" id="yO5-bJ-aS7"/>
@@ -4517,12 +4545,12 @@
                                 <rect key="frame" x="0.0" y="64" width="768" height="85"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIg-bK-VZU">
-                                        <rect key="frame" x="286" y="23" width="62" height="39"/>
+                                        <rect key="frame" x="286" y="23" width="68" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="HIg-bK-VZU" secondAttribute="height" multiplier="62:39" id="Bac-IL-8vm"/>
+                                            <constraint firstAttribute="width" secondItem="HIg-bK-VZU" secondAttribute="height" multiplier="62:39" constant="6.0000000000000071" id="Bac-IL-8vm"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Award">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4532,12 +4560,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AAH-ji-Npp">
-                                        <rect key="frame" x="671" y="23" width="68" height="39"/>
+                                        <rect key="frame" x="671" y="23" width="72" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="AAH-ji-Npp" secondAttribute="height" multiplier="68:39" id="ELQ-Wu-KvI"/>
+                                            <constraint firstAttribute="width" secondItem="AAH-ji-Npp" secondAttribute="height" multiplier="68:39" constant="4" id="ELQ-Wu-KvI"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Market">
                                             <color key="titleColor" red="1" green="0.89386813990000002" blue="0.24416096879999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="1" green="0.89386813990000002" blue="0.24416096879999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -4588,7 +4616,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="wzj-A3-rdW" secondAttribute="height" multiplier="30:13" id="bHC-cK-azE"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Class Jar">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4598,12 +4626,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1yu-Ru-tBy">
-                                        <rect key="frame" x="100" y="21" width="59" height="39"/>
+                                        <rect key="frame" x="100" y="21" width="66" height="39"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="1yu-Ru-tBy" secondAttribute="height" multiplier="59:39" id="IxS-Tb-CNe"/>
+                                            <constraint firstAttribute="width" secondItem="1yu-Ru-tBy" secondAttribute="height" multiplier="59:39" constant="7" id="IxS-Tb-CNe"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="25"/>
                                         <state key="normal" title="Home">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4627,9 +4655,9 @@
                                 <color key="backgroundColor" red="0.48783856959999999" green="0.64913119239999995" blue="0.45113934220000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="zqK-G9-DSv" firstAttribute="leading" secondItem="wzj-A3-rdW" secondAttribute="trailing" constant="35" id="2Rz-vA-75o"/>
-                                    <constraint firstItem="HIg-bK-VZU" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="62:85" id="5cm-xJ-e8x"/>
+                                    <constraint firstItem="HIg-bK-VZU" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="62:85" constant="6" id="5cm-xJ-e8x"/>
                                     <constraint firstItem="ecD-Dm-Xv5" firstAttribute="top" secondItem="tCB-YH-9LY" secondAttribute="top" id="5k6-x9-H8A"/>
-                                    <constraint firstAttribute="trailing" secondItem="AAH-ji-Npp" secondAttribute="trailing" constant="29" id="7eN-Mz-Cpi"/>
+                                    <constraint firstAttribute="trailing" secondItem="AAH-ji-Npp" secondAttribute="trailing" constant="25" id="7eN-Mz-Cpi"/>
                                     <constraint firstItem="wzj-A3-rdW" firstAttribute="leading" secondItem="muV-80-c4x" secondAttribute="trailing" constant="-3" id="8XP-0b-P21"/>
                                     <constraint firstItem="HIg-bK-VZU" firstAttribute="centerY" secondItem="HaJ-te-yRy" secondAttribute="centerY" id="8cx-Tf-g2J"/>
                                     <constraint firstItem="muV-80-c4x" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="16:17" id="FzA-xU-k01"/>
@@ -4641,14 +4669,14 @@
                                     <constraint firstItem="1yu-Ru-tBy" firstAttribute="leading" secondItem="ecD-Dm-Xv5" secondAttribute="trailing" id="RxZ-gr-4zM"/>
                                     <constraint firstItem="HaJ-te-yRy" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="16:17" id="TeB-k2-oSe"/>
                                     <constraint firstItem="ecD-Dm-Xv5" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="16:17" id="XKf-v6-ILY"/>
-                                    <constraint firstItem="1yu-Ru-tBy" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="59:85" id="Y2Y-X1-6cm"/>
+                                    <constraint firstItem="1yu-Ru-tBy" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="59:85" constant="7" id="Y2Y-X1-6cm"/>
                                     <constraint firstItem="muV-80-c4x" firstAttribute="top" secondItem="tCB-YH-9LY" secondAttribute="top" constant="4" id="kFN-07-n0F"/>
                                     <constraint firstItem="AAH-ji-Npp" firstAttribute="centerY" secondItem="zqK-G9-DSv" secondAttribute="centerY" id="mJb-2e-sTI"/>
                                     <constraint firstItem="AAH-ji-Npp" firstAttribute="leading" secondItem="zqK-G9-DSv" secondAttribute="trailing" constant="1" id="pcO-Kn-yDT"/>
                                     <constraint firstItem="wzj-A3-rdW" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="18:17" id="sIk-5L-jkK"/>
-                                    <constraint firstItem="HaJ-te-yRy" firstAttribute="leading" secondItem="1yu-Ru-tBy" secondAttribute="trailing" constant="39" id="t4o-jy-baq"/>
+                                    <constraint firstItem="HaJ-te-yRy" firstAttribute="leading" secondItem="1yu-Ru-tBy" secondAttribute="trailing" constant="32" id="t4o-jy-baq"/>
                                     <constraint firstItem="wzj-A3-rdW" firstAttribute="centerY" secondItem="muV-80-c4x" secondAttribute="centerY" id="u1F-eq-bDe"/>
-                                    <constraint firstItem="AAH-ji-Npp" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="4:5" id="ulC-4s-yqy"/>
+                                    <constraint firstItem="AAH-ji-Npp" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="4:5" constant="4" id="ulC-4s-yqy"/>
                                     <constraint firstItem="zqK-G9-DSv" firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="16:17" id="umF-ne-ihP"/>
                                     <constraint firstAttribute="width" secondItem="tCB-YH-9LY" secondAttribute="height" multiplier="768:85" id="zFz-Qw-N9Y"/>
                                 </constraints>
@@ -4842,10 +4870,10 @@
         <image name="treasure_chest.png" width="832" height="867"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mtj-Wm-nfd"/>
         <segue reference="SR2-9x-ZVn"/>
+        <segue reference="mtj-Wm-nfd"/>
         <segue reference="asf-xD-FDq"/>
         <segue reference="KmN-7b-OvM"/>
-        <segue reference="Zt9-YX-YdQ"/>
+        <segue reference="zkP-67-VRC"/>
     </inferredMetricsTieBreakers>
 </document>

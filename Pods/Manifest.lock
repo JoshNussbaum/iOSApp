@@ -1,7 +1,7 @@
 PODS:
   - BBBadgeBarButtonItem (1.2)
   - CircleProgressBar (0.22)
-  - Flurry-iOS-SDK/FlurrySDK (7.3.0)
+  - Flurry-iOS-SDK/FlurrySDK (7.5.2)
   - gtm-oauth (0.0.1):
     - gtm-oauth/nibs (= 0.0.1)
   - gtm-oauth/nibs (0.0.1)
@@ -17,7 +17,7 @@ PODS:
 DEPENDENCIES:
   - BBBadgeBarButtonItem
   - CircleProgressBar (~> 0.21)
-  - Flurry-iOS-SDK/FlurrySDK
+  - Flurry-iOS-SDK/FlurrySDK (~> 7.5.2)
   - JSBadgeView
   - MBProgressHUD (~> 0.9.1)
   - snowshoe (~> 1.11)
@@ -27,7 +27,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   BBBadgeBarButtonItem: c2fbca0bff18e21b70defc9438a8a5048008e7ca
   CircleProgressBar: bb6418f9a5121f64c5784b9a72e34f353727266c
-  Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
+  Flurry-iOS-SDK: 8c87c4eab6008184ad9f63afabd79ec0d109c82e
   gtm-oauth: 34a7210eb8e2dd00a977f42af7d99f994c1e7917
   JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1

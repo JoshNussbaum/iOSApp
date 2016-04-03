@@ -4,64 +4,65 @@
 //
 //  Created by Josh on 7/24/15.
 //  Copyright (c) 2015 Josh Nussbaum. All rights reserved.
+// http://ehorvat.webfactional.com/ch
 //
 
 
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-static NSString * const LOGIN_URL = @"http://ehorvat.webfactional.com/services/login/auth";
-static NSString * const STAMP_TO_LOGIN_URL = @"http://ehorvat.webfactional.com/services/login/auth/stamp";
-static NSString * const CREATE_ACCOUNT_URL = @"http://ehorvat.webfactional.com/services/register/teacher";
+static NSString * const LOGIN_URL = @"http://ehorvat.webfactional.com/ch/services/login/auth";
+static NSString * const STAMP_TO_LOGIN_URL = @"http://ehorvat.webfactional.com/ch/services/login/auth/stamp";
+static NSString * const CREATE_ACCOUNT_URL = @"http://ehorvat.webfactional.com/ch/services/register/teacher";
 
-static NSString * const ADD_CLASS_URL = @"http://ehorvat.webfactional.com/services/class/add";
-static NSString * const EDIT_CLASS_URL = @"http://ehorvat.webfactional.com/services/class/edit";
-static NSString * const DELETE_CLASS_URL = @"http://ehorvat.webfactional.com/services/class/delete";
+static NSString * const ADD_CLASS_URL = @"http://ehorvat.webfactional.com/ch/services/class/add";
+static NSString * const EDIT_CLASS_URL = @"http://ehorvat.webfactional.com/ch/services/class/edit";
+static NSString * const DELETE_CLASS_URL = @"http://ehorvat.webfactional.com/ch/services/class/delete";
 
-static NSString * const ADD_REINFORCER_URL = @"http://ehorvat.webfactional.com/services/reinforcer/add";
-static NSString * const EDIT_REINFORCER_URL = @"http://ehorvat.webfactional.com/services/reinforcer/edit";
-static NSString * const DELETE_REINFORCER_URL = @"http://ehorvat.webfactional.com/services/reinforcer/delete";
+static NSString * const ADD_REINFORCER_URL = @"http://ehorvat.webfactional.com/ch/services/reinforcer/add";
+static NSString * const EDIT_REINFORCER_URL = @"http://ehorvat.webfactional.com/ch/services/reinforcer/edit";
+static NSString * const DELETE_REINFORCER_URL = @"http://ehorvat.webfactional.com/ch/services/reinforcer/delete";
 
-static NSString * const ADD_ITEM_URL = @"http://ehorvat.webfactional.com/services/item/add";
-static NSString * const EDIT_ITEM_URL = @"http://ehorvat.webfactional.com/services/item/edit";
-static NSString * const DELETE_ITEM_URL = @"http://ehorvat.webfactional.com/services/item/delete";
+static NSString * const ADD_ITEM_URL = @"http://ehorvat.webfactional.com/ch/services/item/add";
+static NSString * const EDIT_ITEM_URL = @"http://ehorvat.webfactional.com/ch/services/item/edit";
+static NSString * const DELETE_ITEM_URL = @"http://ehorvat.webfactional.com/ch/services/item/delete";
 
-static NSString * const ADD_JAR_URL = @"http://ehorvat.webfactional.com/services/jar/add";
-static NSString * const EDIT_JAR_URL = @"http://ehorvat.webfactional.com/services/jar/edit";
-static NSString * const DELETE_JAR_URL = @"http://ehorvat.webfactional.com/services/jar/delete";
+static NSString * const ADD_JAR_URL = @"http://ehorvat.webfactional.com/ch/services/jar/add";
+static NSString * const EDIT_JAR_URL = @"http://ehorvat.webfactional.com/ch/services/jar/edit";
+static NSString * const DELETE_JAR_URL = @"http://ehorvat.webfactional.com/ch/services/jar/delete";
 
-static NSString * const ADD_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/add";
-static NSString * const EDIT_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/edit";
-static NSString * const DELETE_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/delete";
-static NSString * const GET_STUDENT_BY_SERIAL_URL = @"http://ehorvat.webfactional.com/services/student/get";
-static NSString * const REWARD_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/reward";
-static NSString * const CHECK_IN_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/checkin";
-static NSString * const CHECK_OUT_STUDENT_URL = @"http://ehorvat.webfactional.com/services/student/checkout";
-static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/services/class";
-static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/services/class";
-static NSString * const GET_USER_BY_STAMP_URL = @"http://ehorvat.webfactional.com/services/user";
+static NSString * const ADD_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/add";
+static NSString * const EDIT_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/edit";
+static NSString * const DELETE_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/delete";
+static NSString * const GET_STUDENT_BY_SERIAL_URL = @"http://ehorvat.webfactional.com/ch/services/student/get";
+static NSString * const REWARD_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/reward";
+static NSString * const CHECK_IN_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/checkin";
+static NSString * const CHECK_OUT_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/checkout";
+static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/ch/services/class";
+static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/ch/services/class";
+static NSString * const GET_USER_BY_STAMP_URL = @"http://ehorvat.webfactional.com/ch/services/user";
 
-static NSString * const STUDENT_TRANSACTION_URL = @"http://ehorvat.webfactional.com/services/student/transaction";
+static NSString * const STUDENT_TRANSACTION_URL = @"http://ehorvat.webfactional.com/ch/services/student/transaction";
 
-static NSString * const GET_SCHOOLS_URL = @"http://ehorvat.webfactional.com/services/schools/get";
-static NSString * const REGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/services/register/stamp";
-static NSString * const UNREGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/services/register/unregisterStamp";
+static NSString * const GET_SCHOOLS_URL = @"http://ehorvat.webfactional.com/ch/services/schools/get";
+static NSString * const REGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/ch/services/register/stamp";
+static NSString * const UNREGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/ch/services/register/unregisterStamp";
 
-static NSString * const REWARD_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/services/class";
-static NSString * const ADD_TO_JAR_URL = @"http://ehorvat.webfactional.com/services/jar/fill";
+static NSString * const REWARD_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/ch/services/class";
+static NSString * const ADD_TO_JAR_URL = @"http://ehorvat.webfactional.com/ch/services/jar/fill";
 
-static NSString * const ORDER_URL = @"http://ehorvat.webfactional.com/services/register/order";
+static NSString * const ORDER_URL = @"http://ehorvat.webfactional.com/ch/services/register/order";
 
-static NSString * const EDIT_TEACHER_NAME_URL = @"http://ehorvat.webfactional.com/services/user/settings/editName";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://ehorvat.webfactional.com/services/user/settings/changePassword";
-static NSString * const RESET_PASSWORD_URL = @"http://ehorvat.webfactional.com/services/user/settings/recoverPassword";
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://ehorvat.webfactional.com/ch/services/user/settings/editName";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://ehorvat.webfactional.com/ch/services/user/settings/changePassword";
+static NSString * const RESET_PASSWORD_URL = @"http://ehorvat.webfactional.com/ch/services/user/settings/recoverPassword";
 
 
-static NSString * const GET_CLASS_STATS_URL = @"http://ehorvat.webfactional.com/services/class/stats";
+static NSString * const GET_CLASS_STATS_URL = @"http://ehorvat.webfactional.com/ch/services/class/stats";
 
-static NSString * const IDENTIFY_STAMP_URL = @"http://ehorvat.webfactional.com/services/user/identify";
+static NSString * const IDENTIFY_STAMP_URL = @"http://ehorvat.webfactional.com/ch/services/user/identify";
 
-static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/services/class";
+static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/ch/services/class";
 
 
 
@@ -262,8 +263,8 @@ static NSInteger connectionType;
 }
 
 
-- (void)addToClassJar:(NSInteger)cjid :(NSInteger)points{
-    NSString *url = [NSString stringWithFormat:@"%@/?id=%ld&points=%ld", ADD_TO_JAR_URL, (long)cjid, (long)points];
+- (void)addToClassJar:(NSInteger)cjid :(NSInteger)points :(NSInteger)cid{
+    NSString *url = [NSString stringWithFormat:@"%@/?id=%ld&points=%ld&cid=%ld", ADD_TO_JAR_URL, (long)cjid, (long)points, (long)cid];
 
     connectionType = ADD_TO_JAR;
     
@@ -271,10 +272,10 @@ static NSInteger connectionType;
 }
 
 
-- (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost{
+- (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost cid:(NSInteger)cid{
     connectionType = STUDENT_TRANSACTION;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"sid\":%ld, \"iid\":%ld, \"cost\":%ld}", (long)sid, (long)iid, (long)cost];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"sid\":%ld, \"iid\":%ld, \"cost\":%ld, \"cid\":%ld}", (long)sid, (long)iid, (long)cost, (long)cid];
     
     [self asynchronousWebCall:jsonRequest :STUDENT_TRANSACTION_URL :POST];
 }
@@ -365,10 +366,10 @@ static NSInteger connectionType;
 }
 
 
-- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId{
+- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId stamp:(BOOL)stamp{
     connectionType = STUDENT_CHECK_IN;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld, \"cid\":%ld, \"timestamp\":%ld}", (long)studentId, (long)classId, (long)[[NSDate date] timeIntervalSince1970]];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld, \"cid\":%ld, \"stamp\":%ld}", (long)studentId, (long)classId, (long)(stamp == YES ? 1: 0)];
     
     [self asynchronousWebCall:jsonRequest :CHECK_IN_STUDENT_URL :POST];
     

@@ -12,6 +12,8 @@
 #import "StudentViewController.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
+#import "Flurry.h"
+
 
 @interface StudentsTableViewController (){
     user *currentUser;
@@ -80,6 +82,9 @@
                 [self activityStart:@"Adding Student..."];
                 [webHandler addStudent:[currentUser.currentClass getId] :studentFirstName :studentLastName :[currentUser.currentClass getSchoolId]];
             }
+            else {
+                [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            }
         }
         else {
             [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -108,6 +113,8 @@
             [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
             [studentsData addObject:newStudent];
             [self.tableView reloadData];
+            [Flurry logEvent:@"Add Student - Students View"];
+
         }
         else {
             [Utilities alertStatusWithTitle:@"Error adding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];

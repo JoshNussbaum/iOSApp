@@ -11,7 +11,7 @@
 #import "DatabaseHandler.h"
 #import "MBProgressHUD.h"
 #import "StudentsTableViewController.h"
-
+#import "Flurry.h"
 
 @interface MarketViewController (){
     user *currentUser;
@@ -131,6 +131,7 @@
                             isStamping = YES;
                             self.picker.hidden = YES;
                             [webHandler getStudentBySerialwithserial:stampSerial :[currentUser.currentClass getSchoolId]];
+                            [self activityStart:@"Verifying student..."];
                         }
                         else{
                             [Utilities failAnimation:self.stampImage];
@@ -212,7 +213,8 @@
     }
     
     else if (alertView.tag == 3 ){
-        [webHandler studentTransactionWithsid:[currentStudent getId] iid:[currentItem getId] cost:[currentItem getCost]];
+        [self activityStart:@"Selling item..."];
+        [webHandler studentTransactionWithsid:[currentStudent getId] iid:[currentItem getId] cost:[currentItem getCost] cid:[currentUser.currentClass getId]];
     }
     else if (alertView.tag == 4){
         [webHandler deleteItem:[currentItem getId]];
@@ -250,6 +252,8 @@
             [self.picker selectRow:0 inComponent:0 animated:NO];
             [hud hide:YES];
             [self setItemLabel];
+            [Flurry logEvent:@"Add Item - Market View"];
+
         }
         else if (type == EDIT_ITEM){
             [currentItem setName:newItemName];
@@ -263,6 +267,8 @@
             self.pointsLabel.text = [NSString stringWithFormat:@"%@", newItemCost];
             
             [hud hide:YES];
+            [Flurry logEvent:@"Edit Item"];
+
         }
         else if (type == DELETE_ITEM){
             [[DatabaseHandler getSharedInstance]deleteItem:[currentItem getId]];
@@ -278,7 +284,9 @@
             else {
                 [self setItemLabel];
             }
-            
+            [hud hide:YES];
+            [Flurry logEvent:@"Delete Item"];
+
         }
         else if (type == STUDENT_TRANSACTION){
             
@@ -305,10 +313,14 @@
             
             [[DatabaseHandler getSharedInstance] updateStudent:currentStudent];
             [self sellItemAnimation:scores];
+            [currentUser.currentClass addPoints:1];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+            [Flurry logEvent:@"Student Transaction"];
+            [hud hide:YES];
+
         }
 
         else if (type == GET_STUDENT_BY_STAMP){
-            
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
             NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
@@ -344,6 +356,7 @@
             else {
                 [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must earn more coins first" cancel:nil otherTitles:nil tag:0 view:self];
             }
+            [hud hide:YES];
         }
     }
     else {
@@ -367,6 +380,7 @@
         }
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
         isStamping = NO;
+        [hud hide:YES];
     }
     
 }

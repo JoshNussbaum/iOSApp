@@ -9,6 +9,7 @@
 #import "StudentViewController.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
+#import "Flurry.h"
 
 
 @interface StudentViewController (){
@@ -121,11 +122,15 @@
             [hud hide:YES];
             [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
             [self setStudentLabels];
+            [Flurry logEvent:@"Edit Student"];
+
         }
         else if (type == DELETE_STUDENT){
             [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
             [hud hide:YES];
             [self.navigationController popViewControllerAnimated:YES];
+            [Flurry logEvent:@"Delete Student"];
+
         }
         else if (type == REGISTER_STAMP){
             [[DatabaseHandler getSharedInstance] registerStudent:[currentStudent getId] :[currentStudent getSerial]];
@@ -137,6 +142,8 @@
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             isRegistered = YES;
+            [Flurry logEvent:@"Register Student - Student View"];
+
         }
         else if (type == UNREGISTER_STAMP){
             [[DatabaseHandler getSharedInstance] unregisterStudent:[currentStudent getId]];
