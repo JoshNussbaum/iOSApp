@@ -150,7 +150,9 @@
             
         }];
     }
-
+    self.homeButton.enabled = YES;
+    self.marketButton.enabled = YES;
+    self.awardButton.enabled = YES;
 
 }
 
@@ -170,16 +172,19 @@
 
 
 - (IBAction)homeClicked:(id)sender {
+    self.homeButton.enabled = NO;
     [self performSegueWithIdentifier:@"class_jar_to_home" sender:self];
 }
 
 
 - (IBAction)awardClicked:(id)sender {
+    self.awardButton.enabled = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 - (IBAction)marketClicked:(id)sender {
+    self.marketButton.enabled = NO;
     [self performSegueWithIdentifier:@"class_jar_to_market" sender:nil];
 }
 
@@ -440,7 +445,7 @@
                                  newProg = -420;
                              }
                              else {
-                                 newProg = prog * -500;
+                                 newProg = prog * -420;
                                  
                              }
                              finalFrame.size.height = newProg;

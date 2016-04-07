@@ -162,6 +162,10 @@ static NSInteger coinHeight = 250;
     coinLabelRect = self.coinPointsLabel.frame;
     
     coinRect = self.aTwo.frame;
+    
+    self.jarButton.enabled = YES;
+    self.homeButton.enabled = YES;
+    self.marketButton.enabled = YES;
 }
 
 
@@ -171,11 +175,13 @@ static NSInteger coinHeight = 250;
 
 
 - (IBAction)classJarClicked:(id)sender {
+    self.jarButton.enabled = NO;
     [self performSegueWithIdentifier:@"award_to_class_jar" sender:nil];
 }
 
 
 - (IBAction)marketClicked:(id)sender {
+    self.marketButton.enabled = NO;
     UIStoryboard *storyboard = self.storyboard;
     
     ClassJarViewController *cjvc = [storyboard instantiateViewControllerWithIdentifier:@"ClassJarViewController"];
@@ -374,6 +380,9 @@ static NSInteger coinHeight = 250;
                 
                 [Flurry logEvent:@"Delete Reinforcer"];
             }
+            else {
+                [self setReinforcerName];
+            }
         }
         else if (type == REWARD_STUDENT){
             pointsAwarded = [currentReinforcer getValue];
@@ -525,13 +534,6 @@ static NSInteger coinHeight = 250;
     currentReinforcer = [reinforcerData objectAtIndex:index];
     self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
     self.reinforcerValue.text = [NSString stringWithFormat:@"+ %ld", (long)[currentReinforcer getValue]];
-}
-
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    UITextPosition *beginning = [textField beginningOfDocument];
-    [textField setSelectedTextRange:[textField textRangeFromPosition:beginning
-                                                          toPosition:beginning]];
 }
 
 

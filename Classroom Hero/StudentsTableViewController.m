@@ -48,6 +48,7 @@
         [self.tableView reloadData];
         editingStudent = NO;
     }
+    self.backButton.enabled = YES;
 
 }
 
@@ -58,6 +59,7 @@
 
 
 - (IBAction)backClicked:(id)sender {
+    self.backButton.enabled = NO;
     [self.navigationController popViewControllerAnimated:NO];
 }
 

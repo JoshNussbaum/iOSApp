@@ -14,7 +14,7 @@
 #import "YLProgressBar.h"
 
 
-@interface AwardViewController : SnowShoeViewController <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ConnectionHandlerDelegate>
+@interface AwardViewController : SnowShoeViewController <UIPickerViewDataSource, UIPickerViewDelegate, ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerValue;

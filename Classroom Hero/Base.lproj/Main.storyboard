@@ -1789,6 +1789,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="backButton" destination="2xO-MT-fwe" id="ro3-KY-okc"/>
                         <segue destination="Xxy-ye-LqB" kind="push" identifier="student_segue" id="Xgu-86-ZF3"/>
                     </connections>
                 </tableViewController>
@@ -4870,10 +4871,10 @@
         <image name="treasure_chest.png" width="832" height="867"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SR2-9x-ZVn"/>
+        <segue reference="5Qb-t8-igW"/>
         <segue reference="mtj-Wm-nfd"/>
+        <segue reference="SR2-9x-ZVn"/>
         <segue reference="asf-xD-FDq"/>
         <segue reference="KmN-7b-OvM"/>
-        <segue reference="zkP-67-VRC"/>
     </inferredMetricsTieBreakers>
 </document>

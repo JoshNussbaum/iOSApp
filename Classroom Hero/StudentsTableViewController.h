@@ -11,6 +11,8 @@
 
 @interface StudentsTableViewController : UITableViewController <ConnectionHandlerDelegate>
 
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
+
 - (IBAction)backClicked:(id)sender;
 
 - (IBAction)addStudentClicked:(id)sender;

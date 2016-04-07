@@ -57,9 +57,15 @@
     [self displayName:registerIndex];
 }
 
-
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     unregisteredStudents = [[DatabaseHandler getSharedInstance]getUnregisteredStudents:[currentUser.currentClass getId]];
+
+    if (flag == 1){
+        [self.skipButton setTitle:@"Continue" forState:UIControlStateNormal];
+    }
+    else if (flag == 3){
+        [self.skipButton setTitle:@"Settings" forState:UIControlStateNormal];
+    }
 }
 
 

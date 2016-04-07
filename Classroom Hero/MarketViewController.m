@@ -80,17 +80,27 @@
 }
 
 
+- (void)viewDidAppear:(BOOL)animated{
+    self.homeButton.enabled = YES;
+    self.awardButton.enabled = YES;
+    self.jarButton.enabled = YES;
+}
+
+
 - (IBAction)homeClicked:(id)sender {
+    self.homeButton.enabled = NO;
     [self performSegueWithIdentifier:@"market_to_home" sender:nil];
 }
 
 
 - (IBAction)awardClicked:(id)sender {
+    self.awardButton.enabled = NO;
     [self performSegueWithIdentifier:@"market_to_award" sender:nil];
 }
 
 
 - (IBAction)classJarClicked:(id)sender {
+    self.jarButton.enabled = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
