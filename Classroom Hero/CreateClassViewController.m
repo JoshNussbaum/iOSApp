@@ -10,6 +10,7 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
+#import "Flurry.h"
 
 @interface CreateClassViewController (){
     NSInteger index;
@@ -141,6 +142,10 @@
             self.classGradeTextField.text = @"";
             
             [Utilities alertStatusWithTitle:@"Successfully added class!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[newClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Class - Create Class" withParameters:params];
             
         } else {
             [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];

@@ -27,8 +27,8 @@
     NSString *newItemName;
     NSString *newItemCost;
 
-    SystemSoundID sellSound;
     SystemSoundID failSound;
+    SystemSoundID coinSound;
     
     MBProgressHUD *hud;
     
@@ -54,8 +54,8 @@
     self.picker.dataSource = self;
     self.picker.delegate = self;
     
-    sellSound = [Utilities getAwardAllSound];
     failSound = [Utilities getFailSound];
+    coinSound = [Utilities getCoinShakeSound];
     
     if (itemsData.count == 0){
         self.itemNameLabel.text = @"Add items above";
@@ -262,7 +262,9 @@
             [self.picker selectRow:0 inComponent:0 animated:NO];
             [hud hide:YES];
             [self setItemLabel];
-            [Flurry logEvent:@"Add Item - Market View"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Item - Market View" withParameters:params];
 
         }
         else if (type == EDIT_ITEM){
@@ -277,7 +279,9 @@
             self.pointsLabel.text = [NSString stringWithFormat:@"%@", newItemCost];
             
             [hud hide:YES];
-            [Flurry logEvent:@"Edit Item"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Edit Item" withParameters:params];
 
         }
         else if (type == DELETE_ITEM){
@@ -295,7 +299,9 @@
                 [self setItemLabel];
             }
             [hud hide:YES];
-            [Flurry logEvent:@"Delete Item"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Delete Item" withParameters:params];
 
         }
         else if (type == STUDENT_TRANSACTION){
@@ -325,7 +331,11 @@
             [self sellItemAnimation:scores];
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-            [Flurry logEvent:@"Student Transaction"];
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentItem getName], @"Item Name", [NSString stringWithFormat:@"%ld", (long)[currentItem getId]], @"Item ID", [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]], @"Item Cost", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Reward Student" withParameters:params];
+            
             [hud hide:YES];
 
         }
@@ -430,8 +440,7 @@
 }
 
 
-- (void) sellItemAnimation:(NSMutableArray *)scores{
-    AudioServicesPlaySystemSound(sellSound);
+- (void)sellItemAnimation:(NSMutableArray *)scores{
     [Utilities wiggleImage:self.stampImage sound:NO];
     NSInteger score = [[scores objectAtIndex:0]integerValue];
     self.studentPointsLabel.layer.zPosition = 2;
@@ -442,7 +451,7 @@
     self.studentPointsLabel.text = scoreDisplay;
     self.sackImage.hidden = NO;
     self.studentPointsLabel.hidden = NO;
-    AudioServicesPlaySystemSound(sellSound);
+    AudioServicesPlaySystemSound(coinSound);
     
     [self decrementScore:scores];
     

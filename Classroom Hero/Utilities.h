@@ -19,8 +19,8 @@
 // key - d6b63f411c3964fd84ba
 // secret - 6eb0fd53b6b13c6012d0d76e1634f92cd3e9f354
 
-static NSString * const snowshoe_app_key = @"d6b63f411c3964fd84ba";
-static NSString * const snowshoe_app_secret = @"6eb0fd53b6b13c6012d0d76e1634f92cd3e9f354";
+static NSString * const snowshoe_app_key = @"d12276c2fac976865fdc";
+static NSString * const snowshoe_app_secret = @"bf700a42149799b02641b2c2d93dbd3c4f995db8";
 static NSString * const merchant_id = @"merchant.com.classroom-hero";
 
 

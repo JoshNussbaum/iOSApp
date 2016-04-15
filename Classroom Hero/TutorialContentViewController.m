@@ -276,7 +276,7 @@ static int screenNumber;
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    NSLog(@"In Tutorial and here is the data =>\n %@ \nand type = %ld", data, (long)type);
+    //NSLog(@"In Tutorial and here is the data =>\n %@ \nand type = %ld", data, (long)type);
     [hud hide:YES];
     if (data == nil){
         [Utilities alertStatusNoConnection];
@@ -300,7 +300,9 @@ static int screenNumber;
             currentUser.currentClass = newClass;
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another class or swipe left to  continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            [Flurry logEvent:@"Add Class - Tutorial"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Class - Tutorial" withParameters:params];
 
             
         }
@@ -311,7 +313,9 @@ static int screenNumber;
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another student or swipe left to continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            [Flurry logEvent:@"Add Student - Tutorial"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Student - Tutorial" withParameters:params];
 
         }
         
@@ -323,7 +327,9 @@ static int screenNumber;
             [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another reinforcer or swipe left to continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            [Flurry logEvent:@"Add Reinforcer - Tutorial"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Reinforcer - Tutorial" withParameters:params];
         }
         else if (type == ADD_ITEM){
             NSString *itemName = self.textField1.text;
@@ -333,7 +339,9 @@ static int screenNumber;
             [[DatabaseHandler getSharedInstance] addItem:newItem];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another item or swipe left to continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            [Flurry logEvent:@"Add Item - Tutorial"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Item - Tutorial" withParameters:params];
         }
         
         else if (type == ADD_JAR){
@@ -344,13 +352,17 @@ static int screenNumber;
             [[DatabaseHandler getSharedInstance] addClassJar:newJar];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add another jar or swipe left to continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            [Flurry logEvent:@"Add Jar - Tutorial"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Jar - Tutorial" withParameters:params];
         }
         else if (type == REGISTER_STAMP){
             currentUser.serial = serial;
             isStamping = NO;
             [self performSegueWithIdentifier:@"tutorial_to_class" sender:nil];
-            [Flurry logEvent:@"Register Teacher Stamp - Tutorial"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Register Teacher Stamp - Tutorial" withParameters:params];
         }
         
         else{

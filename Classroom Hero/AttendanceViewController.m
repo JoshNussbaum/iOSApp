@@ -208,12 +208,17 @@
                 [currentUser.currentClass addPoints:1];
                 [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
                 [self coinAnimation];
-                [Flurry logEvent:@"Check In Stamp"];
+                
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+                
+                [Flurry logEvent:@"Check In Stamp" withParameters:params];
             }
             else {
                 [currentStudent setCheckedIn:YES];
                 [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-                [Flurry logEvent:@"Check In Manual"];
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+                
+                [Flurry logEvent:@"Check In Manual" withParameters:params];
             }
             
             [self reloadTable];
@@ -225,7 +230,9 @@
             [currentStudent setCheckedIn:NO];
             isStamping = NO;
             [self reloadTable];
-            [Flurry logEvent:@"Check Out"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Check Out" withParameters:params];
         }
         
         else if (type == ALL_STUDENT_CHECK_IN || type == ALL_STUDENT_CHECK_OUT){
@@ -241,9 +248,18 @@
             NSString *checkedInString;
             if (checkedIn) {
                 checkedInString = @"in";
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+                
+                [Flurry logEvent:@"Check In All" withParameters:params];
                 
             }
-            else checkedInString = @"out";
+            else {
+                checkedInString = @"out";
+                
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+                
+                [Flurry logEvent:@"Check Out All" withParameters:params];
+            }
             
             [Utilities alertStatusWithTitle:@"Success" message:[NSString stringWithFormat:@"Checked %@ all students", checkedInString] cancel:nil otherTitles:nil tag:0 view:self];
 

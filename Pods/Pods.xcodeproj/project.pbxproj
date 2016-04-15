@@ -272,7 +272,6 @@
 		18A1FE1244BC7EB8E00EE35E2DBB2601 /* YLProgressBar.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = YLProgressBar.modulemap; sourceTree = "<group>"; };
 		196982A0CA96CE4E66D67D9FB99C3561 /* MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
 		1AC7AAB023EBB998D989A754221790D2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		1BA4C4B5782194044B46873125197EDD /* libFlurry_7.5.2.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libFlurry_7.5.2.a; path = Flurry/libFlurry_7.5.2.a; sourceTree = "<group>"; };
 		1EC8FDF5B4D0CC1AD980EBA4F45A9EF5 /* StripeError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = StripeError.m; path = Stripe/StripeError.m; sourceTree = "<group>"; };
 		1F54C4C97E2A5EB4A28F443E8D5A753D /* STPAPIPostRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = STPAPIPostRequest.h; path = Stripe/STPAPIPostRequest.h; sourceTree = "<group>"; };
 		206C85573002204E2ADB46C418FF671E /* STPAPIClient+ApplePay.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "STPAPIClient+ApplePay.h"; path = "Stripe/PublicHeaders/ApplePay/STPAPIClient+ApplePay.h"; sourceTree = "<group>"; };
@@ -421,6 +420,7 @@
 		DDB9D2DE348E0C768F906B3F8C62419B /* MBProgressHUD-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-umbrella.h"; sourceTree = "<group>"; };
 		DE830FD5303A33539D8D4A70FD858877 /* Fabric.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Fabric.h; path = Stripe/Fabric/Fabric.h; sourceTree = "<group>"; };
 		DFEAE0C9F085728D12A3F68F159D7DE6 /* stp_card_placeholder.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = stp_card_placeholder.png; path = Stripe/Resources/Images/stp_card_placeholder.png; sourceTree = "<group>"; };
+		E0793CD41DC148A4F76965C2AD6CD86A /* libFlurry_7.6.0.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libFlurry_7.6.0.a; path = Flurry/libFlurry_7.6.0.a; sourceTree = "<group>"; };
 		E93796B31B6CEB593D81576FE90D0EB4 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
 		E94DC1C9402BF5EFF8D3F15D5156FFE1 /* SnowShoeViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SnowShoeViewController.m; path = SnowShoe/SnowShoeViewController.m; sourceTree = "<group>"; };
 		E9B104790EE1B115FC36517DB820703B /* gtm_oauth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gtm_oauth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -855,10 +855,10 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		B651CB636C6FBC0E0574022B31B8F298 /* Frameworks */ = {
+		BEEBCEE073F1C07A0BE4CF5E0690E2A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1BA4C4B5782194044B46873125197EDD /* libFlurry_7.5.2.a */,
+				E0793CD41DC148A4F76965C2AD6CD86A /* libFlurry_7.6.0.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1004,7 +1004,7 @@
 			children = (
 				3308EB9A899832A28145DF20AAE1332D /* Flurry.h */,
 				EC8D4D5FF1CF192A54619B2173C7C8E2 /* FlurryEmpty.m */,
-				B651CB636C6FBC0E0574022B31B8F298 /* Frameworks */,
+				BEEBCEE073F1C07A0BE4CF5E0690E2A0 /* Frameworks */,
 			);
 			name = FlurrySDK;
 			sourceTree = "<group>";

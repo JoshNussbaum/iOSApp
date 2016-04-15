@@ -10,7 +10,7 @@ pod 'JSBadgeView'
 pod 'BBBadgeBarButtonItem'
 pod 'Stripe'
 pod 'CircleProgressBar', '~> 0.21'
-pod 'Flurry-iOS-SDK/FlurrySDK', '~> 7.5.2'
+pod 'Flurry-iOS-SDK/FlurrySDK', '~> 7.6.0'
 pod 'YLProgressBar', '~> 3.8.0'
 
 end

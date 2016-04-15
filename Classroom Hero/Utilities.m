@@ -249,6 +249,17 @@ NSInteger RESET_PASSWORD = 42;
 
 
 + (NSString *)isInputValid:(NSString *)input :(NSString *)inputName{
+    
+    
+    
+    NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+    if ([[input stringByTrimmingCharactersInSet: set] length] == 0)
+    {
+        return [NSString stringWithFormat:@"%@ may not contain only white spaces", inputName];
+    }
+    
+
+    
     NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~] "];
     for (NSUInteger i = 0; i < [input length]; ++i) {
         unichar uchar = [input characterAtIndex:i] ;

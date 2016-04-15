@@ -15,6 +15,8 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *skipButton;
 
+@property (strong, nonatomic) IBOutlet UIButton *classesButton;
+
 @property (strong, nonatomic) IBOutlet UILabel *studentNameLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *stampToRegisterLabel;

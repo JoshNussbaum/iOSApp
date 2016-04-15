@@ -4,65 +4,65 @@
 //
 //  Created by Josh on 7/24/15.
 //  Copyright (c) 2015 Josh Nussbaum. All rights reserved.
-// http://ehorvat.webfactional.com/ch
+// http://ehorvat.webfactional.com/apps/ch
 //
 
 
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-static NSString * const LOGIN_URL = @"http://ehorvat.webfactional.com/ch/services/login/auth";
-static NSString * const STAMP_TO_LOGIN_URL = @"http://ehorvat.webfactional.com/ch/services/login/auth/stamp";
-static NSString * const CREATE_ACCOUNT_URL = @"http://ehorvat.webfactional.com/ch/services/register/teacher";
+static NSString * const LOGIN_URL = @"http://ehorvat.webfactional.com/apps/ch/services/login/auth";
+static NSString * const STAMP_TO_LOGIN_URL = @"http://ehorvat.webfactional.com/apps/ch/services/login/auth/stamp";
+static NSString * const CREATE_ACCOUNT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/teacher";
 
-static NSString * const ADD_CLASS_URL = @"http://ehorvat.webfactional.com/ch/services/class/add";
-static NSString * const EDIT_CLASS_URL = @"http://ehorvat.webfactional.com/ch/services/class/edit";
-static NSString * const DELETE_CLASS_URL = @"http://ehorvat.webfactional.com/ch/services/class/delete";
+static NSString * const ADD_CLASS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class/add";
+static NSString * const EDIT_CLASS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class/edit";
+static NSString * const DELETE_CLASS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class/delete";
 
-static NSString * const ADD_REINFORCER_URL = @"http://ehorvat.webfactional.com/ch/services/reinforcer/add";
-static NSString * const EDIT_REINFORCER_URL = @"http://ehorvat.webfactional.com/ch/services/reinforcer/edit";
-static NSString * const DELETE_REINFORCER_URL = @"http://ehorvat.webfactional.com/ch/services/reinforcer/delete";
+static NSString * const ADD_REINFORCER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/reinforcer/add";
+static NSString * const EDIT_REINFORCER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/reinforcer/edit";
+static NSString * const DELETE_REINFORCER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/reinforcer/delete";
 
-static NSString * const ADD_ITEM_URL = @"http://ehorvat.webfactional.com/ch/services/item/add";
-static NSString * const EDIT_ITEM_URL = @"http://ehorvat.webfactional.com/ch/services/item/edit";
-static NSString * const DELETE_ITEM_URL = @"http://ehorvat.webfactional.com/ch/services/item/delete";
+static NSString * const ADD_ITEM_URL = @"http://ehorvat.webfactional.com/apps/ch/services/item/add";
+static NSString * const EDIT_ITEM_URL = @"http://ehorvat.webfactional.com/apps/ch/services/item/edit";
+static NSString * const DELETE_ITEM_URL = @"http://ehorvat.webfactional.com/apps/ch/services/item/delete";
 
-static NSString * const ADD_JAR_URL = @"http://ehorvat.webfactional.com/ch/services/jar/add";
-static NSString * const EDIT_JAR_URL = @"http://ehorvat.webfactional.com/ch/services/jar/edit";
-static NSString * const DELETE_JAR_URL = @"http://ehorvat.webfactional.com/ch/services/jar/delete";
+static NSString * const ADD_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/add";
+static NSString * const EDIT_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/edit";
+static NSString * const DELETE_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/delete";
 
-static NSString * const ADD_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/add";
-static NSString * const EDIT_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/edit";
-static NSString * const DELETE_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/delete";
-static NSString * const GET_STUDENT_BY_SERIAL_URL = @"http://ehorvat.webfactional.com/ch/services/student/get";
-static NSString * const REWARD_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/reward";
-static NSString * const CHECK_IN_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/checkin";
-static NSString * const CHECK_OUT_STUDENT_URL = @"http://ehorvat.webfactional.com/ch/services/student/checkout";
-static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/ch/services/class";
-static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/ch/services/class";
-static NSString * const GET_USER_BY_STAMP_URL = @"http://ehorvat.webfactional.com/ch/services/user";
+static NSString * const ADD_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/add";
+static NSString * const EDIT_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/edit";
+static NSString * const DELETE_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/delete";
+static NSString * const GET_STUDENT_BY_SERIAL_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/get";
+static NSString * const REWARD_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/reward";
+static NSString * const CHECK_IN_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/checkin";
+static NSString * const CHECK_OUT_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/checkout";
+static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
+static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
+static NSString * const GET_USER_BY_STAMP_URL = @"http://ehorvat.webfactional.com/apps/ch/services/user";
 
-static NSString * const STUDENT_TRANSACTION_URL = @"http://ehorvat.webfactional.com/ch/services/student/transaction";
+static NSString * const STUDENT_TRANSACTION_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/transaction";
 
-static NSString * const GET_SCHOOLS_URL = @"http://ehorvat.webfactional.com/ch/services/schools/get";
-static NSString * const REGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/ch/services/register/stamp";
-static NSString * const UNREGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/ch/services/register/unregisterStamp";
+static NSString * const GET_SCHOOLS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/schools/get";
+static NSString * const REGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/stamp";
+static NSString * const UNREGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/unregisterStamp";
 
-static NSString * const REWARD_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/ch/services/class";
-static NSString * const ADD_TO_JAR_URL = @"http://ehorvat.webfactional.com/ch/services/jar/fill";
+static NSString * const REWARD_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
+static NSString * const ADD_TO_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/fill";
 
-static NSString * const ORDER_URL = @"http://ehorvat.webfactional.com/ch/services/register/order";
+static NSString * const ORDER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/order";
 
-static NSString * const EDIT_TEACHER_NAME_URL = @"http://ehorvat.webfactional.com/ch/services/user/settings/editName";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://ehorvat.webfactional.com/ch/services/user/settings/changePassword";
-static NSString * const RESET_PASSWORD_URL = @"http://ehorvat.webfactional.com/ch/services/user/settings/recoverPassword";
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://ehorvat.webfactional.com/apps/ch/services/user/settings/editName";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://ehorvat.webfactional.com/apps/ch/services/user/settings/changePassword";
+static NSString * const RESET_PASSWORD_URL = @"http://ehorvat.webfactional.com/apps/ch/services/user/settings/recoverPassword";
 
 
-static NSString * const GET_CLASS_STATS_URL = @"http://ehorvat.webfactional.com/ch/services/class/stats";
+static NSString * const GET_CLASS_STATS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class/stats";
 
-static NSString * const IDENTIFY_STAMP_URL = @"http://ehorvat.webfactional.com/ch/services/user/identify";
+static NSString * const IDENTIFY_STAMP_URL = @"http://ehorvat.webfactional.com/apps/ch/services/user/identify";
 
-static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/ch/services/class";
+static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
 
 
 
@@ -447,7 +447,6 @@ static NSInteger connectionType;
         return jsonData;
     }
     else{
-        NSLog(@"Synchronous web call failed");
         return nil;
     }
 }
@@ -461,16 +460,16 @@ static NSInteger connectionType;
     [request setHTTPMethod:httpMethod];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setTimeoutInterval:20];
+    [request setTimeoutInterval:8];
     
     if (jsonRequest != nil){
-        NSLog(@"Json Request -> %@\n Url string -> %@", jsonRequest, urlString);
+        //NSLog(@"Json Request -> %@\n Url string -> %@", jsonRequest, urlString);
         NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
         [request setHTTPBody: requestData];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
     }
     else {
-        NSLog(@"Heres the URL -> %@", url);
+        //NSLog(@"Heres the URL -> %@", url);
     }
     
     [NSURLConnection connectionWithRequest:request delegate:self];
@@ -509,7 +508,7 @@ static NSInteger connectionType;
                               JSONObjectWithData:responseData
                               options:NSJSONReadingMutableContainers
                               error:&err];
-    NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
+    //NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
     
     [delegate_ dataReady:jsonData :connectionType];
 }

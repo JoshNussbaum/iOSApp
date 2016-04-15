@@ -16,6 +16,7 @@
 #import "RegisterStudentsViewController.h"
 #import "TutorialViewController.h"
 #import "NSString+FontAwesome.h"
+#import "Flurry.h"
 
 @interface SettingsViewController (){
     user *currentUser;
@@ -57,7 +58,7 @@
     self.classTutorialIcon.text = [NSString fontAwesomeIconStringForEnum:FAQuestionCircle];
     [self.registerTeacherStamp setTitle:@"Manage Teacher Stamp" forState:UIControlStateNormal];
     self.registerTeacherIcon.text = [NSString fontAwesomeIconStringForEnum:FAStar];
-    [self.unregisterAllStampsButton setTitle:@"Unregister All Stamps" forState:UIControlStateNormal];
+    [self.unregisterAllStampsButton setTitle:@"Unregister All Students" forState:UIControlStateNormal];
     self.unregisterAllStampsIcon.text = [NSString fontAwesomeIconStringForEnum:FAExclamationTriangle];
     [self.stampIdentifierButton setTitle:@"Stamp Identifier" forState:UIControlStateNormal];
     self.stampIdentifierIcon.text = [NSString fontAwesomeIconStringForEnum:FALightbulbO];
@@ -162,6 +163,9 @@
             [[DatabaseHandler getSharedInstance]unregisterAllStudentsInClassWithid:[currentUser.currentClass getId]];
             [Utilities alertStatusWithTitle:@"Successfully unregistered all students" message:message cancel:nil otherTitles:nil tag:0 view:self];
             [self checkAccountStatus];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Unregister All Students" withParameters:params];
         }
         
     }
@@ -189,17 +193,6 @@
     else {
         [badgeView removeFromSuperview];
     }
-//    if (currentUser.accountStatus < 2){
-//        badgeView2 = [[JSBadgeView alloc] initWithParentView:self.orderStampsView alignment:JSBadgeViewAlignmentTopRight];
-//        badgeView2.badgeText = @"!";
-//        badgeView2.badgeTextColor=[UIColor whiteColor];
-//        badgeView2.badgeBackgroundColor = [UIColor redColor];
-//        
-//    }
-//    else {
-//        [badgeView removeFromSuperview];
-//        [badgeView2 removeFromSuperview];
-//    }
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
     if (unregisteredStudents > 0){
         badgeView3 = [[JSBadgeView alloc] initWithParentView:self.registerStudentsView alignment:JSBadgeViewAlignmentTopRight];

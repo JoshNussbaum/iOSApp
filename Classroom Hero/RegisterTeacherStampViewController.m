@@ -107,14 +107,18 @@
         if (type == UNREGISTER_STAMP){
             currentUser.serial = nil;
             [self setLabels];
-            [Flurry logEvent:@"Unregister Teacher Stamp - Register Teacher"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Unregister Teacher Stamp - Register Teacher" withParameters:params];
         }
         else if (type == REGISTER_STAMP){
             currentUser.serial = serial;
             currentUser.accountStatus = 2;
             [Utilities wiggleImage:self.stampImage sound:YES];
             [self setLabels];
-            [Flurry logEvent:@"Register Teacher Stamp - Register Teacher"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Register Teacher Stamp - Register Teacher" withParameters:params];
         }
         
     }

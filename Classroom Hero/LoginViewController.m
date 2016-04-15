@@ -43,7 +43,7 @@ NSArray *fakeStudents;
     self.appKey = snowshoe_app_key;
     self.appSecret = snowshoe_app_secret;
     
-    self.emailTextField.text = @"josh@gmail.com";
+    self.emailTextField.text = @"nussbaum.joshua@gmail.com";
     self.passwordTextField.text = @"Punkzor";
 }
 
@@ -209,7 +209,7 @@ NSArray *fakeStudents;
 
 
 - (void)loginSuccess:(NSDictionary *)data{
-    NSLog([NSString stringWithFormat:@"Here's the login info\n %@", data ]);
+    //NSLog([NSString stringWithFormat:@"Here's the login info\n %@", data ]);
     // Set all the user stuff and query the database
     [[DatabaseHandler getSharedInstance] login:data];
     currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];

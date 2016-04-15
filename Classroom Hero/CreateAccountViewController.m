@@ -11,6 +11,7 @@
 #import "Utilities.h"
 #import "RegisterStudentsViewController.h"
 #import "TutorialViewController.h"
+#import "Flurry.h"
 
 
 @interface CreateAccountViewController (){
@@ -107,6 +108,8 @@
             currentUser.password = self.passwordTextField.text;
             currentUser.id = cid;
             currentUser.accountStatus = 0;
+            
+            [Flurry logEvent:@"Create Account"];
             
             [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
 

@@ -345,7 +345,9 @@ static NSInteger coinHeight = 250;
             [self.categoryPicker reloadAllComponents];
             [self setReinforcerName];
             
-            [Flurry logEvent:@"Edit Reinforcer"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Edit Reinforcer" withParameters:params];
             
             
         }
@@ -364,7 +366,9 @@ static NSInteger coinHeight = 250;
             self.editReinforcerButton.hidden = NO;
             self.categoryPicker.hidden = NO;
             
-            [Flurry logEvent:@"Add Reinforcer - Award View"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Reinforcer - Award View" withParameters:params];
             
         }
         else if (type == DELETE_REINFORCER){
@@ -378,7 +382,9 @@ static NSInteger coinHeight = 250;
                 self.reinforcerValue.text = @"";
                 self.editReinforcerButton.hidden = YES;
                 
-                [Flurry logEvent:@"Delete Reinforcer"];
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+                
+                [Flurry logEvent:@"Delete Reinforcer" withParameters:params];
             }
             else {
                 [self setReinforcerName];
@@ -420,7 +426,9 @@ static NSInteger coinHeight = 250;
             tmpPoints = ([currentStudent getPoints] - pointsAwarded);
             [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
             
-            [Flurry logEvent:@"Reward Student"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Reward Student" withParameters:params];
             
         }
         else if (type == REWARD_ALL_STUDENTS){
@@ -428,7 +436,9 @@ static NSInteger coinHeight = 250;
             [[DatabaseHandler getSharedInstance] rewardAllStudentsInClassWithid:[currentUser.currentClass getId]];
             [self awardAllStudents];
             
-            [Flurry logEvent:@"Reward All Students"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Reward Class" withParameters:params];
             
         }
         else {

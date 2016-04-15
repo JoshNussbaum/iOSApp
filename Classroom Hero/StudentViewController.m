@@ -122,14 +122,19 @@
             [hud hide:YES];
             [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
             [self setStudentLabels];
-            [Flurry logEvent:@"Edit Student"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Edit Student" withParameters:params];
 
         }
         else if (type == DELETE_STUDENT){
             [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
             [hud hide:YES];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Delete Student" withParameters:params];
             [self.navigationController popViewControllerAnimated:YES];
-            [Flurry logEvent:@"Delete Student"];
+            
 
         }
         else if (type == REGISTER_STAMP){
@@ -142,7 +147,10 @@
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             isRegistered = YES;
-            [Flurry logEvent:@"Register Student - Student View"];
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Register Student - Student View" withParameters:params];
 
         }
         else if (type == UNREGISTER_STAMP){
@@ -152,6 +160,10 @@
             self.studentButton.hidden = YES;
             isRegistered = NO;
             self.stampIdLabel.text = @"No stamp registered";
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Unregister Student - Student View" withParameters:params];
         }
     }
     else {

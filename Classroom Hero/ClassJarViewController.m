@@ -227,13 +227,6 @@
                     if ([stampSerial isEqualToString:currentUser.serial] && ([currentClassJar getTotal] != 0))
                     {
                         [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
-                        
-                        /*
-                         NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys: currentUser.jarName, @"added", nil];
-                         
-                         [[Countly sharedInstance] recordEvent:@"addToJar" segmentation:dict count:1 sum:currentPoints];
-                         */
-                        
                     }
                     else {
                         AudioServicesPlaySystemSound(fail);
@@ -335,24 +328,32 @@
             self.stepper.hidden = NO;
             self.pointsLabel.hidden = NO;
             
-            [Flurry logEvent:@"Add Jar - Jar View"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add Jar - Jar View" withParameters:params];
         }
         else if (type == EDIT_JAR){
+            self.classJarName.text = newClassJarName;
+            
             if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
                 [currentClassJar setProgress:0];
+                CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.jarCoins.frame = finalFrame;
+                    
+                }];
+            }
+            else {
+                [self displayJarCoins:0 :newClassJarTotal.integerValue];
             }
 
             [currentClassJar setName:newClassJarName];
             [currentClassJar setTotal:newClassJarTotal.integerValue];
             [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
-            [self displayClassJar];
+        
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
-            CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
-            [UIView animateWithDuration:0.5 animations:^{
-                self.jarCoins.frame = finalFrame;
-                
-            }];
-            [Flurry logEvent:@"Edit Jar"];
+            [Flurry logEvent:@"Edit Jar" withParameters:params];
 
         }
         else if (type == ADD_TO_JAR){
@@ -360,7 +361,9 @@
             [currentClassJar updateJar:currentPoints];
             [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
             [self addCoins];
-            [Flurry logEvent:@"Add to Jar"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentClassJar getName], @"Jar Name", [NSString stringWithFormat:@"%ld", (long)[currentClassJar getId]], @"Jar ID", [NSString stringWithFormat:@"%ld", (long)currentPoints], @"Points", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Add To Jar" withParameters:params];
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
         }
@@ -409,7 +412,6 @@
     NSInteger pointsEarned = [[scores objectAtIndex:0]integerValue];
     NSInteger newScore = [[scores objectAtIndex:1]integerValue];
 
-    float time = pointsEarned *.25;
     if (pointsEarned != 0)
     {
         pointsEarned--;
@@ -431,28 +433,8 @@
                              
                              coin.alpha=0;
                              coin.frame = coinRect;
-                             float prog;
-                             if ([currentClassJar getProgress] == 0){
-                                 prog = (float)([currentClassJar getTotal] - pointsEarned);
-                             }
-                             else{
-                                 prog = (float)([currentClassJar getProgress]-pointsEarned) / (float)[currentClassJar getTotal];
-                             }
-                             
-                             CGRect finalFrame = self.jarCoins.frame;
-                             float newProg;
-                             if (prog >= 1.0 || prog == 0) {
-                                 newProg = -420;
-                             }
-                             else {
-                                 newProg = prog * -420;
-                                 
-                             }
-                             finalFrame.size.height = newProg;
-                             
-                             [UIView animateWithDuration:time animations:^{
-                                 self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
-                             }];
+                             [self displayJarCoins:pointsEarned :newScore];
+
                          }
          ];
         [self performSelector:@selector(coinsFall:) withObject:scores afterDelay:0.2 ];
@@ -465,6 +447,33 @@
         self.stepper.enabled = YES;
         isStamping = NO;
     }
+}
+
+
+- (void)displayJarCoins:(NSInteger)pointsEarned :(NSInteger)newScore{
+    float time = pointsEarned *.25;
+    float prog;
+    if ([currentClassJar getProgress] == 0){
+        prog = (float)([currentClassJar getTotal] - pointsEarned);
+    }
+    else{
+        prog = (float)([currentClassJar getProgress]-pointsEarned) / (float)[currentClassJar getTotal];
+    }
+    
+    CGRect finalFrame = self.jarCoins.frame;
+    float newProg;
+    if (prog >= 1.0 || prog == 0) {
+        newProg = -420;
+    }
+    else {
+        newProg = prog * -420;
+        
+    }
+    finalFrame.size.height = newProg;
+    
+    [UIView animateWithDuration:time animations:^{
+        self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
+    }];
 }
 
 

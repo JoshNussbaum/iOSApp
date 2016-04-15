@@ -112,7 +112,9 @@
                 currentUser.serial = nil;
             }
             [Utilities wiggleImage:self.stampImage sound:NO];
-            [Flurry logEvent:@"Unregister Student Stamp - Stamp Identifier"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Unregister Stamp - Stamp Identifier" withParameters:params];
             
         }
         else if (type == GET_USER_BY_STAMP){
@@ -136,7 +138,9 @@
                 [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
             }
             [self displayStudent];
-            [Flurry logEvent:@"Get User - Stamp Identifier"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Get User - Stamp Identifier" withParameters:params];
         }
         
     }

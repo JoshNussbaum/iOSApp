@@ -57,6 +57,7 @@
     [self displayName:registerIndex];
 }
 
+
 - (void)viewWillAppear:(BOOL)animated{
     unregisteredStudents = [[DatabaseHandler getSharedInstance]getUnregisteredStudents:[currentUser.currentClass getId]];
 
@@ -65,6 +66,8 @@
     }
     else if (flag == 3){
         [self.skipButton setTitle:@"Settings" forState:UIControlStateNormal];
+        [self.classesButton setHidden:YES];
+
     }
 }
 
@@ -128,7 +131,7 @@
 }
 
 
-- (void) displayName:(NSInteger)index{
+- (void)displayName:(NSInteger)index{
     if ([unregisteredStudents count] != 0)
     {
         student *ss = [unregisteredStudents objectAtIndex:index];
@@ -237,7 +240,10 @@
                 
             }
             [self displayName:registerIndex];
-            [Flurry logEvent:@"Register Student - Register Students"];
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [ss getFirstName], [ss getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Register Student - Register Students" withParameters:params];
         }
         else{
             [Utilities alertStatusWithTitle:@"Error registering student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
