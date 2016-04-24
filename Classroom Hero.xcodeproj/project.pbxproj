@@ -48,6 +48,7 @@
 		034075DA1B980CBB008E14B2 /* ClassJarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034075D91B980CBA008E14B2 /* ClassJarViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03492CF21B8863DB0015CD78 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03492CF11B8863DB0015CD78 /* HomeViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		034C92B81BF19A7B0090667C /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */; };
+		0354E2F51CCCB239008E6F04 /* Icon-83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0354E2F41CCCB239008E6F04 /* Icon-83.5@2x.png */; };
 		036811561B8C49B400690294 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811551B8C49B400690294 /* AboutViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		036811591B8C49C300690294 /* PricingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811581B8C49C300690294 /* PricingViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0369CF8D1BE082EC00E8857D /* StudentAttendanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -177,6 +178,7 @@
 		03492CF11B8863DB0015CD78 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
+		0354E2F41CCCB239008E6F04 /* Icon-83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-83.5@2x.png"; path = "icons/Icon-83.5@2x.png"; sourceTree = SOURCE_ROOT; };
 		036811541B8C49B400690294 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		036811551B8C49B400690294 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		036811571B8C49C300690294 /* PricingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PricingViewController.h; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				0338557C1B89C97E00173600 /* Icon-60@3x.png */,
 				0338557D1B89C97E00173600 /* Icon-76.png */,
 				0338557E1B89C97E00173600 /* Icon-76@2x.png */,
+				0354E2F41CCCB239008E6F04 /* Icon-83.5@2x.png */,
 				0338557F1B89C97E00173600 /* Icon-Small.png */,
 				033855801B89C97E00173600 /* Icon-Small@2x.png */,
 				033855811B89C97E00173600 /* Icon-Small@3x.png */,
@@ -788,6 +791,7 @@
 				03AA9A131B63381B00750758 /* FontAwesome.ttf in Resources */,
 				033A4DB01B75B25B006E90D6 /* teacherstamp.wav in Resources */,
 				03AA9A581B63399D00750758 /* treasure_chest.png in Resources */,
+				0354E2F51CCCB239008E6F04 /* Icon-83.5@2x.png in Resources */,
 				0338559E1B89C97E00173600 /* iTunesArtwork@2x.png in Resources */,
 				033855971B89C97E00173600 /* Icon-72.png in Resources */,
 				0338558E1B89C97E00173600 /* Icon-40@3x.png in Resources */,
