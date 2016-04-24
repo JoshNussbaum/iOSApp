@@ -142,33 +142,51 @@ extern NSInteger RESET_PASSWORD;
 
 + (SystemSoundID) getFailSound;
 
+
 + (SystemSoundID) getTheSoundOfSuccess;
+
 
 + (SystemSoundID) getAwardSound;
 
+
 + (SystemSoundID) getTeacherStampSound;
+
 
 + (SystemSoundID) getLevelUpSound;
 
+
 + (SystemSoundID) getCoinShakeSound;
+
 
 + (SystemSoundID) getAwardAllSound;
 
+
 + (SystemSoundID) getJarSuccessSound;
+
 
 + (SystemSoundID) getCorkSound;
 
+
 + (SystemSoundID) getAchievementSound;
+
 
 + (NSInteger) getRewardNumber;
 
+
 + (NSString *)getCurrentDate;
 
+
 + (BOOL)isNewDate:(NSString *)oldDate;
+
+
++ (BOOL)isIPadPro;
+
 
 + (id) getStudentWitharray:(NSMutableArray *)searchArray propertyName:(NSString *)propertyName searchString:(NSString *)searchString;
 
 
 + (NSString *)getPackageDescriptionWithpackageId:(NSInteger)packageId stamps:(NSInteger)stamps;
+
+
 
 @end

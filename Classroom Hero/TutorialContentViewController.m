@@ -477,7 +477,7 @@ static int screenNumber;
                     self.titleLabel.hidden = NO;
                 }
                 else {
-                    self.titleLabel.text = @"You have a stamp registered to your account. Unregister from the in app settings menu";
+                    self.titleLabel.text = @"You have a stamp registered to your account.  Unregister from the in app settings menu";
                     self.titleLabel.hidden =  NO;
                 }
             }

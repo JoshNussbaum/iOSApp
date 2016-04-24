@@ -37,11 +37,20 @@ NSString * const StripePublishableKey = @" pk_test_0k5cvVSHQihOyTbRCUHXm9T2 ";
     NSShadow* shadow = [NSShadow new];
     shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
     if ([self checkOSVersion] >= 7) {
-        [[UINavigationBar appearance] setTitleTextAttributes: @{
-                                                                NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:35.0f],
-                                                                NSShadowAttributeName: shadow
-                                                                }];
+        if ([Utilities isIPadPro]){
+            [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                                    NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                                    NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:44.0f],
+                                                                    NSShadowAttributeName: shadow
+                                                                    }];
+        }
+        else{
+            [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                                    NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                                    NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:38.0f],
+                                                                    NSShadowAttributeName: shadow
+                                                                    }];
+        }
     } else {
         [[UINavigationBar appearance] setTintColor:[Utilities CHBlueColor]];
     }

@@ -17,6 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
+
     // Do any additional setup after loading the view.
     [Utilities makeRoundedButton:self.backButton :nil];
 }

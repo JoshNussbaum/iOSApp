@@ -30,6 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
+
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
@@ -40,7 +42,6 @@
     [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[Utilities CHGreenColor]];
     
     [Utilities makeRoundedButton:self.createAccountButton :[UIColor blackColor]];
-    [Utilities makeRoundedButton:self.backButton :nil];
 }
 
 

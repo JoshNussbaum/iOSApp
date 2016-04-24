@@ -11,7 +11,7 @@
 @implementation passwordTextField
 
 - (NSString *)validate{
-    if (self.text.length >= 6){
+    if (self.text.length >= 3){
         NSString *errorMessage = [self isPasswordValid:self.text];
         if (!errorMessage){
             return @"";
@@ -19,22 +19,13 @@
         else return errorMessage;
     }
     else {
-        return @"Password length must be at least six characters long";
+        return @"Password length must be at least three characters long";
     }
 }
 
 - (NSString *)isPasswordValid:(NSString *)password
 {
     NSCharacterSet * characterSet = [NSCharacterSet uppercaseLetterCharacterSet] ;
-    NSRange range = [password rangeOfCharacterFromSet:characterSet] ;
-    if (range.location == NSNotFound) {
-        return @"Passwords must contain at least one upper case character";
-    }
-    characterSet = [NSCharacterSet lowercaseLetterCharacterSet] ;
-    range = [password rangeOfCharacterFromSet:characterSet] ;
-    if (range.location == NSNotFound) {
-        return @"Passwords must contain at least one lower case character";
-    }
     
     characterSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~]"];
     for (NSUInteger i = 0; i < [password length]; ++i) {

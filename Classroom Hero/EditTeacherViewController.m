@@ -195,6 +195,8 @@
             errorMessage = @"Error resetting password";
         }
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        [hud hide:YES];
+
     }
 
 }

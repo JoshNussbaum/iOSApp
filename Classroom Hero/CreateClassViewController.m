@@ -36,10 +36,11 @@
     
     [Utilities setTextFieldPlaceholder:self.classNameTextField :@"Class name" :[Utilities CHBlueColor]];
     [Utilities setTextFieldPlaceholder:self.classGradeTextField :@"Class grade" :[Utilities CHBlueColor]];
-    
-    [Utilities makeRoundedButton:self.addClassButton :nil];
-    [Utilities makeRoundedButton:self.backButton :nil];
-    [Utilities makeRoundedButton:self.helpButton :nil];
+    self.classNameTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
+    self.classGradeTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
+
+    [Utilities makeRoundedButton:self.addClassButton :[Utilities CHBlueColor]];
+
 
     if (schoolData.count == 0){
         self.schoolPicker.hidden = YES;

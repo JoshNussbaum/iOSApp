@@ -659,6 +659,7 @@ NSInteger RESET_PASSWORD = 42;
     
 }
 
+
 + (NSString *)getCurrentDate{
     NSDateComponents *components = [[NSDateComponents alloc] init];
     [components setDay:(0)];
@@ -685,6 +686,24 @@ NSInteger RESET_PASSWORD = 42;
     else {
         return YES;
     }
+}
+
+
++ (BOOL)isIPadPro
+{
+    UIScreen *mainScreen = [UIScreen mainScreen];
+    CGFloat width = mainScreen.nativeBounds.size.width / mainScreen.nativeScale;
+    CGFloat height = mainScreen.nativeBounds.size.height / mainScreen.nativeScale;
+    BOOL isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+    BOOL hasIPadProWidth = fabs(width - 1024.f) < DBL_EPSILON;
+    BOOL hasIPadProHeight = fabs(height - 1366.f) < DBL_EPSILON;
+    if (isIpad && hasIPadProHeight && hasIPadProWidth){
+        NSLog(@"WE GOT AN IPAD PRO");
+    }
+    else{
+        NSLog(@"WE DON'T HAVE AN IPAD PRO");
+    }
+    return isIpad && hasIPadProHeight && hasIPadProWidth;
 }
 
 

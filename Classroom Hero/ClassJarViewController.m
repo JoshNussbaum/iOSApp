@@ -412,6 +412,7 @@
     NSInteger pointsEarned = [[scores objectAtIndex:0]integerValue];
     NSInteger newScore = [[scores objectAtIndex:1]integerValue];
 
+    float time = pointsEarned * .25;
     if (pointsEarned != 0)
     {
         pointsEarned--;
@@ -433,11 +434,32 @@
                              
                              coin.alpha=0;
                              coin.frame = coinRect;
-                             [self displayJarCoins:pointsEarned :newScore];
+                             float prog;
+                             if ([currentClassJar getProgress] == 0){
+                                 prog = (float)([currentClassJar getTotal] - pointsEarned);
+                             }
+                             else{
+                                 prog = (float)([currentClassJar getProgress]-pointsEarned) / (float)[currentClassJar getTotal];
+                             }
+                             
+                             CGRect finalFrame = self.jarCoins.frame;
+                             float newProg;
+                             if (prog >= 1.0 || prog == 0) {
+                                 newProg = -420;
+                             }
+                             else {
+                                 newProg = prog * -420;
+                                 
+                             }
+                             finalFrame.size.height = newProg;
+                             
+                             [UIView animateWithDuration:time animations:^{
+                                 self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
+                             }];
 
                          }
          ];
-        [self performSelector:@selector(coinsFall:) withObject:scores afterDelay:0.2 ];
+        [self performSelector:@selector(coinsFall:) withObject:scores afterDelay:0.2];
         return;
     }
     else {

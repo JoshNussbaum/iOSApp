@@ -23,10 +23,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *addClassButton;
 
-@property (strong, nonatomic) IBOutlet UIButton *backButton;
-
-@property (strong, nonatomic) IBOutlet UIButton *helpButton;
-
 
 - (IBAction)backgroundTap:(id)sender;
 

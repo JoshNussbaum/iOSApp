@@ -28,7 +28,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *createAccountButton;
 
-@property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 
 - (IBAction)createAccountClicked:(id)sender;
