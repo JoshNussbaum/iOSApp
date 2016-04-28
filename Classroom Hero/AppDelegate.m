@@ -47,14 +47,14 @@ NSString * const StripePublishableKey = @" pk_test_0k5cvVSHQihOyTbRCUHXm9T2 ";
         else{
             [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                                     NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                    NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:38.0f],
+                                                                    NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:36.0f],
                                                                     NSShadowAttributeName: shadow
                                                                     }];
         }
     } else {
         [[UINavigationBar appearance] setTintColor:[Utilities CHBlueColor]];
     }
-    
+    [[UITextField appearance] setTintColor:[Utilities CHBlueColor]];
     [Flurry startSession:@"646YZ8K3TTSHHSK43QKZ"];
     [Flurry setDebugLogEnabled:YES];
     

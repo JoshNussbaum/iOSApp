@@ -42,14 +42,14 @@ NSArray *fakeStudents;
     isStamping = NO;
     self.appKey = snowshoe_app_key;
     self.appSecret = snowshoe_app_secret;
-    
-    self.emailTextField.text = @"eric.horvat@gmail.com";
-    self.passwordTextField.text = @"half";
+
 }
 
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    [Utilities makeRoundedButton:self.forgotPasswordButton :[UIColor whiteColor]];
     
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
@@ -119,7 +119,7 @@ NSArray *fakeStudents;
 
 
 - (IBAction)forgotPasswordClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Forgot password" message:@"Enter your email to reset your password" cancel:@"Cancel" done:@"Confirm" delete:NO input:@"Email" tag:1 view:self];
+    [Utilities editAlertTextWithtitle:@"Forgot password" message:@"Enter your email to reset your password" cancel:@"Cancel" done:@"Reset" delete:NO input:@"Email" tag:1 view:self capitalizationType:UITextAutocapitalizationTypeNone];
 }
 
 
@@ -135,8 +135,6 @@ NSArray *fakeStudents;
     }
     
     if (alertView.tag == 1){
-        // RESET PASSWORD CONNETION HERE
-        // Check to make sure its an email
         [webHandler resetPasswordWithemail:email];
     }
 
@@ -190,6 +188,9 @@ NSArray *fakeStudents;
             
             [Utilities wiggleImage:self.stampImage sound:NO];
             [self loginSuccess:data];
+        }
+        else if (type == RESET_PASSWORD){
+            [Utilities alertStatusWithTitle:@"Password recovery email sent" message:@"Check your inbox for an email containing instructions to reset your password" cancel:nil otherTitles:nil tag:0 view:nil];
         }
     }
     else {

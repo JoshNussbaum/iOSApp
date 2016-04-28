@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "baseTextField.h"
 
-@interface emailTextField : UITextField <baseTextField>
+@interface emailTextField : baseTextField <baseTextField>
 
 @end

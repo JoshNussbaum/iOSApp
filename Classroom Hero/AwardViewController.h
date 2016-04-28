@@ -45,6 +45,11 @@
 @property (strong, nonatomic) IBOutlet UIButton *jarButton;
 @property (strong, nonatomic) IBOutlet UIButton *marketButton;
 
+@property (strong, nonatomic) IBOutlet UIButton *homeIconButton;
+@property (strong, nonatomic) IBOutlet UIButton *classJarIconButton;
+@property (strong, nonatomic) IBOutlet UIButton *marketIconButton;
+
+
 - (IBAction)addReinforcerClicked:(id)sender;
 - (IBAction)editReinforcerClicked:(id)sender;
 - (IBAction)studentListClicked:(id)sender;

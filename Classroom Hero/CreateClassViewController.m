@@ -82,6 +82,7 @@
             
         }
         [self activityStart:@"Adding class..."];
+        [self hideKeyboard];
         NSString *className = self.classNameTextField.text;
         NSInteger classGrade = [self.classGradeTextField.text integerValue];
         NSInteger schoolId = [self getSchoolId];
@@ -110,7 +111,6 @@
     if (alertView.tag == 1){
         self.classNameTextField.text = @"";
         self.classGradeTextField.text = @"";
-        [self.classNameTextField becomeFirstResponder];
     }
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;

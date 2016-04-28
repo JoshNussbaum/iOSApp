@@ -88,7 +88,14 @@
     
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
     NSInteger totalStamps = 0;
-    NSInteger partialProgress = 2 + (([currentUser.currentClass getLevel] - 2) * 2);
+    NSInteger partialProgress = 0;
+    if ([currentUser.currentClass getLevel] > 1){
+        partialProgress = 30 + (([currentUser.currentClass getLevel] - 2) * 5);
+
+    }
+    else {
+        partialProgress = 5 + (([currentUser.currentClass getLevel] - 2) * 5);
+    }
     totalStamps = partialProgress + [currentUser.currentClass getProgress];
     self.classAvgLevelLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averageLevel"] integerValue]];
     self.classAvgPointsLabel.text = [NSString stringWithFormat:@"%ld", [[classStats objectForKey:@"averagePoints"] integerValue]];

@@ -22,6 +22,8 @@
 
 @property (strong, nonatomic) IBOutlet passwordTextField *passwordTextField;
 
+@property (strong, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+
 @property (strong, nonatomic) IBOutlet UIButton *aboutButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *pricingButton;

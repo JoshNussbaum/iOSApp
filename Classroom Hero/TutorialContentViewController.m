@@ -38,7 +38,7 @@ static int screenNumber;
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
     
-    [Utilities makeRoundedButton:self.button :[UIColor blackColor]];
+    [Utilities makeRoundedButton:self.button :[UIColor whiteColor]];
     
     
     self.schoolPicker.delegate = self;

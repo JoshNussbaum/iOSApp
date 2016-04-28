@@ -60,11 +60,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     unregisteredStudents = [[DatabaseHandler getSharedInstance]getUnregisteredStudents:[currentUser.currentClass getId]];
-
+    registerIndex = 0;
+    [self displayName:0];
     if (flag == 1){
         [self.skipButton setTitle:@"Continue" forState:UIControlStateNormal];
     }
-    else if (flag == 3){
+    else if (flag == 3 || flag == 2){
         [self.skipButton setTitle:@"Settings" forState:UIControlStateNormal];
         [self.classesButton setHidden:YES];
 

@@ -41,7 +41,7 @@
     [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[Utilities CHGreenColor]];
     [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[Utilities CHGreenColor]];
     
-    [Utilities makeRoundedButton:self.createAccountButton :[UIColor blackColor]];
+    [Utilities makeRoundedButton:self.createAccountButton :[UIColor whiteColor]];
 }
 
 
@@ -98,7 +98,7 @@
 
         if([successNumber boolValue] == YES)
         {
-            NSInteger cid = [[data objectForKey:@"id"] integerValue];
+            NSInteger tid = [[data objectForKey:@"id"] integerValue];
 
             NSMutableArray *schools = data[@"schools"];
             
@@ -107,10 +107,16 @@
             currentUser.lastName = self.lastNameTextField.text;
             currentUser.email = self.emailTextField.text;
             currentUser.password = self.passwordTextField.text;
-            currentUser.id = cid;
+            currentUser.id = tid;
             currentUser.accountStatus = 0;
             
-            [Flurry logEvent:@"Create Account"];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSString stringWithFormat:@"%ld", (long)tid], @"Teacher ID",
+                                    [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name",
+                                    [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil
+                                    ];
+            
+            [Flurry logEvent:@"Create Account" withParameters:params];
             
             [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
 

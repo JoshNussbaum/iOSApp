@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "baseTextField.h"
 
-@interface passwordTextField : UITextField <baseTextField>
+@interface passwordTextField : baseTextField <baseTextField>
 
 @end

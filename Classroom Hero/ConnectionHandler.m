@@ -4,8 +4,6 @@
 //
 //  Created by Josh on 7/24/15.
 //  Copyright (c) 2015 Josh Nussbaum. All rights reserved.
-// http://ehorvat.webfactional.com/apps/ch
-//
 
 
 #import "ConnectionHandler.h"
@@ -489,7 +487,7 @@ static NSInteger connectionType;
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"In connection did fail");
+    //NSLog(@"In connection did fail");
 
     if(error.code == NSURLErrorTimedOut){
     }

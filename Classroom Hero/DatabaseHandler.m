@@ -69,20 +69,17 @@ static sqlite3_stmt *statement = nil;
         
         if (sqlite3_exec(database, create_tables, NULL, NULL, &errMsg) == SQLITE_OK)
         {
-            NSLog(@"Created DB");
             sqlite3_close(database);
             return  isSuccess;
         }
         else
         {
             isSuccess = NO;
-            NSLog(@"Failed to create table");
         }
         
     }
     else {
         isSuccess = NO;
-        NSLog(@"Failed to open/create database");
     }
 
     sqlite3_close(database);

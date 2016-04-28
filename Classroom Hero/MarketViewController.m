@@ -81,9 +81,12 @@
 
 
 - (void)viewDidAppear:(BOOL)animated{
-    self.homeButton.enabled = YES;
     self.awardButton.enabled = YES;
+    self.awardIconButton.enabled = YES;
     self.jarButton.enabled = YES;
+    self.classJarIconButton.enabled = YES;
+    self.homeButton.enabled = YES;
+    self.homeIconButton.enabled = YES;
 }
 
 

@@ -37,6 +37,11 @@
 @property (strong, nonatomic) IBOutlet UIButton *jarButton;
 @property (strong, nonatomic) IBOutlet UIButton *marketButton;
 
+@property (strong, nonatomic) IBOutlet UIButton *homeIconButton;
+@property (strong, nonatomic) IBOutlet UIButton *awardIconButton;
+@property (strong, nonatomic) IBOutlet UIButton *marketIconButton;
+
+
 - (IBAction)valueChanged:(id)sender;
 
 - (IBAction)editJarClicked:(id)sender;

@@ -150,9 +150,12 @@
             
         }];
     }
-    self.homeButton.enabled = YES;
-    self.marketButton.enabled = YES;
     self.awardButton.enabled = YES;
+    self.awardIconButton.enabled = YES;
+    self.homeButton.enabled = YES;
+    self.homeIconButton.enabled = YES;
+    self.marketButton.enabled = YES;
+    self.marketIconButton.enabled = YES;
 
 }
 
@@ -173,18 +176,21 @@
 
 - (IBAction)homeClicked:(id)sender {
     self.homeButton.enabled = NO;
+    self.homeIconButton.enabled = NO;
     [self performSegueWithIdentifier:@"class_jar_to_home" sender:self];
 }
 
 
 - (IBAction)awardClicked:(id)sender {
     self.awardButton.enabled = NO;
+    self.awardIconButton.enabled = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 - (IBAction)marketClicked:(id)sender {
     self.marketButton.enabled = NO;
+    self.marketIconButton.enabled = NO;
     [self performSegueWithIdentifier:@"class_jar_to_market" sender:nil];
 }
 
@@ -221,32 +227,18 @@
             isStamping = YES;
             if ([resultObject objectForKey:@"stamp"] != nil){
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if (self.corkImage.hidden == YES){
-                    self.stepper.enabled = NO;
-                    
-                    if ([stampSerial isEqualToString:currentUser.serial] && ([currentClassJar getTotal] != 0))
-                    {
-                        [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
-                    }
-                    else {
-                        AudioServicesPlaySystemSound(fail);
-                        self.stepper.enabled = YES;
-                        isStamping = NO;
-                    }
+                self.stepper.enabled = NO;
+                
+                if ([stampSerial isEqualToString:currentUser.serial] && ([currentClassJar getTotal] != 0))
+                {
+                    [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
                 }
-                else{
-                    AudioServicesPlaySystemSound(jarFull);
-                    self.corkImage.hidden = YES;
-                    self.corkImage.frame = corkRect;
-                    
-                    CGRect finalFrame = self.jarCoins.frame;
-                    finalFrame.size.height = 0;
-                    
-                    [UIView animateWithDuration:0 animations:^{
-                        self.jarCoins.frame = finalFrame;
-                    }];
+                else {
+                    AudioServicesPlaySystemSound(fail);
+                    self.stepper.enabled = YES;
                     isStamping = NO;
                 }
+              
             }
             else {
                 isStamping = NO;
@@ -279,7 +271,6 @@
             }
             else if (alertView.tag == 2){
                 [self activityStart:@"Editing class jar..."];
-                NSLog(@"New total-> %@, current progress -> %d", newClassJarTotal, [currentClassJar getProgress] );
                 if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
                     [Utilities alertStatusWithTitle:@"Warning" message:@"Your new total is less than your current progress. Proceeding will reset your progress to 0" cancel:@"Cancel" otherTitles:@[@"Proceed"] tag:3 view:self];
 
@@ -334,7 +325,9 @@
         }
         else if (type == EDIT_JAR){
             self.classJarName.text = newClassJarName;
-            
+            [currentClassJar setName:newClassJarName];
+            [currentClassJar setTotal:newClassJarTotal.integerValue];
+            [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
             if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
                 [currentClassJar setProgress:0];
                 CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
@@ -344,12 +337,21 @@
                 }];
             }
             else {
-                [self displayJarCoins:0 :newClassJarTotal.integerValue];
+                float prog = (float)([currentClassJar getProgress]) / (float)[currentClassJar getTotal];
+                
+                
+                CGRect finalFrame = self.jarCoins.frame;
+                float newProg;
+                newProg = prog * -420;
+                
+                finalFrame.size.height = newProg;
+                
+                [UIView animateWithDuration:0 animations:^{
+                    self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
+                }];
             }
 
-            [currentClassJar setName:newClassJarName];
-            [currentClassJar setTotal:newClassJarTotal.integerValue];
-            [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
+
         
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
@@ -484,13 +486,8 @@
     
     CGRect finalFrame = self.jarCoins.frame;
     float newProg;
-    if (prog >= 1.0 || prog == 0) {
-        newProg = -420;
-    }
-    else {
-        newProg = prog * -420;
-        
-    }
+    newProg = prog * -420;
+
     finalFrame.size.height = newProg;
     
     [UIView animateWithDuration:time animations:^{
@@ -500,7 +497,7 @@
 
 
 - (void)jarFull{
-    double delayInSeconds = 1.5;
+    double delayInSeconds = 1.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         self.stepper.enabled = YES;
@@ -513,7 +510,21 @@
                          }
                          completion:^(BOOL finished) {
                              AudioServicesPlaySystemSound(cork);
-                             isStamping = NO;
+                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                 AudioServicesPlaySystemSound(jarFull);
+                                 self.corkImage.hidden = YES;
+                                 self.corkImage.frame = corkRect;
+                                 
+                                 CGRect finalFrame = self.jarCoins.frame;
+                                 finalFrame.size.height = 0;
+                                 
+                                 [UIView animateWithDuration:0 animations:^{
+                                     self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
+                                 }];
+                                 isStamping = NO;
+                        
+                             });
                          }
          ];
     });

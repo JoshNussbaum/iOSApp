@@ -10,6 +10,6 @@
 #import "baseTextField.h"
 
 
-@interface numberTextField : UITextField <baseTextField>
+@interface numberTextField : baseTextField <baseTextField>
 
 @end

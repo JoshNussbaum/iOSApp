@@ -288,7 +288,7 @@ NSInteger RESET_PASSWORD = 42;
 }
 
 
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view{
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type{
     if (!cancel) cancel = @"Close";
     if (!done) done = @"Done";
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
@@ -297,7 +297,8 @@ NSInteger RESET_PASSWORD = 42;
                                              cancelButtonTitle:cancel
                                              otherButtonTitles:done, delete ? @"Delete" : nil, nil];
     [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeEmailAddress];
+    [alertView textFieldAtIndex:0].autocapitalizationType = type;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
     [[alertView textFieldAtIndex:0]setPlaceholder:input];
     [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyDone];
@@ -476,7 +477,7 @@ NSInteger RESET_PASSWORD = 42;
 
 
 + (NSString *) getRandomCompliment{
-    NSArray *compliments = @[@"Outstanding!",@"Splendid!",@"Marvelous!",@"Amazing!",@"Impressive!",@"Great!",@"Good work!",@"Fine  job!",@"Magnificent!",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing!",@"Phenomenal!",@"Terrific!",@"Stupendous!",];
+    NSArray *compliments = @[@"Outstanding! ",@"Splendid! ",@"Marvelous! ",@"Amazing! ",@"Impressive! ",@"Great! ",@"Good work! ",@"Fine  job!",@"Magnificent! ",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing! ",@"Phenomenal! ",@"Terrific! ",@"Stupendous! ",];
     
     NSInteger randomInteger = arc4random() % (compliments.count-1);
     
@@ -697,12 +698,6 @@ NSInteger RESET_PASSWORD = 42;
     BOOL isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
     BOOL hasIPadProWidth = fabs(width - 1024.f) < DBL_EPSILON;
     BOOL hasIPadProHeight = fabs(height - 1366.f) < DBL_EPSILON;
-    if (isIpad && hasIPadProHeight && hasIPadProWidth){
-        NSLog(@"WE GOT AN IPAD PRO");
-    }
-    else{
-        NSLog(@"WE DON'T HAVE AN IPAD PRO");
-    }
     return isIpad && hasIPadProHeight && hasIPadProWidth;
 }
 
@@ -724,14 +719,6 @@ NSInteger RESET_PASSWORD = 42;
     }
     return nil;
     
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"serial contains[c] %@", searchString]];
-//    NSLog(@"This is the predicate -> %@", predicate);
-//    NSArray *results = [searchArray filteredArrayUsingPredicate:predicate];
-//    if (results.count > 0){
-//        student *stud = results[0];
-//        return stud;
-//    }
-//    else return nil;
 }
 
 
@@ -755,6 +742,16 @@ NSInteger RESET_PASSWORD = 42;
     }
     
     return description;
+}
+
+
++ (long) getNavigationBarButtonSize{
+    if ([self isIPadPro]){
+        return 55.0f;
+    }
+    else {
+        return 27.0f;
+    }
 }
 
 

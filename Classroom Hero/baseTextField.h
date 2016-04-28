@@ -13,3 +13,11 @@
 -(NSString *)validate;
 
 @end
+
+
+@interface baseTextField : UITextField
+
+-(id)init;
+
+
+@end

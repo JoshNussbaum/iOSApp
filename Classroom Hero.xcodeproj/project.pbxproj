@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0312C3211C1EAC3200BD3F88 /* CitiesAndStates.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312C3201C1EAC3200BD3F88 /* CitiesAndStates.m */; };
 		0315AB051BD5F08C00C77F2F /* StampIdentifierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		031A31691C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031A31681C1CC78400ACBEB2 /* CheckoutInputTableViewCell.m */; };
 		0324E7EF1C4B51690079A441 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 0324E7EE1C4B51690079A441 /* coin.png */; };
@@ -54,6 +53,7 @@
 		0369CF8D1BE082EC00E8857D /* StudentAttendanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		036AAD661BBF9245007AF0A8 /* RegisterTeacherStampViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036AAD651BBF9245007AF0A8 /* RegisterTeacherStampViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		036E4ED41B9832EA00A06B25 /* MarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E4ED31B9832EA00A06B25 /* MarketViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		037BED5D1CD07472003C2D38 /* CitiesAndStates.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BED5C1CD07472003C2D38 /* CitiesAndStates.m */; };
 		038545261B6359DD0053C169 /* emailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545251B6359DD0053C169 /* emailTextField.m */; };
 		038545291B6359E90053C169 /* passwordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545281B6359E90053C169 /* passwordTextField.m */; };
 		038545321B635B1F0053C169 /* baseTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545311B635B1F0053C169 /* baseTextField.m */; };
@@ -128,8 +128,6 @@
 
 /* Begin PBXFileReference section */
 		003C81B540498279E6B276D7 /* Pods-Classroom Hero.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Classroom Hero.release.xcconfig"; path = "Pods/Target Support Files/Pods-Classroom Hero/Pods-Classroom Hero.release.xcconfig"; sourceTree = "<group>"; };
-		0312C31F1C1EAC3200BD3F88 /* CitiesAndStates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesAndStates.h; sourceTree = "<group>"; };
-		0312C3201C1EAC3200BD3F88 /* CitiesAndStates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesAndStates.m; sourceTree = "<group>"; };
 		0315AB031BD5F08C00C77F2F /* StampIdentifierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StampIdentifierViewController.h; sourceTree = "<group>"; };
 		0315AB041BD5F08C00C77F2F /* StampIdentifierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StampIdentifierViewController.m; sourceTree = "<group>"; };
 		031A31671C1CC78400ACBEB2 /* CheckoutInputTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutInputTableViewCell.h; sourceTree = "<group>"; };
@@ -190,6 +188,8 @@
 		036AAD651BBF9245007AF0A8 /* RegisterTeacherStampViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterTeacherStampViewController.m; sourceTree = "<group>"; };
 		036E4ED21B9832EA00A06B25 /* MarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarketViewController.h; sourceTree = "<group>"; };
 		036E4ED31B9832EA00A06B25 /* MarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarketViewController.m; sourceTree = "<group>"; };
+		037BED5B1CD07472003C2D38 /* CitiesAndStates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesAndStates.h; sourceTree = "<group>"; };
+		037BED5C1CD07472003C2D38 /* CitiesAndStates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesAndStates.m; sourceTree = "<group>"; };
 		038545241B6359DD0053C169 /* emailTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emailTextField.h; sourceTree = "<group>"; };
 		038545251B6359DD0053C169 /* emailTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = emailTextField.m; sourceTree = "<group>"; };
 		038545271B6359E90053C169 /* passwordTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = passwordTextField.h; sourceTree = "<group>"; };
@@ -533,8 +533,8 @@
 				03AA9A5A1B633B8100750758 /* ConnectionHandler.m */,
 				03F46FB31B69CBAD00A695B2 /* DatabaseHandler.h */,
 				03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */,
-				0312C31F1C1EAC3200BD3F88 /* CitiesAndStates.h */,
-				0312C3201C1EAC3200BD3F88 /* CitiesAndStates.m */,
+				037BED5B1CD07472003C2D38 /* CitiesAndStates.h */,
+				037BED5C1CD07472003C2D38 /* CitiesAndStates.m */,
 				0338C8EF1C1936870081F5F5 /* Controllers */,
 				0338C8EE1C19366A0081F5F5 /* Views */,
 				038F7B311B643FCC0026F679 /* Models */,
@@ -879,7 +879,7 @@
 				038545321B635B1F0053C169 /* baseTextField.m in Sources */,
 				034C92B81BF19A7B0090667C /* NSString+FontAwesome.m in Sources */,
 				034075D71B980A60008E14B2 /* AwardViewController.m in Sources */,
-				0312C3211C1EAC3200BD3F88 /* CitiesAndStates.m in Sources */,
+				037BED5D1CD07472003C2D38 /* CitiesAndStates.m in Sources */,
 				03DCFFD31B6C5A1900C451CC /* reinforcer.m in Sources */,
 				0388983D1BB3CCDA00D12468 /* StudentViewController.m in Sources */,
 				0315AB051BD5F08C00C77F2F /* StampIdentifierViewController.m in Sources */,
@@ -1036,7 +1036,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Classroom Hero/Classroom Hero.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1044,7 +1044,7 @@
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Classroomhero.Classroom-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a62713e1-1039-4c6e-81a4-e6fa97b6f7e8";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1056,7 +1056,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Classroom Hero/Classroom Hero.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1064,7 +1064,7 @@
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Classroomhero.Classroom-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a62713e1-1039-4c6e-81a4-e6fa97b6f7e8";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

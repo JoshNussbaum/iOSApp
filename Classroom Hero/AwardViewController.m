@@ -124,7 +124,7 @@ static NSInteger coinHeight = 250;
         button.exclusiveTouch = YES;
     }
     
-    CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 20);
+    CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 16);
     
     self.progressView = [[YLProgressBar alloc]initWithFrame:levelRect];
     self.progressView.hidden = YES;
@@ -164,24 +164,32 @@ static NSInteger coinHeight = 250;
     coinRect = self.aTwo.frame;
     
     self.jarButton.enabled = YES;
+    self.classJarIconButton.enabled = YES;
     self.homeButton.enabled = YES;
+    self.homeIconButton.enabled = YES;
     self.marketButton.enabled = YES;
+    self.marketIconButton.enabled = YES;
 }
 
 
 - (IBAction)homeClicked:(id)sender {
+    self.homeButton.enabled = NO;
+    self.homeIconButton.enabled = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 - (IBAction)classJarClicked:(id)sender {
     self.jarButton.enabled = NO;
+    self.classJarIconButton.enabled = NO;
+
     [self performSegueWithIdentifier:@"award_to_class_jar" sender:nil];
 }
 
 
 - (IBAction)marketClicked:(id)sender {
     self.marketButton.enabled = NO;
+    self.marketIconButton.enabled = NO;
     UIStoryboard *storyboard = self.storyboard;
     
     ClassJarViewController *cjvc = [storyboard instantiateViewControllerWithIdentifier:@"ClassJarViewController"];
@@ -227,7 +235,6 @@ static NSInteger coinHeight = 250;
             if ([resultObject objectForKey:@"stamp"] != nil){
                 self.nameLabel.hidden = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                NSLog(@"Stamp serial -> %@", stampSerial);
                 if (currentUser.serial){
                     if ([Utilities isValidClassroomHeroStamp:stampSerial]){
                         if ([stampSerial isEqualToString:currentUser.serial]){
@@ -437,7 +444,8 @@ static NSInteger coinHeight = 250;
             [self awardAllStudents];
             
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
+            [currentUser.currentClass addPoints:1];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             [Flurry logEvent:@"Reward Class" withParameters:params];
             
         }

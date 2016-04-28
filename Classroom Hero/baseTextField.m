@@ -7,6 +7,7 @@
 //
 
 #import "baseTextField.h"
+#import "Utilities.h"
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -14,4 +15,15 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
 }
-*/
+ */
+@implementation baseTextField
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+    }
+    return self;
+}
+
+@end
