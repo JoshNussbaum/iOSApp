@@ -317,10 +317,12 @@ static NSString * const classCell = @"classCell";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"class_to_register_students"]){
         RegisterStudentsViewController *vc = [segue destinationViewController];
+        flag = 2;
         [vc setFlag:1];
     }
     else if ([segue.identifier isEqualToString:@"class_to_home"]){
         HomeViewController *vc = [segue destinationViewController];
+        flag = 2;
         [vc setFlag:2];
     }
     

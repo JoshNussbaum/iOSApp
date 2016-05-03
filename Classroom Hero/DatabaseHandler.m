@@ -1035,8 +1035,10 @@ static sqlite3_stmt *statement = nil;
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
+        //        "CREATE TABLE Class (id integer primary key, name text, grade integer, schoolid integer, level integer, progress integer, nextlevel integer, currentday text);"
+
         NSString *querySQL = [NSString stringWithFormat:
-                              @"UPDATE Class SET name=\"%@\", grade=%ld WHERE id=%ld", [updatedClass getName], (long)[updatedClass getGradeNumber], (long)[updatedClass getId]];
+                              @"UPDATE Class SET name=\"%@\", grade=%ld, level=%ld, progress=%ld, nextlevel=%ld, currentday=\"%@\" WHERE id=%ld", [updatedClass getName], (long)[updatedClass getGradeNumber], (long)[updatedClass getLevel], (long)[updatedClass getProgress], (long)[updatedClass getNextLevel], [updatedClass getCurrentDate], (long)[updatedClass getId]];
         const char *update_stmt = [querySQL UTF8String];
         sqlite3_prepare_v2(database,
                            update_stmt, -1, &statement, NULL);

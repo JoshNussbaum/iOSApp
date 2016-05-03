@@ -235,26 +235,19 @@ static NSInteger coinHeight = 250;
             if ([resultObject objectForKey:@"stamp"] != nil){
                 self.nameLabel.hidden = YES;
                 NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if (currentUser.serial){
-                    if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                        if ([stampSerial isEqualToString:currentUser.serial]){
-                            [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
-                        }
-                        else{
-                            [Utilities wiggleImage:self.stampImage sound:NO];
-                            [webHandler rewardStudentWithserial:stampSerial pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
-                        }
+                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                    if ([stampSerial isEqualToString:currentUser.serial]){
+                        [webHandler rewardAllStudentsWithcid:[currentUser.currentClass getId]];
                     }
-                    else {
-                        [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];
-                        isStamping = NO;
+                    else{
+                        [Utilities wiggleImage:self.stampImage sound:NO];
+                        [webHandler rewardStudentWithserial:stampSerial pointsEarned:[currentReinforcer getValue] reinforcerId:[currentReinforcer getId] schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
                     }
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error awarding points" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];
                     isStamping = NO;
                 }
-                
             }
             else {
 

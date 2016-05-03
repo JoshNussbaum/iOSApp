@@ -138,23 +138,17 @@
             if ([resultObject objectForKey:@"stamp"] != nil){
                 stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
                 if (![stampSerial isEqualToString:currentUser.serial]){
-                    if (currentUser.serial){
-                        if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                            [Utilities wiggleImage:self.stampImage sound:NO];
-                            isStamping = YES;
-                            self.picker.hidden = YES;
-                            [webHandler getStudentBySerialwithserial:stampSerial :[currentUser.currentClass getSchoolId]];
-                            [self activityStart:@"Verifying student..."];
-                        }
-                        else{
-                            [Utilities failAnimation:self.stampImage];
-                        }
-                        
+                    if ([Utilities isValidClassroomHeroStamp:stampSerial]){
+                        [Utilities wiggleImage:self.stampImage sound:NO];
+                        isStamping = YES;
+                        self.picker.hidden = YES;
+                        [webHandler getStudentBySerialwithserial:stampSerial :[currentUser.currentClass getSchoolId]];
+                        [self activityStart:@"Verifying student..."];
                     }
-                    else {
-                        [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must register your teacher stamp first" cancel:nil otherTitles:nil tag:0 view:nil];
-                        isStamping = NO;
+                    else{
+                        [Utilities failAnimation:self.stampImage];
                     }
+         
                 }
                 else {
                     isStamping = NO;

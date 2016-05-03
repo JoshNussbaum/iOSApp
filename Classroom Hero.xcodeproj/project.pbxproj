@@ -1035,7 +1035,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Classroom Hero/Classroom Hero.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Josh  Nussbaum (B28Q4692N6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
@@ -1044,7 +1044,7 @@
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Classroomhero.Classroom-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a62713e1-1039-4c6e-81a4-e6fa97b6f7e8";
+				PROVISIONING_PROFILE = "e90b85cb-8fe4-4803-9cd1-78f83f315f88";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1055,7 +1055,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Classroom Hero/Classroom Hero.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Josh  Nussbaum (B28Q4692N6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
@@ -1064,7 +1064,7 @@
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Classroomhero.Classroom-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a62713e1-1039-4c6e-81a4-e6fa97b6f7e8";
+				PROVISIONING_PROFILE = "e90b85cb-8fe4-4803-9cd1-78f83f315f88";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

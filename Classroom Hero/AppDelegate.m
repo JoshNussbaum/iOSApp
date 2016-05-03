@@ -56,7 +56,6 @@ NSString * const StripePublishableKey = @" pk_test_0k5cvVSHQihOyTbRCUHXm9T2 ";
     }
     [[UITextField appearance] setTintColor:[Utilities CHBlueColor]];
     [Flurry startSession:@"646YZ8K3TTSHHSK43QKZ"];
-    [Flurry setDebugLogEnabled:YES];
     
     return YES;
 }
