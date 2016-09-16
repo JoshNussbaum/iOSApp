@@ -38,7 +38,7 @@
     self.appKey = snowshoe_app_key;
     self.appSecret = snowshoe_app_secret;
     
-    [Utilities makeRoundedButton:self.studentButton :[UIColor blackColor]];
+    [Utilities makeRoundedButton:self.studentButton :[Utilities CHBlueColor]];
     [self configureProgressBar];
     [self setStudentLabels];
     

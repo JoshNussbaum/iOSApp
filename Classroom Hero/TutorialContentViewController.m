@@ -7,7 +7,6 @@
 //
 
 #import "TutorialContentViewController.h"
-#import <QuartzCore/QuartzCore.h>
 #import "MBProgressHUD.h"
 #import "DatabaseHandler.h"
 #import "Utilities.h"
@@ -38,7 +37,7 @@ static int screenNumber;
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
     
-    [Utilities makeRoundedButton:self.button :[UIColor whiteColor]];
+    [Utilities makeRoundedButton:self.button :[Utilities CHBlueColor]];
     
     
     self.schoolPicker.delegate = self;
@@ -524,20 +523,14 @@ static int screenNumber;
 
 
 - (void)setFirstTextField:(NSString *)placeholder{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
-                                                                                                  }];
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:nil];
     
     self.textField1.attributedPlaceholder = str;
 }
 
 
 - (void)setSecondTextField:(NSString *)placeholder{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : [Utilities CHBlueColor],
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
-                                                                                                  }];
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:nil];
     self.textField2.attributedPlaceholder = str;
 }
 

@@ -54,7 +54,7 @@
 
     self.studentNameLabel.hidden = YES;
     self.studentPointsLabel.hidden = YES;
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
+    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
 
 }
 

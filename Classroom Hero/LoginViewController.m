@@ -49,13 +49,15 @@ NSArray *fakeStudents;
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    [Utilities makeRoundedButton:self.forgotPasswordButton :[UIColor whiteColor]];
+    [Utilities makeRoundedButton:self.forgotPasswordButton :[Utilities CHBlueColor]];
+    self.logInButton.layer.borderWidth = .6;
+    self.logInButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.createAccountButton.layer.borderWidth = .6;
+    self.createAccountButton.layer.borderColor = [UIColor whiteColor].CGColor;
+
     
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
-    
-    [Utilities setTextFieldPlaceholder:self.emailTextField :@"Email" :[Utilities CHBlueColor]];
-    [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[Utilities CHBlueColor]];
     
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];

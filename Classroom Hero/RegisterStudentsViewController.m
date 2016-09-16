@@ -35,7 +35,7 @@
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     self.appKey = snowshoe_app_key ;
     self.appSecret = snowshoe_app_secret;
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
+    self.view.backgroundColor = [UIColor whiteColor];
 
     UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];

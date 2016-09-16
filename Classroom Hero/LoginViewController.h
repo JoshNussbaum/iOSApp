@@ -28,6 +28,9 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *pricingButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *logInButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 - (IBAction)backgroundTap:(id)sender;
 

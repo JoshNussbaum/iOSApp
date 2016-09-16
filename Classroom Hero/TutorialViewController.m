@@ -50,7 +50,7 @@
     
     NSArray *buttons = @[self.startOverButton, self.skipButton, self.backButton];
     for (UIButton *button in buttons){
-        [Utilities makeRoundedButton:button :nil];
+        [Utilities makeRoundedButton:button :[Utilities CHBlueColor]];
     }
 
 }

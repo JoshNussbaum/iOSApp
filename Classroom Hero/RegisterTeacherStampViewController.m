@@ -34,7 +34,7 @@
     self.appKey = snowshoe_app_key;
     self.appSecret = snowshoe_app_secret;
     
-    [Utilities makeRoundedButton:self.unregisterStampButton :nil];
+    [Utilities makeRoundedButton:self.unregisterStampButton :[Utilities CHBlueColor]];
     
     [self setLabels];
 }

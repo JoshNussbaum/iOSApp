@@ -35,11 +35,11 @@
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
-    [Utilities setTextFieldPlaceholder:self.firstNameTextField :@"First name" :[Utilities CHGreenColor]];
-    [Utilities setTextFieldPlaceholder:self.lastNameTextField :@"Last name" :[Utilities CHGreenColor]];
-    [Utilities setTextFieldPlaceholder:self.emailTextField :@"Email" :[Utilities CHGreenColor]];
-    [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[Utilities CHGreenColor]];
-    [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[Utilities CHGreenColor]];
+//    [Utilities setTextFieldPlaceholder:self.firstNameTextField :@"First name" :[UIColor blackColor]];
+//    [Utilities setTextFieldPlaceholder:self.lastNameTextField :@"Last name" :[UIColor blackColor]];
+//    [Utilities setTextFieldPlaceholder:self.emailTextField :@"Email" :[UIColor blackColor]];
+//    [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[UIColor blackColor]];
+//    [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[UIColor blackColor]];
     
     [Utilities makeRoundedButton:self.createAccountButton :[UIColor whiteColor]];
 }

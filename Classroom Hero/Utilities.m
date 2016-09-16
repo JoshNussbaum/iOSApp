@@ -302,6 +302,7 @@ NSInteger RESET_PASSWORD = 42;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
     [[alertView textFieldAtIndex:0]setPlaceholder:input];
     [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyDone];
+    [alertView setTintColor:[Utilities CHBlueColor]];
 
     alertView.tag = tag;
     [alertView show];
@@ -325,6 +326,8 @@ NSInteger RESET_PASSWORD = 42;
     [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
     [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+
 
     for (NSInteger i = 0; i < textfields.count; i++){
         NSString *placeholder = [textfields objectAtIndex:i];
@@ -353,6 +356,8 @@ NSInteger RESET_PASSWORD = 42;
     [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
     [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+
     
     for (NSInteger i = 0; i < textfields.count; i++){
         NSString *placeholder = [textfields objectAtIndex:i];
@@ -384,6 +389,8 @@ NSInteger RESET_PASSWORD = 42;
     [alertView textFieldAtIndex:1].autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
     [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+
     
     for (NSInteger i = 0; i < textfields.count; i++){
         NSString *placeholder = [textfields objectAtIndex:i];
@@ -413,6 +420,8 @@ NSInteger RESET_PASSWORD = 42;
     [alertView textFieldAtIndex:1].autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [[alertView textFieldAtIndex:0] setDelegate:(id)view];
     [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+
     
     for (NSInteger i = 0; i < textfields.count; i++){
         NSString *placeholder = [textfields objectAtIndex:i];
@@ -461,6 +470,8 @@ NSInteger RESET_PASSWORD = 42;
         [alertView addButtonWithTitle:title];
     }
     alertView.tag = tag;
+    [alertView setTintColor:[Utilities CHBlueColor]];
+
     [alertView show];
 }
 
