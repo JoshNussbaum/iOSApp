@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface student : NSObject{
+    BOOL selected;
 
 }
 
@@ -22,6 +23,8 @@
 @property(nonatomic)NSInteger points;
 @property(nonatomic)NSInteger totalpoints;
 @property(nonatomic)BOOL checkedin;
+@property(nonatomic) BOOL selected;
+
 
 -(id) init;
 
@@ -46,6 +49,8 @@
 - (void) setProgress:(NSInteger)progress_;
 
 - (void) setCheckedIn:(BOOL)checkedIn_;
+
+- (void) setSelected:(BOOL)selected_;
 
 // Read Functions
 -(NSInteger )getId;

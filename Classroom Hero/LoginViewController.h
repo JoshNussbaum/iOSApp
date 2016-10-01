@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
 #import "DatabaseHandler.h"
-#import "SnowShoeViewController.h"
 #import "emailTextField.h"
 #import "passwordTextField.h"
 #import "user.h"
 
-@interface LoginViewController : SnowShoeViewController <ConnectionHandlerDelegate>
+@interface LoginViewController : UIViewController <ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;
 

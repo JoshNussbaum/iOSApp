@@ -41,14 +41,12 @@
     self.studentsTableView.delegate = self;
     [self.studentsTableView setBounces:NO];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
-    self.appKey = snowshoe_app_key;
-    self.appSecret = snowshoe_app_secret;
     // Check to see if it's a different day.
     if (!([[Utilities getCurrentDate] isEqualToString:[currentUser.currentClass getCurrentDate]])){
         [[DatabaseHandler getSharedInstance]updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:NO];
         [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
     }
-    
+
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
     coins = [Utilities getCoinShakeSound];
 
@@ -71,7 +69,7 @@
     else{
         [self animateTableView:YES];
     }
-    
+
 }
 
 
@@ -90,66 +88,17 @@
 }
 
 
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                isStamping = YES;
-                stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    if (![stampSerial isEqualToString:currentUser.serial]){
-                        currentStudent = [Utilities getStudentWitharray:studentsData propertyName:@"serial" searchString:stampSerial];
-                        if (currentStudent != nil){
-                            if ([currentStudent getCheckedIn]){
-                                [Utilities alertStatusWithTitle:[NSString stringWithFormat:@"%@ is already checked in", [currentStudent getFirstName]] message:nil cancel:nil otherTitles:nil tag:0 view:self];
-                                isStamping = NO;
-                            }
-                            else {
-                                [Utilities wiggleImage:self.stampImage sound:NO];
-                                [self setStudentLabels];
-                                [self checkNewDay];
-                                didManuallyCheckIn = NO;
-                                [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:YES];
-                            }
-                            
-                        }
-                        else {
-                            [Utilities failAnimation:self.stampImage];
-                            isStamping = NO;
-                        }
-                    }
-                    else {
-                        [Utilities alertStatusWithTitle:@"Attendance error" message:@"Only students can stamp this screen" cancel:nil otherTitles:nil tag:0 view:self];
-                        isStamping = NO;
-                    }
-                 
-                }
-                else{
-                    [Utilities failAnimation:self.stampImage];
-                    isStamping = NO;
-                }
-                
-            }
-        }
-    }
-    
-}
-
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
-    
+
     if (alertView.tag == 1){
         didManuallyCheckIn = YES;
         [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:NO];
     }
-    
+
     else if (alertView.tag == 2){
         didManuallyCheckIn = YES;
         [webHandler checkOutStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
@@ -167,7 +116,7 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     if ([touch.view isDescendantOfView:self.studentsTableView]) {
-        
+
         return NO;
     }
     if (self.studentsTableView.hidden == NO){
@@ -179,18 +128,18 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-    
+
     if (data == nil){
         isStamping = NO;
         [Utilities alertStatusNoConnection];
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    
+
     if ([successNumber boolValue] == YES){
         if (type == STUDENT_CHECK_IN){
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
-            
+
             if (!didManuallyCheckIn){
                 NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
                 NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
@@ -198,7 +147,7 @@
                 NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
                 NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
                 NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
-                
+
                 [currentStudent setPoints:pointsNumber.integerValue];
                 [currentStudent setLevel:levelNumber.integerValue];
                 [currentStudent setProgress:progressNumber.integerValue];
@@ -208,59 +157,59 @@
                 [currentUser.currentClass addPoints:1];
                 [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
                 [self coinAnimation];
-                
+
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-                
+
                 [Flurry logEvent:@"Check In Stamp" withParameters:params];
             }
             else {
                 [currentStudent setCheckedIn:YES];
                 [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-                
+
                 [Flurry logEvent:@"Check In Manual" withParameters:params];
             }
-            
+
             [self reloadTable];
             [self checkNewDay];
         }
-        
+
         else if (type == STUDENT_CHECK_OUT){
             [[DatabaseHandler getSharedInstance] updateStudentCheckedIn:[currentStudent getId] :NO];
             [currentStudent setCheckedIn:NO];
             isStamping = NO;
             [self reloadTable];
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
+
             [Flurry logEvent:@"Check Out" withParameters:params];
         }
-        
+
         else if (type == ALL_STUDENT_CHECK_IN || type == ALL_STUDENT_CHECK_OUT){
             BOOL checkedIn = (type == ALL_STUDENT_CHECK_IN ? YES: NO);
             [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:checkedIn];
-            
+
             [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] editClass:currentUser.currentClass];
-            
+
             studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
-            
+
             [self.studentsTableView reloadData];
             NSString *checkedInString;
             if (checkedIn) {
                 checkedInString = @"in";
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-                
+
                 [Flurry logEvent:@"Check In All" withParameters:params];
-                
+
             }
             else {
                 checkedInString = @"out";
-                
+
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-                
+
                 [Flurry logEvent:@"Check Out All" withParameters:params];
             }
-            
+
             [Utilities alertStatusWithTitle:@"Success" message:[NSString stringWithFormat:@"Checked %@ all students", checkedInString] cancel:nil otherTitles:nil tag:0 view:self];
 
         }
@@ -268,14 +217,14 @@
     else {
         NSString *errorMessage = nil;
         NSString *message = [data objectForKey:@"message"];
-        
+
         if (type == STUDENT_CHECK_IN){
             errorMessage = @"Error checking in";
         }
         else if (type == STUDENT_CHECK_OUT){
             errorMessage = @"Error checkout out";
         }
-        
+
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
         self.studentNameLabel.hidden = YES;
         self.studentPointsLabel.hidden = YES;
@@ -304,12 +253,12 @@
 
 
 - (void)checkNewDay{
-    
+
     if ([Utilities isNewDate:[currentUser.currentClass getCurrentDate]]){
         [self activityStart:@"Resetting attendance for new day"];
         [webHandler checkOutAllStudentsWithclassId:[currentUser.currentClass getId]];
         // Make web call to check out all students here. THen put this stuff in dataReady
-        
+
     }
 }
 
@@ -322,7 +271,7 @@
 
 
 - (void)checkInAllStudents{
-    
+
 }
 
 
@@ -342,7 +291,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
     [hud show:YES];
-    
+
 }
 
 
@@ -350,7 +299,7 @@
     [UIView animateWithDuration:.4
                      animations:^{
                          self.coinImage.alpha = 1.0;
-                         
+
                      }
                      completion:^(BOOL finished) {
                          double delayInSeconds = .5;
@@ -358,20 +307,20 @@
                          dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                              [UIView animateWithDuration:.5
                                               animations:^{
-                                                  
+
                                                   [self animateCoinToSack:self.coinImage];
-                                                  
+
                                               }
                                               completion:^(BOOL finished) {
                                                   self.studentPointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
                                                   [Utilities sackWiggle:self.sackImage];
                                                   AudioServicesPlaySystemSound(coins);
-                     
+
                                                   [UIView animateWithDuration:.3
                                                                    animations:^{
                                                                        [self.coinImage setFrame:coinRect];
                                                                        float progress = (float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount];
-                                                
+
                                                                    }
                                                                    completion:^(BOOL finished) {
                                                                        double delayInSeconds = 1.0;
@@ -391,10 +340,10 @@
                                               }
                               ];
                          });
-                         
+
                      }
      ];
-    
+
 }
 
 
@@ -425,7 +374,7 @@
         student *student_ = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
         [cell initializeWithStudent:student_];
     }
-    
+
     return cell;
 }
 
@@ -462,7 +411,7 @@
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
-    
+
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
@@ -473,7 +422,7 @@
     if ([self.studentsTableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.studentsTableView setSeparatorInset:UIEdgeInsetsZero];
     }
-    
+
     if ([self.studentsTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.studentsTableView setLayoutMargins:UIEdgeInsetsZero];
     }
@@ -486,7 +435,7 @@
     }
     [UIView animateWithDuration:.2
                      animations:^{
-                         
+
                          if (open){
                              self.studentsTableView.alpha = 0.0;
                          }else{

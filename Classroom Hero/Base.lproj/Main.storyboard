@@ -1071,7 +1071,6 @@
                         <outlet property="editButton" destination="f1G-uX-y8h" id="CBM-ye-5Sb"/>
                         <segue destination="U2R-yA-zyV" kind="push" identifier="class_to_home" id="mtj-Wm-nfd"/>
                         <segue destination="eMN-Zh-xzp" kind="push" identifier="class_to_add_class" id="716-vg-ubi"/>
-                        <segue destination="MR8-j5-sYB" kind="push" identifier="class_to_register_students" id="3xj-Rp-VH0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iuy-0M-pN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1411,111 +1410,6 @@
             </objects>
             <point key="canvasLocation" x="1706" y="2170"/>
         </scene>
-        <!--Student Registration-->
-        <scene sceneID="9uM-hp-ngg">
-            <objects>
-                <viewController id="MR8-j5-sYB" customClass="RegisterStudentsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Dfa-Om-1SB"/>
-                        <viewControllerLayoutGuide type="bottom" id="tgb-td-VK2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="YXx-HJ-X9s">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stamp to register" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="38" translatesAutoresizingMaskIntoConstraints="NO" id="8jW-Il-fXn">
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="8jW-Il-fXn" secondAttribute="height" multiplier="389:46" id="KtU-gr-g3T"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="42"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redapple.png" translatesAutoresizingMaskIntoConstraints="NO" id="X00-fj-A5i">
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="X00-fj-A5i" secondAttribute="height" multiplier="230:237" constant="11.814345991561197" id="kKd-mE-naZ"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="36" translatesAutoresizingMaskIntoConstraints="NO" id="zdE-pO-J9z">
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="zdE-pO-J9z" secondAttribute="height" multiplier="562:129" id="BSA-2g-hoB"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="42"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe  between  students" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="35" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hn7-4n-jm3">
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="hn7-4n-jm3" secondAttribute="height" multiplier="281:50" id="bGo-MQ-CaJ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="42"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </label>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="8jW-Il-fXn" firstAttribute="centerX" secondItem="YXx-HJ-X9s" secondAttribute="centerX" id="457-Qx-jAm"/>
-                            <constraint firstItem="X00-fj-A5i" firstAttribute="centerX" secondItem="YXx-HJ-X9s" secondAttribute="centerX" id="6aZ-DS-6Bw"/>
-                            <constraint firstItem="8jW-Il-fXn" firstAttribute="width" secondItem="YXx-HJ-X9s" secondAttribute="height" multiplier="389:1024" id="BmN-wN-i18"/>
-                            <constraint firstItem="8jW-Il-fXn" firstAttribute="top" secondItem="zdE-pO-J9z" secondAttribute="bottom" constant="21" id="HXb-Df-3WX"/>
-                            <constraint firstItem="zdE-pO-J9z" firstAttribute="top" secondItem="Dfa-Om-1SB" secondAttribute="bottom" id="Uza-pW-QOC"/>
-                            <constraint firstItem="X00-fj-A5i" firstAttribute="top" secondItem="zdE-pO-J9z" secondAttribute="bottom" constant="111" id="VPk-C8-Ygy"/>
-                            <constraint firstItem="hn7-4n-jm3" firstAttribute="width" secondItem="YXx-HJ-X9s" secondAttribute="height" multiplier="281:512" id="cPn-BA-9ht"/>
-                            <constraint firstItem="zdE-pO-J9z" firstAttribute="centerX" secondItem="YXx-HJ-X9s" secondAttribute="centerX" id="dSj-2J-R5m"/>
-                            <constraint firstItem="tgb-td-VK2" firstAttribute="top" secondItem="hn7-4n-jm3" secondAttribute="bottom" constant="74" id="oXs-Ev-Wby"/>
-                            <constraint firstItem="zdE-pO-J9z" firstAttribute="width" secondItem="YXx-HJ-X9s" secondAttribute="height" multiplier="281:512" id="qQX-aW-Jfw"/>
-                            <constraint firstItem="hn7-4n-jm3" firstAttribute="centerX" secondItem="YXx-HJ-X9s" secondAttribute="centerX" id="t5e-MT-4jA"/>
-                            <constraint firstItem="X00-fj-A5i" firstAttribute="width" secondItem="YXx-HJ-X9s" secondAttribute="height" multiplier="115:256" constant="-60" id="xuF-eS-fjs"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Student Registration" id="C7T-ec-Plb">
-                        <barButtonItem key="leftBarButtonItem" id="SR9-V9-hgN">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Zi4-J2-Nz0">
-                                <rect key="frame" x="20" y="2" width="170" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
-                                <state key="normal" title="Back">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="backButtonClicked:" destination="MR8-j5-sYB" eventType="touchUpInside" id="Qfh-5h-BbU"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="rZh-E4-6S6">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZML-Eo-Sd6">
-                                <rect key="frame" x="578" y="2" width="170" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
-                                <state key="normal" title="Continue">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="skipButtonClicked:" destination="MR8-j5-sYB" eventType="touchUpInside" id="WkF-N6-l0W"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
-                    <connections>
-                        <outlet property="classesButton" destination="Zi4-J2-Nz0" id="2Rb-Dv-qng"/>
-                        <outlet property="skipButton" destination="ZML-Eo-Sd6" id="TFQ-Yt-RCE"/>
-                        <outlet property="stampImage" destination="X00-fj-A5i" id="eZG-Su-Kuu"/>
-                        <outlet property="stampToRegisterLabel" destination="8jW-Il-fXn" id="C2m-2T-kLD"/>
-                        <outlet property="studentNameLabel" destination="zdE-pO-J9z" id="LtB-E0-tuP"/>
-                        <outlet property="swipeLabel" destination="hn7-4n-jm3" id="e0q-RK-oe4"/>
-                        <segue destination="U2R-yA-zyV" kind="push" identifier="register_students_to_home" id="hcw-Vj-VJR"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mHQ-GP-TnF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4962" y="2082"/>
-        </scene>
         <!--Students Table View Controller-->
         <scene sceneID="Q00-IN-WCw">
             <objects>
@@ -1597,7 +1491,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dCI-xW-RY9">
-                            <rect key="frame" x="231" y="7" width="307" height="30"/>
+                            <rect key="frame" x="230.5" y="7" width="307" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="38"/>
                             <state key="normal" title="Student List">
@@ -2792,6 +2686,77 @@
                                     <constraint firstItem="a68-gh-DNt" firstAttribute="centerY" secondItem="PQS-1i-Ntj" secondAttribute="centerY" id="yNh-tA-VHD"/>
                                 </constraints>
                             </view>
+                            <tableView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ebp-Z3-Goo">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ebp-Z3-Goo" secondAttribute="height" multiplier="391:875" id="JCB-9h-eXA"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddPointsTableViewCell" id="FX2-oP-paA">
+                                        <rect key="frame" x="0.0" y="28" width="391" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FX2-oP-paA" id="qZV-hs-B5w">
+                                            <frame key="frameInset" width="391" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-GG-iUV">
+                                                    <frame key="frameInset" width="383" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="22"/>
+                                                    <color key="textColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GenerateChestTableViewCell" id="2GX-QF-XkO">
+                                        <rect key="frame" x="0.0" y="72" width="391" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2GX-QF-XkO" id="hI9-Mc-0FQ">
+                                            <frame key="frameInset" width="391" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Generate Chest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRM-mH-QQy">
+                                                    <frame key="frameInset" width="383" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="22"/>
+                                                    <color key="textColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentAwardTableViewCell" id="bxL-Rb-bJJ" customClass="StudentAwardTableViewCell">
+                                        <rect key="frame" x="0.0" y="116" width="391" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bxL-Rb-bJJ" id="nCs-0h-BXo">
+                                            <frame key="frameInset" width="391" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rog-yc-c7n">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="rog-yc-c7n" secondAttribute="height" multiplier="391:56" id="DpK-Hl-Kug"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rog-yc-c7n" firstAttribute="leading" secondItem="nCs-0h-BXo" secondAttribute="leading" id="3Zo-2E-dK0"/>
+                                                <constraint firstAttribute="trailing" secondItem="rog-yc-c7n" secondAttribute="trailing" id="meA-iE-lFv"/>
+                                                <constraint firstItem="rog-yc-c7n" firstAttribute="centerY" secondItem="nCs-0h-BXo" secondAttribute="centerY" id="zSc-vz-w3e"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="studentNameLabel" destination="rog-yc-c7n" id="Lp7-l9-u6b"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="gqC-DY-3f5" id="KOs-8N-OdC"/>
+                                    <outlet property="delegate" destination="gqC-DY-3f5" id="0Af-mq-riY"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.96162405303030307" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2829,12 +2794,14 @@
                             <constraint firstItem="Ftu-FH-CgF" firstAttribute="leading" secondItem="HQm-Fh-Xba" secondAttribute="trailing" constant="-71" id="buY-rh-daQ"/>
                             <constraint firstItem="8z2-Rt-FTg" firstAttribute="top" secondItem="pvh-1z-sIM" secondAttribute="bottom" id="cIn-km-jLo"/>
                             <constraint firstItem="OjB-wd-amb" firstAttribute="centerY" secondItem="0xe-62-Iap" secondAttribute="centerY" id="ciJ-yE-fmb"/>
+                            <constraint firstItem="S2N-Ej-Bvr" firstAttribute="top" secondItem="ebp-Z3-Goo" secondAttribute="bottom" id="dYe-tY-mlS"/>
                             <constraint firstItem="HQm-Fh-Xba" firstAttribute="centerY" secondItem="Ftu-FH-CgF" secondAttribute="centerY" id="dvd-91-d5P"/>
                             <constraint firstItem="nsa-1m-N8W" firstAttribute="width" secondItem="Ucv-Q8-T7q" secondAttribute="height" multiplier="213:1024" id="eED-9v-57g"/>
                             <constraint firstItem="PLE-jT-9iA" firstAttribute="centerX" secondItem="Ucv-Q8-T7q" secondAttribute="centerX" id="f8w-Ff-pve"/>
                             <constraint firstItem="OjB-wd-amb" firstAttribute="width" secondItem="Ucv-Q8-T7q" secondAttribute="height" multiplier="35:128" id="fRV-je-HCS"/>
                             <constraint firstItem="PLE-jT-9iA" firstAttribute="width" secondItem="Ucv-Q8-T7q" secondAttribute="height" multiplier="71:128" id="fhv-C7-Jwi"/>
                             <constraint firstItem="XmI-w7-4HT" firstAttribute="leading" secondItem="OjB-wd-amb" secondAttribute="trailing" constant="-149" id="i9V-Gl-mp7"/>
+                            <constraint firstItem="ebp-Z3-Goo" firstAttribute="top" secondItem="8z2-Rt-FTg" secondAttribute="bottom" id="k5N-ab-FQV"/>
                             <constraint firstItem="UyG-bg-ziW" firstAttribute="centerX" secondItem="Ucv-Q8-T7q" secondAttribute="centerX" id="kdn-Z8-jrR"/>
                             <constraint firstItem="S2N-Ej-Bvr" firstAttribute="top" secondItem="UyG-bg-ziW" secondAttribute="bottom" constant="40" id="l70-9T-oqz"/>
                             <constraint firstItem="iwY-KV-Zpj" firstAttribute="width" secondItem="Ucv-Q8-T7q" secondAttribute="height" multiplier="15:128" id="lHl-Tb-ax0"/>
@@ -2849,6 +2816,7 @@
                             <constraint firstItem="nsa-1m-N8W" firstAttribute="top" secondItem="FgV-6t-tb4" secondAttribute="bottom" constant="8" id="vOC-7D-cJt"/>
                             <constraint firstItem="FgV-6t-tb4" firstAttribute="top" secondItem="8z2-Rt-FTg" secondAttribute="bottom" id="vta-mi-QKd"/>
                             <constraint firstItem="kBG-hb-LxP" firstAttribute="centerY" secondItem="Ucv-Q8-T7q" secondAttribute="centerY" id="xL2-FG-w4B"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ebp-Z3-Goo" secondAttribute="trailing" constant="-20" id="xej-Kp-LUh"/>
                             <constraint firstItem="5cv-9g-y2k" firstAttribute="width" secondItem="Ucv-Q8-T7q" secondAttribute="height" multiplier="35:128" id="xrO-fc-M5c"/>
                             <constraint firstItem="Ftu-FH-CgF" firstAttribute="width" secondItem="Ucv-Q8-T7q" secondAttribute="height" multiplier="35:128" id="zgn-7B-XtX"/>
                         </constraints>
@@ -2858,7 +2826,6 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="THD-2U-vjG">
-                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Item" id="9Jb-hh-ciO">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sLD-Ag-hTN">
                                 <rect key="frame" x="20" y="2" width="170" height="39"/>
@@ -2930,7 +2897,7 @@
                         <outlet property="reinforcerValue" destination="nsa-1m-N8W" id="41J-fZ-wl6"/>
                         <outlet property="sackImage" destination="iwY-KV-Zpj" id="hiy-zl-s6y"/>
                         <outlet property="stampImage" destination="0xe-62-Iap" id="qp9-lp-fdX"/>
-                        <segue destination="MR8-j5-sYB" kind="push" identifier="award_to_students" id="Zt9-YX-YdQ"/>
+                        <outlet property="studentsTableView" destination="ebp-Z3-Goo" id="XhQ-Vi-Wug"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oWq-DR-vbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3223,7 +3190,6 @@
                         <outlet property="pointsLabel" destination="tS8-qQ-35D" id="cPo-xn-tYq"/>
                         <outlet property="stepper" destination="V12-pn-duu" id="Owr-YH-lZH"/>
                         <segue destination="ZmY-0S-XHe" kind="unwind" identifier="class_jar_to_home" unwindAction="unwindToHome:" id="aOj-Kz-tTR"/>
-                        <segue destination="MR8-j5-sYB" kind="push" identifier="jar_to_students" id="5Qb-t8-igW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlV-q2-8NG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3519,7 +3485,6 @@
                         <outlet property="studentPointsLabel" destination="EJH-Fw-5zY" id="bGF-DU-f76"/>
                         <segue destination="VH0-Rb-kzW" kind="unwind" identifier="market_to_award" unwindAction="unwindToAward:" id="v4f-G7-obf"/>
                         <segue destination="VH0-Rb-kzW" kind="unwind" identifier="market_to_home" unwindAction="unwindToHome:" id="xCl-aR-7ZO"/>
-                        <segue destination="MR8-j5-sYB" kind="push" identifier="market_to_students" id="zkP-67-VRC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNw-4P-enm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3552,9 +3517,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gYe-ik-tSY"/>
-        <segue reference="0OP-ML-Sf4"/>
-        <segue reference="mtj-Wm-nfd"/>
-        <segue reference="5Qb-t8-igW"/>
+        <segue reference="SR2-9x-ZVn"/>
+        <segue reference="bHb-Tt-ENY"/>
     </inferredMetricsTieBreakers>
 </document>

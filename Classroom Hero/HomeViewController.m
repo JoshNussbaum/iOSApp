@@ -22,7 +22,6 @@
 
 @interface HomeViewController (){
     user *currentUser;
-    NSInteger flag;
     NSArray *statsViews;
 }
 
@@ -32,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.title  = @"Home Screen";
     currentUser = [user getInstance];
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
@@ -40,7 +39,7 @@
     self.classNameLabel.text = [currentUser.currentClass getName];
     self.schoolNameLabel.text = [[DatabaseHandler getSharedInstance] getSchoolName:[currentUser.currentClass getSchoolId]];
     [self configureProgressBars];
-    
+
     NSArray *buttons = @[self.classesButton, self.attendanceButton];
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
@@ -50,13 +49,13 @@
     for (UIButton *button in menuButtons){
         button.exclusiveTouch = YES;
     }
-    
+
     NSArray *statsViews = @[self.classAvgLevelView, self.classAvgPointsView, self.classTotalStampsView];
-    
+
     for (UIView *view in statsViews){
         [view.layer setCornerRadius:30.0f];
     }
-    
+
 }
 
 
@@ -65,10 +64,10 @@
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
     self.teacherNameLabel.text = name;
     classjar *jar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
-    
+
     if (jar != nil){
         [self.jarProgressBar setProgress:((float)[jar getProgress] / (float)[jar getTotal]) animated:YES ];
-        
+
     }
     else {
         [self.jarProgressBar setProgress:0.0f animated:YES ];
@@ -77,7 +76,7 @@
     [self.classProgressBar setProgress:(float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel] animated:YES];
 
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
-    
+
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
     NSInteger totalStamps = 0;
     NSInteger partialProgress = 0;
@@ -132,7 +131,7 @@
     ClassJarViewController *cjvc = [storyboard instantiateViewControllerWithIdentifier:@"ClassJarViewController"];
     [self.navigationController pushViewController:avc animated:NO];
     [self.navigationController pushViewController:cjvc animated:NO];
-    
+
 }
 
 
@@ -150,13 +149,13 @@
 
 - (void)configureProgressBars{
     self.classLevelLabel.text = [NSString stringWithFormat:@"Class  Level:  %ld", [currentUser.currentClass getLevel]];
-    
+
     BOOL customized = NO;
     [self.classProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
     [self.classProgressBar setProgressBarWidth:(5.0f)];
     [self.classProgressBar  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.classProgressBar setBackgroundColor:[UIColor clearColor]];
-    
+
     [self.classProgressBar  setHintViewSpacing:(customized ? 10.0f : 0)];
     [self.classProgressBar  setHintViewBackgroundColor:[UIColor clearColor]];
     [self.classProgressBar  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
@@ -164,12 +163,12 @@
     [self.classProgressBar  setHintTextGenerationBlock:(customized ? ^NSString *(CGFloat progress) {
         return [NSString stringWithFormat:@"%.0f / 255", progress * 255];
     } : nil)];
-    
+
     [self.jarProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
     [self.jarProgressBar setProgressBarWidth:(5.0f)];
     [self.jarProgressBar  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.jarProgressBar setBackgroundColor:[UIColor clearColor]];
-    
+
     [self.jarProgressBar  setHintViewSpacing:(customized ? 10.0f : 0)];
     [self.jarProgressBar  setHintViewBackgroundColor:[UIColor clearColor]];
     [self.jarProgressBar  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
@@ -183,19 +182,14 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"home_to_tutorial"]){
         TutorialViewController *vc = [segue destinationViewController];
-        [vc setFlag:flag];
+        [vc setFlag:2];
     }
-    
+
 }
 
 
 - (IBAction)unwindToHome:(UIStoryboardSegue *)unwindSegue {
-    
-}
 
-
-- (void)setFlag:(NSInteger)flag_{
-    flag = flag_;
 }
 
 

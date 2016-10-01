@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SnowShoeViewController.h"
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "ConnectionHandler.h"
 #import "YLProgressBar.h"
 
 
-@interface AwardViewController : SnowShoeViewController <UIPickerViewDataSource, UIPickerViewDelegate, ConnectionHandlerDelegate>
+@interface AwardViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate, ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerValue;
@@ -49,6 +48,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *classJarIconButton;
 @property (strong, nonatomic) IBOutlet UIButton *marketIconButton;
 
+@property (weak, nonatomic) IBOutlet UITableView *studentsTableView;
 
 - (IBAction)addReinforcerClicked:(id)sender;
 - (IBAction)editReinforcerClicked:(id)sender;

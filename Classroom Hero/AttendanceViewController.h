@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SnowShoeViewController.h"
 #import "ConnectionHandler.h"
 
-@interface AttendanceViewController : SnowShoeViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, ConnectionHandlerDelegate>
+@interface AttendanceViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, ConnectionHandlerDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;

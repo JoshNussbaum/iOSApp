@@ -40,9 +40,6 @@ NSArray *fakeStudents;
     [currentUser reset];
     
     isStamping = NO;
-    self.appKey = snowshoe_app_key;
-    self.appSecret = snowshoe_app_secret;
-
 }
 
 
@@ -143,40 +140,6 @@ NSArray *fakeStudents;
 }
 
 
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (!currentUser.serial && !isStamping){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                isStamping = YES;
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    [Utilities wiggleImage:self.stampImage sound:NO];
-                    if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
-                        [Utilities wiggleImage:self.stampImage sound:NO];
-                        [self activityStart:@"Logging in..."];
-                        [[DatabaseHandler getSharedInstance] resetDatabase];
-                        [webHandler stampToLogin:stampSerial];
-                    }
-                    else {
-                        [Utilities failAnimation:self.stampImage];
-                        isStamping = NO;
-                    }
-                }
-                else{
-                    [Utilities failAnimation:self.stampImage];
-                    isStamping = NO;
-                }
-                
-            }
-        }
-    }
-    
-}
-
-
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
     [hud hide:YES];
     if (data == nil){
@@ -222,7 +185,6 @@ NSArray *fakeStudents;
     currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
     currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
     currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];
-    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance] getNumberOfUnregisteredStudentsInClass:currentUser.id];
     
     self.passwordTextField.text=@"";
     
@@ -230,13 +192,7 @@ NSArray *fakeStudents;
         [self performSegueWithIdentifier:@"login_to_tutorial" sender:nil];
     }
     else {
-        if (unregisteredStudents == 0){
-            [self performSegueWithIdentifier:@"login_to_class" sender:nil];
-            
-        }
-        else {
-            [self performSegueWithIdentifier:@"login_to_register_students" sender:self];
-        }
+        [self performSegueWithIdentifier:@"login_to_class" sender:nil];
     }
     [hud hide:YES];
 }

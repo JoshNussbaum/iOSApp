@@ -11,7 +11,6 @@
 #import "ClassTableViewCell.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
-#import "RegisterStudentsViewController.h"
 #import "HomeViewController.h"
 #import "Flurry.h"
 
@@ -37,11 +36,11 @@ static NSString * const classCell = @"classCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
     [self.tableView setBounces:NO];
-    
-    
+
+
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     currentUser = [user getInstance];
     classes = [[DatabaseHandler getSharedInstance] getClasses];
@@ -52,7 +51,7 @@ static NSString * const classCell = @"classCell";
         NSNumber *classId = [NSNumber numberWithInteger:[class_ getId]];
         [classIds addObject:classId];
     }
-    
+
     studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
 
 }
@@ -67,14 +66,14 @@ static NSString * const classCell = @"classCell";
     if (flag == 2){
         currentUser = [user getInstance];
         classes = [[DatabaseHandler getSharedInstance] getClasses];
-        
+
         NSMutableArray *classIds = [[NSMutableArray alloc]init];
         for (class *class_ in classes){
             NSNumber *classId = [NSNumber numberWithInteger:[class_ getId]];
             [classIds addObject:classId];
         }
-        
-        
+
+
         studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
         [self.tableView reloadData];
     }
@@ -108,7 +107,7 @@ static NSString * const classCell = @"classCell";
         NSString *newClassName = [alertView textFieldAtIndex:0].text;
         NSString *newClassGrade = [alertView textFieldAtIndex:1].text;
         NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
-        
+
         if (!errorMessage){
             NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
             if (!gradeErrorMessage){
@@ -141,7 +140,7 @@ static NSString * const classCell = @"classCell";
         [Utilities alertStatusNoConnection];
         return;
     }
-    
+
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     NSString *message = [data objectForKey:@"message"];
     if([successNumber boolValue] == YES)
@@ -151,29 +150,29 @@ static NSString * const classCell = @"classCell";
             [classes replaceObjectAtIndex:index withObject:tmpClass];
             [self.tableView reloadData];
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
+
             [Flurry logEvent:@"Edit Class" withParameters:params];
         }
-        
+
         else if (type == DELETE_CLASS){
             [[DatabaseHandler getSharedInstance]deleteClass:[tmpClass getId]];
             NSInteger row = index + 1;
-            
+
             [classes removeObjectAtIndex:index];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             NSArray *indexPaths = @[indexPath];
             [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            
+
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
-            
+
             [Flurry logEvent:@"Edit Class" withParameters:params];
-            
+
         }
     }
     else {
         NSString *message = [data objectForKey:@"message"];
         NSString *errorMessage;
-        
+
         if (type == EDIT_CLASS){
             errorMessage = @"Error editing class";
         }
@@ -222,7 +221,7 @@ static NSString * const classCell = @"classCell";
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
-    
+
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
@@ -236,14 +235,14 @@ static NSString * const classCell = @"classCell";
     }
     else {
         ClassTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:classCell forIndexPath:indexPath];
-        
+
         if (classes.count > 0){
             class *class_ = [classes objectAtIndex:indexPath.row-1];
             NSString *schoolName = [[DatabaseHandler getSharedInstance] getSchoolName:[class_ getSchoolId]];
             NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInteger:[class_ getId]]]integerValue];
             [cell initializeCellWithClass:class_ :classCount :schoolName];
         }
-        
+
         return cell;
     }
 }
@@ -264,7 +263,7 @@ static NSString * const classCell = @"classCell";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         tmpClass = [self getClassByIndexPath:indexPath];
-        
+
         [Utilities alertStatusWithTitle:@"Confirm Delete" message:[NSString stringWithFormat:@"Are you sure you want to delete %@?", [tmpClass getName]]  cancel:@"Cancel"  otherTitles:@[@"Delete"] tag:2 view:self];
     }
 }
@@ -280,23 +279,14 @@ static NSString * const classCell = @"classCell";
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             class *selectedClass = [self getClassByIndexPath:indexPath];
             currentUser.currentClass = selectedClass;
-            NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance] getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
-            if (unregisteredStudents == 0){
-                flag = 2;
-                [self performSegueWithIdentifier:@"class_to_home" sender:nil];
-
-            }
-            else {
-                flag = 2;
-                [self performSegueWithIdentifier:@"class_to_register_students" sender:nil];
-            }
+            [self performSegueWithIdentifier:@"class_to_home" sender:nil];
         }
     }
     else {
         class *selectedClass = [self getClassByIndexPath:indexPath];
         NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
         [Utilities editTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
-        
+
     }
 }
 
@@ -305,32 +295,15 @@ static NSString * const classCell = @"classCell";
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     }
-    
+
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
 
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"class_to_register_students"]){
-        RegisterStudentsViewController *vc = [segue destinationViewController];
-        flag = 2;
-        [vc setFlag:1];
-    }
-    else if ([segue.identifier isEqualToString:@"class_to_home"]){
-        HomeViewController *vc = [segue destinationViewController];
-        flag = 2;
-        [vc setFlag:2];
-    }
-    
-}
-
-
 - (IBAction)unwindToClassTableView:(UIStoryboardSegue *)unwindSegue{
-    
+
 }
 
 

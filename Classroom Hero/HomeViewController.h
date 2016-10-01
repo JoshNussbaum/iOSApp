@@ -49,8 +49,6 @@
 
 
 
-- (void)setFlag:(NSInteger)flag_;
-
 - (IBAction)classesClicked:(id)sender;
 
 - (IBAction)awardClicked:(id)sender;
