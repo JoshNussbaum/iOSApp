@@ -7,6 +7,7 @@
 //
 
 #import "EditTeacherViewController.h"
+#import "TutorialViewController.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "Flurry.h"
@@ -112,6 +113,10 @@
     [self performSegueWithIdentifier:@"edit_teacher_to_manage_stamp" sender:self];
 }
 
+- (IBAction)tutorialClicked:(id)sender {
+    [self performSegueWithIdentifier:@"settings_to_tutorial" sender:self];
+}
+
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == [alertView cancelButtonIndex]) {
@@ -130,6 +135,14 @@
 
 - (IBAction)backClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"settings_to_tutorial"]){
+        TutorialViewController *vc = [segue destinationViewController];
+        [vc setFlag:2];
+    }
+    
 }
 
 

@@ -41,7 +41,7 @@
     self.schoolNameLabel.text = [[DatabaseHandler getSharedInstance] getSchoolName:[currentUser.currentClass getSchoolId]];
     [self configureProgressBars];
     
-    NSArray *buttons = @[self.settingsButton, self.classesButton, self.settingsButton, self.attendanceButton];
+    NSArray *buttons = @[self.classesButton, self.attendanceButton];
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
         button.exclusiveTouch = YES;
@@ -77,14 +77,6 @@
     [self.classProgressBar setProgress:(float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel] animated:YES];
 
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
-    
-    if (!currentUser.serial || unregisteredStudents > 0){
-        [[JSBadgeView appearance] setBadgeBackgroundColor:UIColor.blackColor];
-        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.settingsView alignment:JSBadgeViewAlignmentTopRight];
-        badgeView.badgeText = @"!";
-        badgeView.badgeTextColor=[UIColor whiteColor];
-        badgeView.badgeBackgroundColor = [UIColor redColor];
-    }
     
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
     NSInteger totalStamps = 0;
@@ -189,8 +181,8 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"home_to_settings"]){
-        SettingsViewController *vc = [segue destinationViewController];
+    if ([segue.identifier isEqualToString:@"home_to_tutorial"]){
+        TutorialViewController *vc = [segue destinationViewController];
         [vc setFlag:flag];
     }
     

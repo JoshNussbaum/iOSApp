@@ -58,11 +58,5 @@
 - (IBAction)unregisterAllStampsClicked:(id)sender;
 
 
-
-
-
-
-
-
 - (void)setFlag:(NSInteger)flag_;
 @end

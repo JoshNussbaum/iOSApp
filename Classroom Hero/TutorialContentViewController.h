@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SnowShoeViewController.h"
 #import "ConnectionHandler.h"
 
-@interface TutorialContentViewController : SnowShoeViewController <UIPickerViewDataSource, UIPickerViewDelegate,  ConnectionHandlerDelegate>
+@interface TutorialContentViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate,  ConnectionHandlerDelegate>
 
 @property NSMutableArray *schoolData;
 @property NSMutableArray *classData;

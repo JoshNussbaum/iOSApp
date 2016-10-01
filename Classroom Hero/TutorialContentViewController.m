@@ -20,7 +20,6 @@ static int screenNumber;
     NSInteger index;
     MBProgressHUD *hud;
     ConnectionHandler *webHandler;
-    NSString *serial;
     BOOL isStamping;
 }
 
@@ -44,8 +43,6 @@ static int screenNumber;
     
     self.titleLabel.text = self.titleText;
     
-    self.appKey = snowshoe_app_key ;
-    self.appSecret = snowshoe_app_secret;
     self.arrowLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:25];
     self.arrowLabel.text = [NSString fontAwesomeIconStringForEnum:FAArrowRight];
     
@@ -94,39 +91,6 @@ static int screenNumber;
     
 }
 
-
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (self.pageIndex == 6 && !isStamping && !currentUser.serial){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            isStamping = YES;
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    if (![[DatabaseHandler getSharedInstance]isSerialRegistered:stampSerial]){
-                        serial = stampSerial;
-                        [self activityStart:@"Registering stamp..."];
-                        [webHandler registerStamp:currentUser.id :stampSerial :[currentUser.currentClass getId]];
-                    }
-                    else {
-                        [Utilities failAnimation:self.stampImage];
-                        
-                    }
-                }
-                else{
-                    [Utilities failAnimation:self.stampImage];
-                    isStamping = NO;
-                }
-            }
-            else {
-                isStamping = NO;
-            }
-        }
-    }
-}
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -355,14 +319,6 @@ static int screenNumber;
             
             [Flurry logEvent:@"Add Jar - Tutorial" withParameters:params];
         }
-        else if (type == REGISTER_STAMP){
-            currentUser.serial = serial;
-            isStamping = NO;
-            [self performSegueWithIdentifier:@"tutorial_to_class" sender:nil];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Register Teacher Stamp - Tutorial" withParameters:params];
-        }
         
         else{
             [Utilities alertStatusNoConnection];
@@ -386,9 +342,6 @@ static int screenNumber;
         }
         else if (type == ADD_JAR){
             errorMessage = @"Error adding jar";
-        }
-        else if (type == REGISTER_STAMP){
-            errorMessage = @"Error registering stamp";
         }
         isStamping = NO;
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];

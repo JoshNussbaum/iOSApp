@@ -21,15 +21,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (flag == 1){
-        _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  create  a  class  and  register  your  teacher  stamp", @"Create  a  class  for  the  selected  school", @"Add  students  to  your  selected  class", @"Add  reinforcers  to  categorize  points  awarded  to  students  in  your  selected  class (e.g.  Homework on time)", @"Add  market  place  items  for  students  to  spend  points  on (e.g.  Early to recess)", @"Add  a  jar  that  only  your  teacher  stamp  can  add  points  to  for  a  class-wide  reward (e.g.  Pizza party)", @"Stamp  the  apple  to  register  your  teacher  stamp  and  begin  your  journey  with  Classroom  Hero!"];
+        _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  get  started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Add  reinforcers  to  categorize  points  awarded  to  students  in  your  selected  class (e.g.  Homework on time)", @"Add  market  place  items  for  students  to  spend  points  on (e.g.  Early to recess)", @"Add  a  jar  that  only  your  teacher  stamp  can  add  points  to  for  a  class-wide  reward (e.g.  Pizza party)", @"Click  continue  to  begin  your  adventure  with  Classroom  Hero!"];
         self.backButton.enabled = YES;
         self.backButton.hidden = NO;
 
     }
     if (flag == 2){
-        [self.backButton setTitle:@"Settings" forState:UIControlStateNormal];
+        [self.backButton setTitle:@"Back" forState:UIControlStateNormal];
         [self.skipButton setHidden:YES];
-        _pageTitles = @[@"Swipe  left  to  create  a  class  and  register  a  teacher  stamp", @"Create  a  class  for  the  selected  school", @"Add  students  to  your  selected  class", @"Add  reinforcers  to  categorize  points  awarded  to  students  in  your  selected  class (e.g.  Homework on time)", @"Add  market  place  items  for  students  to  spend  points  on (e.g.  Early to recess)", @"Add  a  jar  that  only  your  teacher  stamp  can  add  points  to  for  a  class-wide  reward (e.g.  Pizza party)", @"Stamp  the  apple  to  register  your  teacher  stamp"];
+        _pageTitles = @[@"Swipe  left  to  create  a  class  and  register  a  teacher  stamp", @"Create  a  class  for  the  selected  school", @"Add  students  to  your  selected  class", @"Add  reinforcers  to  categorize  points  awarded  to  students  in  your  selected  class (e.g.  Homework on time)", @"Add  market  place  items  for  students  to  spend  points  on (e.g.  Early to recess)", @"Add  a  jar  that  only  your  teacher  stamp  can  add  points  to  for  a  class-wide  reward (e.g.  Pizza party)", @"Click  back  to  return  to  the  settings  screen"];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
     currentUser = [user getInstance];

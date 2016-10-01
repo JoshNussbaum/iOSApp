@@ -28,5 +28,6 @@
 - (IBAction)backClicked:(id)sender;
 - (IBAction)resetPasswordClicked:(id)sender;
 - (IBAction)manageStampClicked:(id)sender;
+- (IBAction)tutorialClicked:(id)sender;
 
 @end
