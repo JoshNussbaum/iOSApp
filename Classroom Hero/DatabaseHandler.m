@@ -474,7 +474,6 @@ static sqlite3_stmt *statement = nil;
                     NSInteger checkedIn = sqlite3_column_int(statement, 9);
 
                     student *ss = [[student alloc] initWithid:id firstName:firstName lastName:lastName serial:serial lvl:level progress:progress lvlupamount:levelUpAmount points:points totalpoints:totalPoints checkedin:(checkedIn==1 ? YES : NO)];
-                    ss.selected = NO;
                     [allStudents addObject:ss];
 
                     sqlite3_finalize(statement);

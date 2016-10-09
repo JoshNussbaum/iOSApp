@@ -68,6 +68,7 @@
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     currentClassJar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
+    [Utilities makeRoundedButton:self.addPointsButton :[UIColor blueColor]];
     
     if (!currentClassJar){
         self.addJarButton.hidden = NO;
@@ -84,9 +85,6 @@
         self.pointsLabel.hidden = NO;
     }
     [self displayClassJar];
-    self.appKey = snowshoe_app_key ;
-    self.appSecret = snowshoe_app_secret;
-    
     
     NSArray *menuButtons = @[self.homeButton, self.awardButton, self.jarButton, self.marketButton];
     for (UIButton *button in menuButtons){
@@ -99,8 +97,6 @@
     fail = [Utilities getFailSound];
     jarFull = [Utilities getAchievementSound];
     
-    coinRect = self.coinImage.frame;
-    corkRect = self.corkImage.frame;
     
     currentPoints = 1;
 
@@ -156,7 +152,13 @@
     self.homeIconButton.enabled = YES;
     self.marketButton.enabled = YES;
     self.marketIconButton.enabled = YES;
-
+    
+    coinRect = self.coinImage.frame;
+    corkRect = self.corkImage.frame;
+    
+    CGRect rect = self.coinImage.frame;
+    
+    NSLog(@"Here is the coinRect -> %f, %f, %d, %d", coinRect.origin.x, coinRect.origin.y, coinRect.size.width, coinRect.size.height);
 }
 
 
@@ -218,33 +220,9 @@
 }
 
 
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping && currentClassJar){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            isStamping = YES;
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                self.stepper.enabled = NO;
-                
-                if ([stampSerial isEqualToString:currentUser.serial] && ([currentClassJar getTotal] != 0))
-                {
-                    [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
-                }
-                else {
-                    AudioServicesPlaySystemSound(fail);
-                    self.stepper.enabled = YES;
-                    isStamping = NO;
-                }
-              
-            }
-            else {
-                isStamping = NO;
-            }
-        }
-    }
+- (IBAction)addPointsClicked:(id)sender{
+    isStamping = YES;
+    [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
 }
 
 

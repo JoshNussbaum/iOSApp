@@ -1491,7 +1491,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dCI-xW-RY9">
-                            <rect key="frame" x="230.5" y="7" width="307" height="30"/>
+                            <rect key="frame" x="231" y="7" width="307" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="38"/>
                             <state key="normal" title="Student List">
@@ -2340,7 +2340,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AmA-ZV-xBJ">
-                            <rect key="frame" x="231" y="7" width="307" height="30"/>
+                            <rect key="frame" x="230.5" y="7" width="307" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="36"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2823,6 +2823,7 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="qeI-AU-sWu" appends="YES" id="Pb8-0M-rhA"/>
                             <outletCollection property="gestureRecognizers" destination="Bdh-NG-UAR" appends="YES" id="nDx-n5-ceb"/>
+                            <outletCollection property="gestureRecognizers" destination="C9T-rI-ALP" appends="YES" id="KRy-89-aLN"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="THD-2U-vjG">
@@ -2901,6 +2902,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oWq-DR-vbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="C9T-rI-ALP">
+                    <connections>
+                        <outlet property="delegate" destination="gqC-DY-3f5" id="vYq-Ma-GTu"/>
+                    </connections>
+                </tapGestureRecognizer>
                 <exit id="wum-BM-i6p" userLabel="Exit" sceneMemberID="exit"/>
                 <swipeGestureRecognizer direction="left" id="qeI-AU-sWu">
                     <connections>
@@ -3093,16 +3099,28 @@
                                     <constraint firstAttribute="width" secondItem="3PS-Y6-N4D" secondAttribute="height" multiplier="424:605" id="9Hl-8o-cYQ"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Yp-zx-Qig">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5Yp-zx-Qig" secondAttribute="height" multiplier="257:69" id="mGz-et-R27"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="44"/>
+                                <state key="normal" title="Add Points"/>
+                                <connections>
+                                    <action selector="addPointsClicked:" destination="mAJ-bY-EoJ" eventType="touchUpInside" id="TaU-O8-6jL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96162405299999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="alx-ai-xsj" firstAttribute="top" secondItem="pZp-hH-HXR" secondAttribute="bottom" id="0Cg-8z-8AW"/>
                             <constraint firstItem="3PS-Y6-N4D" firstAttribute="centerX" secondItem="mkn-FW-6Y9" secondAttribute="centerX" id="0ij-ex-cIJ"/>
+                            <constraint firstItem="5Yp-zx-Qig" firstAttribute="centerY" secondItem="3PS-Y6-N4D" secondAttribute="centerY" id="1gw-mG-lw4"/>
                             <constraint firstItem="PKY-bC-m3E" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="77:128" id="8uB-HY-lGF"/>
                             <constraint firstItem="bWL-xq-Wxn" firstAttribute="centerX" secondItem="mkn-FW-6Y9" secondAttribute="centerX" id="Bb5-8a-UNf"/>
                             <constraint firstItem="tS8-qQ-35D" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="105:1024" id="DnZ-bR-ZvC"/>
                             <constraint firstItem="alx-ai-xsj" firstAttribute="leading" secondItem="mkn-FW-6Y9" secondAttribute="leading" id="Epf-eh-k7g"/>
+                            <constraint firstItem="5Yp-zx-Qig" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="257:1024" id="Eq3-XT-kaS"/>
                             <constraint firstItem="tHH-bU-t83" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="175:1024" id="HJr-6a-9cw"/>
                             <constraint firstItem="3PS-Y6-N4D" firstAttribute="top" secondItem="alx-ai-xsj" secondAttribute="bottom" constant="146" id="JDh-7r-2YZ"/>
                             <constraint firstItem="76n-cq-yjV" firstAttribute="width" secondItem="3PS-Y6-N4D" secondAttribute="height" multiplier="307:395" constant="143.78481012658227" id="Kdd-HN-yO4"/>
@@ -3120,6 +3138,7 @@
                             <constraint firstItem="PKY-bC-m3E" firstAttribute="centerX" secondItem="3PS-Y6-N4D" secondAttribute="centerX" id="neW-uX-k7E"/>
                             <constraint firstItem="d52-HW-iar" firstAttribute="top" secondItem="V12-pn-duu" secondAttribute="bottom" constant="8" id="o5S-x4-fZW"/>
                             <constraint firstItem="V12-pn-duu" firstAttribute="top" secondItem="tS8-qQ-35D" secondAttribute="bottom" constant="8" id="rwk-Ue-1X7"/>
+                            <constraint firstItem="5Yp-zx-Qig" firstAttribute="centerX" secondItem="3PS-Y6-N4D" secondAttribute="centerX" id="wJ1-I2-ZjE"/>
                             <constraint firstItem="3PS-Y6-N4D" firstAttribute="top" secondItem="PKY-bC-m3E" secondAttribute="bottom" constant="-462" id="yae-E5-X6j"/>
                         </constraints>
                         <connections>
@@ -3174,6 +3193,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
                         <outlet property="addJarButton" destination="M6b-RD-dgz" id="URe-qP-SKb"/>
+                        <outlet property="addPointsButton" destination="5Yp-zx-Qig" id="bEK-tx-Kyn"/>
                         <outlet property="awardButton" destination="qEX-Od-gs2" id="9KJ-z1-JW0"/>
                         <outlet property="awardIconButton" destination="gjP-kd-xTm" id="iIU-IK-6lo"/>
                         <outlet property="classJarName" destination="bWL-xq-Wxn" id="1TK-mn-bIa"/>

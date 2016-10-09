@@ -69,6 +69,8 @@ static NSInteger coinHeight = 250;
 
     BOOL showingStudents;
     NSMutableDictionary *selectedStudents;
+    
+    BOOL chestTappable;
 
 }
 
@@ -210,7 +212,6 @@ static NSInteger coinHeight = 250;
     }
 
 }
-
 
 
 - (IBAction)addReinforcerClicked:(id)sender {
@@ -388,7 +389,7 @@ static NSInteger coinHeight = 250;
             }
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-            [self displayStudent];
+            
             tmpPoints = ([currentStudent getPoints] - pointsAwarded);
             [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
 
@@ -478,31 +479,51 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (void)displayStudent{
+- (void)displayStudent:(BOOL)chest{
     self.categoryPicker.hidden = YES;
-    NSString *studentName = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
-    self.nameLabel.text = studentName;
-    self.nameLabel.hidden = NO;
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)([currentStudent getPoints] - pointsAwarded)];
-    self.pointsLabel.hidden = NO;
-
-    NSInteger level;
-    if ([currentStudent getProgress] == 0){
-        level = [currentStudent getLvl] - 1;
-        self.progressView.progress = (float)([currentStudent getLvlUpAmount]-3)/(float)([currentStudent getLvlUpAmount]-2);
+    NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+    student *selectedStudent = [selectedStudents objectForKey:studentId];
+    NSInteger studentsCount = selectedStudents.count;
+    NSString *studentString;
+    if (studentsCount > 1) {
+        studentString = [NSString stringWithFormat:@"%@ and %ld others", [selectedStudent getFirstName], (long)studentsCount];
+        self.levelLabel.hidden = YES;
+        self.sackImage.hidden = NO;
+        self.progressView.hidden = YES;
+        self.pointsLabel.hidden = YES;
     }
     else {
-        level = [currentStudent getLvl];
-        self.progressView.progress = (float)(([currentStudent getProgress]-1) / (float)[currentStudent getLvlUpAmount]);
+        studentString = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
+        self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)([currentStudent getPoints] - pointsAwarded)];
+        self.pointsLabel.hidden = NO;
+        
+        NSInteger level;
+        if ([currentStudent getProgress] == 0 && [currentStudent getLvl] != 1){
+            level = [currentStudent getLvl] - 1;
+            self.progressView.progress = (float)([currentStudent getLvlUpAmount]-3)/(float)([currentStudent getLvlUpAmount]-2);
+        }
+        else {
+            level = [currentStudent getLvl];
+            self.progressView.progress = (float)(([currentStudent getProgress]-1) / (float)[currentStudent getLvlUpAmount]);
+            
+        }
+        self.progressView.hidden = NO;
+        NSString * levelDisplay = [NSString stringWithFormat:@"Level %ld", (long)level];
+        
+        self.levelLabel.text=levelDisplay;
+        self.levelLabel.hidden = NO;
+        
+        self.sackImage.hidden = NO;
+    }
+    
+    self.nameLabel.text = studentString;
+    
+    self.nameLabel.hidden = NO;
+    if (chest) {
+        self.reinforcerLabel.text = @"Tap to unlock chest";
 
     }
-    self.progressView.hidden = NO;
-    NSString * levelDisplay = [NSString stringWithFormat:@"Level %ld", (long)level];
-
-    self.levelLabel.text=levelDisplay;
-    self.levelLabel.hidden = NO;
-
-    self.sackImage.hidden = NO;
+    
 }
 
 
@@ -918,6 +939,18 @@ static NSInteger coinHeight = 250;
 }
 
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isDescendantOfView:self.studentsTableView]) {
+        
+        return NO;
+    }
+    if (self.studentsTableView.hidden == NO){
+        [self animateTableView:YES];
+    }
+    return YES;
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -952,39 +985,86 @@ static NSInteger coinHeight = 250;
     else {
         StudentAwardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentAwardTableViewCell" forIndexPath:indexPath];
         student *student_ = [studentsData objectAtIndex:indexPath.row - 2];
-        [cell initializeWithStudent:student_ selected:student_.selected];
+        NSNumber *studentId = [NSNumber numberWithInteger:[student_ getId]];
+        BOOL selected;
+        if ([selectedStudents objectForKey:studentId]){
+            selected = YES;
+        }
+        else {
+            selected = NO;
+        }
+        [cell initializeWithStudent:student_ selected:selected];
         return cell;
-
     }
+}
 
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    studentIndex = indexPath.row - 2;
+    currentStudent = [studentsData objectAtIndex:studentIndex];
+    NSNumber *studentId = [NSNumber numberWithInteger:[currentStudent getId]];
+    
+    if ([selectedStudents objectForKey:studentId]){
+        [selectedStudents removeObjectForKey:studentId];
+    }
+    NSLog(@"Here are the selected students -> %@", selectedStudents);
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (studentsData.count > 0){
-        
-        if (indexPath.row == 0){
-            // if there are no students selected, then alert that 
-            NSLog(@"Add points");
-        }
-        else if (indexPath.row == 1){
-            NSLog(@"Generate chest");
-        }
-        
-        else {
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            studentIndex = indexPath.row - 2;
-            currentStudent = [studentsData objectAtIndex:studentIndex];
-            BOOL selected = currentStudent.selected;
-            if (selected){
-                
-            }
-            else{
-                
-            }
-        }
+    
+    if (indexPath.row == 0){
+        // Add Points Manually
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        if (selectedStudents.count > 0){
+            NSInteger reinforcerId = [currentReinforcer getId];
+            NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+            NSInteger pointsEarned = [currentReinforcer getValue];
+            NSInteger studentCount = selectedStudents.count;
+            student *selectedStudent = [selectedStudents objectForKey:studentId];
 
+            currentStudent = selectedStudent;
+            [self animateTableView:YES];
+            [self displayStudent:NO];
+            
+            // make dat web call ehre
+        }
+        else {
+            [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
+        }
     }
+    else if (indexPath.row == 1){
+        // Generate Chest
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        if (selectedStudents.count > 0){
+            // this is generate chest, so make the animation,
+            // set a bool, close the tableview, then generate the chest
+            // on tap, check for that bool and then open that
+            chestTappable = YES;
+            NSInteger studentCount = selectedStudents.count;
+            
+            NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+            student *selectedStudent = [selectedStudents objectForKey:studentId];
+            currentStudent = selectedStudent;
+            [self animateTableView:YES];
+            [self displayStudent:YES];
+            
+            // get all the student IDs and make the web call
+            
+        }
+        else {
+            [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
+        }
+    }
+    
+    else {
+        studentIndex = indexPath.row - 2;
+        student *selectedStudent = [studentsData objectAtIndex:studentIndex];
+        NSNumber *studentId = [NSNumber numberWithInteger:[selectedStudent getId]];
+        [selectedStudents setObject:selectedStudent forKey:studentId];
+        
+    }
+    NSLog(@"Here are the selected students -> %@", selectedStudents);
 }
 
 
@@ -1018,6 +1098,7 @@ static NSInteger coinHeight = 250;
                      }
      ];
 }
+
 
 
 

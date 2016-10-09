@@ -13,7 +13,7 @@
 #import "YLProgressBar.h"
 
 
-@interface AwardViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate, ConnectionHandlerDelegate>
+@interface AwardViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *reinforcerValue;

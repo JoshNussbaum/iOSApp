@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
-#import "SnowShoeViewController.h"
 
-@interface ClassJarViewController : SnowShoeViewController <ConnectionHandlerDelegate>
+@interface ClassJarViewController : UIViewController <ConnectionHandlerDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UILabel *classJarName;
@@ -31,6 +30,8 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *editJarButton;
 
+@property (strong, nonatomic) IBOutlet UIButton *addPointsButton;
+
 // Menu
 @property (strong, nonatomic) IBOutlet UIButton *homeButton;
 @property (strong, nonatomic) IBOutlet UIButton *awardButton;
@@ -49,6 +50,8 @@
 - (IBAction)addJarClicked:(id)sender;
 
 - (IBAction)studentListClicked:(id)sender;
+
+- (IBAction)addPointsClicked:(id)sender;
 
 - (IBAction)homeClicked:(id)sender;
 
