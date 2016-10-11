@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
-#import "SnowShoeViewController.h"
 
-@interface MarketViewController : SnowShoeViewController <ConnectionHandlerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface MarketViewController : UIViewController <ConnectionHandlerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *itemNameLabel;
 
@@ -20,12 +19,12 @@
 
 @property (strong, nonatomic) IBOutlet UIPickerView *picker;
 
-@property (strong, nonatomic) IBOutlet UIImageView *sackImage;
-
 @property (strong, nonatomic) IBOutlet UILabel *studentPointsLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *studentNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 
+@property (strong, nonatomic) IBOutlet UIButton *purchaseButton;
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 
 // Menu
@@ -38,6 +37,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *awardIconButton;
 @property (strong, nonatomic) IBOutlet UIButton *homeIconButton;
 
+@property (strong, nonatomic) IBOutlet UITableView *studentsTableView;
+
+@property (strong, nonatomic) IBOutlet UIView *divider1;
+@property (strong, nonatomic) IBOutlet UIView *divider2;
 
 - (IBAction)homeClicked:(id)sender;
 
@@ -50,5 +53,7 @@
 - (IBAction)editItemClicked:(id)sender;
 
 - (IBAction)studentListClicked:(id)sender;
+
+- (IBAction)purchaseClicked:(id)sender;
 
 @end

@@ -68,7 +68,7 @@
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     currentClassJar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
-    [Utilities makeRoundedButton:self.addPointsButton :[UIColor blueColor]];
+    [Utilities makeRoundedButton:self.addPointsButton :nil];
     
     if (!currentClassJar){
         self.addJarButton.hidden = NO;
@@ -96,7 +96,6 @@
     coinShake = [Utilities getCoinShakeSound];
     fail = [Utilities getFailSound];
     jarFull = [Utilities getAchievementSound];
-    
     
     currentPoints = 1;
 

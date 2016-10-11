@@ -2340,7 +2340,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AmA-ZV-xBJ">
-                            <rect key="frame" x="230.5" y="7" width="307" height="30"/>
+                            <rect key="frame" x="231" y="7" width="307" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="36"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2842,12 +2842,12 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WEj-SA-9nd">
-                            <rect key="frame" x="231" y="2" width="307" height="40"/>
+                            <rect key="frame" x="231" y="-5" width="307" height="54"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="36"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <state key="normal" title="Student List">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Student Selector">
+                                <color key="titleColor" red="1" green="0.98455631699080515" blue="0.77841421072317107" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
@@ -3100,11 +3100,14 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Yp-zx-Qig">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="5Yp-zx-Qig" secondAttribute="height" multiplier="257:69" id="mGz-et-R27"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="44"/>
-                                <state key="normal" title="Add Points"/>
+                                <state key="normal" title="Add Points">
+                                    <color key="titleColor" red="0.48783856959999999" green="0.64913119239999995" blue="0.45113934220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="addPointsClicked:" destination="mAJ-bY-EoJ" eventType="touchUpInside" id="TaU-O8-6jL"/>
                                 </connections>
@@ -3239,6 +3242,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xq9-Kh-Dgl">
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Xq9-Kh-Dgl" secondAttribute="height" multiplier="192:1" id="U72-bz-X6d"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="itemsIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="uZo-2Q-U9Q">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="uZo-2Q-U9Q" secondAttribute="height" multiplier="1:1" id="KYW-mX-XNm"/>
+                                </constraints>
+                            </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 Points" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKs-0R-6wk">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rKs-0R-6wk" secondAttribute="height" multiplier="736:63" id="YgD-Sk-Gxj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="34"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tCB-YH-9LY">
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIg-bK-VZU">
@@ -3374,24 +3397,18 @@
                                     <constraint firstAttribute="width" secondItem="sR8-yY-mCI" secondAttribute="height" multiplier="384:125" id="8bJ-mF-cTr"/>
                                 </constraints>
                             </pickerView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coinsack.png" translatesAutoresizingMaskIntoConstraints="NO" id="fIL-18-748">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="srx-XP-7TZ">
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="fIL-18-748" secondAttribute="height" multiplier="1:1" id="wEx-hV-fRR"/>
+                                    <constraint firstAttribute="width" secondItem="srx-XP-7TZ" secondAttribute="height" multiplier="192:1" id="Oml-y4-gmI"/>
                                 </constraints>
-                            </imageView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJH-Fw-5zY">
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="EJH-Fw-5zY" secondAttribute="height" multiplier="137:44" id="iZx-gG-tBv"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="38"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptO-mf-fG9">
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="ptO-mf-fG9" secondAttribute="height" multiplier="368:43" id="eIo-Jh-JRY"/>
+                                    <constraint firstAttribute="width" secondItem="ptO-mf-fG9" secondAttribute="height" multiplier="736:105" id="RmJ-N1-2Ld"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="40"/>
+                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="34"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -3403,47 +3420,115 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="itemsIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="gMz-PF-wDn">
+                            <tableView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TKh-UE-yJg">
+                                <frame key="frameInset" minX="745" minY="149" width="23" height="875"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentAwardTableViewCell" id="ezP-GM-MyV" customClass="StudentAwardTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="23" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ezP-GM-MyV" id="9xq-44-rif">
+                                            <frame key="frameInset" width="23" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjP-0U-JFP">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="HjP-0U-JFP" secondAttribute="height" multiplier="391:56" id="39P-Ck-ETg"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="HjP-0U-JFP" firstAttribute="leading" secondItem="9xq-44-rif" secondAttribute="leading" id="5pV-MB-2dA"/>
+                                                <constraint firstAttribute="trailing" secondItem="HjP-0U-JFP" secondAttribute="trailing" id="BHk-Hn-naG"/>
+                                                <constraint firstItem="HjP-0U-JFP" firstAttribute="centerY" secondItem="9xq-44-rif" secondAttribute="centerY" id="Fgx-RR-i8D"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="studentNameLabel" destination="HjP-0U-JFP" id="g2U-Xm-a0n"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Kyg-8S-AT0" id="sKc-Ee-5sk"/>
+                                    <outlet property="delegate" destination="Kyg-8S-AT0" id="Ec8-nO-gN2"/>
+                                </connections>
+                            </tableView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transaction Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sp4-gt-a3w">
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="gMz-PF-wDn" secondAttribute="height" multiplier="1:1" id="bYO-IP-kpy"/>
+                                    <constraint firstAttribute="width" secondItem="Sp4-gt-a3w" secondAttribute="height" multiplier="92:15" id="lM1-8X-bt8"/>
                                 </constraints>
-                            </imageView>
+                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="34"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zp2-br-Tkz">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zp2-br-Tkz" secondAttribute="height" multiplier="257:69" id="zmR-Oa-nah"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="44"/>
+                                <state key="normal" title="Purchase">
+                                    <color key="titleColor" red="0.48783856959999999" green="0.64913119239999995" blue="0.45113934220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="addPointsClicked:" destination="mAJ-bY-EoJ" eventType="touchUpInside" id="rkb-bM-kRX"/>
+                                    <action selector="purchaseClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="hDG-mJ-ywR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95859375000000002" green="1" blue="0.9605581688" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="EJH-Fw-5zY" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="137:1024" id="1Yg-zN-uaB"/>
                             <constraint firstAttribute="trailing" secondItem="sR8-yY-mCI" secondAttribute="trailing" id="1uz-bE-PBY"/>
-                            <constraint firstItem="fIL-18-748" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="2Gc-wJ-qWh"/>
-                            <constraint firstItem="ptO-mf-fG9" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="23:32" id="4Xq-c7-3kv"/>
+                            <constraint firstItem="uZo-2Q-U9Q" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="105:256" id="4ka-ah-uDl"/>
+                            <constraint firstItem="srx-XP-7TZ" firstAttribute="top" secondItem="zp2-br-Tkz" secondAttribute="bottom" constant="22" id="6BV-GW-iXY"/>
+                            <constraint firstItem="uZo-2Q-U9Q" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="9Do-i0-TMA"/>
                             <constraint firstItem="tCB-YH-9LY" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="3:4" id="9LI-Si-lD7"/>
+                            <constraint firstItem="srx-XP-7TZ" firstAttribute="leading" secondItem="xbq-R1-ZNM" secondAttribute="leading" id="A1i-27-V8h"/>
+                            <constraint firstItem="srx-XP-7TZ" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="Bdl-NB-Qkc"/>
                             <constraint firstItem="tCB-YH-9LY" firstAttribute="top" secondItem="2eJ-41-5MN" secondAttribute="bottom" id="E9k-yA-CsX"/>
+                            <constraint firstAttribute="trailing" secondItem="srx-XP-7TZ" secondAttribute="trailing" id="JCR-vx-g4I"/>
+                            <constraint firstItem="Sp4-gt-a3w" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="23:32" id="KJj-hb-6gy"/>
                             <constraint firstItem="OVn-Xq-Zuh" firstAttribute="top" secondItem="sR8-yY-mCI" secondAttribute="bottom" id="LS0-GY-Nac"/>
-                            <constraint firstItem="fIL-18-748" firstAttribute="top" secondItem="EJH-Fw-5zY" secondAttribute="bottom" constant="15" id="Lah-6a-bXp"/>
+                            <constraint firstItem="zp2-br-Tkz" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="M6w-qa-l0j"/>
+                            <constraint firstItem="rKs-0R-6wk" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="23:32" id="MTT-EK-a1z"/>
+                            <constraint firstItem="ptO-mf-fG9" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="NBs-kU-F0f"/>
+                            <constraint firstAttribute="trailing" secondItem="Xq9-Kh-Dgl" secondAttribute="trailing" id="NCq-NO-3JW"/>
                             <constraint firstItem="z6f-ic-UP8" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="NcG-5B-r9S"/>
-                            <constraint firstItem="OVn-Xq-Zuh" firstAttribute="top" secondItem="fIL-18-748" secondAttribute="bottom" constant="8" id="Wbf-dB-1u2"/>
+                            <constraint firstItem="uZo-2Q-U9Q" firstAttribute="top" secondItem="bNY-Tl-vWz" secondAttribute="bottom" constant="8" id="RQc-4J-NCK"/>
                             <constraint firstAttribute="trailing" secondItem="tCB-YH-9LY" secondAttribute="trailing" id="WzO-Sm-oYI"/>
+                            <constraint firstItem="Sp4-gt-a3w" firstAttribute="top" secondItem="rKs-0R-6wk" secondAttribute="bottom" constant="-1" id="XPY-gE-ce0"/>
+                            <constraint firstAttribute="trailing" secondItem="TKh-UE-yJg" secondAttribute="trailing" id="XwR-PC-DM0"/>
                             <constraint firstItem="tCB-YH-9LY" firstAttribute="leading" secondItem="xbq-R1-ZNM" secondAttribute="leading" id="Zuz-9p-Jyp"/>
                             <constraint firstItem="bNY-Tl-vWz" firstAttribute="top" secondItem="z6f-ic-UP8" secondAttribute="bottom" constant="5" id="ZzZ-X4-GIg"/>
                             <constraint firstItem="sR8-yY-mCI" firstAttribute="leading" secondItem="xbq-R1-ZNM" secondAttribute="leading" id="arg-C7-sjM"/>
-                            <constraint firstItem="EJH-Fw-5zY" firstAttribute="top" secondItem="ptO-mf-fG9" secondAttribute="bottom" constant="8" id="bAq-U4-epU"/>
+                            <constraint firstItem="TKh-UE-yJg" firstAttribute="top" secondItem="tCB-YH-9LY" secondAttribute="bottom" id="bMj-c8-wsV"/>
+                            <constraint firstItem="TKh-UE-yJg" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="391:1024" id="cX2-Je-tZq"/>
                             <constraint firstItem="bNY-Tl-vWz" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="33:256" id="cZj-PT-o1x"/>
-                            <constraint firstItem="gMz-PF-wDn" firstAttribute="top" secondItem="bNY-Tl-vWz" secondAttribute="bottom" constant="27" id="cnz-0r-SZv"/>
+                            <constraint firstItem="ptO-mf-fG9" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="23:32" id="cga-DU-4fI"/>
                             <constraint firstItem="bNY-Tl-vWz" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="eOt-KT-Gir"/>
-                            <constraint firstItem="gMz-PF-wDn" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="gWM-Xi-Ve3"/>
+                            <constraint firstItem="ptO-mf-fG9" firstAttribute="top" secondItem="Xq9-Kh-Dgl" secondAttribute="bottom" constant="8" id="eTX-nv-cwf"/>
+                            <constraint firstItem="srx-XP-7TZ" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="3:4" id="fT7-tn-6qQ"/>
                             <constraint firstItem="z6f-ic-UP8" firstAttribute="top" secondItem="tCB-YH-9LY" secondAttribute="bottom" id="gnl-Or-3u2"/>
-                            <constraint firstItem="fIL-18-748" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="5:64" id="i8P-sV-CIk"/>
-                            <constraint firstItem="gMz-PF-wDn" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="95:256" id="liT-8X-Gcu"/>
-                            <constraint firstItem="ptO-mf-fG9" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="rWX-Lz-a8m"/>
+                            <constraint firstItem="Sp4-gt-a3w" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="gr1-PR-r6s"/>
+                            <constraint firstItem="Xq9-Kh-Dgl" firstAttribute="top" secondItem="bNY-Tl-vWz" secondAttribute="bottom" constant="8" id="iXe-T1-MmT"/>
+                            <constraint firstItem="Xq9-Kh-Dgl" firstAttribute="leading" secondItem="xbq-R1-ZNM" secondAttribute="leading" id="oqO-b3-oxc"/>
+                            <constraint firstItem="zp2-br-Tkz" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="257:1024" id="p8l-s3-gfc"/>
+                            <constraint firstItem="rKs-0R-6wk" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="pq0-yu-MpH"/>
+                            <constraint firstItem="sR8-yY-mCI" firstAttribute="top" secondItem="srx-XP-7TZ" secondAttribute="bottom" constant="8" id="t4y-ge-0y6"/>
+                            <constraint firstItem="Xq9-Kh-Dgl" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="3:4" id="vot-Er-4N4"/>
                             <constraint firstItem="z6f-ic-UP8" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="23:32" id="wXo-v0-VIu"/>
-                            <constraint firstItem="EJH-Fw-5zY" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="y1p-3I-phS"/>
+                            <constraint firstItem="OVn-Xq-Zuh" firstAttribute="top" secondItem="TKh-UE-yJg" secondAttribute="bottom" id="xa2-gz-fag"/>
+                            <constraint firstItem="rKs-0R-6wk" firstAttribute="top" secondItem="ptO-mf-fG9" secondAttribute="bottom" constant="8" id="zXB-va-V5c"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="JLX-xs-2M4" appends="YES" id="5st-cP-jnu"/>
+                            <outletCollection property="gestureRecognizers" destination="djq-qd-Tdi" appends="YES" id="zAc-6i-6Db"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="qau-OE-sNc">
-                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" id="sLn-DI-gFn">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cDc-RY-Xa8">
                                 <rect key="frame" x="20" y="7" width="170" height="30"/>
@@ -3459,12 +3544,12 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UvD-he-CPE">
-                            <rect key="frame" x="231" y="-1" width="307" height="46"/>
+                            <rect key="frame" x="231" y="-5" width="307" height="54"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="36"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <state key="normal" title="Student List">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Student Selector">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
@@ -3491,6 +3576,9 @@
                         <outlet property="awardButton" destination="HIg-bK-VZU" id="8E6-on-vgd"/>
                         <outlet property="awardIconButton" destination="HaJ-te-yRy" id="Zvu-VM-WML"/>
                         <outlet property="classJarIconButton" destination="muV-80-c4x" id="GAZ-kU-VJi"/>
+                        <outlet property="descriptionLabel" destination="Sp4-gt-a3w" id="2dx-Fv-BGh"/>
+                        <outlet property="divider1" destination="Xq9-Kh-Dgl" id="242-so-05x"/>
+                        <outlet property="divider2" destination="srx-XP-7TZ" id="lT5-Zl-geD"/>
                         <outlet property="editItemButton" destination="5dl-Iz-pMg" id="u2q-fJ-bgS"/>
                         <outlet property="homeButton" destination="1yu-Ru-tBy" id="oDP-bQ-1xb"/>
                         <outlet property="homeIconButton" destination="ecD-Dm-Xv5" id="hv5-rV-8jf"/>
@@ -3499,15 +3587,21 @@
                         <outlet property="marketButton" destination="AAH-ji-Npp" id="Urd-bN-dDo"/>
                         <outlet property="picker" destination="sR8-yY-mCI" id="yan-sm-JrI"/>
                         <outlet property="pointsLabel" destination="bNY-Tl-vWz" id="CWK-eB-qAq"/>
-                        <outlet property="sackImage" destination="fIL-18-748" id="6CV-d8-bCZ"/>
-                        <outlet property="stampImage" destination="gMz-PF-wDn" id="tSa-yW-cpJ"/>
+                        <outlet property="purchaseButton" destination="zp2-br-Tkz" id="cg8-SQ-a74"/>
+                        <outlet property="stampImage" destination="uZo-2Q-U9Q" id="jU1-8J-MLl"/>
                         <outlet property="studentNameLabel" destination="ptO-mf-fG9" id="qsi-DR-hi9"/>
-                        <outlet property="studentPointsLabel" destination="EJH-Fw-5zY" id="bGF-DU-f76"/>
+                        <outlet property="studentPointsLabel" destination="rKs-0R-6wk" id="ofi-vS-Dzz"/>
+                        <outlet property="studentsTableView" destination="TKh-UE-yJg" id="1jx-aN-Ejt"/>
                         <segue destination="VH0-Rb-kzW" kind="unwind" identifier="market_to_award" unwindAction="unwindToAward:" id="v4f-G7-obf"/>
                         <segue destination="VH0-Rb-kzW" kind="unwind" identifier="market_to_home" unwindAction="unwindToHome:" id="xCl-aR-7ZO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNw-4P-enm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="djq-qd-Tdi">
+                    <connections>
+                        <outlet property="delegate" destination="Kyg-8S-AT0" id="uVg-xD-gaJ"/>
+                    </connections>
+                </tapGestureRecognizer>
                 <exit id="VH0-Rb-kzW" userLabel="Exit" sceneMemberID="exit"/>
                 <swipeGestureRecognizer direction="right" id="JLX-xs-2M4">
                     <connections>

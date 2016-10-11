@@ -11,13 +11,14 @@
 #import "DatabaseHandler.h"
 #import "MBProgressHUD.h"
 #import "StudentsTableViewController.h"
+#import "StudentAwardTableViewCell.h"
 #import "Flurry.h"
 
 @interface MarketViewController (){
     user *currentUser;
     
     ConnectionHandler *webHandler;
-    
+    NSMutableArray *studentsData;
     NSMutableArray *itemsData;
     NSInteger index;
     item *currentItem;
@@ -32,7 +33,9 @@
     
     MBProgressHUD *hud;
     
-    bool isStamping;
+    BOOL showingStudents;
+    BOOL studentSelected;
+    NSInteger studentIndex;
 }
 
 @end
@@ -41,15 +44,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    showingStudents = NO;
+    studentSelected = NO;
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
     currentUser = [user getInstance];
     
-    self.appKey = snowshoe_app_key;
-    self.appSecret = snowshoe_app_secret;
-    
     itemsData = [[DatabaseHandler getSharedInstance ] getItems:[currentUser.currentClass getId]];
+    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
     
     self.picker.dataSource = self;
     self.picker.delegate = self;
@@ -109,13 +111,16 @@
 
 
 - (IBAction)studentListClicked:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.2;
-    transition.type = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
-    [self.navigationController pushViewController:stvc animated:NO];
+    if (self.studentsTableView.hidden){
+        [self animateTableView:NO];
+    }
+    else{
+        [self animateTableView:YES];
+    }
+    
+}
+
+- (IBAction)purchaseClicked:(id)sender {
 }
 
 
@@ -129,37 +134,8 @@
 }
 
 
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping && (itemsData.count > 0)){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                if (![stampSerial isEqualToString:currentUser.serial]){
-                    if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                        [Utilities wiggleImage:self.stampImage sound:NO];
-                        isStamping = YES;
-                        self.picker.hidden = YES;
-                        [webHandler getStudentBySerialwithserial:stampSerial :[currentUser.currentClass getSchoolId]];
-                        [self activityStart:@"Verifying student..."];
-                    }
-                    else{
-                        [Utilities failAnimation:self.stampImage];
-                    }
-         
-                }
-                else {
-                    isStamping = NO;
-                }
-            }
-            else{
-                [Utilities failAnimation:self.stampImage];
-                isStamping = NO;
-            }
-        }
-    }
+- (IBAction)itemImageClicked:(id)sender {
+    
 }
 
 
@@ -233,10 +209,8 @@
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
-        isStamping = NO;
         self.studentNameLabel.hidden = YES;
         self.studentPointsLabel.hidden = YES;
-        self.sackImage.hidden = YES;
         self.picker.hidden = NO;
         return;
     }
@@ -396,7 +370,6 @@
             errorMessage = @"Error identifying student";
         }
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
-        isStamping = NO;
         [hud hide:YES];
     }
     
@@ -404,23 +377,44 @@
 
 
 - (void)displayStudent{
+    
+    self.divider1.hidden = NO;
+    self.divider2.hidden = NO;
     self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.studentNameLabel.hidden = NO;
-    NSString *scoreDisplay = [NSString stringWithFormat:@"%ld", (long)[currentStudent getPoints]];
-    self.studentPointsLabel.text = scoreDisplay;
-    self.studentPointsLabel.hidden = NO;
-    self.sackImage.hidden = NO;
+    [self setScore];
+}
+
+
+- (void)setScore{
+    NSInteger difference = [currentStudent getPoints] - [currentItem getCost];
+    NSString *scoreDisplay;
+    if (difference >= 0) {
+        scoreDisplay = [NSString stringWithFormat:@"You will have %ld - %ld = %ld remaining points%ld", (long)[currentStudent getPoints], (long)[currentItem getCost], (long)difference];
+        self.purchaseButton.hidden = NO;
+        // highlight the stamp image
+        
+    }
+    else {
+        scoreDisplay = [NSString stringWithFormat:@"You must earn %ld more points before purchasing this item", difference*(-1)];
+        self.purchaseButton.hidden = YES;
+    }
+    
+    self.descriptionLabel.text = scoreDisplay;
 }
 
 
 - (void)hideStudent{
     self.studentNameLabel.hidden = YES;
     self.studentPointsLabel.hidden = YES;
-    self.sackImage.hidden = YES;
     self.studentNameLabel.text= @"";
     self.studentPointsLabel.text = @"";
-    self.picker.hidden = NO;
-    isStamping = NO;
+    self.descriptionLabel.text = @"";
+    self.descriptionLabel.hidden = YES;
+    self.divider1.hidden = YES;
+    self.divider2.hidden = YES;
+    
+    
 }
 
 
@@ -446,7 +440,6 @@
     
     NSString *scoreDisplay = [NSString stringWithFormat:@"%ld", (long)score];
     self.studentPointsLabel.text = scoreDisplay;
-    self.sackImage.hidden = NO;
     self.studentPointsLabel.hidden = NO;
     AudioServicesPlaySystemSound(coinSound);
     
@@ -455,10 +448,8 @@
     double delayInSeconds = 2.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        isStamping = NO;
         self.studentNameLabel.hidden=YES;
         self.studentPointsLabel.hidden = YES;
-        self.sackImage.hidden = YES;
         self.picker.hidden = NO;
         
     });
@@ -484,15 +475,19 @@
     [hud hide:YES];
     [Utilities alertStatusWithTitle:title message:message cancel:nil otherTitles:nil tag:0 view:nil];
     self.picker.hidden = NO;
-    isStamping = NO;
 }
 
 
 - (void)setItemLabel {
     index = [self.picker selectedRowInComponent:0];
     currentItem = [itemsData objectAtIndex:index];
-    self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
-    self.pointsLabel.text=[NSString stringWithFormat:@"%li", (long)[currentItem getCost]];
+    if (studentSelected){
+        [self setScore];
+    }
+    else {
+        self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
+        self.pointsLabel.text=[NSString stringWithFormat:@"%li", (long)[currentItem getCost]];
+    }
 }
 
 
@@ -501,6 +496,83 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
     [hud show:YES];
+}
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isDescendantOfView:self.studentsTableView]) {
+        
+        return NO;
+    }
+    if (self.studentsTableView.hidden == NO){
+        [self animateTableView:YES];
+    }
+    return YES;
+}
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return studentsData.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    StudentAwardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentAwardTableViewCell" forIndexPath:indexPath];
+    student *student_ = [studentsData objectAtIndex:indexPath.row];
+    NSNumber *studentId = [NSNumber numberWithInteger:[student_ getId]];
+    [cell initializeWithStudent:student_ selected:NO];
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    studentIndex = indexPath.row;
+    student *selectedStudent = [studentsData objectAtIndex:studentIndex];
+    NSNumber *studentId = [NSNumber numberWithInteger:[selectedStudent getId]];
+    studentSelected = YES;
+    [self animateTableView:NO];
+    [self displayStudent];
+}
+
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+
+- (void)animateTableView:(BOOL)open{
+    if (!open){
+        self.studentsTableView.alpha = 0.0;
+    }
+    [UIView animateWithDuration:.2
+                     animations:^{
+                         
+                         if (open){
+                             self.studentsTableView.alpha = 0.0;
+                         }else{
+                             self.studentsTableView.alpha = 1.0;
+                             self.studentsTableView.hidden = open;
+                         }
+                     }
+                     completion:^(BOOL finished) {
+                         self.studentsTableView.hidden = open;
+                     }
+     ];
 }
 
 
@@ -526,7 +598,6 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     [self setItemLabel];
 }
-
 
 
 @end

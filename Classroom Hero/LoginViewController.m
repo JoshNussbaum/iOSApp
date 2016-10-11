@@ -45,7 +45,8 @@ NSArray *fakeStudents;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
+    self.emailTextField.text = @"josh@test.com";
+    self.passwordTextField.text = @"josh";
     [Utilities makeRoundedButton:self.forgotPasswordButton :[Utilities CHBlueColor]];
     self.logInButton.layer.borderWidth = .6;
     self.logInButton.layer.borderColor = [UIColor whiteColor].CGColor;
