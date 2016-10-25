@@ -589,6 +589,7 @@ static NSInteger coinHeight = 250;
         self.sackImage.hidden = NO;
         self.progressView.hidden = YES;
         self.pointsLabel.hidden = YES;
+
     }
     else {
         studentString = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
@@ -618,9 +619,15 @@ static NSInteger coinHeight = 250;
     
     self.nameLabel.hidden = NO;
     if (chest) {
-        self.reinforcerLabel.text = @"Tap to unlock chest";
-        self.pointsLabel.text = [currentReinforcer getName];
-        self.pointsLabel.hidden = NO;
+
+        if (studentsCount == 1){
+            self.pointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
+            self.pointsLabel.hidden = NO;
+        }
+        else {
+            self.pointsLabel.hidden = YES;
+        }
+
         double delayInSeconds = .5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -1298,6 +1305,11 @@ static NSInteger coinHeight = 250;
         student *selectedStudent = [studentsData objectForKey:studentId];
 
         [selectedStudents setObject:selectedStudent forKey:studentId];
+        
+        if ([selectedStudents count] > 0 && chestTappable){
+            [self displayStudent:chestTappable];
+        }
+
         
     }
     [self printSelectedStudents];

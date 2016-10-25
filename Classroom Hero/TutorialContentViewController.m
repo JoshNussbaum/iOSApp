@@ -373,7 +373,6 @@ static int screenNumber;
     }
     if (picker){
         self.arrowLabel.hidden = NO;
-        NSMutableAttributedString *titleString;
         self.stampImage.hidden = YES;
         self.schoolPicker.hidden = NO;
         if (self.pageIndex != 1){
@@ -387,8 +386,6 @@ static int screenNumber;
             }
             else {
                 self.pickerLabel.text = @"Class Selector";
-                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select your class"];
-                [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
                 self.pickerLabel.hidden = NO;
                 for (int i=0; i <self.classData.count; i++){
                     if ([[self.classData objectAtIndex:i] getId] == [currentUser.currentClass getId]){
@@ -412,16 +409,12 @@ static int screenNumber;
             }
             else {
                 self.pickerLabel.text = @"School Selector";
-                titleString = [[NSMutableAttributedString alloc]initWithString:@" Select your school"];
-                [titleString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:(NSUnderlinePatternDot|NSUnderlineStyleSingle)] range:NSMakeRange(0, [titleString length])];
                 self.pickerLabel.hidden = NO;
                 
                 self.classNameLabel.hidden = YES;
             }
             
         }
-        self.pickerLabel.text = [titleString string];
-        
     }
     else {
         self.arrowLabel.hidden = NO;

@@ -76,58 +76,13 @@
 }
 
 
-- (IBAction)orderStampsClicked:(id)sender {
-    [self performSegueWithIdentifier:@"settings_to_order_stamps" sender:self];
-}
-
-
 - (IBAction)classTutorialClicked:(id)sender {
     [self performSegueWithIdentifier:@"settings_to_tutorial" sender:self];
 }
 
 
-- (IBAction)registerStudentsClicked:(id)sender {
-    if (flag == 1){
-        if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
-            [self performSegueWithIdentifier:@"settings_unwind_to_register_students" sender:self];
-        }
-    }
-    else if (flag == 2){
-        if ([[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]] != 0){
-            [self performSegueWithIdentifier:@"settings_to_register_students" sender:nil];
-        }
-    }
-}
-
-
-- (IBAction)registerTeacherStampClicked:(id)sender {
-    [self performSegueWithIdentifier:@"settings_to_register_teacher_stamp" sender:self];
-}
-
-
 - (IBAction)backClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-- (IBAction)studentListClicked:(id)sender {
-    UIStoryboard *storyboard = self.storyboard;
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.2;
-    transition.type = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
-    [self.navigationController pushViewController:stvc animated:NO];
-}
-
-
-- (IBAction)stampIdentifierClicked:(id)sender {
-    [self performSegueWithIdentifier:@"settings_to_stamp_identifier" sender:self];
-}
-
-
-- (IBAction)unregisterAllStampsClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"Confirm unregister" message:@"Unregister all stamps from your class?" cancel:@"Cancel" otherTitles:@[@"Unregister"] tag:1 view:self];
 }
 
 

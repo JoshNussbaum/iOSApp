@@ -17,12 +17,7 @@
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
     self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
-    if ([[currentStudent getSerial] isEqualToString:@""]){
-        self.backgroundColor = [Utilities CHRedColor];
-    }
-    else {
-        self.backgroundColor = [UIColor clearColor];
-    }
+    self.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

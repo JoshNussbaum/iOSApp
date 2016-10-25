@@ -233,7 +233,7 @@
 - (void)setStudentLabels{
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Coins", (long)[currentStudent getPoints]];
+    self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Points", (long)[currentStudent getPoints]];
     NSString *name = [currentStudent getSerial];
     if (![[currentStudent getSerial] isEqualToString:@""]){
         self.stampIdLabel.text = [currentStudent getSerial];

@@ -252,7 +252,7 @@
             [self.picker reloadAllComponents];
             
             self.itemNameLabel.text = newItemName;
-            self.pointsLabel.text = [NSString stringWithFormat:@"%@", newItemCost];
+            self.pointsLabel.text = [NSString stringWithFormat:@"%@ points", newItemCost];
             [self setScore];
             [hud hide:YES];
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
@@ -411,12 +411,12 @@
     self.picker.hidden = YES;
     self.editItemButton.hidden = YES;
     self.pointsLabel.text = @"";
-    self.stampImage.hidden = YES;
+    self.stampImage.hidden = NO;
 }
 
 
 - (void)displayStudent{
-    self.stampImage.hidden = NO;
+    self.stampImage.hidden = YES;
     self.divider1.hidden = NO;
     self.divider2.hidden = NO;
     self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
@@ -428,13 +428,9 @@
 - (void)setScore{
     if (currentStudent != nil && currentItem != nil){
         NSInteger difference = [currentStudent getPoints] - [currentItem getCost];
-        if (difference >= 0) {
-            self.purchaseButton.hidden = NO;
-            
-        }
-        else {
-            self.purchaseButton.hidden = YES;
-        }
+        self.purchaseButton.hidden = NO;
+        self.sackImage.hidden = NO;
+        
         self.studentPointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
         self.studentPointsLabel.hidden = NO;
     }
@@ -451,6 +447,8 @@
     self.divider1.hidden = YES;
     self.divider2.hidden = YES;
     self.purchaseButton.hidden = YES;
+    self.sackImage.hidden = YES;
+    self.stampImage.hidden = NO;
     
 }
 
@@ -486,7 +484,6 @@
     double delayInSeconds = 1.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        self.sackImage.hidden = YES;
         isBuying = NO;
         [self setScore];
     });
@@ -578,7 +575,6 @@
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             
             [self hideStudent];
-            self.stampImage.hidden = YES;
             [self animateTableView:YES];
             
         }
@@ -586,7 +582,6 @@
             currentStudent = selectedStudent;
             NSNumber *studentId = [NSNumber numberWithInteger:[selectedStudent getId]];
             studentSelected = YES;
-            //[self animateTableView:NO];
             [self displayStudent];
             [self animateTableView:YES];
         }
