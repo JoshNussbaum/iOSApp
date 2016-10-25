@@ -158,7 +158,7 @@
 
     [self.classProgressBar  setHintViewSpacing:(customized ? 10.0f : 0)];
     [self.classProgressBar  setHintViewBackgroundColor:[UIColor clearColor]];
-    [self.classProgressBar  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
+    [self.classProgressBar  setHintTextFont:[UIFont fontWithName:@"GillSans-Bold" size:26.0f]];
     [self.classProgressBar  setHintTextColor:[UIColor blackColor]];
     [self.classProgressBar  setHintTextGenerationBlock:(customized ? ^NSString *(CGFloat progress) {
         return [NSString stringWithFormat:@"%.0f / 255", progress * 255];
@@ -171,7 +171,8 @@
 
     [self.jarProgressBar  setHintViewSpacing:(customized ? 10.0f : 0)];
     [self.jarProgressBar  setHintViewBackgroundColor:[UIColor clearColor]];
-    [self.jarProgressBar  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
+    [self.jarProgressBar  setHintTextFont:[UIFont fontWithName:@"GillSans-Bold" size:26.0f]];
+
     [self.jarProgressBar  setHintTextColor:[UIColor blackColor]];
     [self.jarProgressBar  setHintTextGenerationBlock:(customized ? ^NSString *(CGFloat progress) {
         return [NSString stringWithFormat:@"%.0f / 255", progress * 255];

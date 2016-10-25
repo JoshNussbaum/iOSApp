@@ -44,6 +44,7 @@
     double currentPoints;
     BOOL isStamping;
     BOOL coinsShowing;
+    BOOL isJarFull;
     
     float jarImageX;
     float jarImageY;
@@ -98,6 +99,7 @@
     jarFull = [Utilities getAchievementSound];
     
     currentPoints = 1;
+    isJarFull = NO;
 
 }
 
@@ -220,8 +222,29 @@
 
 
 - (IBAction)addPointsClicked:(id)sender{
-    isStamping = YES;
-    [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
+    if (!isStamping){
+        if (!isJarFull){
+            isStamping = YES;
+            [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
+        }
+    }
+}
+
+
+- (void)hideJar{
+    AudioServicesPlaySystemSound(jarFull);
+    self.corkImage.hidden = YES;
+    self.corkImage.frame = corkRect;
+    
+    CGRect finalFrame = self.jarCoins.frame;
+    finalFrame.size.height = 0;
+    
+    [UIView animateWithDuration:0 animations:^{
+        self.jarCoins.frame = finalFrame;
+    }];
+    
+    isStamping = NO;
+    isJarFull = NO;
 }
 
 
@@ -383,6 +406,7 @@
     }
     [scores addObject:[NSNumber numberWithInteger:points]];
     [scores addObject:[NSNumber numberWithInteger:newTotal]];
+    self.addPointsButton.enabled = NO;
     [self coinsFall:scores];
 }
 
@@ -443,10 +467,14 @@
     }
     else {
         if ([currentClassJar getProgress] == 0){
+            isJarFull = YES;
+            self.addPointsButton.enabled = NO;
             [self jarFull];
         }
         self.stepper.enabled = YES;
         isStamping = NO;
+        self.addPointsButton.enabled = YES;
+
     }
 }
 
@@ -500,7 +528,8 @@
                                      self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
                                  }];
                                  isStamping = NO;
-                        
+                                 isJarFull = NO;
+                                 self.addPointsButton.enabled = YES;
                              });
                          }
          ];

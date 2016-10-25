@@ -46,6 +46,7 @@ extern NSInteger DELETE_JAR;
 extern NSInteger GET_SCHOOLS;
 extern NSInteger REGISTER_STAMP;
 extern NSInteger REWARD_STUDENT;
+extern NSInteger REWARD_STUDENT_BULK;
 extern NSInteger REWARD_ALL_STUDENTS;
 extern NSInteger ADD_TO_JAR;
 extern NSInteger STUDENT_TRANSACTION;
@@ -97,7 +98,7 @@ extern NSInteger RESET_PASSWORD;
 + (bool)isValidClassroomHeroStamp:(NSString *)serial;
 
 
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type;
++ (UIAlertView *) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type;
 
 
 + (void) editTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
@@ -116,6 +117,9 @@ extern NSInteger RESET_PASSWORD;
 
 
 + (void) makeRoundedButton:(UIButton *)button :(UIColor *)color;
+
+
++ (void) makeRoundedLabel:(UILabel *)label :(UIColor *)color;
 
 
 + (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view;

@@ -52,6 +52,7 @@ NSInteger ALL_STUDENT_CHECK_IN = 39;
 NSInteger ALL_STUDENT_CHECK_OUT = 40;
 NSInteger GET_USER_BY_STAMP = 41;
 NSInteger RESET_PASSWORD = 42;
+NSInteger REWARD_STUDENT_BULK = 43;
 
 
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType{
@@ -182,6 +183,9 @@ NSInteger RESET_PASSWORD = 42;
         case 42:
             return @"RESET_PASSWORD";
             break;
+        case 43:
+            return @"REWARD_STUDENT_BULK";
+            break;
  
         default:
             return @"Connection result";
@@ -288,7 +292,7 @@ NSInteger RESET_PASSWORD = 42;
 }
 
 
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type{
++ (UIAlertView *) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type{
     if (!cancel) cancel = @"Close";
     if (!done) done = @"Done";
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
@@ -306,6 +310,7 @@ NSInteger RESET_PASSWORD = 42;
 
     alertView.tag = tag;
     [alertView show];
+    return alertView;
 }
 
 
@@ -455,6 +460,23 @@ NSInteger RESET_PASSWORD = 42;
 
     }
 }
+
+
++ (void) makeRoundedLabel:(UILabel *)label :(UIColor *)color{
+    label.layer.cornerRadius = 5;
+    label.layer.borderWidth = .8;
+    label.clipsToBounds = YES;
+    if (color != nil){
+        label.layer.borderColor = color.CGColor;
+    }
+    else {
+        label.layer.borderColor = [UIColor clearColor].CGColor;
+        
+    }
+}
+
+
+
 
 
 + (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view{

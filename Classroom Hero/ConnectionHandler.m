@@ -9,6 +9,9 @@
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
+//http://ehorvat.webfactional.com/apps/ch/
+//http://107.206.158.62:1337/classroom-web-services/
+
 static NSString * const LOGIN_URL = @"http://ehorvat.webfactional.com/apps/ch/services/login/auth";
 static NSString * const STAMP_TO_LOGIN_URL = @"http://ehorvat.webfactional.com/apps/ch/services/login/auth/stamp";
 static NSString * const CREATE_ACCOUNT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/teacher";
@@ -33,7 +36,10 @@ static NSString * const ADD_STUDENT_URL = @"http://ehorvat.webfactional.com/apps
 static NSString * const EDIT_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/edit";
 static NSString * const DELETE_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/delete";
 static NSString * const GET_STUDENT_BY_SERIAL_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/get";
+
 static NSString * const REWARD_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/reward";
+static NSString * const REWARD_STUDENT_BULK_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/reward/bulk";
+
 static NSString * const CHECK_IN_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/checkin";
 static NSString * const CHECK_OUT_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/checkout";
 static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
@@ -244,12 +250,33 @@ static NSInteger connectionType;
 }
 
 
-- (void)rewardStudentWithserial:(NSString *)serial pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId classId:(NSInteger)classId{
+- (void)rewardStudentWithid:(NSInteger)id pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId classId:(NSInteger)classId{
     connectionType = REWARD_STUDENT;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"stamp\":\"%@\", \"pointsearned\":%ld, \"reinforcerId\":%ld, \"schoolId\":%ld, \"cid\":%ld}", serial, (long)pointsEarned, (long)reinforcerId, (long)schoolId, (long)classId];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":\"%ld\", \"pointsearned\":%ld, \"reinforcerId\":%ld, \"schoolId\":%ld, \"cid\":%ld}", (long)id, (long)pointsEarned, (long)reinforcerId, (long)schoolId, (long)classId];
     
     [self asynchronousWebCall:jsonRequest :REWARD_STUDENT_URL :POST];
+}
+
+
+- (void)rewardStudentsWithids:(NSMutableArray *)ids pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId classId:(NSInteger)classId{
+    connectionType = REWARD_STUDENT_BULK;
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:ids
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString;
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"ids\":%@, \"points\":%ld, \"reinforcerId\":%ld, \"schoolId\":%ld, \"classId\":%ld}", jsonString, (long)pointsEarned, (long)reinforcerId, (long)schoolId, (long)classId];
+    
+    [self asynchronousWebCall:jsonRequest :REWARD_STUDENT_BULK_URL :POST];
 }
 
 
@@ -461,7 +488,7 @@ static NSInteger connectionType;
     [request setTimeoutInterval:8];
     
     if (jsonRequest != nil){
-        //NSLog(@"Json Request -> %@\n Url string -> %@", jsonRequest, urlString);
+        NSLog(@"Json Request -> %@\n Url string -> %@", jsonRequest, urlString);
         NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
         [request setHTTPBody: requestData];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
@@ -488,15 +515,7 @@ static NSInteger connectionType;
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     //NSLog(@"In connection did fail");
-
-    if(error.code == NSURLErrorTimedOut){
-    }
-    else {
-
-    }
     [delegate_ dataReady:nil :connectionType];
-
-    
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -506,7 +525,7 @@ static NSInteger connectionType;
                               JSONObjectWithData:responseData
                               options:NSJSONReadingMutableContainers
                               error:&err];
-    //NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
+    NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
     
     [delegate_ dataReady:jsonData :connectionType];
 }

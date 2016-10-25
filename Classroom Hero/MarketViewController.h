@@ -22,10 +22,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *studentPointsLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *studentNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 @property (strong, nonatomic) IBOutlet UIButton *purchaseButton;
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *sackImage;
 
 // Menu
 @property (strong, nonatomic) IBOutlet UIButton *homeButton;
@@ -47,8 +47,6 @@
 - (IBAction)awardClicked:(id)sender;
 
 - (IBAction)classJarClicked:(id)sender;
-
-- (IBAction)addItemClicked:(id)sender;
 
 - (IBAction)editItemClicked:(id)sender;
 

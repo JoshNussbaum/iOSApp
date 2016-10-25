@@ -27,7 +27,6 @@
 		034075D71B980A60008E14B2 /* AwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034075D61B980A60008E14B2 /* AwardViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		034075DA1B980CBB008E14B2 /* ClassJarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034075D91B980CBA008E14B2 /* ClassJarViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03492CF21B8863DB0015CD78 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03492CF11B8863DB0015CD78 /* HomeViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		034C3AE91D9F5DB20092948F /* StudentAwardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C3AE81D9F5DB20092948F /* StudentAwardTableViewCell.m */; };
 		034C92B81BF19A7B0090667C /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */; };
 		036811561B8C49B400690294 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811551B8C49B400690294 /* AboutViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		036811591B8C49C300690294 /* PricingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811581B8C49C300690294 /* PricingViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -47,6 +46,7 @@
 		038F7B341B643FE30026F679 /* user.m in Sources */ = {isa = PBXBuildFile; fileRef = 038F7B331B643FE30026F679 /* user.m */; };
 		039567C71BCE141100AFF48A /* coinsack.png in Resources */ = {isa = PBXBuildFile; fileRef = 039567C31BCE141100AFF48A /* coinsack.png */; };
 		039567C81BCE141100AFF48A /* jar_coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 039567C41BCE141100AFF48A /* jar_coin.png */; };
+		039926D01DBDC34F0008B8F7 /* StudentAwardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 039926CF1DBDC34F0008B8F7 /* StudentAwardTableViewCell.m */; };
 		0399AAF21B846C6500972F21 /* ClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0399AAF11B846C6500972F21 /* ClassTableViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0399AAF61B84731E00972F21 /* ClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0399AAF51B84731E00972F21 /* ClassTableViewCell.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03A01ED71B68A33F0037110E /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A01ED61B68A33F0037110E /* TutorialViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -154,8 +154,6 @@
 		034075D91B980CBA008E14B2 /* ClassJarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassJarViewController.m; sourceTree = "<group>"; };
 		03492CF01B8863DB0015CD78 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		03492CF11B8863DB0015CD78 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		034C3AE71D9F5DB20092948F /* StudentAwardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudentAwardTableViewCell.h; path = ../StudentAwardTableViewCell.h; sourceTree = "<group>"; };
-		034C3AE81D9F5DB20092948F /* StudentAwardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudentAwardTableViewCell.m; path = ../StudentAwardTableViewCell.m; sourceTree = "<group>"; };
 		034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
 		036811541B8C49B400690294 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
@@ -193,6 +191,8 @@
 		038F7B331B643FE30026F679 /* user.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = user.m; sourceTree = "<group>"; };
 		039567C31BCE141100AFF48A /* coinsack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coinsack.png; sourceTree = "<group>"; };
 		039567C41BCE141100AFF48A /* jar_coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jar_coin.png; sourceTree = "<group>"; };
+		039926CE1DBDC34F0008B8F7 /* StudentAwardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentAwardTableViewCell.h; sourceTree = "<group>"; };
+		039926CF1DBDC34F0008B8F7 /* StudentAwardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentAwardTableViewCell.m; sourceTree = "<group>"; };
 		0399AAF01B846C6500972F21 /* ClassTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTableViewController.h; sourceTree = "<group>"; };
 		0399AAF11B846C6500972F21 /* ClassTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassTableViewController.m; sourceTree = "<group>"; };
 		0399AAF41B84731E00972F21 /* ClassTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTableViewCell.h; sourceTree = "<group>"; };
@@ -460,12 +460,12 @@
 		0399AAF31B8472EA00972F21 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				039926CE1DBDC34F0008B8F7 /* StudentAwardTableViewCell.h */,
+				039926CF1DBDC34F0008B8F7 /* StudentAwardTableViewCell.m */,
 				0399AAF41B84731E00972F21 /* ClassTableViewCell.h */,
 				0399AAF51B84731E00972F21 /* ClassTableViewCell.m */,
 				038898381BB3B6ED00D12468 /* StudentTableViewCell.h */,
 				038898391BB3B6ED00D12468 /* StudentTableViewCell.m */,
-				034C3AE71D9F5DB20092948F /* StudentAwardTableViewCell.h */,
-				034C3AE81D9F5DB20092948F /* StudentAwardTableViewCell.m */,
 				0369CF8B1BE082EC00E8857D /* StudentAttendanceTableViewCell.h */,
 				0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */,
 				031A31671C1CC78400ACBEB2 /* CheckoutInputTableViewCell.h */,
@@ -699,6 +699,7 @@
 					03AA99E01B6333C300750758 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = B28Q4692N6;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.OMC = {
 								enabled = 0;
@@ -881,8 +882,8 @@
 				0385453B1B636BFF0053C169 /* nameTextField.m in Sources */,
 				03AA99EA1B6333C300750758 /* AppDelegate.m in Sources */,
 				038545291B6359E90053C169 /* passwordTextField.m in Sources */,
-				034C3AE91D9F5DB20092948F /* StudentAwardTableViewCell.m in Sources */,
 				033855711B8996D400173600 /* CreateClassViewController.m in Sources */,
+				039926D01DBDC34F0008B8F7 /* StudentAwardTableViewCell.m in Sources */,
 				03A2C1DC1BB901C20073EBF8 /* OrderStampsViewController.m in Sources */,
 				036E4ED41B9832EA00A06B25 /* MarketViewController.m in Sources */,
 				0369CF8D1BE082EC00E8857D /* StudentAttendanceTableViewCell.m in Sources */,
@@ -1032,7 +1033,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Josh  Nussbaum (B28Q4692N6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1040,7 +1042,8 @@
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Classroomhero.Classroom-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e90b85cb-8fe4-4803-9cd1-78f83f315f88";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1052,7 +1055,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Josh  Nussbaum (B28Q4692N6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1060,7 +1064,8 @@
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Classroomhero.Classroom-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e90b85cb-8fe4-4803-9cd1-78f83f315f88";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

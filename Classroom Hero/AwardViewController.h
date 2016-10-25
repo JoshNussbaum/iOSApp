@@ -50,6 +50,12 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *studentsTableView;
 
+
+@property (strong, nonatomic) IBOutlet UIButton *chestButton;
+@property (strong, nonatomic) IBOutlet UILabel *notificationLabel;
+
+- (IBAction)chestClicked:(id)sender;
+
 - (IBAction)addReinforcerClicked:(id)sender;
 - (IBAction)editReinforcerClicked:(id)sender;
 - (IBAction)studentListClicked:(id)sender;

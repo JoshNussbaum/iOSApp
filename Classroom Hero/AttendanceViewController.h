@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
 
-@interface AttendanceViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, ConnectionHandlerDelegate>
+@interface AttendanceViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ConnectionHandlerDelegate>
 
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;
 
@@ -26,6 +27,12 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *sackImage;
 
+@property (strong, nonatomic) IBOutlet UIPickerView *studentsPicker;
+
+@property (strong, nonatomic) IBOutlet UILabel *studentNamePreStampLabel;
+
+
+- (IBAction)attendanceClicked:(id)sender;
 
 - (IBAction)studentsClicked:(id)sender;
 

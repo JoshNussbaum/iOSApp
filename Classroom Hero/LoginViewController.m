@@ -45,6 +45,7 @@ NSArray *fakeStudents;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+        
     self.emailTextField.text = @"josh@test.com";
     self.passwordTextField.text = @"josh";
     [Utilities makeRoundedButton:self.forgotPasswordButton :[Utilities CHBlueColor]];
@@ -52,7 +53,6 @@ NSArray *fakeStudents;
     self.logInButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.createAccountButton.layer.borderWidth = .6;
     self.createAccountButton.layer.borderColor = [UIColor whiteColor].CGColor;
-
     
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
@@ -119,7 +119,12 @@ NSArray *fakeStudents;
 
 
 - (IBAction)forgotPasswordClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Forgot password" message:@"Enter your email to reset your password" cancel:@"Cancel" done:@"Reset" delete:NO input:@"Email" tag:1 view:self capitalizationType:UITextAutocapitalizationTypeNone];
+    UIAlertView *av = [Utilities editAlertTextWithtitle:@"Forgot password" message:@"Enter your email to reset your password" cancel:@"Cancel" done:@"Reset" delete:NO input:@"Email" tag:1 view:self capitalizationType:UITextAutocapitalizationTypeNone];
+    if (self.emailTextField.text){
+        [[av textFieldAtIndex:0]setText:self.emailTextField.text];
+    }
+    
+    
 }
 
 

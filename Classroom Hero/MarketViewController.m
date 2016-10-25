@@ -23,7 +23,6 @@
     NSInteger index;
     item *currentItem;
     student *currentStudent;
-    NSString *stampSerial;
     
     NSString *newItemName;
     NSString *newItemCost;
@@ -36,6 +35,8 @@
     BOOL showingStudents;
     BOOL studentSelected;
     NSInteger studentIndex;
+    
+    BOOL isBuying;
 }
 
 @end
@@ -44,9 +45,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isBuying = NO;
     showingStudents = NO;
     studentSelected = NO;
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
+    [Utilities makeRoundedButton:self.purchaseButton :nil];
     
     currentUser = [user getInstance];
     
@@ -60,19 +63,11 @@
     coinSound = [Utilities getCoinShakeSound];
     
     if (itemsData.count == 0){
-        self.itemNameLabel.text = @"Add items above";
-        self.picker.hidden = YES;
-        self.editItemButton.hidden = YES;
-        self.pointsLabel.text = @"";
+        [self showNoItems];
 
     }
     else {
-        self.picker.hidden = NO;
-        [self.picker reloadAllComponents];
-        [self.picker selectRow:index inComponent:0 animated:YES];
-        currentItem = [itemsData objectAtIndex:0];
-        self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
-        self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]];
+        [self showItems];
     }
     
     NSArray *menuButtons = @[self.homeButton, self.awardButton, self.jarButton, self.marketButton];
@@ -121,28 +116,41 @@
 }
 
 - (IBAction)purchaseClicked:(id)sender {
+    if (!isBuying){
+        isBuying = YES;
+        [Utilities wiggleImage:self.stampImage sound:NO];
+        [self displayStudent];
+        
+        if ([currentStudent getPoints] >= [currentItem getCost]){
+            [self sellItem];
+        }
+        else {
+            [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must earn more coins first" cancel:nil otherTitles:nil tag:0 view:self];
+        }
+    }
 }
 
 
 - (IBAction)addItemClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Add item" message:nil cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
+    if (!isBuying){
+        [Utilities editAlertTextWithtitle:@"Add item" message:nil cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
+
+    }
 }
 
 
 - (IBAction)editItemClicked:(id)sender {
-    [Utilities editTextWithtitle:@"Edit item" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
+    if (!isBuying){
+        [Utilities editTextWithtitle:@"Edit item" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
+    }
 }
 
-
-- (IBAction)itemImageClicked:(id)sender {
-    
-}
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if (buttonIndex == [alertView cancelButtonIndex]) {
-        [self hideStudent];
+        isBuying = NO;
         return;
     }
     
@@ -196,7 +204,7 @@
     }
     
     else if (alertView.tag == 3 ){
-        [self activityStart:@"Selling item..."];
+        //self.picker.hidden = YES;
         [webHandler studentTransactionWithsid:[currentStudent getId] iid:[currentItem getId] cost:[currentItem getCost] cid:[currentUser.currentClass getId]];
     }
     else if (alertView.tag == 4){
@@ -209,9 +217,6 @@
     if (data == nil){
         [hud hide:YES];
         [Utilities alertStatusNoConnection];
-        self.studentNameLabel.hidden = YES;
-        self.studentPointsLabel.hidden = YES;
-        self.picker.hidden = NO;
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
@@ -248,7 +253,7 @@
             
             self.itemNameLabel.text = newItemName;
             self.pointsLabel.text = [NSString stringWithFormat:@"%@", newItemCost];
-            
+            [self setScore];
             [hud hide:YES];
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
@@ -261,10 +266,19 @@
             [self.picker reloadAllComponents];
             
             if (!itemsData || [itemsData count] == 0) {
+                currentStudent = nil;
+                currentItem = nil;
                 self.picker.hidden = YES;
                 self.itemNameLabel.text=@"Add  items  above";
                 self.pointsLabel.text = @"";
                 self.editItemButton.enabled = NO;
+                [self hideStudent];
+                [self showNoItems];
+                for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
+                    NSInteger index = indexPath.row;
+                    [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
+                }
+                
             }
             else {
                 [self setItemLabel];
@@ -307,8 +321,6 @@
             
             [Flurry logEvent:@"Reward Student" withParameters:params];
             
-            [hud hide:YES];
-
         }
 
         else if (type == GET_STUDENT_BY_STAMP){
@@ -376,8 +388,35 @@
 }
 
 
+- (void)showItems{
+    self.picker.hidden = NO;
+    [self.picker reloadAllComponents];
+    [self.picker selectRow:index inComponent:0 animated:YES];
+    currentItem = [itemsData objectAtIndex:0];
+    self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
+    NSString *points;
+    if ([currentItem getCost] > 1){
+        points = @"points";
+    }
+    else {
+        points = @"point";
+    }
+    self.pointsLabel.text = [NSString stringWithFormat:@"%ld %@", (long)[currentItem getCost], points];
+}
+
+
+- (void)showNoItems{
+    currentItem = nil;
+    self.itemNameLabel.text = @"Add items above";
+    self.picker.hidden = YES;
+    self.editItemButton.hidden = YES;
+    self.pointsLabel.text = @"";
+    self.stampImage.hidden = YES;
+}
+
+
 - (void)displayStudent{
-    
+    self.stampImage.hidden = NO;
     self.divider1.hidden = NO;
     self.divider2.hidden = NO;
     self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
@@ -387,33 +426,31 @@
 
 
 - (void)setScore{
-    NSInteger difference = [currentStudent getPoints] - [currentItem getCost];
-    NSString *scoreDisplay;
-    if (difference >= 0) {
-        scoreDisplay = [NSString stringWithFormat:@"You will have %ld - %ld = %ld remaining points%ld", (long)[currentStudent getPoints], (long)[currentItem getCost], (long)difference];
-        self.purchaseButton.hidden = NO;
-        // highlight the stamp image
-        
-    }
-    else {
-        scoreDisplay = [NSString stringWithFormat:@"You must earn %ld more points before purchasing this item", difference*(-1)];
-        self.purchaseButton.hidden = YES;
+    if (currentStudent != nil && currentItem != nil){
+        NSInteger difference = [currentStudent getPoints] - [currentItem getCost];
+        if (difference >= 0) {
+            self.purchaseButton.hidden = NO;
+            
+        }
+        else {
+            self.purchaseButton.hidden = YES;
+        }
+        self.studentPointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
+        self.studentPointsLabel.hidden = NO;
     }
     
-    self.descriptionLabel.text = scoreDisplay;
 }
 
 
 - (void)hideStudent{
+    studentSelected = NO;
     self.studentNameLabel.hidden = YES;
     self.studentPointsLabel.hidden = YES;
     self.studentNameLabel.text= @"";
     self.studentPointsLabel.text = @"";
-    self.descriptionLabel.text = @"";
-    self.descriptionLabel.hidden = YES;
     self.divider1.hidden = YES;
     self.divider2.hidden = YES;
-    
+    self.purchaseButton.hidden = YES;
     
 }
 
@@ -432,26 +469,26 @@
 
 
 - (void)sellItemAnimation:(NSMutableArray *)scores{
+    self.sackImage.hidden = NO;
     [Utilities wiggleImage:self.stampImage sound:NO];
     NSInteger score = [[scores objectAtIndex:0]integerValue];
     self.studentPointsLabel.layer.zPosition = 2;
     self.stampImage.layer.zPosition = 1;
     self.stampImage.layer.zPosition = 0;
     
-    NSString *scoreDisplay = [NSString stringWithFormat:@"%ld", (long)score];
+    NSString *scoreDisplay = [NSString stringWithFormat:@"%ld points", (long)score];
     self.studentPointsLabel.text = scoreDisplay;
     self.studentPointsLabel.hidden = NO;
     AudioServicesPlaySystemSound(coinSound);
     
     [self decrementScore:scores];
     
-    double delayInSeconds = 2.5;
+    double delayInSeconds = 1.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        self.studentNameLabel.hidden=YES;
-        self.studentPointsLabel.hidden = YES;
-        self.picker.hidden = NO;
-        
+        self.sackImage.hidden = YES;
+        isBuying = NO;
+        [self setScore];
     });
     
 }
@@ -462,11 +499,11 @@
     NSInteger newScore = [[scores objectAtIndex:1]integerValue];
     if (score != newScore)
     {
-        NSString *scoreDisplay = [NSString stringWithFormat:@"%ld", (long)--score];
+        NSString *scoreDisplay = [NSString stringWithFormat:@"%ld points", (long)--score];
         [scores replaceObjectAtIndex:0 withObject:[NSNumber numberWithInteger:score]];
         [self.studentPointsLabel setText:scoreDisplay];
         [self performSelector:@selector(decrementScore:) withObject:scores afterDelay:0.035];
-    }
+    }	
     
 }
 
@@ -484,10 +521,8 @@
     if (studentSelected){
         [self setScore];
     }
-    else {
-        self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
-        self.pointsLabel.text=[NSString stringWithFormat:@"%li", (long)[currentItem getCost]];
-    }
+    self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
+    self.pointsLabel.text=[NSString stringWithFormat:@"%li", (long)[currentItem getCost]];
 }
 
 
@@ -534,13 +569,33 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    studentIndex = indexPath.row;
-    student *selectedStudent = [studentsData objectAtIndex:studentIndex];
-    NSNumber *studentId = [NSNumber numberWithInteger:[selectedStudent getId]];
-    studentSelected = YES;
-    [self animateTableView:NO];
-    [self displayStudent];
+    if (itemsData.count > 0){
+        
+        studentIndex = indexPath.row;
+        student *selectedStudent = [studentsData objectAtIndex:studentIndex];
+        if (selectedStudent == currentStudent){
+            currentStudent = nil;
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            
+            [self hideStudent];
+            self.stampImage.hidden = YES;
+            [self animateTableView:YES];
+            
+        }
+        else {
+            currentStudent = selectedStudent;
+            NSNumber *studentId = [NSNumber numberWithInteger:[selectedStudent getId]];
+            studentSelected = YES;
+            //[self animateTableView:NO];
+            [self displayStudent];
+            [self animateTableView:YES];
+        }
+    }
+    else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [Utilities alertStatusWithTitle:@"Must add items first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
+    }
+
 }
 
 

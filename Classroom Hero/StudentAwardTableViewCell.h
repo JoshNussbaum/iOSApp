@@ -1,16 +1,19 @@
 //
 //  StudentAwardTableViewCell.h
-//  Classroom Hero
+//  
 //
 //  Created by Josh Nussbaum on 9/30/16.
-//  Copyright © 2016 Josh Nussbaum. All rights reserved.
+//
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "student.h"
 
-@interface StudentAwardTableViewCell : NSObject
+@interface StudentAwardTableViewCell : UITableViewCell
 
-- (void)initializeWithStudent:(student *)student selected:(BOOL)selected_;
+@property (weak, nonatomic) IBOutlet UILabel *studentNameLabel;
+
+- (void)initializeWithStudent:(student *)student selected:(BOOL)selected;
+
 
 @end

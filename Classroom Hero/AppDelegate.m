@@ -40,14 +40,14 @@ NSString * const StripePublishableKey = @" pk_test_0k5cvVSHQihOyTbRCUHXm9T2 ";
         if ([Utilities isIPadPro]){
             [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                                     NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                    NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:44.0f],
+                                                                    NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:44.0f],
                                                                     NSShadowAttributeName: shadow
                                                                     }];
         }
         else{
             [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                                     NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                    NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:36.0f],
+                                                                    NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:36.0f],
                                                                     NSShadowAttributeName: shadow
                                                                     }];
         }

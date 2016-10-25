@@ -15,12 +15,16 @@
 #import "StudentAwardTableViewCell.h"
 #import "Flurry.h"
 
+
+// make select all and deslect all buttons
+// lets change studentsData to a dictionary
+
 static NSInteger coinWidth = 250;
 static NSInteger coinHeight = 250;
 
 @interface AwardViewController (){
     NSMutableArray *reinforcerData;
-    NSMutableArray *studentsData;
+    NSMutableDictionary *studentsData;
     reinforcer *currentReinforcer;
     NSString *tmpName;
     NSString *tmpValue;
@@ -71,6 +75,7 @@ static NSInteger coinHeight = 250;
     NSMutableDictionary *selectedStudents;
     
     BOOL chestTappable;
+    BOOL chestPoint;
 
 }
 
@@ -84,14 +89,17 @@ static NSInteger coinHeight = 250;
     [super viewDidLoad];
     currentUser = [user getInstance];
     reinforcerData = [[DatabaseHandler getSharedInstance]getReinforcers:[currentUser.currentClass getId]];
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
+    studentsData = [[NSMutableDictionary alloc]init];
+    [self getStudentsData];
+    
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     selectedStudents = [[NSMutableDictionary alloc] init];
     self.categoryPicker.delegate = self;
     self.categoryPicker.dataSource = self;
     self.nameLabel.text=@"";
     showingStudents = NO;
-
+    chestPoint = NO;
+    chestTappable = NO;
     failSound = [Utilities getFailSound];
     award = [Utilities getAwardSound];
     coins = [Utilities getCoinShakeSound];
@@ -136,13 +144,19 @@ static NSInteger coinHeight = 250;
     self.progressView.type = YLProgressBarTypeRounded;
     self.progressView.tintColor = [UIColor clearColor];
     self.progressView.progressTintColor = [Utilities CHBlueColor];
-    self.progressView.indicatorTextLabel.font = [UIFont fontWithName:@"Gil Sans Light" size:15.0];
+    self.progressView.indicatorTextLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:15.0];
+    
+    [Utilities makeRoundedLabel:self.notificationLabel :nil];
     [self.view addSubview:self.progressView];
 }
 
 
-- (void)viewWillAppear:(BOOL)animated{
-    self.nameLabel.hidden = YES;
+- (void)getStudentsData{
+    NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
+    
+    for (student *tmpStudent in studentsDataArray){
+        [studentsData setObject:tmpStudent forKey:[NSNumber numberWithInteger:[tmpStudent getId]]];
+    }
 }
 
 
@@ -208,9 +222,40 @@ static NSInteger coinHeight = 250;
         [self animateTableView:NO];
     }
     else{
+
         [self animateTableView:YES];
     }
 
+}
+
+
+- (IBAction)chestClicked:(id)sender {
+    if (chestTappable && !showingStudents){
+        chestTappable = NO;
+        chestPoint = YES;
+        [Utilities wiggleImage:self.stampImage sound:NO];
+        // add the points now and do all the cool animations brah
+        NSInteger reinforcerId = [currentReinforcer getId];
+        NSInteger pointsEarned = [currentReinforcer getValue];
+        
+        NSInteger studentCount = selectedStudents.count;
+
+        if (studentCount > 1){
+            NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
+            
+            for (NSNumber *studentId in selectedStudents) {
+                [selectedStudentIds addObject:studentId];
+            }
+            
+            [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+        }
+        else {
+            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+            
+        }
+        
+        
+    }
 }
 
 
@@ -294,12 +339,6 @@ static NSInteger coinHeight = 250;
     [hud hide:YES];
     if (data == nil){
         [Utilities alertStatusNoConnection];
-        self.nameLabel.hidden=YES;
-        self.pointsLabel.hidden=YES;
-        self.levelLabel.hidden=YES;
-        self.sackImage.hidden=YES;
-        self.progressView.hidden=YES;
-        self.categoryPicker.hidden = NO;
         isStamping = NO;
         return;
     }
@@ -368,36 +407,86 @@ static NSInteger coinHeight = 250;
             NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
             NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
 
-            currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
+            [currentStudent setPoints:pointsNumber.integerValue];
+            [currentStudent setLevel:levelNumber.integerValue];
+            [currentStudent setProgress:progressNumber.integerValue];
+            [currentStudent setLevelUpAmount:lvlUpAmount];
+            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
 
-            if (currentStudent != nil){
-                [currentStudent setPoints:pointsNumber.integerValue];
-                [currentStudent setLevel:levelNumber.integerValue];
-                [currentStudent setProgress:progressNumber.integerValue];
-                [currentStudent setLevelUpAmount:lvlUpAmount];
-                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-
-            }
-            else{
-                NSString *stamp = [studentDictionary objectForKey:@"stamp"];
-                NSString * fname = [studentDictionary objectForKey: @"fname"];
-                NSString * lname = [studentDictionary objectForKey: @"lname"];
-
-                currentStudent = [[student alloc]initWithid:idNumber.integerValue firstName:fname lastName:lname serial:stamp lvl:levelNumber.integerValue progress:progressNumber.integerValue lvlupamount:lvlUpAmount points:pointsNumber.integerValue totalpoints:totalPoints.integerValue checkedin:NO];
-
-                [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
-            }
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             
             tmpPoints = ([currentStudent getPoints] - pointsAwarded);
-            [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
+            
+            [studentsData setObject:currentStudent forKey:idNumber];
+            
+            [selectedStudents removeAllObjects];
+            [self.studentsTableView reloadData];
 
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
 
             [Flurry logEvent:@"Reward Student" withParameters:params];
+            
+            if (chestPoint){
+                [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
+            }
+            
+            else {
+                [self manuallyAddPointsSuccess];
+            }
+            
 
         }
+        
+        else if (type == REWARD_STUDENT_BULK){
+            pointsAwarded = [currentReinforcer getValue];
+            NSArray *studentsArray = [data objectForKey:@"students"];
+            NSInteger studentCount = studentsArray.count;
+            
+            for (NSDictionary *studentDictionary in studentsArray){
+                NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
+                NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
+                NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
+                NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+                NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
+                NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
+                
+                
+                student *tmpStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
+                
+                [tmpStudent setPoints:pointsNumber.integerValue];
+                [tmpStudent setLevel:levelNumber.integerValue];
+                [tmpStudent setProgress:progressNumber.integerValue];
+                [tmpStudent setLevelUpAmount:lvlUpAmount];
+                [[DatabaseHandler getSharedInstance]updateStudent:tmpStudent];
+                
+                [studentsData setObject:tmpStudent forKey:idNumber];
+            }
+            
+
+            
+            [currentUser.currentClass addPoints:studentCount];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+            
+            tmpPoints = ([currentStudent getPoints] - pointsAwarded);
+            
+            [selectedStudents removeAllObjects];
+            [self.studentsTableView reloadData];
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Rewrd Student" withParameters:params];
+            
+            if (chestPoint){
+                [self addPoints:[currentReinforcer getValue] levelup:NO ];
+            }
+            else {
+             [self manuallyAddPointsSuccess];
+            }
+            
+        }
+        
+        
         else if (type == REWARD_ALL_STUDENTS){
             AudioServicesPlaySystemSound(teacherStamp);
             [[DatabaseHandler getSharedInstance] rewardAllStudentsInClassWithid:[currentUser.currentClass getId]];
@@ -406,6 +495,8 @@ static NSInteger coinHeight = 250;
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+            [self getStudentsData];
+            
             [Flurry logEvent:@"Reward Class" withParameters:params];
 
         }
@@ -486,7 +577,14 @@ static NSInteger coinHeight = 250;
     NSInteger studentsCount = selectedStudents.count;
     NSString *studentString;
     if (studentsCount > 1) {
-        studentString = [NSString stringWithFormat:@"%@ and %ld others", [selectedStudent getFirstName], (long)studentsCount];
+        if (studentsCount == 2){
+            studentString = [NSString stringWithFormat:@"%@ and 1 other", [selectedStudent getFirstName]];
+
+        }
+        else {
+            studentString = [NSString stringWithFormat:@"%@ and %ld others", [selectedStudent getFirstName], (long)studentsCount-1];
+        }
+
         self.levelLabel.hidden = YES;
         self.sackImage.hidden = NO;
         self.progressView.hidden = YES;
@@ -521,6 +619,13 @@ static NSInteger coinHeight = 250;
     self.nameLabel.hidden = NO;
     if (chest) {
         self.reinforcerLabel.text = @"Tap to unlock chest";
+        self.pointsLabel.text = [currentReinforcer getName];
+        self.pointsLabel.hidden = NO;
+        double delayInSeconds = .5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            self.chestButton.enabled = YES;
+        });
 
     }
     
@@ -700,9 +805,7 @@ static NSInteger coinHeight = 250;
                                                                                 [self hideStudent];
                                                                             }
                                                                             completion:^(BOOL finished) {
-                                                                                self.categoryPicker.hidden = NO;
-                                                                                isStamping = NO;
-                                                                                [self.coinPointsLabel setFont:[UIFont systemFontOfSize:40]];
+                                                                                [self completeCoinAnimation];
                                                                             }
                                                             ];
                                                        });
@@ -720,6 +823,16 @@ static NSInteger coinHeight = 250;
     self.levelLabel.hidden=YES;
     self.sackImage.hidden=YES;
     self.progressView.hidden=YES;
+}
+
+
+- (void)completeCoinAnimation{
+    self.reinforcerLabel.text = [currentReinforcer getName];
+    self.categoryPicker.hidden = NO;
+    isStamping = NO;
+    chestPoint = NO;
+    
+    [self.coinPointsLabel setFont:[UIFont systemFontOfSize:40]];
 }
 
 
@@ -769,8 +882,7 @@ static NSInteger coinHeight = 250;
                                                                                                 [self hideStudent];
                                                                                             }
                                                                                             completion:^(BOOL finished) {
-                                                                                                self.categoryPicker.hidden = NO;
-                                                                                                isStamping = NO;
+                                                                                                [self completeCoinAnimation];
                                                                                             }
                                                                             ];
                                                                        });
@@ -841,8 +953,8 @@ static NSInteger coinHeight = 250;
                                                                                                                      [self hideStudent];
                                                                                                                  }
                                                                                                                  completion:^(BOOL finished) {
-                                                                                                                     self.categoryPicker.hidden = NO;
-                                                                                                                     isStamping = NO;
+                                                                                                                     [self completeCoinAnimation];
+                                                                                                                     
                                                                                                                  }
                                                                                                  ];
                                                                                             });
@@ -920,8 +1032,7 @@ static NSInteger coinHeight = 250;
 
                                                                                                                                       }
                                                                                                                                       completion:^(BOOL finished) {
-                                                                                                                                          self.categoryPicker.hidden = NO;
-                                                                                                                                          isStamping = NO;
+                                                                                                                                          [self completeCoinAnimation];
                                                                                                                                       }
                                                                                                                       ];
                                                                                                                  });
@@ -939,6 +1050,35 @@ static NSInteger coinHeight = 250;
 }
 
 
+- (void)manuallyAddPointsSuccess{
+    
+    self.notificationLabel.alpha = 0.0;
+    self.notificationLabel.hidden = NO;
+    [UIView animateWithDuration:.1
+                     animations:^{
+                         self.notificationLabel.alpha = 1.0;
+                         
+                     }completion:^(BOOL finished) {
+                         
+                         double delayInSeconds = 1.4;
+                         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                             [UIView animateWithDuration:.2
+                                              animations:^{
+                                                  self.notificationLabel.alpha = 0.0;
+
+                                              }
+                                              completion:^(BOOL finished) {
+                                                  self.notificationLabel.hidden = YES;
+                                                  isStamping = NO;
+                                              }
+                              ];
+                         });
+                     }
+     ];
+}
+
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     if ([touch.view isDescendantOfView:self.studentsTableView]) {
         
@@ -947,6 +1087,7 @@ static NSInteger coinHeight = 250;
     if (self.studentsTableView.hidden == NO){
         [self animateTableView:YES];
     }
+    
     return YES;
 }
 
@@ -962,9 +1103,9 @@ static NSInteger coinHeight = 250;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     if (studentsData.count > 0) {
-        return studentsData.count + 2;
+        return studentsData.count + 4;
     }
-    else return 2;
+    else return 4;
 }
 
 
@@ -982,10 +1123,26 @@ static NSInteger coinHeight = 250;
         return cell;
         
     }
+    else if (indexPath.row == 2){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AwardStudentsSelectAllCell"];
+        cell.contentView.exclusiveTouch = YES;
+        cell.exclusiveTouch = YES;
+        return cell;
+
+    }
+    else if (indexPath.row == 3){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AwardStudentsDeselectAllCell"];
+        cell.contentView.exclusiveTouch = YES;
+        cell.exclusiveTouch = YES;
+        return cell;
+        
+    }
     else {
         StudentAwardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentAwardTableViewCell" forIndexPath:indexPath];
-        student *student_ = [studentsData objectAtIndex:indexPath.row - 2];
-        NSNumber *studentId = [NSNumber numberWithInteger:[student_ getId]];
+        NSNumber *studentId = [[studentsData allKeys] objectAtIndex:(indexPath.row-4)];
+
+        student *student_ = [studentsData objectForKey:studentId];
+        
         BOOL selected;
         if ([selectedStudents objectForKey:studentId]){
             selected = YES;
@@ -1000,48 +1157,81 @@ static NSInteger coinHeight = 250;
 
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    studentIndex = indexPath.row - 2;
-    currentStudent = [studentsData objectAtIndex:studentIndex];
-    NSNumber *studentId = [NSNumber numberWithInteger:[currentStudent getId]];
+    studentIndex = indexPath.row - 4;
+    
+    NSNumber *studentId = [[studentsData allKeys] objectAtIndex:studentIndex];
+    
+    currentStudent = [studentsData objectForKey:studentId];
     
     if ([selectedStudents objectForKey:studentId]){
         [selectedStudents removeObjectForKey:studentId];
     }
-    NSLog(@"Here are the selected students -> %@", selectedStudents);
+    if ([selectedStudents count] > 0 ){
+        [self displayStudent:chestTappable];
+    }
+    else {
+        chestTappable = NO;
+        [self hideStudent];
+        self.categoryPicker.hidden = NO;
+        [self setReinforcerName];
+    }
+    [self printSelectedStudents];
+
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    NSLog(@"Selected Index Path Row -> %ld", (long)indexPath.row);
+
     if (indexPath.row == 0){
         // Add Points Manually
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if (selectedStudents.count > 0){
-            NSInteger reinforcerId = [currentReinforcer getId];
-            NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
-            NSInteger pointsEarned = [currentReinforcer getValue];
+        if (!isStamping){
             NSInteger studentCount = selectedStudents.count;
-            student *selectedStudent = [selectedStudents objectForKey:studentId];
-
-            currentStudent = selectedStudent;
-            [self animateTableView:YES];
-            [self displayStudent:NO];
-            
-            // make dat web call ehre
-        }
-        else {
-            [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            if (studentCount > 0){
+                NSInteger reinforcerId = [currentReinforcer getId];
+                NSInteger pointsEarned = [currentReinforcer getValue];
+                
+                if (studentCount > 1){
+                    NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
+                    
+                    for (NSNumber *studentId in selectedStudents) {
+                        [selectedStudentIds addObject:studentId];
+                    }
+                    
+                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                }
+                
+                else {
+                    NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+                    
+                    student *selectedStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:studentId.integerValue];
+                    
+                    currentStudent = selectedStudent;
+                    
+                    
+                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                    
+                }
+                
+                
+                
+            }
+            else {
+                [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
+            }
         }
     }
     else if (indexPath.row == 1){
         // Generate Chest
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if (selectedStudents.count > 0){
+        NSInteger studentCount = selectedStudents.count;
+        if (studentCount > 0){
             // this is generate chest, so make the animation,
             // set a bool, close the tableview, then generate the chest
             // on tap, check for that bool and then open that
             chestTappable = YES;
-            NSInteger studentCount = selectedStudents.count;
+       
             
             NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
             student *selectedStudent = [selectedStudents objectForKey:studentId];
@@ -1056,15 +1246,71 @@ static NSInteger coinHeight = 250;
             [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
         }
     }
+    else if (indexPath.row == 2){
+        // select all
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+        NSInteger rows = [self.studentsTableView numberOfRowsInSection:1];
+        
+        
+        
+        for (NSInteger index = 0; index < studentsData.count; index++) {
+            NSNumber *studentId = [[studentsData allKeys] objectAtIndex:index];
+
+            student *selectedStudent = [studentsData objectForKey:studentId];
+            [selectedStudents setObject:selectedStudent forKey:studentId];
+        }
+        for (NSIndexPath *indexPath in tableView.indexPathsForVisibleRows) {
+            NSInteger index = indexPath.row;
+            if (index > 3){
+                [self.studentsTableView selectRowAtIndexPath:indexPath
+                                                    animated:NO
+                                              scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+        
+    }
+    else if (indexPath.row == 3){
+        // de select all
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+        NSInteger rows = [self.studentsTableView numberOfRowsInSection:1];
+        
+        for (NSInteger index = 0; index < studentsData.count; index++) {
+            NSNumber *studentId = [[studentsData allKeys] objectAtIndex:index];
+
+            student *selectedStudent = [studentsData objectForKey:studentId];
+
+            [selectedStudents removeObjectForKey:studentId];
+        }
+        
+        for (NSIndexPath *indexPath in tableView.indexPathsForSelectedRows) {
+            NSInteger index = indexPath.row;
+            [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        }
+
+    }
     
     else {
-        studentIndex = indexPath.row - 2;
-        student *selectedStudent = [studentsData objectAtIndex:studentIndex];
-        NSNumber *studentId = [NSNumber numberWithInteger:[selectedStudent getId]];
+        studentIndex = indexPath.row - 4;
+        NSNumber *studentId = [[studentsData allKeys] objectAtIndex:studentIndex];
+
+        student *selectedStudent = [studentsData objectForKey:studentId];
+
         [selectedStudents setObject:selectedStudent forKey:studentId];
         
     }
-    NSLog(@"Here are the selected students -> %@", selectedStudents);
+    [self printSelectedStudents];
+}
+
+
+-(void)printSelectedStudents{
+    NSString *students = @"";
+    for (NSNumber *index in selectedStudents){
+        student *stud = [selectedStudents objectForKey:index];
+        students = [students stringByAppendingString:[NSString stringWithFormat:@"Student -> %@, %@. Index -> %ld.\n", [stud getFirstName], [stud getLastName], (long)index.integerValue]];
+    }
+    NSLog(@"\n%@", students);
 }
 
 
@@ -1095,11 +1341,15 @@ static NSInteger coinHeight = 250;
                      }
                      completion:^(BOOL finished) {
                          self.studentsTableView.hidden = open;
+                         if (open){
+                             showingStudents = NO;
+                         }
+                         else {
+                             showingStudents = YES;
+                         }
                      }
      ];
 }
-
-
 
 
 #pragma Picker view

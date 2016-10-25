@@ -164,12 +164,12 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (studentsData.count > 0 && !clicked){
-        clicked = YES;
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
-        [self performSegueWithIdentifier:@"student_segue" sender:self];
-    }
+//    if (studentsData.count > 0 && !clicked){
+//        clicked = YES;
+//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+//        [self performSegueWithIdentifier:@"student_segue" sender:self];
+//    }
 }
 
 
