@@ -338,6 +338,9 @@ static NSInteger coinHeight = 250;
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
     if (data == nil){
+        if (chestPoint){
+            chestTappable = YES;
+        } else chestTappable = NO;
         [Utilities alertStatusNoConnection];
         isStamping = NO;
         return;
@@ -571,10 +574,19 @@ static NSInteger coinHeight = 250;
 
 
 - (void)displayStudent:(BOOL)chest{
+    NSInteger studentsCount = selectedStudents.count;
+
+    if (studentsCount == 0){
+        chestTappable = NO;
+        [self hideStudent];
+        self.categoryPicker.hidden = NO;
+        [self setReinforcerName];
+        return;
+    }
     self.categoryPicker.hidden = YES;
+
     NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
     student *selectedStudent = [selectedStudents objectForKey:studentId];
-    NSInteger studentsCount = selectedStudents.count;
     NSString *studentString;
     if (studentsCount > 1) {
         if (studentsCount == 2){
@@ -591,7 +603,7 @@ static NSInteger coinHeight = 250;
         self.pointsLabel.hidden = YES;
 
     }
-    else {
+    else if (studentsCount == 1){
         studentString = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
         self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)([currentStudent getPoints] - pointsAwarded)];
         self.pointsLabel.hidden = NO;
@@ -613,6 +625,9 @@ static NSInteger coinHeight = 250;
         self.levelLabel.hidden = NO;
         
         self.sackImage.hidden = NO;
+    }
+    else {
+        return;
     }
     
     self.nameLabel.text = studentString;
@@ -1173,7 +1188,7 @@ static NSInteger coinHeight = 250;
     if ([selectedStudents objectForKey:studentId]){
         [selectedStudents removeObjectForKey:studentId];
     }
-    if ([selectedStudents count] > 0 ){
+    if ([selectedStudents count] > 0 && chestTappable){
         [self displayStudent:chestTappable];
     }
     else {
@@ -1182,7 +1197,9 @@ static NSInteger coinHeight = 250;
         self.categoryPicker.hidden = NO;
         [self setReinforcerName];
     }
-    [self printSelectedStudents];
+    if (chestPoint){
+        [self printSelectedStudents];
+    }
 
 }
 
@@ -1221,8 +1238,6 @@ static NSInteger coinHeight = 250;
                     
                 }
                 
-                
-                
             }
             else {
                 [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
@@ -1231,35 +1246,52 @@ static NSInteger coinHeight = 250;
     }
     else if (indexPath.row == 1){
         // Generate Chest
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        NSInteger studentCount = selectedStudents.count;
-        if (studentCount > 0){
-            // this is generate chest, so make the animation,
-            // set a bool, close the tableview, then generate the chest
-            // on tap, check for that bool and then open that
-            chestTappable = YES;
-       
+        if (chestTappable) {
             
-            NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
-            student *selectedStudent = [selectedStudents objectForKey:studentId];
-            currentStudent = selectedStudent;
-            [self animateTableView:YES];
-            [self displayStudent:YES];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             
-            // get all the student IDs and make the web call
+            [selectedStudents removeAllObjects];
             
+            for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
+                NSInteger index = indexPath.row;
+                [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
+            }
+            
+            chestTappable = NO;
+            chestPoint = NO;
+            [self hideStudent];
+            self.categoryPicker.hidden = NO;
+            [self setReinforcerName];
+            return;
         }
         else {
-            [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            NSInteger studentCount = selectedStudents.count;
+            if (studentCount > 0){
+                // this is generate chest, so make the animation,
+                // set a bool, close the tableview, then generate the chest
+                // on tap, check for that bool and then open that
+                chestTappable = YES;
+                
+                
+                NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+                student *selectedStudent = [selectedStudents objectForKey:studentId];
+                currentStudent = selectedStudent;
+                [self animateTableView:YES];
+                [self displayStudent:YES];
+                
+                // get all the student IDs and make the web call
+                
+            }
+            else {
+                [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
+            }
         }
+        
     }
     else if (indexPath.row == 2){
         // select all
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-        NSInteger rows = [self.studentsTableView numberOfRowsInSection:1];
-        
-        
         
         for (NSInteger index = 0; index < studentsData.count; index++) {
             NSNumber *studentId = [[studentsData allKeys] objectAtIndex:index];
@@ -1275,27 +1307,24 @@ static NSInteger coinHeight = 250;
                                               scrollPosition:UITableViewScrollPositionNone];
             }
         }
+        if (chestTappable){
+            [self displayStudent:chestTappable];
+        }
         
     }
     else if (indexPath.row == 3){
         // de select all
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-        NSInteger rows = [self.studentsTableView numberOfRowsInSection:1];
-        
-        for (NSInteger index = 0; index < studentsData.count; index++) {
-            NSNumber *studentId = [[studentsData allKeys] objectAtIndex:index];
-
-            student *selectedStudent = [studentsData objectForKey:studentId];
-
-            [selectedStudents removeObjectForKey:studentId];
-        }
-        
-        for (NSIndexPath *indexPath in tableView.indexPathsForSelectedRows) {
+        currentStudent = nil;
+        [selectedStudents removeAllObjects];
+        for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
             NSInteger index = indexPath.row;
-            [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
         }
-
+        
+        if (chestTappable){
+            [self displayStudent:chestTappable];
+        }
     }
     
     else {
@@ -1314,6 +1343,7 @@ static NSInteger coinHeight = 250;
     }
     [self printSelectedStudents];
 }
+
 
 
 -(void)printSelectedStudents{

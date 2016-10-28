@@ -14,7 +14,6 @@
 
 @interface CreateClassViewController (){
     NSInteger index;
-    NSMutableArray *schoolData;
     MBProgressHUD *hud;
     user *currentUser;
     ConnectionHandler *webHandler;
@@ -30,74 +29,47 @@
     
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
-    schoolData = [[DatabaseHandler getSharedInstance] getSchools];
-    
-    self.schoolPicker.delegate = self;
-    
 
     self.classNameTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
     self.classGradeTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
 
     [Utilities makeRoundedButton:self.addClassButton :[Utilities CHBlueColor]];
-
-
-    if (schoolData.count == 0){
-        self.schoolPicker.hidden = YES;
-        self.errorLabel.hidden = NO;
-    }
-    else {
-        self.schoolPicker.hidden = NO;
-        [self.schoolPicker selectRow:floor(schoolData.count/2) inComponent:0 animated:YES];
-    }
 }
 
 
 - (IBAction)addClassClicked:(id)sender {
-    if (schoolData.count > 0 ){
-        index = [self.schoolPicker selectedRowInComponent:0];
-        
-        [self hideKeyboard ];
-        
-        NSMutableArray *textFields = [[NSMutableArray alloc]initWithObjects:self.classNameTextField, self.classGradeTextField, nil];
-        
-        NSString *errorMessage = @"";
-        
-        for (int i =0; i < [textFields count]; i++){
-            NSString *error = [[textFields objectAtIndex:i] validate];
-            if ( ![error isEqualToString:@""] ){
-                errorMessage = [errorMessage stringByAppendingString:error];
-                break;
-            }
+    
+    [self hideKeyboard ];
+    
+    NSMutableArray *textFields = [[NSMutableArray alloc]initWithObjects:self.classNameTextField, self.classGradeTextField, nil];
+    
+    NSString *errorMessage = @"";
+    
+    for (int i =0; i < [textFields count]; i++){
+        NSString *error = [[textFields objectAtIndex:i] validate];
+        if ( ![error isEqualToString:@""] ){
+            errorMessage = [errorMessage stringByAppendingString:error];
+            break;
         }
-        
-        if (![errorMessage isEqualToString:@""]){
-            [Utilities alertStatusWithTitle:@"Error adding class" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
-            
-        }
-        if (self.classGradeTextField.text.length > 3){
-            [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be 3 numbers or less"  cancel:nil otherTitles:nil tag:0 view:nil];
-            return;
-            
-        }
-        [self activityStart:@"Adding class..."];
-        [self hideKeyboard];
-        NSString *className = self.classNameTextField.text;
-        NSInteger classGrade = [self.classGradeTextField.text integerValue];
-        NSInteger schoolId = [self getSchoolId];
-        newClass = [[class alloc]init:0 :className :classGrade :schoolId :1 :0 :30 :[Utilities getCurrentDate]];
-        [webHandler addClass:currentUser.id :className :classGrade :schoolId];
-        
-    }
-    else {
-        [Utilities alertStatusNoConnection];
     }
     
-}
-
-
-- (IBAction)helpClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"Class Creation" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get your school added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
+    if (![errorMessage isEqualToString:@""]){
+        [Utilities alertStatusWithTitle:@"Error adding class" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+        return;
+        
+    }
+    if (self.classGradeTextField.text.length > 3){
+        [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be 3 numbers or less"  cancel:nil otherTitles:nil tag:0 view:nil];
+        return;
+        
+    }
+    [self activityStart:@"Adding class..."];
+    [self hideKeyboard];
+    NSString *className = self.classNameTextField.text;
+    NSInteger classGrade = [self.classGradeTextField.text integerValue];
+    newClass = [[class alloc]init:0 :className :classGrade :1 :1 :0 :30 :[Utilities getCurrentDate]];
+    [webHandler addClass:currentUser.id :className :classGrade :1];
+    
 }
 
 
@@ -156,13 +128,6 @@
 }
 
 
-- (NSInteger)getSchoolId{
-    NSInteger schoolIndex = index ;
-    school *ss = [schoolData objectAtIndex:schoolIndex];
-    NSInteger schoolId = [ss getId];
-    return schoolId;
-}
-
 
 - (void) activityStart :(NSString *)message {
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -189,34 +154,6 @@
 - (void)hideKeyboard{
     [self.view endEditing:YES];
 }
-
-
-#pragma mark - Picker view
-
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;
-}
-
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return schoolData.count;
-}
-
-
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return [[schoolData objectAtIndex:row] getName];
-    
-}
-
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    index = row;
-    
-}
-
-
-
 
 
 @end

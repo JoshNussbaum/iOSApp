@@ -17,7 +17,6 @@
 #import "MarketViewController.h"
 #import "StudentsTableViewController.h"
 #import "BBBadgeBarButtonItem.h"
-#import "SettingsViewController.h"
 
 
 @interface HomeViewController (){
@@ -37,7 +36,6 @@
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
     self.teacherNameLabel.text = name;
     self.classNameLabel.text = [currentUser.currentClass getName];
-    self.schoolNameLabel.text = [[DatabaseHandler getSharedInstance] getSchoolName:[currentUser.currentClass getSchoolId]];
     [self configureProgressBars];
 
     NSArray *buttons = @[self.classesButton, self.attendanceButton];

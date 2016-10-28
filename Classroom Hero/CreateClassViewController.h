@@ -11,9 +11,7 @@
 #import "numberTextField.h"
 #import "ConnectionHandler.h"
 
-@interface CreateClassViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, ConnectionHandlerDelegate>
-
-@property (strong, nonatomic) IBOutlet UIPickerView *schoolPicker;
+@interface CreateClassViewController : UIViewController <ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet nameTextField *classNameTextField;
 

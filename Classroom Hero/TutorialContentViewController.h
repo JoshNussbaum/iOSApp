@@ -24,7 +24,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *stampImage;	
-@property (strong, nonatomic) IBOutlet UIButton *infoButton;
 @property (strong, nonatomic) IBOutlet UILabel *pickerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *arrowLabel;
 

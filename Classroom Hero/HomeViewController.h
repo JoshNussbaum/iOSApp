@@ -19,8 +19,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
 
-@property (strong, nonatomic) IBOutlet UILabel *schoolNameLabel;
-
 @property (strong, nonatomic) IBOutlet UIButton *classesButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *attendanceButton;

@@ -20,10 +20,8 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *totalPointsLabel;
 
-@property (strong, nonatomic) IBOutlet UILabel *schoolName;
-
 @property (strong, nonatomic) IBOutlet UILabel *gradeLabel;
 
-- (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount :(NSString *)schoolName;
+- (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount;
 
 @end

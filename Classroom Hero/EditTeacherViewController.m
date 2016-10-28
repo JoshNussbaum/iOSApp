@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentUser = [user getInstance];
-    NSArray *buttons = @[self.editNameButton, self.editPasswordButton, self.resetPasswordButton, self.manageStampButton];
+    NSArray *buttons = @[self.editNameButton, self.editPasswordButton, self.resetPasswordButton];
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :[UIColor whiteColor]];
     }

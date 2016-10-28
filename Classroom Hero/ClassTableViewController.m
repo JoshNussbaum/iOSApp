@@ -238,9 +238,8 @@ static NSString * const classCell = @"classCell";
 
         if (classes.count > 0){
             class *class_ = [classes objectAtIndex:indexPath.row-1];
-            NSString *schoolName = [[DatabaseHandler getSharedInstance] getSchoolName:[class_ getSchoolId]];
             NSInteger classCount = [[studentNumberCountsByClassIds objectForKey:[NSNumber numberWithInteger:[class_ getId]]]integerValue];
-            [cell initializeCellWithClass:class_ :classCount :schoolName];
+            [cell initializeCellWithClass:class_ :classCount];
         }
 
         return cell;

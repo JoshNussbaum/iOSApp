@@ -15,9 +15,8 @@
 }
 
 
-- (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount :(NSString *)schoolName{
+- (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount{
     self.nameLabel.text = [class_ getName];
-    self.schoolName.text = schoolName;
     self.totalPointsLabel.text = [NSString stringWithFormat:@"%ld  Points", (long)[class_ getProgress]];
     float barProgress = (float)[class_ getProgress] / (float)[class_ getNextLevel];
     if ([class_ getProgress] == 0) {

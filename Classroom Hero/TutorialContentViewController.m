@@ -27,6 +27,7 @@ static int screenNumber;
 
 @implementation TutorialContentViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     screenNumber = 0;
@@ -51,8 +52,7 @@ static int screenNumber;
             [self onPage:nil :nil :nil :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 1:
-            [self onPage:@"Class name" :@"Grade number" :@"Add  class" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
-            [self.schoolPicker selectRow:floor(self.schoolData.count/2) inComponent:0 animated:YES];
+            [self onPage:@"Class name" :@"Grade number" :@"Add  class" :NO :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 2:
             [self onPage:@"Student first name" :@"Student last name" :@"Add  student" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
@@ -75,10 +75,6 @@ static int screenNumber;
     }
 }
 
-
-- (IBAction)infoButtonClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"School Selector" message:@"If you do not see your school, contact classroomheroservices@gmail.com to get it added" cancel:@"Close" otherTitles:nil tag:0 view:nil];
-}
 
 
 - (IBAction)backgroundTap:(id)sender{
@@ -107,14 +103,13 @@ static int screenNumber;
         NSString *className = self.textField1.text;
         NSString *gradeNumber = self.textField2.text;
         NSString *classErrorMessage = [Utilities isInputValid:className :@"Class name"];
-        NSInteger schoolId = [self getSchoolId];
         if (!classErrorMessage){
             if (![[DatabaseHandler getSharedInstance] doesClassNameExist:className]){
                 NSString *gradeErrorMessage = [Utilities isNumeric:gradeNumber];
                 if (!gradeErrorMessage) {
                     if (!(gradeNumber.length > 3)){
                         [self activityStart:@"Validating class data..."];
-                        [webHandler addClass:currentUser.id :className :gradeNumber.integerValue :schoolId];
+                        [webHandler addClass:currentUser.id :className :gradeNumber.integerValue :1];
                     }
                     else {
                         [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be less than 1000" cancel:nil otherTitles:nil tag:0 view:nil];
@@ -257,8 +252,7 @@ static int screenNumber;
         
         if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
-            NSInteger schoolId = [self getSchoolId];
-            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :schoolId :1 :0 :30 :[Utilities getCurrentDate]];
+            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :1 :1 :0 :30 :[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             currentUser.currentClass = newClass;
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add  another  class  or  swipe  left  to  continue", compliment]];
@@ -376,8 +370,6 @@ static int screenNumber;
         self.stampImage.hidden = YES;
         self.schoolPicker.hidden = NO;
         if (self.pageIndex != 1){
-            self.infoButton.hidden = YES;
-            self.infoButton.enabled = NO;
             if (self.classData.count == 0){
                 self.schoolPicker.hidden = YES;
                 self.classNameLabel.text = @"You  must  add  a  class  first!";
@@ -397,24 +389,6 @@ static int screenNumber;
                 self.classNameLabel.hidden = YES;
             }
         }
-        else {
-            self.infoButton.hidden = NO;
-            self.infoButton.enabled = YES;
-            if (self.schoolData.count == 0){
-                self.pickerLabel.hidden = YES;
-                self.schoolPicker.hidden = YES;
-                self.classNameLabel.text = @"Error loading schools";
-                self.classNameLabel.hidden = NO;
-                self.pickerLabel.text = @"";
-            }
-            else {
-                self.pickerLabel.text = @"School Selector";
-                self.pickerLabel.hidden = NO;
-                
-                self.classNameLabel.hidden = YES;
-            }
-            
-        }
     }
     else {
         self.arrowLabel.hidden = NO;
@@ -422,36 +396,19 @@ static int screenNumber;
             self.stampImage.hidden = NO;
             if (self.pageIndex == 6){
                 self.arrowLabel.hidden = YES;
-                if (!currentUser.serial){
-                    self.titleLabel.hidden = NO;
-                }
-                else {
-                    self.titleLabel.text = @"You have a stamp registered to your account.  Unregister from the in app settings menu";
-                    self.titleLabel.hidden =  NO;
-                }
+                self.titleLabel.hidden = NO;
+
             }
-            self.pickerLabel.hidden = YES;
-            self.schoolPicker.hidden = YES;
-            self.classNameLabel.hidden = YES;
             
             
         }
-        else {
-            self.schoolPicker.hidden = YES;
-            
-        }
+        self.pickerLabel.hidden = YES;
+        self.schoolPicker.hidden = YES;
+        self.classNameLabel.hidden = YES;
     }
     self.textField1.keyboardType = keyboard1Type;
     self.textField2.keyboardType = keyboard2Type;
     
-}
-
-
-- (NSInteger)getSchoolId{
-    NSInteger schoolIndex = index ;
-    school *ss = [self.schoolData objectAtIndex:schoolIndex];
-    NSInteger schoolId = [ss getId];
-    return schoolId;
 }
 
 
@@ -527,26 +484,14 @@ static int screenNumber;
 
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    
-    if (self.pageIndex > 1){
-        return self.classData.count;
-    }
-    else{
-        return self.schoolData.count;
-    }
+    return self.classData.count;
+
 }
 
 
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    if (self.pageIndex > 1){
-        NSString *title = [[self.classData objectAtIndex:row] getName];
-        return title;
-
-    }
-    else{
-        NSString *title = [[self.schoolData objectAtIndex:row] getName];
-        return title;
-    }
+    NSString *title = [[self.classData objectAtIndex:row] getName];
+    return title;
  
 }
 

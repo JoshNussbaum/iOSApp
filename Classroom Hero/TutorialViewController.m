@@ -132,9 +132,6 @@
     TutorialContentViewController *tutorialContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TutorialContentViewController"];
     tutorialContentViewController.pageIndex = index;
     tutorialContentViewController.titleText = self.pageTitles[index];
-    if (index == 1){
-        tutorialContentViewController.schoolData = [[DatabaseHandler getSharedInstance] getSchools];
-    }
     if (index > 1 && index < 6){
         tutorialContentViewController.classData = [[DatabaseHandler getSharedInstance] getClasses];
     }
