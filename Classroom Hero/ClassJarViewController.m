@@ -49,10 +49,11 @@
     float jarImageX;
     float jarImageY;
     float jarImageWidth;
-    float jarImageHeight;
-    float jarCoinsX;
-    float jarCoinsY;
-    float jarCoinsWidth;
+    
+    CGFloat jarCoinsHeight;
+    CGFloat jarCoinsX;
+    CGFloat jarCoinsY;
+    CGFloat jarCoinsWidth;
 }
 
 @property UIImageView *jarCoins;
@@ -64,6 +65,7 @@
 
 
 - (void)viewDidLoad {
+    NSLog(@"Here is the view width and height -> (%f, %f)", (float)self.view.frame.size.width, (float)self.view.frame.size.height);
     [super viewDidLoad];
     coinsShowing = NO;
     currentUser = [user getInstance];
@@ -112,33 +114,41 @@
         jarImageX = self.jarImage.frame.origin.x;
         jarImageY = self.jarImage.frame.origin.y;
         jarImageWidth = self.jarImage.frame.size.width;
-        jarImageHeight = self.jarImage.frame.size.height;
         
-        jarCoinsWidth = jarImageX + jarImageWidth/2;
+        jarCoinsHeight = self.jarCoinsImage.frame.size.height;
+        jarCoinsWidth = self.jarCoinsImage.frame.size.width;
         
         
-        jarCoinsX = (jarImageX + jarImageWidth/2) - jarCoinsWidth/2;
-        jarCoinsY = jarImageHeight + jarImageY - 50;
+        jarCoinsX = self.jarCoinsImage.frame.origin.x;
+        jarCoinsY = self.jarCoinsImage.frame.origin.y;
+        jarCoinsY += jarCoinsHeight;
         
         self.jarCoins = [[UIImageView alloc] initWithImage:image];
         self.jarCoins.layer.zPosition = -1;
         self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
-        self.jarCoins.contentMode = UIViewContentModeTop;
         self.jarCoins.clipsToBounds = YES;
+        if (self.view.frame.size.height == 1366) {
+            self.jarCoins.contentMode = UIViewContentModeScaleToFill;
+
+        }
+        else {
+            self.jarCoins.contentMode = UIViewContentModeTop;
+        }
+
         [self.view addSubview:self.jarCoins];
         
-        self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
         
         self.corkImage.hidden = YES;
+        self.corkImage.layer.zPosition = -50;
         float prog = (float)[currentClassJar getProgress] / (float)[currentClassJar getTotal];
         
-        float newProg;
+        CGFloat newProg;
         if ([currentClassJar getProgress] == 0){
             self.jarCoins.hidden = YES;
             newProg = 0;
         }
         else {
-            newProg = prog * (-420);
+            newProg = prog * -(jarCoinsHeight);
             
         }
         CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
@@ -341,8 +351,8 @@
                 
                 
                 CGRect finalFrame = self.jarCoins.frame;
-                float newProg;
-                newProg = prog * -420;
+                CGFloat newProg;
+                newProg = prog * -(jarCoinsHeight );
                 
                 finalFrame.size.height = newProg;
                 
@@ -429,7 +439,7 @@
         
         [UIView animateWithDuration:.60
                          animations:^{
-                             [coin setFrame:CGRectMake(self.jarImage.frame.origin.x + self.jarImage.frame.size.width/2 - 85, self.jarImage.frame.origin.y+(self.jarImage.frame.size.height-230), self.coinImage.frame.size.width, self.coinImage.frame.size.height)];
+                             [coin setFrame:CGRectMake(self.jarImage.frame.origin.x + self.jarImage.frame.size.width/2 - 85, self.jarImage.frame.origin.y+(self.jarImage.frame.size.height-225), self.coinImage.frame.size.width, self.coinImage.frame.size.height)];
                              
                          }
                          completion:^(BOOL finished) {
@@ -446,12 +456,12 @@
                              }
                              
                              CGRect finalFrame = self.jarCoins.frame;
-                             float newProg;
+                             CGFloat newProg;
                              if (prog >= 1.0 || prog == 0) {
-                                 newProg = -420;
+                                 newProg = -(jarCoinsHeight );
                              }
                              else {
-                                 newProg = prog * -420;
+                                 newProg = prog * -(jarCoinsHeight);
                                  
                              }
                              finalFrame.size.height = newProg;
@@ -489,11 +499,11 @@
         prog = (float)([currentClassJar getProgress]-pointsEarned) / (float)[currentClassJar getTotal];
     }
     
-    CGRect finalFrame = self.jarCoins.frame;
-    float newProg;
-    newProg = prog * -420;
+    //CGRect finalFrame = self.jarCoins.frame;
+    CGFloat newProg;
+    newProg = prog * -(jarCoinsHeight);
 
-    finalFrame.size.height = newProg;
+    //finalFrame.size.height = newProg;
     
     [UIView animateWithDuration:time animations:^{
         self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
@@ -511,7 +521,7 @@
         
         [UIView animateWithDuration:1.2
                          animations:^{
-                             [self.corkImage setFrame:CGRectMake(self.corkImage.frame.origin.x, self.corkImage.frame.origin.y+140, self.corkImage.frame.size.width, self.corkImage.frame.size.height)];
+                             [self.corkImage setFrame:CGRectMake(self.corkImage.frame.origin.x-10, jarImageY-50, self.corkImage.frame.size.width, self.corkImage.frame.size.height)];
                          }
                          completion:^(BOOL finished) {
                              AudioServicesPlaySystemSound(cork);

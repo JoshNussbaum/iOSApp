@@ -20,6 +20,8 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *coinImage;
 
+@property (strong, nonatomic) IBOutlet UIImageView *jarCoinsImage;
+
 @property (strong, nonatomic) IBOutlet UIStepper *stepper;
 
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;

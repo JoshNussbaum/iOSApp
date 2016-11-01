@@ -256,14 +256,14 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-283" y="906"/>
+            <point key="canvasLocation" x="-869" y="1048"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Dp-hU-HN5">
             <objects>
                 <navigationController id="V0G-Sn-Owy" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Doy-jr-HEF"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4EF-Gc-zg4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4EF-Gc-zg4">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -273,7 +273,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xhZ-03-XPP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1295" y="-688"/>
+            <point key="canvasLocation" x="-2211" y="-688"/>
         </scene>
         <!--Account Creation-->
         <scene sceneID="q71-iz-Mvh">
@@ -465,7 +465,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-283" y="-688"/>
+            <point key="canvasLocation" x="-869" y="-688"/>
         </scene>
         <!--Tutorial View Controller-->
         <scene sceneID="qLH-aS-0aZ">
@@ -548,7 +548,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AZT-xx-4lJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="cWe-vQ-rBv" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="768" y="-688"/>
+            <point key="canvasLocation" x="443" y="-688"/>
         </scene>
         <!--Tutorial Content View Controller-->
         <scene sceneID="zz0-St-izh">
@@ -719,7 +719,7 @@
         <scene sceneID="41z-ma-2id">
             <objects>
                 <navigationController id="5rX-c4-C7T" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fFj-pg-Kak">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fFj-pg-Kak">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -729,7 +729,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XwM-g6-Hlq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1731" y="2186"/>
+            <point key="canvasLocation" x="-3675" y="2186"/>
         </scene>
         <!--About Us-->
         <scene sceneID="bUP-gt-Ja1">
@@ -810,7 +810,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eDS-20-9r5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="8ig-PM-DDv" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-869" y="2186"/>
+            <point key="canvasLocation" x="-1823" y="3118"/>
         </scene>
         <!--Pricing View Controller-->
         <scene sceneID="q7k-LO-Bz7">
@@ -848,13 +848,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hRf-5X-GaF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="115" y="2170"/>
+            <point key="canvasLocation" x="13" y="3778"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SBm-Z9-O0J">
             <objects>
                 <navigationController id="FrP-gK-jVA" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1d8-0u-jGw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1d8-0u-jGw">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -864,7 +864,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Flx-NY-ZUB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="714" y="906"/>
+            <point key="canvasLocation" x="360" y="1048"/>
         </scene>
         <!--Class List-->
         <scene sceneID="LZd-ls-33b">
@@ -1018,7 +1018,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="IF7-o3-AaP">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="f1G-uX-y8h">
-                                <rect key="frame" x="578" y="7" width="170" height="30"/>
+                                <rect key="frame" x="834" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1040,7 +1040,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iuy-0M-pN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0YL-8o-P28" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1706" y="906"/>
+            <point key="canvasLocation" x="2638" y="1203"/>
         </scene>
         <!--Attendance View Controller-->
         <scene sceneID="4YI-1C-2z4">
@@ -1205,7 +1205,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h02-Kb-W86">
-                            <rect key="frame" x="196" y="7" width="198" height="30"/>
+                            <rect key="frame" x="413" y="7" width="198" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                             <state key="normal" title="Check In All">
@@ -1218,7 +1218,7 @@
                         <rightBarButtonItems>
                             <barButtonItem id="B2N-eh-7e0">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sU3-EE-PhM">
-                                    <rect key="frame" x="578" y="2" width="170" height="39"/>
+                                    <rect key="frame" x="834" y="2" width="170" height="39"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1235,7 +1235,7 @@
                             </barButtonItem>
                             <barButtonItem style="plain" id="Zqi-xo-Ojc">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xeZ-X7-Rgc">
-                                    <rect key="frame" x="400" y="1" width="170" height="41"/>
+                                    <rect key="frame" x="656" y="1" width="170" height="41"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                     <state key="normal" title="Check Out All">
@@ -1269,7 +1269,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3209" y="91"/>
+            <point key="canvasLocation" x="3214" y="-688"/>
         </scene>
         <!--Class Creation-->
         <scene sceneID="eBJ-fA-hHl">
@@ -1376,7 +1376,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1706" y="2170"/>
+            <point key="canvasLocation" x="1669" y="3118"/>
         </scene>
         <!--Students Table View Controller-->
         <scene sceneID="Q00-IN-WCw">
@@ -1491,7 +1491,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bg6-AO-vSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5899" y="2082"/>
+            <point key="canvasLocation" x="6118" y="2689"/>
         </scene>
         <!--Hero Page-->
         <scene sceneID="T1K-z5-mPF">
@@ -1574,7 +1574,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="156-ON-2Kk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="e96-Dn-8gD">
-                                <rect key="frame" x="578" y="7" width="170" height="30"/>
+                                <rect key="frame" x="834" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                 <state key="normal" title="Edit Student">
@@ -1595,7 +1595,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfW-Vd-zfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5899" y="3271"/>
+            <point key="canvasLocation" x="6118" y="4860"/>
         </scene>
         <!--Settings-->
         <scene sceneID="nIf-vc-m5J">
@@ -1761,7 +1761,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="6JK-gq-SLP">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Dhy-Rj-UlJ">
-                                <rect key="frame" x="578" y="7" width="170" height="30"/>
+                                <rect key="frame" x="834" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                 <state key="normal" title="Tutorial">
@@ -1793,7 +1793,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4962" y="-426"/>
+            <point key="canvasLocation" x="4705" y="-688"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="T4s-j2-Csh">
@@ -1809,11 +1809,11 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3e-X8-Y6E">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh's Wacky Cool Two Line Fourth Grade Class" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9b-4G-Sw5">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh's Wacky Cool Two Line Fourth Grade Class" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="32" translatesAutoresizingMaskIntoConstraints="NO" id="Q9b-4G-Sw5">
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Q9b-4G-Sw5" secondAttribute="height" multiplier="601:86" id="WLg-0Z-hcx"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="32"/>
+                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="39"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1823,7 +1823,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ZdY-u4-QM3" secondAttribute="height" multiplier="79:25" id="bwT-tb-yHL"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="16"/>
+                                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1831,7 +1831,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="z5d-5Q-Qio" secondAttribute="height" multiplier="7:3" id="oeF-MK-xXG"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
+                                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1853,7 +1853,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="wZ3-mB-6r4" secondAttribute="height" multiplier="79:25" id="JqR-CF-gDw"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="16"/>
+                                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1861,7 +1861,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="s4X-wK-A8U" secondAttribute="height" multiplier="7:3" id="525-tt-apU"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
+                                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1881,7 +1881,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="EQ0-z4-kEE" secondAttribute="height" multiplier="157:40" id="cuY-NL-tIn"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
+                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="27"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DoG-Rn-Q86" customClass="CircleProgressBar">
@@ -1905,7 +1905,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="d5o-NN-7QH" secondAttribute="height" multiplier="79:25" id="54Z-nk-P3P"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="16"/>
+                                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1913,7 +1913,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="hGs-lu-Fw1" secondAttribute="height" multiplier="7:3" id="I8s-QN-A5b"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
+                                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1950,11 +1950,11 @@
                                             <constraint firstAttribute="width" secondItem="N7v-iN-yzp" secondAttribute="height" multiplier="609:4" id="1wU-JY-p05"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh Nussbaum" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="wFg-oq-SLx">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh Nussbaum" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="27" translatesAutoresizingMaskIntoConstraints="NO" id="wFg-oq-SLx">
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="wFg-oq-SLx" secondAttribute="height" multiplier="10:1" id="ECG-m5-kVx"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="27"/>
+                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="34"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1962,7 +1962,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="LZk-O2-S30" secondAttribute="height" multiplier="157:40" id="hmB-7J-Y9l"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
+                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="27"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -2212,7 +2212,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4962" y="818"/>
+            <point key="canvasLocation" x="4705" y="818"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="dlX-Rq-Svj">
@@ -2220,7 +2220,7 @@
                 <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="OnU-4O-cID" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fAs-b3-3fW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1669" y="-1878"/>
+            <point key="canvasLocation" x="1706" y="-2287"/>
         </scene>
         <!--Award View Controller-->
         <scene sceneID="q2u-Nq-y2U">
@@ -2518,7 +2518,7 @@
                                         <rect key="frame" x="0.0" y="28" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FX2-oP-paA" id="qZV-hs-B5w">
-                                            <frame key="frameInset" width="391" height="43"/>
+                                            <frame key="frameInset" width="391" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-GG-iUV">
@@ -2539,7 +2539,7 @@
                                         <rect key="frame" x="0.0" y="72" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2GX-QF-XkO" id="hI9-Mc-0FQ">
-                                            <frame key="frameInset" width="391" height="43"/>
+                                            <frame key="frameInset" width="391" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generate Chest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRM-mH-QQy">
@@ -2560,7 +2560,7 @@
                                         <rect key="frame" x="0.0" y="116" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bxL-Rb-bJJ" id="nCs-0h-BXo">
-                                            <frame key="frameInset" width="391" height="43"/>
+                                            <frame key="frameInset" width="391" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select all " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkk-s4-pl7">
@@ -2581,7 +2581,7 @@
                                         <rect key="frame" x="0.0" y="160" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pYM-5Y-zBe" id="LA9-TT-GbN">
-                                            <frame key="frameInset" width="391" height="43"/>
+                                            <frame key="frameInset" width="391" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deselect all" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qE4-U4-lPq">
@@ -2602,7 +2602,7 @@
                                         <rect key="frame" x="0.0" y="204" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WhH-Je-Xtm" id="6mA-3P-JGB">
-                                            <frame key="frameInset" width="391" height="43"/>
+                                            <frame key="frameInset" width="391" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iK9-6I-wGA">
@@ -2802,7 +2802,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="5899" y="818"/>
+            <point key="canvasLocation" x="6118" y="818"/>
         </scene>
         <!--Class Jar View Controller-->
         <scene sceneID="aR5-Qo-doW">
@@ -2823,11 +2823,6 @@
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="40"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cork.png" translatesAutoresizingMaskIntoConstraints="NO" id="PKY-bC-m3E">
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="PKY-bC-m3E" secondAttribute="height" multiplier="616:767" id="NhV-vk-deb"/>
-                                </constraints>
-                            </imageView>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin.png" translatesAutoresizingMaskIntoConstraints="NO" id="tHH-bU-t83">
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="tHH-bU-t83" secondAttribute="height" multiplier="1:1" id="55W-FJ-6Ld"/>
@@ -2985,6 +2980,16 @@
                                     <action selector="addPointsClicked:" destination="mAJ-bY-EoJ" eventType="touchUpInside" id="TaU-O8-6jL"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" autoresizesSubviews="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jar_progress_coins.png" translatesAutoresizingMaskIntoConstraints="NO" id="DWU-w3-Q8u">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DWU-w3-Q8u" secondAttribute="height" multiplier="337:484" constant="25.066115702479351" id="yEf-oY-tIh"/>
+                                </constraints>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cork.png" translatesAutoresizingMaskIntoConstraints="NO" id="PKY-bC-m3E">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="PKY-bC-m3E" secondAttribute="height" multiplier="33:23" constant="21.739130434782624" id="gio-bE-IZ6"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.99357201533352657" green="1" blue="0.91139571917218554" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -2992,13 +2997,17 @@
                             <constraint firstItem="alx-ai-xsj" firstAttribute="top" secondItem="pZp-hH-HXR" secondAttribute="bottom" id="0Cg-8z-8AW"/>
                             <constraint firstItem="3PS-Y6-N4D" firstAttribute="centerX" secondItem="mkn-FW-6Y9" secondAttribute="centerX" id="0ij-ex-cIJ"/>
                             <constraint firstItem="5Yp-zx-Qig" firstAttribute="centerY" secondItem="3PS-Y6-N4D" secondAttribute="centerY" id="1gw-mG-lw4"/>
-                            <constraint firstItem="PKY-bC-m3E" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="77:128" id="8uB-HY-lGF"/>
+                            <constraint firstItem="3PS-Y6-N4D" firstAttribute="top" secondItem="PKY-bC-m3E" secondAttribute="bottom" constant="8" id="9Np-Hg-KTz"/>
                             <constraint firstItem="bWL-xq-Wxn" firstAttribute="centerX" secondItem="mkn-FW-6Y9" secondAttribute="centerX" id="Bb5-8a-UNf"/>
+                            <constraint firstItem="DWU-w3-Q8u" firstAttribute="bottom" secondItem="3PS-Y6-N4D" secondAttribute="bottom" constant="-15" id="CF8-dM-rXE"/>
                             <constraint firstItem="tS8-qQ-35D" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="105:1024" id="DnZ-bR-ZvC"/>
                             <constraint firstItem="alx-ai-xsj" firstAttribute="leading" secondItem="mkn-FW-6Y9" secondAttribute="leading" id="Epf-eh-k7g"/>
                             <constraint firstItem="5Yp-zx-Qig" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="257:1024" constant="-82" id="Eq3-XT-kaS"/>
                             <constraint firstItem="tHH-bU-t83" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="175:1024" id="HJr-6a-9cw"/>
+                            <constraint firstItem="DWU-w3-Q8u" firstAttribute="width" secondItem="3PS-Y6-N4D" secondAttribute="height" multiplier="337:605" id="Hbm-SG-OB3"/>
                             <constraint firstItem="3PS-Y6-N4D" firstAttribute="top" secondItem="alx-ai-xsj" secondAttribute="bottom" constant="146" id="JDh-7r-2YZ"/>
+                            <constraint firstItem="PKY-bC-m3E" firstAttribute="centerX" secondItem="3PS-Y6-N4D" secondAttribute="centerX" id="KP9-F7-ngi"/>
+                            <constraint firstItem="DWU-w3-Q8u" firstAttribute="centerX" secondItem="3PS-Y6-N4D" secondAttribute="centerX" id="Msu-rj-lrk"/>
                             <constraint firstAttribute="trailing" secondItem="alx-ai-xsj" secondAttribute="trailing" id="Nw7-nV-CvA"/>
                             <constraint firstItem="tHH-bU-t83" firstAttribute="centerX" secondItem="3PS-Y6-N4D" secondAttribute="centerX" id="ODw-5W-2lg"/>
                             <constraint firstItem="tS8-qQ-35D" firstAttribute="centerX" secondItem="mkn-FW-6Y9" secondAttribute="centerX" id="ULM-Pu-DYr"/>
@@ -3008,11 +3017,10 @@
                             <constraint firstItem="bWL-xq-Wxn" firstAttribute="top" secondItem="alx-ai-xsj" secondAttribute="bottom" id="fGI-w8-ttu"/>
                             <constraint firstItem="3PS-Y6-N4D" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="307:512" constant="-190" id="gR7-TH-gNO"/>
                             <constraint firstItem="alx-ai-xsj" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="3:4" id="jzq-2Z-Lto"/>
-                            <constraint firstItem="PKY-bC-m3E" firstAttribute="centerX" secondItem="3PS-Y6-N4D" secondAttribute="centerX" id="neW-uX-k7E"/>
                             <constraint firstItem="d52-HW-iar" firstAttribute="top" secondItem="V12-pn-duu" secondAttribute="bottom" constant="8" id="o5S-x4-fZW"/>
                             <constraint firstItem="V12-pn-duu" firstAttribute="top" secondItem="tS8-qQ-35D" secondAttribute="bottom" constant="8" id="rwk-Ue-1X7"/>
                             <constraint firstItem="5Yp-zx-Qig" firstAttribute="centerX" secondItem="3PS-Y6-N4D" secondAttribute="centerX" id="wJ1-I2-ZjE"/>
-                            <constraint firstItem="3PS-Y6-N4D" firstAttribute="top" secondItem="PKY-bC-m3E" secondAttribute="bottom" constant="-462" id="yae-E5-X6j"/>
+                            <constraint firstItem="PKY-bC-m3E" firstAttribute="width" secondItem="mkn-FW-6Y9" secondAttribute="height" multiplier="165:512" constant="-50" id="wub-R1-sgV"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="EfU-vX-rI3" appends="YES" id="O3W-Nq-VZb"/>
@@ -3073,6 +3081,7 @@
                         <outlet property="homeButton" destination="RTu-sm-79t" id="HFv-jj-Xff"/>
                         <outlet property="homeIconButton" destination="GdD-1B-y5z" id="34k-Sf-Yf4"/>
                         <outlet property="jarButton" destination="RdN-2P-eCE" id="5hv-yn-HkM"/>
+                        <outlet property="jarCoinsImage" destination="DWU-w3-Q8u" id="N3U-Ps-mdu"/>
                         <outlet property="jarImage" destination="3PS-Y6-N4D" id="4L8-rz-EXa"/>
                         <outlet property="marketButton" destination="UnT-w3-ymX" id="cJC-sG-mXl"/>
                         <outlet property="marketIconButton" destination="a1L-w8-9oA" id="AKd-AW-Vsf"/>
@@ -3094,7 +3103,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6764" y="818"/>
+            <point key="canvasLocation" x="7483" y="818"/>
         </scene>
         <!--Market View Controller-->
         <scene sceneID="euu-Jd-jaq">
@@ -3306,7 +3315,7 @@
                                         <rect key="frame" x="0.0" y="28" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ezP-GM-MyV" id="9xq-44-rif">
-                                            <frame key="frameInset" width="391" height="43"/>
+                                            <frame key="frameInset" width="391" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjP-0U-JFP">
@@ -3342,7 +3351,6 @@
                             <constraint firstItem="srx-XP-7TZ" firstAttribute="top" secondItem="zp2-br-Tkz" secondAttribute="bottom" constant="34" id="6BV-GW-iXY"/>
                             <constraint firstItem="uZo-2Q-U9Q" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="9Do-i0-TMA"/>
                             <constraint firstItem="tCB-YH-9LY" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="3:4" id="9LI-Si-lD7"/>
-                            <constraint firstItem="srx-XP-7TZ" firstAttribute="leading" secondItem="xbq-R1-ZNM" secondAttribute="leading" id="A1i-27-V8h"/>
                             <constraint firstItem="srx-XP-7TZ" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="Bdl-NB-Qkc"/>
                             <constraint firstItem="tCB-YH-9LY" firstAttribute="top" secondItem="2eJ-41-5MN" secondAttribute="bottom" id="E9k-yA-CsX"/>
                             <constraint firstItem="lV2-3G-dgm" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="It2-Zi-L7B"/>
@@ -3351,10 +3359,8 @@
                             <constraint firstItem="zp2-br-Tkz" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="M6w-qa-l0j"/>
                             <constraint firstItem="rKs-0R-6wk" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="23:32" id="MTT-EK-a1z"/>
                             <constraint firstItem="ptO-mf-fG9" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="NBs-kU-F0f"/>
-                            <constraint firstAttribute="trailing" secondItem="Xq9-Kh-Dgl" secondAttribute="trailing" id="NCq-NO-3JW"/>
                             <constraint firstItem="z6f-ic-UP8" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="NcG-5B-r9S"/>
                             <constraint firstItem="uZo-2Q-U9Q" firstAttribute="top" secondItem="bNY-Tl-vWz" secondAttribute="bottom" constant="27" id="RQc-4J-NCK"/>
-                            <constraint firstAttribute="trailing" secondItem="tCB-YH-9LY" secondAttribute="trailing" id="WzO-Sm-oYI"/>
                             <constraint firstAttribute="trailing" secondItem="TKh-UE-yJg" secondAttribute="trailing" id="XwR-PC-DM0"/>
                             <constraint firstItem="tCB-YH-9LY" firstAttribute="leading" secondItem="xbq-R1-ZNM" secondAttribute="leading" id="Zuz-9p-Jyp"/>
                             <constraint firstItem="bNY-Tl-vWz" firstAttribute="top" secondItem="z6f-ic-UP8" secondAttribute="bottom" constant="8" id="ZzZ-X4-GIg"/>
@@ -3368,7 +3374,6 @@
                             <constraint firstItem="srx-XP-7TZ" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="3:4" id="fT7-tn-6qQ"/>
                             <constraint firstItem="z6f-ic-UP8" firstAttribute="top" secondItem="tCB-YH-9LY" secondAttribute="bottom" id="gnl-Or-3u2"/>
                             <constraint firstItem="Xq9-Kh-Dgl" firstAttribute="top" secondItem="bNY-Tl-vWz" secondAttribute="bottom" constant="29" id="iXe-T1-MmT"/>
-                            <constraint firstItem="Xq9-Kh-Dgl" firstAttribute="leading" secondItem="xbq-R1-ZNM" secondAttribute="leading" id="oqO-b3-oxc"/>
                             <constraint firstItem="zp2-br-Tkz" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="257:1024" constant="-57" id="p8l-s3-gfc"/>
                             <constraint firstItem="rKs-0R-6wk" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="pq0-yu-MpH"/>
                             <constraint firstItem="lV2-3G-dgm" firstAttribute="top" secondItem="rKs-0R-6wk" secondAttribute="bottom" constant="23" id="rvf-tQ-0iS"/>
@@ -3376,6 +3381,7 @@
                             <constraint firstItem="Xq9-Kh-Dgl" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="3:4" id="vot-Er-4N4"/>
                             <constraint firstItem="z6f-ic-UP8" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="23:32" id="wXo-v0-VIu"/>
                             <constraint firstItem="OVn-Xq-Zuh" firstAttribute="top" secondItem="TKh-UE-yJg" secondAttribute="bottom" id="xa2-gz-fag"/>
+                            <constraint firstItem="Xq9-Kh-Dgl" firstAttribute="leading" secondItem="tCB-YH-9LY" secondAttribute="leading" id="yy0-31-Wcq"/>
                             <constraint firstItem="lV2-3G-dgm" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="15:128" constant="-20" id="yyU-Fe-QaW"/>
                             <constraint firstItem="rKs-0R-6wk" firstAttribute="top" secondItem="ptO-mf-fG9" secondAttribute="bottom" constant="11" id="zXB-va-V5c"/>
                         </constraints>
@@ -3463,18 +3469,19 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="7688" y="818"/>
+            <point key="canvasLocation" x="8945" y="818"/>
         </scene>
     </scenes>
     <resources>
         <image name="apple hero.png" width="591" height="680"/>
         <image name="coin.png" width="720" height="720"/>
         <image name="coinsack.png" width="720" height="720"/>
-        <image name="cork.png" width="660" height="1020"/>
+        <image name="cork.png" width="289" height="206"/>
         <image name="homeIcon.png" width="300" height="300"/>
         <image name="intact_jar.png" width="479" height="779"/>
         <image name="itemsIcon.png" width="300" height="300"/>
         <image name="jar_coin.png" width="720" height="720"/>
+        <image name="jar_progress_coins.png" width="299" height="413"/>
         <image name="redapple.png" width="3201" height="3201"/>
         <image name="treasure_chest.png" width="832" height="867"/>
     </resources>
@@ -3484,7 +3491,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ewg-8k-sYO"/>
-        <segue reference="0OP-ML-Sf4"/>
+        <segue reference="SR2-9x-ZVn"/>
+        <segue reference="bHb-Tt-ENY"/>
     </inferredMetricsTieBreakers>
 </document>
