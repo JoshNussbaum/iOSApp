@@ -18,8 +18,6 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *corkImage;
 
-@property (strong, nonatomic) IBOutlet UIImageView *lidImage;
-
 @property (strong, nonatomic) IBOutlet UIImageView *coinImage;
 
 @property (strong, nonatomic) IBOutlet UIStepper *stepper;

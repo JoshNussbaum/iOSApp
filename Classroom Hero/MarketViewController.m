@@ -43,6 +43,7 @@
 
 @implementation MarketViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     isBuying = NO;
@@ -115,10 +116,10 @@
     
 }
 
+
 - (IBAction)purchaseClicked:(id)sender {
     if (!isBuying){
         isBuying = YES;
-        [Utilities wiggleImage:self.stampImage sound:NO];
         [self displayStudent];
         
         if ([currentStudent getPoints] >= [currentItem getCost]){
@@ -144,7 +145,6 @@
         [Utilities editTextWithtitle:@"Edit item" message:nil cancel:@"Cancel" done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
     }
 }
-
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -316,6 +316,7 @@
             [self sellItemAnimation:scores];
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+            [Utilities wiggleImage:self.sackImage sound:NO];
             
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentItem getName], @"Item Name", [NSString stringWithFormat:@"%ld", (long)[currentItem getId]], @"Item ID", [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]], @"Item Cost", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             

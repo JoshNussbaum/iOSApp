@@ -76,6 +76,8 @@ static NSInteger coinHeight = 250;
     
     BOOL chestTappable;
     BOOL chestPoint;
+    
+    NSMutableDictionary *selectedStudentsWhenGenerateChestClicked;
 
 }
 
@@ -90,6 +92,8 @@ static NSInteger coinHeight = 250;
     currentUser = [user getInstance];
     reinforcerData = [[DatabaseHandler getSharedInstance]getReinforcers:[currentUser.currentClass getId]];
     studentsData = [[NSMutableDictionary alloc]init];
+    selectedStudentsWhenGenerateChestClicked = [[NSMutableDictionary alloc]init];
+
     [self getStudentsData];
     
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
@@ -340,7 +344,12 @@ static NSInteger coinHeight = 250;
     if (data == nil){
         if (chestPoint){
             chestTappable = YES;
-        } else chestTappable = NO;
+        } else {
+            chestTappable = NO;
+            [self hideStudent];
+            [self setReinforcerName];
+            self.categoryPicker.hidden = NO;
+        }
         [Utilities alertStatusNoConnection];
         isStamping = NO;
         return;
@@ -435,6 +444,9 @@ static NSInteger coinHeight = 250;
             }
             
             else {
+                [self hideStudent];
+                [self setReinforcerName];
+                self.categoryPicker.hidden = NO;
                 [self manuallyAddPointsSuccess];
             }
             
@@ -1246,7 +1258,9 @@ static NSInteger coinHeight = 250;
     }
     else if (indexPath.row == 1){
         // Generate Chest
-        if (chestTappable) {
+        NSInteger studentCount = selectedStudents.count;
+
+        if (chestTappable && [selectedStudents isEqualToDictionary:selectedStudentsWhenGenerateChestClicked]) {
             
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             
@@ -1266,8 +1280,8 @@ static NSInteger coinHeight = 250;
         }
         else {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            NSInteger studentCount = selectedStudents.count;
             if (studentCount > 0){
+                selectedStudentsWhenGenerateChestClicked = [NSMutableDictionary dictionaryWithDictionary:selectedStudents];
                 // this is generate chest, so make the animation,
                 // set a bool, close the tableview, then generate the chest
                 // on tap, check for that bool and then open that

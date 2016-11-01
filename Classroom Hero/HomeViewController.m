@@ -149,7 +149,7 @@
     self.classLevelLabel.text = [NSString stringWithFormat:@"Class  Level:  %ld", [currentUser.currentClass getLevel]];
 
     BOOL customized = NO;
-    [self.classProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
+    [self.classProgressBar setProgressBarTrackColor:[UIColor blackColor]];
     [self.classProgressBar setProgressBarWidth:(5.0f)];
     [self.classProgressBar  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.classProgressBar setBackgroundColor:[UIColor clearColor]];
@@ -162,7 +162,7 @@
         return [NSString stringWithFormat:@"%.0f / 255", progress * 255];
     } : nil)];
 
-    [self.jarProgressBar setProgressBarTrackColor:[Utilities CHGreenColor]];
+    [self.jarProgressBar setProgressBarTrackColor:[UIColor blackColor]];
     [self.jarProgressBar setProgressBarWidth:(5.0f)];
     [self.jarProgressBar  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.jarProgressBar setBackgroundColor:[UIColor clearColor]];
