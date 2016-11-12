@@ -58,7 +58,7 @@ static int screenNumber;
             [self onPage:@"Student first name" :@"Student last name" :@"Add  student" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 3:
-            [self onPage:@"Reinforcer name" :@"Reinforcer value" :@"Add  reinforcer" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"e.g. " :@"Reinforcer value" :@"Add  reinforcer" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 4:
             [self onPage:@"Item name" :@"Item cost" :@"Add  item" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
@@ -76,7 +76,6 @@ static int screenNumber;
 }
 
 
-
 - (IBAction)backgroundTap:(id)sender{
     [self hideKeyboard];
 }
@@ -86,7 +85,6 @@ static int screenNumber;
     [self handleAction];
     
 }
-
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

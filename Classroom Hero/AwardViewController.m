@@ -78,7 +78,6 @@ static NSInteger coinHeight = 250;
     BOOL chestPoint;
     
     NSMutableDictionary *selectedStudentsWhenGenerateChestClicked;
-
 }
 
 @end

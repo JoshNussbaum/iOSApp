@@ -14,6 +14,7 @@
     NSInteger flag;
 }
 
+
 @end
 
 @implementation TutorialViewController
@@ -21,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (flag == 1){
-        _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  get  started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers (Participation,  Homework on time,  In line)", @"Add  items  for  students  to  spend  points  on (e.g.  Day late homework pass)", @"Add  a  jar  for  a  class-wide  reward (e.g.  Pizza party, Movie day)", @"Click  continue  to  begin  your  adventure  with  Classroom  Hero!"];
+        _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  get  started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  continue  to  begin  your  adventure  with  Classroom  Hero!"];
         self.backButton.enabled = YES;
         self.backButton.hidden = NO;
 
@@ -29,7 +30,7 @@
     if (flag == 2){
         [self.backButton setTitle:@"Back" forState:UIControlStateNormal];
         [self.skipButton setHidden:YES];
-        _pageTitles = @[@"Swipe  left  to  create  a  class  and  register  a  teacher  stamp", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers (Participation,  Homework on time,  In line)", @"Add  items  for  students  to  spend  points  on (e.g.  Day late homework pass)", @"Add  a  jar  for  a  class-wide  reward (e.g.  Pizza party, Movie day)", @"Click  back  to  return  to  the  settings  screen"];
+        _pageTitles = @[@"Swipe  left  to  create  a  class  and  register  a  teacher  stamp", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  back  to  return  to  the  settings  screen"];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
     currentUser = [user getInstance];

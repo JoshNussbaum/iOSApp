@@ -30,7 +30,6 @@ NSArray *fakeStudents;
     MBProgressHUD* hud;
     bool isStamping;
 }
-
 @end
 
 @implementation LoginViewController
@@ -123,8 +122,6 @@ NSArray *fakeStudents;
     if (self.emailTextField.text){
         [[av textFieldAtIndex:0]setText:self.emailTextField.text];
     }
-    
-    
 }
 
 
