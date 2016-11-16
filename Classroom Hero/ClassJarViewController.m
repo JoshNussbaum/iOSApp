@@ -74,16 +74,12 @@
     [Utilities makeRoundedButton:self.addPointsButton :nil];
     
     if (!currentClassJar){
-        self.addJarButton.hidden = NO;
-        self.addJarButton.enabled = YES;
-        self.editJarButton.hidden = YES;
+        [self.addJarButton setTitle:@"Add" forState:UIControlStateNormal];
         self.stepper.hidden = YES;
         self.pointsLabel.hidden = YES;
     }
     else {
-        self.addJarButton.hidden = YES;
-        self.addJarButton.enabled = NO;
-        self.editJarButton.hidden = NO;
+        [self.addJarButton setTitle:@"Edit" forState:UIControlStateNormal];
         self.stepper.hidden = NO;
         self.pointsLabel.hidden = NO;
     }
@@ -121,7 +117,7 @@
         
         jarCoinsX = self.jarCoinsImage.frame.origin.x;
         jarCoinsY = self.jarCoinsImage.frame.origin.y;
-        jarCoinsY += jarCoinsHeight;
+        jarCoinsY += (jarCoinsHeight - 9);
         
         self.jarCoins = [[UIImageView alloc] initWithImage:image];
         self.jarCoins.layer.zPosition = -1;
@@ -219,15 +215,13 @@
 }
 
 
-- (IBAction)editJarClicked:(id)sender {
-    if (currentClassJar){
+- (IBAction)addJarClicked:(id)sender {
+    if (!currentClassJar){
+        [Utilities editAlertTextWithtitle:@"Add Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
+    }
+    else {
         [Utilities editTextWithtitle:@"Edit Class Jar" message:nil cancel:@"Cancel" done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
     }
-}
-
-
-- (IBAction)addJarClicked:(id)sender {
-    [Utilities editAlertTextWithtitle:@"Add Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
 }
 
 
@@ -322,10 +316,8 @@
             currentClassJar = [[classjar alloc] initWithid:jarId cid:[currentUser.currentClass getId] name:newClassJarName progress:0 total:newClassJarTotal.integerValue];
             [[DatabaseHandler getSharedInstance] addClassJar:(currentClassJar)];
             [self displayClassJar];
-            self.addJarButton.enabled = NO;
-            self.addJarButton.hidden = YES;
+            [self.addJarButton setTitle:@"Edit" forState:UIControlStateNormal];
             self.stepper.enabled = YES;
-            self.editJarButton.hidden = NO;
             self.stepper.hidden = NO;
             self.pointsLabel.hidden = NO;
             

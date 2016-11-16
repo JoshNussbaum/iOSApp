@@ -47,7 +47,7 @@ NSString * const StripePublishableKey = @" pk_test_0k5cvVSHQihOyTbRCUHXm9T2 ";
         else{
             [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                                     NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                    NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:36.0f],
+                                                                    NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:32.0f],
                                                                     NSShadowAttributeName: shadow
                                                                     }];
         }

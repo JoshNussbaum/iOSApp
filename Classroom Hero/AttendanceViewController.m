@@ -117,6 +117,11 @@
 // ATTENDANCE CLICKED
 
 - (IBAction)attendanceClicked:(id)sender {
+    NSInteger index = [self.studentsPicker selectedRowInComponent:0];
+    NSNumber *studentId = [[checkedOutStudents allKeys] objectAtIndex:index];
+    
+    student *selectedStudent = [checkedOutStudents objectForKey:studentId];
+    currentStudent = selectedStudent;
     if (showingStudents){
         [self animateTableView:YES];
     }
@@ -149,12 +154,16 @@
 
 
 - (IBAction)resetClicked:(id)sender {
-    [Utilities alertStatusWithTitle:@"Confirm action" message:@"Check out all students?" cancel:nil otherTitles:@[@"Confirm"] tag:3 view:self];
+    if (studentsData.count > 0 && checkedOutStudents.count != studentsData.count){
+        [Utilities alertStatusWithTitle:@"Confirm action" message:@"Check out all students?" cancel:nil otherTitles:@[@"Confirm"] tag:3 view:self];
+    }
 }
 
 
 - (IBAction)checkInAllClicked:(id)sender {
+    if (checkedOutStudents.count > 0){
      [Utilities alertStatusWithTitle:@"Confirm action" message:@"Check in all students?" cancel:nil otherTitles:@[@"Confirm"] tag:4 view:self];
+    }
 }
 
 
@@ -392,11 +401,6 @@
     for (student *stud in studentsData){
         [stud setCheckedIn:NO];
     }
-}
-
-
-- (void)checkInAllStudents{
-
 }
 
 

@@ -24,6 +24,8 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
 
+@property (strong, nonatomic) IBOutlet UILabel *arrowLabel;
+
 
 - (IBAction)startTutorial:(id)sender;
 

@@ -8,10 +8,12 @@
 
 #import "TutorialViewController.h"
 #import "Utilities.h"
+#import "NSString+FontAwesome.h"
 
 @interface TutorialViewController (){
     user *currentUser;
     NSInteger flag;
+    NSInteger pageIndex;
 }
 
 
@@ -33,6 +35,15 @@
         _pageTitles = @[@"Swipe  left  to  create  a  class  and  register  a  teacher  stamp", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  back  to  return  to  the  settings  screen"];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
+    
+    self.arrowLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:25];
+    self.arrowLabel.text = [NSString fontAwesomeIconStringForEnum:FAArrowRight];
+    self.arrowLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(arrowLabelTapped)];
+    [self.arrowLabel addGestureRecognizer:tapGesture];
+
     currentUser = [user getInstance];
     // Do any additional setup after loading the view.
 
@@ -43,7 +54,7 @@
     TutorialContentViewController *initialViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[initialViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-60);
+    self.pageViewController.view.frame = CGRectMake(52, 0, self.view.frame.size.width - 104, self.view.frame.size.height-60);
     
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
@@ -57,7 +68,18 @@
 }
 
 
+- (void)arrowLabelTapped{
+    if (pageIndex != 6){
+        pageIndex += 1;
+        TutorialContentViewController *initialViewController = [self viewControllerAtIndex:pageIndex];
+
+        [self.pageViewController setViewControllers:@[initialViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    }
+}
+
+
 - (IBAction)startTutorial:(id)sender {
+    pageIndex = 0;
     TutorialContentViewController *initialViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[initialViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -127,6 +149,7 @@
 
 
 - (TutorialContentViewController *)viewControllerAtIndex:(NSUInteger)index{
+    pageIndex = index;
     if (([self.pageTitles count] == 0) || (index >= [self.pageTitles count])){
         return nil;
     }
@@ -135,6 +158,12 @@
     tutorialContentViewController.titleText = self.pageTitles[index];
     if (index > 1 && index < 6){
         tutorialContentViewController.classData = [[DatabaseHandler getSharedInstance] getClasses];
+    }
+    if (index == [self.pageTitles count]-1){
+        self.arrowLabel.hidden = YES;
+    }
+    else {
+        self.arrowLabel.hidden = NO;
     }
     return tutorialContentViewController;
 }

@@ -28,8 +28,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *addJarButton;
 
-@property (strong, nonatomic) IBOutlet UIButton *editJarButton;
-
 @property (strong, nonatomic) IBOutlet UIButton *addPointsButton;
 
 // Menu
@@ -45,11 +43,7 @@
 
 - (IBAction)valueChanged:(id)sender;
 
-- (IBAction)editJarClicked:(id)sender;
-
 - (IBAction)addJarClicked:(id)sender;
-
-- (IBAction)studentListClicked:(id)sender;
 
 - (IBAction)addPointsClicked:(id)sender;
 
@@ -58,6 +52,8 @@
 - (IBAction)awardClicked:(id)sender;
 
 - (IBAction)marketClicked:(id)sender;
+
+- (IBAction)studentListClicked:(id)sender;
 
 
 @end

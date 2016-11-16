@@ -21,6 +21,7 @@ static int screenNumber;
     MBProgressHUD *hud;
     ConnectionHandler *webHandler;
     BOOL isStamping;
+    NSArray *titles;
 }
 
 @end
@@ -30,12 +31,12 @@ static int screenNumber;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    titles = @[@"Swipe  left  to  create  a  class  and  register  a  teacher  stamp", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"For  any  questions, email  classroomheroservices@gmail.com"];
     screenNumber = 0;
     isStamping = NO;
     currentUser = [user getInstance];
     
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
-    
     
     [Utilities makeRoundedButton:self.button :[Utilities CHBlueColor]];
     
@@ -44,9 +45,11 @@ static int screenNumber;
     
     self.titleLabel.text = self.titleText;
     
-    self.arrowLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:25];
-    self.arrowLabel.text = [NSString fontAwesomeIconStringForEnum:FAArrowRight];
-    
+    [self setPage];
+}
+
+- (void)setPage{
+    self.titleLabel.text = titles[self.pageIndex];
     switch (self.pageIndex) {
         case 0:
             [self onPage:nil :nil :nil :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
@@ -58,13 +61,13 @@ static int screenNumber;
             [self onPage:@"Student first name" :@"Student last name" :@"Add  student" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 3:
-            [self onPage:@"e.g. " :@"Reinforcer value" :@"Add  reinforcer" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"e.g. Participation points" :@"e.g. 3" :@"Add  reinforcer" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 4:
-            [self onPage:@"Item name" :@"Item cost" :@"Add  item" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"e.g. Day late homework pass" :@"e.g. 30" :@"Add  item" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 5:
-            [self onPage:@"Class jar name" :@"Class jar total" :@"Add  class  jar" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"e.g. Pizza party" :@"100" :@"Add  class  jar" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 6:
             [self onPage:nil :nil :nil :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
@@ -359,12 +362,12 @@ static int screenNumber;
     }
     if (buttonName){
         [self.button setTitle:buttonName forState:UIControlStateNormal];
+        self.button.hidden = NO;
     }
     else {
         self.button.hidden = YES;
     }
     if (picker){
-        self.arrowLabel.hidden = NO;
         self.stampImage.hidden = YES;
         self.schoolPicker.hidden = NO;
         if (self.pageIndex != 1){
@@ -389,16 +392,17 @@ static int screenNumber;
         }
     }
     else {
-        self.arrowLabel.hidden = NO;
         if (self.pageIndex == 0 || self.pageIndex == 6){
             self.stampImage.hidden = NO;
             if (self.pageIndex == 6){
-                self.arrowLabel.hidden = YES;
                 self.titleLabel.hidden = NO;
 
             }
             
             
+        }
+        else if (self.pageIndex == 1){
+            self.stampImage.hidden = YES;
         }
         self.pickerLabel.hidden = YES;
         self.schoolPicker.hidden = YES;
