@@ -8,14 +8,12 @@
 
 #import "AppDelegate.h"
 #import "Utilities.h"
-#import "Stripe.h"
 #import "Flurry.h"
 
 @interface AppDelegate ()
 
 @end
 
-NSString * const StripePublishableKey = @" pk_test_0k5cvVSHQihOyTbRCUHXm9T2 ";
 
 @implementation AppDelegate
 
@@ -29,8 +27,6 @@ NSString * const StripePublishableKey = @" pk_test_0k5cvVSHQihOyTbRCUHXm9T2 ";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [Stripe setDefaultPublishableKey:StripePublishableKey];
-
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     

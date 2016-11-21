@@ -78,6 +78,19 @@
 }
 
 
+- (void)viewDidLayoutSubviews{
+    if (IS_IPAD_PRO) {
+        NSArray *menuButtons = @[self.homeButton, self.jarButton, self.marketButton, self.awardButton];
+        
+        [Utilities setFontSizeWithbuttons:menuButtons font:@"GillSans-Bold" size:menuItemFontSize];
+        
+        self.itemNameLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:45.0];
+        self.pointsLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:42.0];
+    }
+
+}
+
+
 - (void)viewDidAppear:(BOOL)animated{
     self.awardButton.enabled = YES;
     self.awardIconButton.enabled = YES;
@@ -107,12 +120,24 @@
 
 
 - (IBAction)studentListClicked:(id)sender {
-    if (self.studentsTableView.hidden){
-        [self animateTableView:NO];
+    if (studentsData.count > 0){
+        if (itemsData.count > 0){
+            if (self.studentsTableView.hidden){
+                [self animateTableView:NO];
+            }
+            else{
+                [self animateTableView:YES];
+            }
+        }
+        else {
+            [Utilities alertStatusWithTitle:@"Add items first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
+        }
     }
-    else{
-        [self animateTableView:YES];
+    else {
+        [Utilities alertStatusWithTitle:@"Add students first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
     }
+    
+
     
 }
 

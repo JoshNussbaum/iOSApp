@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "user.h"
-#import "Stripe.h"
 
 @protocol ConnectionHandlerDelegate
 

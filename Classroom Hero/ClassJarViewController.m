@@ -65,7 +65,6 @@
 
 
 - (void)viewDidLoad {
-    NSLog(@"Here is the view width and height -> (%f, %f)", (float)self.view.frame.size.width, (float)self.view.frame.size.height);
     [super viewDidLoad];
     coinsShowing = NO;
     currentUser = [user getInstance];
@@ -74,11 +73,14 @@
     [Utilities makeRoundedButton:self.addPointsButton :nil];
     
     if (!currentClassJar){
+        self.classJarProgressLabel.hidden = YES;
         [self.addJarButton setTitle:@"Add" forState:UIControlStateNormal];
         self.stepper.hidden = YES;
         self.pointsLabel.hidden = YES;
     }
     else {
+        self.classJarProgressLabel.hidden = NO;
+        self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
         [self.addJarButton setTitle:@"Edit" forState:UIControlStateNormal];
         self.stepper.hidden = NO;
         self.pointsLabel.hidden = NO;
@@ -96,9 +98,29 @@
     fail = [Utilities getFailSound];
     jarFull = [Utilities getAchievementSound];
     
+    self.classJarName.layer.zPosition = -4;
+    self.classJarProgressLabel.layer.zPosition = -4;
+    self.backLidImage.layer.zPosition = -5;
+    
     currentPoints = 1;
     isJarFull = NO;
 
+}
+
+- (void)viewDidLayoutSubviews{
+    
+    if (self.view.frame.size.height == 1366) {
+        NSArray *menuButtons = @[self.homeButton, self.jarButton, self.marketButton, self.awardButton];
+        
+        [Utilities setFontSizeWithbuttons:menuButtons font:@"GillSans-Bold" size:menuItemFontSize];
+        
+        self.backLidImage.frame = CGRectMake(225, 328, 598, 920.0);
+        
+        self.classJarName.frame = CGRectMake(21, 178, 982, 76);
+        
+        self.classJarProgressLabel.frame = CGRectMake(399, 265, 226, 54);
+        
+    }
 }
 
 
@@ -111,13 +133,13 @@
         jarImageY = self.jarImage.frame.origin.y;
         jarImageWidth = self.jarImage.frame.size.width;
         
-        jarCoinsHeight = self.jarCoinsImage.frame.size.height;
+        jarCoinsHeight = self.jarCoinsImage.frame.size.height - 10;
         jarCoinsWidth = self.jarCoinsImage.frame.size.width;
         
         
         jarCoinsX = self.jarCoinsImage.frame.origin.x;
         jarCoinsY = self.jarCoinsImage.frame.origin.y;
-        jarCoinsY += (jarCoinsHeight - 9);
+        jarCoinsY += (jarCoinsHeight + 2);
         
         self.jarCoins = [[UIImageView alloc] initWithImage:image];
         self.jarCoins.layer.zPosition = -1;
@@ -125,7 +147,6 @@
         self.jarCoins.clipsToBounds = YES;
         if (self.view.frame.size.height == 1366) {
             self.jarCoins.contentMode = UIViewContentModeScaleToFill;
-
         }
         else {
             self.jarCoins.contentMode = UIViewContentModeTop;
@@ -135,7 +156,7 @@
         
         
         self.corkImage.hidden = YES;
-        self.corkImage.layer.zPosition = -50;
+        self.corkImage.layer.zPosition = -1;
         float prog = (float)[currentClassJar getProgress] / (float)[currentClassJar getTotal];
         
         CGFloat newProg;
@@ -164,8 +185,6 @@
     corkRect = self.corkImage.frame;
     
     CGRect rect = self.coinImage.frame;
-    
-    NSLog(@"Here is the coinRect -> %f, %f, %d, %d", coinRect.origin.x, coinRect.origin.y, coinRect.size.width, coinRect.size.height);
 }
 
 
@@ -226,11 +245,16 @@
 
 
 - (IBAction)addPointsClicked:(id)sender{
-    if (!isStamping){
-        if (!isJarFull){
-            isStamping = YES;
-            [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
+    if (currentClassJar != nil){
+        if (!isStamping){
+            if (!isJarFull){
+                isStamping = YES;
+                [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
+            }
         }
+    }
+    else {
+        [Utilities alertStatusWithTitle:@"Add a class jar above" message:nil cancel:nil otherTitles:nil tag:0 view:self];
     }
 }
 
@@ -327,6 +351,7 @@
         }
         else if (type == EDIT_JAR){
             self.classJarName.text = newClassJarName;
+            
             [currentClassJar setName:newClassJarName];
             [currentClassJar setTotal:newClassJarTotal.integerValue];
             [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
@@ -352,7 +377,7 @@
                     self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
                 }];
             }
-
+            self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
 
         
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
@@ -365,6 +390,7 @@
             [currentClassJar updateJar:currentPoints];
             [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
             [self addCoins];
+            
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentClassJar getName], @"Jar Name", [NSString stringWithFormat:@"%ld", (long)[currentClassJar getId]], @"Jar ID", [NSString stringWithFormat:@"%ld", (long)currentPoints], @"Points", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
             [Flurry logEvent:@"Add To Jar" withParameters:params];
@@ -424,15 +450,21 @@
         UIImageView *coin = [[UIImageView alloc] initWithFrame:coinRect];
         coin.image = [UIImage imageNamed:@"coin.png"];
         coin.alpha=1.0;
-        coin.layer.zPosition = -50;
+        coin.layer.zPosition = -3;
         [self.view addSubview:coin];
         
         [scores replaceObjectAtIndex:0 withObject:[NSNumber numberWithInteger:pointsEarned]];
         
         [UIView animateWithDuration:.60
                          animations:^{
-                             [coin setFrame:CGRectMake(self.jarImage.frame.origin.x + self.jarImage.frame.size.width/2 - 85, self.jarImage.frame.origin.y+(self.jarImage.frame.size.height-225), self.coinImage.frame.size.width, self.coinImage.frame.size.height)];
-                             
+                             if (IS_IPAD_PRO){
+                                 [coin setFrame:CGRectMake(self.jarImage.frame.origin.x + self.jarImage.frame.size.width/2 - 110, self.jarImage.frame.origin.y+(self.jarImage.frame.size.height-270), self.coinImage.frame.size.width, self.coinImage.frame.size.height)];
+
+                             }
+                             else {
+                                 [coin setFrame:CGRectMake(self.jarImage.frame.origin.x + self.jarImage.frame.size.width/2 - 85, self.jarImage.frame.origin.y+(self.jarImage.frame.size.height-230), self.coinImage.frame.size.width, self.coinImage.frame.size.height)];
+
+                             }
                          }
                          completion:^(BOOL finished) {
                              AudioServicesPlaySystemSound(coinShake);
@@ -476,6 +508,7 @@
         self.stepper.enabled = YES;
         isStamping = NO;
         self.addPointsButton.enabled = YES;
+        self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
 
     }
 }
@@ -513,7 +546,7 @@
         
         [UIView animateWithDuration:1.2
                          animations:^{
-                             [self.corkImage setFrame:CGRectMake(self.corkImage.frame.origin.x-10, jarImageY-50, self.corkImage.frame.size.width, self.corkImage.frame.size.height)];
+                             [self.corkImage setFrame:CGRectMake(self.corkImage.frame.origin.x-10, jarImageY-80, self.corkImage.frame.size.width, self.corkImage.frame.size.height)];
                          }
                          completion:^(BOOL finished) {
                              AudioServicesPlaySystemSound(cork);
@@ -532,6 +565,7 @@
                                  isStamping = NO;
                                  isJarFull = NO;
                                  self.addPointsButton.enabled = YES;
+                                 self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
                              });
                          }
          ];

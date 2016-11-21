@@ -44,6 +44,25 @@
     [Utilities makeRoundedButton:self.createAccountButton :[UIColor whiteColor]];
 }
 
+- (void)viewDidLayoutSubviews{
+    if (IS_IPAD_PRO){
+        textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.passwordTextField, self.confirmPasswordTextField, nil];
+        
+        for (UITextField *tf in textFields){
+            float x = tf.frame.origin.x;
+            float y = tf.frame.origin.y + 50;
+            float width = tf.frame.size.width;
+            float height = tf.frame.size.height;
+            [tf setFrame:CGRectMake(x, y, width, height)];
+        }
+        float x = self.createAccountButton.frame.origin.x;
+        float y = self.createAccountButton.frame.origin.y + 50;
+        float width = self.createAccountButton.frame.size.width;
+        float height = self.createAccountButton.frame.size.height;
+        self.createAccountButton.frame = CGRectMake(x, y, width, height);
+    }
+}
+
 
 - (IBAction)createAccountClicked:(id)sender {
     [self hideKeyboard];

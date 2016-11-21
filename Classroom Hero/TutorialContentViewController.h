@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
 
+@protocol TutorialView <NSObject>
+
+- (void)setTmpClass:(Class *)tmpClass;
+
+@end
+
 @interface TutorialContentViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate,  ConnectionHandlerDelegate>
 
 @property NSMutableArray *schoolData;
@@ -31,5 +37,7 @@
 - (IBAction)buttonClicked:(id)sender;
 
 - (IBAction)backgroundTap:(id)sender;
+
+- (void)setTmpClass:(class *)tmpClass_;
 
 @end

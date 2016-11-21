@@ -34,6 +34,14 @@
     self.classGradeTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
 
     [Utilities makeRoundedButton:self.addClassButton :[Utilities CHBlueColor]];
+    
+}
+
+
+- (void)viewDidLayoutSubviews{
+    if (IS_IPAD_PRO) {
+        self.addClassButton.frame = CGRectMake(425, 300, 180, 40);
+    }
 }
 
 
@@ -113,11 +121,11 @@
             self.classNameTextField.text = @"";
             self.classGradeTextField.text = @"";
             
-            [Utilities alertStatusWithTitle:@"Successfully added class!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
             
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[newClass getId]], @"Class ID", nil];
             
             [Flurry logEvent:@"Add Class - Create Class" withParameters:params];
+            [self.navigationController popViewControllerAnimated:YES];
             
         } else {
             [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];

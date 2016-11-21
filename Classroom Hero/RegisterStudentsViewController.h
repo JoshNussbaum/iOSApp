@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SnowShoeViewController.h"
 #import "ConnectionHandler.h"
 
 
-@interface RegisterStudentsViewController : SnowShoeViewController <ConnectionHandlerDelegate>
+@interface RegisterStudentsViewController : UIViewController <ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *skipButton;
 

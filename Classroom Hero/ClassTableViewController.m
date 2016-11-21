@@ -80,12 +80,6 @@ static NSString * const classCell = @"classCell";
 }
 
 
-- (IBAction)addClassClicked:(id)sender {
-    addingClass = YES;
-    [self performSegueWithIdentifier:@"class_to_add_class" sender:nil];
-}
-
-
 - (IBAction)editClicked:(id)sender {
     if (self.editing) {
         [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
@@ -225,6 +219,7 @@ static NSString * const classCell = @"classCell";
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+    
 }
 
 
@@ -270,6 +265,7 @@ static NSString * const classCell = @"classCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
+        flag = 2;
         [self performSegueWithIdentifier:@"class_to_add_class" sender:self];
         return;
     }

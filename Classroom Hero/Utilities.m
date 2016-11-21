@@ -54,6 +54,8 @@ NSInteger GET_USER_BY_STAMP = 41;
 NSInteger RESET_PASSWORD = 42;
 NSInteger REWARD_STUDENT_BULK = 43;
 
+NSInteger menuItemFontSize = 26;
+
 
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType{
     switch (connectionType) {
@@ -784,6 +786,12 @@ NSInteger REWARD_STUDENT_BULK = 43;
     }
     else {
         return 27.0f;
+    }
+}
+
++ (void) setFontSizeWithbuttons:(NSArray *)buttons font:(NSString *)font size:(float)size{
+    for (UIButton *button in buttons) {
+        button.titleLabel.font =[UIFont fontWithName:font size:size];
     }
 }
 

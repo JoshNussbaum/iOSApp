@@ -489,14 +489,11 @@ static NSInteger connectionType;
     [request setTimeoutInterval:8];
     
     if (jsonRequest != nil){
-        NSLog(@"Json Request -> %@\n Url string -> %@", jsonRequest, urlString);
         NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
         [request setHTTPBody: requestData];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
     }
-    else {
-        //NSLog(@"Heres the URL -> %@", url);
-    }
+
     
     [NSURLConnection connectionWithRequest:request delegate:self];
 }
@@ -526,7 +523,7 @@ static NSInteger connectionType;
                               JSONObjectWithData:responseData
                               options:NSJSONReadingMutableContainers
                               error:&err];
-    NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
+    //NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
     
     [delegate_ dataReady:jsonData :connectionType];
 }

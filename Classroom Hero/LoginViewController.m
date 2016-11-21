@@ -10,17 +10,6 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 
-NSDictionary *fakeSchool1;
-NSArray *fakeSchools;
-NSDictionary *fakeClass1;
-NSArray *fakeClassArray;
-NSDictionary *fakeUserDict;
-NSDictionary *fakeLoginDict;
-NSDictionary *fakeStudent1;
-NSDictionary *fakeStudent2;
-NSDictionary *fakeStudent3;
-NSArray *fakeStudents;
-
 
 @interface LoginViewController (){
     ConnectionHandler *webHandler;
@@ -42,11 +31,21 @@ NSArray *fakeStudents;
 }
 
 
+- (void) viewDidLayoutSubviews{
+    if (IS_IPAD_PRO) {
+        self.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:65.0];
+        self.headerLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:48.0];
+        self.logInButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:46];
+        self.createAccountButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:46];
+        self.forgotPasswordButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:30];
+        self.aboutButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:30];
+    }
+}
+
+
 - (void)viewDidLoad{
     [super viewDidLoad];
-        
-    self.emailTextField.text = @"josh@test.com";
-    self.passwordTextField.text = @"josh";
+
     [Utilities makeRoundedButton:self.forgotPasswordButton :[Utilities CHBlueColor]];
     self.logInButton.layer.borderWidth = .6;
     self.logInButton.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -59,21 +58,7 @@ NSArray *fakeStudents;
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
     
-    
-    fakeStudent1 = @{@"id": @"1", @"fname": @"Mel", @"lname": @"Clarke", @"currentCoins": @"1", @"lvl": @"1", @"progress": @"1", @"totalCoins": @"1", @"checkedIn": @"0"};
-    fakeStudent2 = @{@"id": @"2", @"fname": @"Holly", @"lname": @"Irish", @"currentCoins": @"2", @"lvl": @"1", @"progress": @"2", @"totalCoins": @"2", @"checkedIn": @"0"};
-    fakeStudent3 = @{@"id": @"3", @"fname": @"Mike", @"lname": @"Sela", @"currentCoins": @"3", @"lvl": @"2", @"progress": @"0", @"totalCoins": @"3", @"checkedIn": @"0"};
-    
-    fakeStudents = @[fakeStudent1, fakeStudent2, fakeStudent3];
-    
-    fakeSchool1 = @{@"id": @"2", @"name": @"Josh's Jedi Lounge"};
-    fakeSchools = @[fakeSchool1];
-    fakeClass1 = @{@"cid": @"20", @"name": @"Python for Monkeys", @"classProgress": @"2", @"grade": @"2", @"nextLvl": @"10", @"classLvl": @"1", @"schoolId": @"2", @"students": fakeStudents};
-    fakeClassArray = @[fakeClass1];
-    fakeUserDict = @{@"fname" : @"Monkey", @"lname": @"Wizard", @"uid": @"120", @"accountStatus": @"2"};
-    fakeLoginDict = @{@"login": fakeUserDict, @"classes":fakeClassArray, @"schools": fakeSchools};
 }
-
 
 - (IBAction)loginClicked:(id)sender{
     [self hideKeyboard];
@@ -178,8 +163,6 @@ NSArray *fakeStudents;
 
 
 - (void)loginSuccess:(NSDictionary *)data{
-    //NSLog([NSString stringWithFormat:@"Here's the login info\n %@", data ]);
-    // Set all the user stuff and query the database
     [[DatabaseHandler getSharedInstance] login:data];
     currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];
     currentUser.email = self.emailTextField.text;

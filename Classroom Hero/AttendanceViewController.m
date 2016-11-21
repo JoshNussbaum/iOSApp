@@ -77,26 +77,25 @@
         self.studentNamePreStampLabel.hidden = YES;
         self.titleLabel.text = @"All students checked in";
     }
+}
+
+
+- (void)viewDidLayoutSubviews{
+    if ([self.studentsTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.studentsTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
     
-//    if (reinforcerData.count > 0){
-//        [self.categoryPicker selectRow:index inComponent:0 animated:YES];
-//        self.categoryPicker.hidden = NO;
-//        currentReinforcer = [reinforcerData objectAtIndex:0];
-//        self.reinforcerLabel.text= [NSString stringWithFormat:@"%@", [currentReinforcer getName]];
-//        self.reinforcerValue.text = [NSString stringWithFormat:@"+ %ld", (long)[currentReinforcer getValue]];
-//        [self.categoryPicker reloadAllComponents];
-//        
-//    }
-//    
-//    if (!reinforcerData || [reinforcerData count] == 0) {
-//        self.categoryPicker.hidden = YES;
-//        self.reinforcerLabel.text=@"Add reinforcers above";
-//        self.reinforcerValue.text = @"";
-//        self.editReinforcerButton.hidden = YES;
-//        
-//    }
-    
-    
+    if ([self.studentsTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.studentsTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if (IS_IPAD_PRO) {
+        self.studentNamePreStampLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:42.0];
+        self.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:50.0];
+        
+        self.studentNameLabel.font = [UIFont fontWithName:@"GillSans-Light" size:35];
+        self.studentPointsLabel.font = [UIFont fontWithName:@"GillSans-Light" size:35];
+
+    }
 }
 
 
@@ -240,15 +239,12 @@
 
                 [self coinAnimation];
                 
-                if (checkedOutStudents.count == 0){
-                    currentStudent = nil;
-                }
                 [self reloadTable];
                 [self.studentsPicker reloadAllComponents];
 
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
 
-                [Flurry logEvent:@"Check In Stamp" withParameters:params];
+                [Flurry logEvent:@"Check In" withParameters:params];
             }
             else {
                 [currentStudent setCheckedIn:YES];
@@ -258,9 +254,6 @@
                 [Flurry logEvent:@"Check In Manual" withParameters:params];
                 [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
                 
-                if (checkedOutStudents.count == 0){
-                    currentStudent = nil;
-                }
                 [self reloadTable];
                 [self checkNewDay];
                 [self.studentsPicker reloadAllComponents];
@@ -274,6 +267,7 @@
             [currentStudent setCheckedIn:NO];
             isStamping = NO;
             [checkedOutStudents setObject:currentStudent forKey:[NSNumber numberWithInteger:[currentStudent getId]]];
+            self.studentsPicker.hidden = NO;
             [self.studentsPicker reloadAllComponents];
             [self setStudentPreTouchLabel];
             [self reloadTable];
@@ -363,7 +357,6 @@
 
 - (void)setStudentPreTouchLabel{
     if ([checkedOutStudents count] > 0){
-        self.studentsPicker.hidden = NO;
 
         NSInteger index = [self.studentsPicker selectedRowInComponent:0];
         NSNumber *studentId = [[checkedOutStudents allKeys] objectAtIndex:index];
@@ -465,6 +458,9 @@
                                                                                                 [self.studentsPicker reloadAllComponents];
                                                                                                 self.studentsPicker.hidden = NO;
                                                                                                 [self setStudentPreTouchLabel];
+                                                                                                if (checkedOutStudents.count == 0){
+                                                                                                    currentStudent = nil;
+                                                                                                }
                                                                                             }
                                                                             ];
                                                                        });
@@ -549,16 +545,6 @@
     }
 }
 
-
-- (void)viewDidLayoutSubviews{
-    if ([self.studentsTableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.studentsTableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-
-    if ([self.studentsTableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.studentsTableView setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
 
 
 - (void)animateTableView:(BOOL)open{

@@ -14,7 +14,11 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *classJarName;
 
+@property (strong, nonatomic) IBOutlet UILabel *classJarProgressLabel;
+
 @property (strong, nonatomic) IBOutlet UIImageView *jarImage;
+
+@property (strong, nonatomic) IBOutlet UIImageView *backLidImage;
 
 @property (strong, nonatomic) IBOutlet UIImageView *corkImage;
 

@@ -9,11 +9,15 @@
 #import "TutorialViewController.h"
 #import "Utilities.h"
 #import "NSString+FontAwesome.h"
+#import "Class.h"
+
 
 @interface TutorialViewController (){
     user *currentUser;
     NSInteger flag;
     NSInteger pageIndex;
+    class *tmpClass;
+    
 }
 
 
@@ -54,7 +58,14 @@
     TutorialContentViewController *initialViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[initialViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    self.pageViewController.view.frame = CGRectMake(52, 0, self.view.frame.size.width - 104, self.view.frame.size.height-60);
+    if (self.view.frame.size.height == 1366) {
+        self.pageViewController.view.frame = CGRectMake(52, 0, self.view.frame.size.width - 104, self.view.frame.size.height-120);
+
+    }
+    else {
+        self.pageViewController.view.frame = CGRectMake(52, 0, self.view.frame.size.width - 104, self.view.frame.size.height-60);
+
+    }
     
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
@@ -64,7 +75,20 @@
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :[Utilities CHBlueColor]];
     }
+    tmpClass = currentUser.currentClass;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setTmpClass:)
+                                                 name:@"SetTmpClass"
+                                               object:nil];
+    
 
+}
+
+
+- (void)setTmpClass:(NSNotification *)notification{
+    NSDictionary* userInfo = notification.object;
+    class* tmpClass_ = userInfo[@"tmpClass"];
+    tmpClass = tmpClass_;
 }
 
 
@@ -154,6 +178,7 @@
         return nil;
     }
     TutorialContentViewController *tutorialContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TutorialContentViewController"];
+    [tutorialContentViewController setTmpClass:tmpClass];
     tutorialContentViewController.pageIndex = index;
     tutorialContentViewController.titleText = self.pageTitles[index];
     if (index > 1 && index < 6){

@@ -16,7 +16,6 @@
 #import "ClassJarViewController.h"
 #import "MarketViewController.h"
 #import "StudentsTableViewController.h"
-#import "BBBadgeBarButtonItem.h"
 
 
 @interface HomeViewController (){
@@ -53,9 +52,35 @@
     for (UIView *view in statsViews){
         [view.layer setCornerRadius:30.0f];
     }
-
 }
 
+- (void)viewDidLayoutSubviews{
+    if (IS_IPAD_PRO) {
+        NSArray *menuButtons = @[self.homeButton, self.jarButton, self.marketButton, self.awardButton];
+        
+        [Utilities setFontSizeWithbuttons:menuButtons font:@"GillSans-Bold" size:menuItemFontSize];
+        
+        NSArray *statsLabels = @[self.classTotalStampsLabel, self.classAvgLevelLabel, self.classAvgPointsLabel, self.classTotalAwardsTitleLabel, self.studentAvgLevelTitleLabel, self.studentAvgPointsTitleLabel];
+        for (UILabel *label in statsLabels){
+            label.font = [UIFont fontWithName:@"GillSans-Bold" size:23.0];
+        }
+        
+        self.classLevelLabel.frame = CGRectMake(13, 387, 233, 54);
+        self.classLevelLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:28.0];
+        self.jarProgressLabel.frame = CGRectMake(573, 387, 209, 54);
+        self.jarProgressLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:28.0];
+        
+        self.classNameLabel.frame = CGRectMake(4.5, 40, 803, 115);
+        self.classNameLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:54];
+        
+        self.separatorView.frame = CGRectMake(0, 190, 812, 5.5);
+        
+        self.teacherNameLabel.frame = CGRectMake(4, 250, 801, 80);
+        self.teacherNameLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:44];
+        
+        self.attendanceButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:32.0];
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated{
     currentUser = [user getInstance];
@@ -150,6 +175,8 @@
 
     BOOL customized = NO;
     [self.classProgressBar setProgressBarTrackColor:[UIColor blackColor]];
+    [self.classProgressBar setStartAngle:-90.0];
+
     [self.classProgressBar setProgressBarWidth:(5.0f)];
     [self.classProgressBar  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.classProgressBar setBackgroundColor:[UIColor clearColor]];
@@ -163,6 +190,8 @@
     } : nil)];
 
     [self.jarProgressBar setProgressBarTrackColor:[UIColor blackColor]];
+    [self.jarProgressBar setStartAngle:-90.0];
+
     [self.jarProgressBar setProgressBarWidth:(5.0f)];
     [self.jarProgressBar  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.jarProgressBar setBackgroundColor:[UIColor clearColor]];

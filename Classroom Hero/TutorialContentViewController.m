@@ -9,6 +9,7 @@
 #import "TutorialContentViewController.h"
 #import "MBProgressHUD.h"
 #import "DatabaseHandler.h"
+#import "Class.h"
 #import "Utilities.h"
 #import "NSString+FontAwesome.h"
 #import "Flurry.h"
@@ -22,6 +23,8 @@ static int screenNumber;
     ConnectionHandler *webHandler;
     BOOL isStamping;
     NSArray *titles;
+    class *tmpClass;
+    
 }
 
 @end
@@ -47,6 +50,13 @@ static int screenNumber;
     
     [self setPage];
 }
+
+- (void) viewDidLayoutSubviews{
+    if (IS_IPAD_PRO) {
+        self.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:45.0];
+    }
+}
+
 
 - (void)setPage{
     self.titleLabel.text = titles[self.pageIndex];
@@ -132,8 +142,8 @@ static int screenNumber;
         }
     }
     else{
-        if ([currentUser.currentClass getId]  != 0){
-            currentUser.currentClass = [self getClass];
+        if ([tmpClass getId]  != 0){
+            tmpClass = [self getClass];
             
             if (self.pageIndex == 2){
                 NSString *firstName = self.textField1.text;
@@ -143,7 +153,7 @@ static int screenNumber;
                     NSString *lastErrorMessage = [Utilities isInputValid:lastName :@"Last name"];
                     if (!lastErrorMessage) {
                         [self activityStart:@"Adding student..."];
-                        [webHandler addStudent:[currentUser.currentClass getId] :firstName :lastName :[currentUser.currentClass getSchoolId]];
+                        [webHandler addStudent:[tmpClass getId] :firstName :lastName :[tmpClass getSchoolId]];
                         
                     }
                     else {
@@ -165,7 +175,7 @@ static int screenNumber;
                     NSString *valueErrorMessage = [Utilities isNumeric:reinforcerValue];
                     if (!valueErrorMessage) {
                         [self activityStart:@"Adding reinforcer..."];
-                        [webHandler addReinforcer:[currentUser.currentClass getId] :reinforcerName :reinforcerValue.integerValue];
+                        [webHandler addReinforcer:[tmpClass getId] :reinforcerName :reinforcerValue.integerValue];
                     }
                     else {
                         [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:valueErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -187,7 +197,7 @@ static int screenNumber;
                     NSString *costErrorMessage = [Utilities isNumeric:itemCost];
                     if (!costErrorMessage) {
                         [self activityStart:@"Adding item..."];
-                        [webHandler addItem:[currentUser.currentClass getId] :itemName :itemCost.integerValue];
+                        [webHandler addItem:[tmpClass getId] :itemName :itemCost.integerValue];
                         
                     }
                     else {
@@ -210,7 +220,7 @@ static int screenNumber;
                     NSString *costErrorMessage = [Utilities isNumeric:jarCost];
                     if (!costErrorMessage && [jarCost integerValue] > 0) {
                         [self activityStart:@"Adding jar..."];
-                        [webHandler addJar:[currentUser.currentClass getId] :jarName :jarCost.integerValue];
+                        [webHandler addJar:[tmpClass getId] :jarName :jarCost.integerValue];
                         
                     }
                     else {
@@ -250,15 +260,17 @@ static int screenNumber;
             AudioServicesPlaySystemSound([Utilities getAwardSound]);
             compliment = [Utilities getRandomCompliment];
         }
-        
+
+
         if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
             class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :1 :1 :0 :30 :[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
-            currentUser.currentClass = newClass;
+            tmpClass = newClass;
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add  another  class  or  swipe  left  to  continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
             
             [Flurry logEvent:@"Add Class - Tutorial" withParameters:params];
 
@@ -268,10 +280,10 @@ static int screenNumber;
         else if (type == ADD_STUDENT){
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
             student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
-            [[DatabaseHandler getSharedInstance] addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
+            [[DatabaseHandler getSharedInstance] addStudent:newStudent :[tmpClass getId] :[tmpClass getSchoolId]];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add  another  student  or  swipe  left  to  continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
             
             [Flurry logEvent:@"Add Student - Tutorial" withParameters:params];
 
@@ -281,11 +293,11 @@ static int screenNumber;
             NSString *reinforcerName = self.textField1.text;
             NSInteger reinforcerValue = self.textField2.text.integerValue;
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
-            reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :[currentUser.currentClass getId] :reinforcerName :reinforcerValue];
+            reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :[tmpClass getId] :reinforcerName :reinforcerValue];
             [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add  another  reinforcer  or  swipe  left  to  continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
             
             [Flurry logEvent:@"Add Reinforcer - Tutorial" withParameters:params];
         }
@@ -293,11 +305,11 @@ static int screenNumber;
             NSString *itemName = self.textField1.text;
             NSInteger itemCost = self.textField2.text.integerValue;
             NSInteger itemId = [[data objectForKey:@"id"] integerValue];
-            item *newItem = [[item alloc]init:itemId :[currentUser.currentClass getId]  :itemName :itemCost];
+            item *newItem = [[item alloc]init:itemId :[tmpClass getId]  :itemName :itemCost];
             [[DatabaseHandler getSharedInstance] addItem:newItem];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Add  another  item  or  swipe  left  to  continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
             
             [Flurry logEvent:@"Add Item - Tutorial" withParameters:params];
         }
@@ -306,18 +318,22 @@ static int screenNumber;
             NSString *jarName = self.textField1.text;
             NSInteger jarTotal = self.textField2.text.integerValue;
             NSInteger jarId = [[data objectForKey:@"id"] integerValue];
-            classjar *newJar = [[classjar alloc]initWithid:jarId cid:[currentUser.currentClass getId]  name:jarName progress:0 total:jarTotal];
+            classjar *newJar = [[classjar alloc]initWithid:jarId cid:[tmpClass getId]  name:jarName progress:0 total:jarTotal];
             [[DatabaseHandler getSharedInstance] addClassJar:newJar];
             [self setTitleAndClear:[NSString stringWithFormat:@"%@ Replace  your  jar  or  swipe  left  to  continue", compliment]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
             
             [Flurry logEvent:@"Add Jar - Tutorial" withParameters:params];
         }
         
+        
         else{
             [Utilities alertStatusNoConnection];
         }
+        NSDictionary* tmpClassDict = @{@"tmpClass": tmpClass};
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SetTmpClass" object:tmpClassDict];
     }
     else {
         NSString *errorMessage = nil;
@@ -381,7 +397,7 @@ static int screenNumber;
                 self.pickerLabel.text = @"Class Selector";
                 self.pickerLabel.hidden = NO;
                 for (int i=0; i <self.classData.count; i++){
-                    if ([[self.classData objectAtIndex:i] getId] == [currentUser.currentClass getId]){
+                    if ([[self.classData objectAtIndex:i] getId] == [tmpClass getId]){
                         [self.schoolPicker selectRow:i inComponent:0 animated:YES];
                         continue;
                     }
@@ -504,6 +520,10 @@ static int screenNumber;
     
 }
 
+
+- (void)setTmpClass:(class *)tmpClass_{
+    tmpClass = tmpClass_;
+}
 
 
 

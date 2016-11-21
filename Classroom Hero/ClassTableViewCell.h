@@ -20,6 +20,10 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *totalPointsLabel;
 
+@property (strong, nonatomic) IBOutlet UILabel *gradeTitleLabel;
+
+@property (strong, nonatomic) IBOutlet UILabel *levelTitleLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *gradeLabel;
 
 - (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount;

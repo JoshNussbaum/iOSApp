@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>BBBadgeBarButtonItem.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>CircleProgressBar.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -39,7 +34,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Stripe.xcscheme</key>
+		<key>Pods-Classroom HeroTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -49,70 +44,45 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>gtm-oauth.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>snowshoe.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>105BB21DDA17F283BCA6C012BAB3E330</key>
+		<key>02A2036DBD2DE74BDCF160D8A28613A2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5BB69D3F3BE24BC6BE2B1DE2E5BD3B36</key>
+		<key>4713F0C254D824AFCE023D25B1184AF3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>996C4CEDBD819845E4AE075097DBD57D</key>
+		<key>4BFA2674723F961A1A340F2B9A1E78FD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A00F51781201D70FE5D98D7CB0CC1505</key>
+		<key>4C6F63F6E3D5A3A8C392A2039DF0FAE2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A1B55627E716E61E40F1632AA3B7CBD1</key>
+		<key>4CA48FEE25DAC333CBDAE070ED31391B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AD66D107A11889C65B39762E12777436</key>
+		<key>6B1714E816AE794962516E2ECBB40A5A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B0493664E135014525E0C4D9A0D4C214</key>
+		<key>A25615DF9BF8FFAF6A63BF1D878DC7DB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D8FA4C173ECC3DFDBEED727E5FA1FBD7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F194304CFC17C4F3C6CB20896F68B0D9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FEC0B981E85E2595CCB485D55636BA2F</key>
+		<key>B545B48FA0CEE58E0B8D9309EE4CFF7C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

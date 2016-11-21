@@ -35,13 +35,21 @@
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
-    self.appKey = snowshoe_app_key;
-    self.appSecret = snowshoe_app_secret;
-    
-    [Utilities makeRoundedButton:self.studentButton :[Utilities CHBlueColor]];
     [self configureProgressBar];
     [self setStudentLabels];
     
+}
+
+
+- (void)viewDidLayoutSubviews{
+
+    if (IS_IPAD_PRO) {
+        self.nameLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:45];
+        self.levelLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:38];
+        self.pointsLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:38];
+
+        self.heroImage.frame = CGRectMake(335, 590, 356, 412);
+    }
 }
 
 
@@ -137,34 +145,7 @@
             
 
         }
-        else if (type == REGISTER_STAMP){
-            [[DatabaseHandler getSharedInstance] registerStudent:[currentStudent getId] :[currentStudent getSerial]];
-            
-            [Utilities wiggleImage:self.stampImage sound:YES];
-            self.studentButton.hidden = NO;
-            self.stampToRegisterLabel.hidden = YES;
-            self.stampIdLabel.text = [currentStudent getSerial];
-            [currentUser.currentClass addPoints:1];
-            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-            isRegistered = YES;
-            
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Register Student - Student View" withParameters:params];
-
-        }
-        else if (type == UNREGISTER_STAMP){
-            [[DatabaseHandler getSharedInstance] unregisterStudent:[currentStudent getId]];
-            [Utilities wiggleImage:self.stampImage sound:YES];
-            self.stampToRegisterLabel.hidden = NO;
-            self.studentButton.hidden = YES;
-            isRegistered = NO;
-            self.stampIdLabel.text = @"No stamp registered";
-            
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Unregister Student - Student View" withParameters:params];
-        }
+        
     }
     else {
         NSString *message = [data objectForKey:@"message"];
@@ -188,79 +169,24 @@
 }
 
 
-- (void)stampResultDidChange:(NSString *)stampResult{
-    if (!isStamping){
-        NSData *jsonData = [stampResult dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        if (resultObject != NULL) {
-            if ([resultObject objectForKey:@"stamp"] != nil){
-                isStamping = YES;
-                [Utilities wiggleImage:self.stampImage sound:NO];
-                NSString *stampSerial = [[resultObject objectForKey:@"stamp"] objectForKey:@"serial"];
-                
-                if ([Utilities isValidClassroomHeroStamp:stampSerial]){
-                    if (![[DatabaseHandler getSharedInstance] isSerialRegistered:stampSerial] && ![stampSerial isEqualToString:currentUser.serial]){
-                        [currentStudent setSerial:stampSerial];
-                        [self activityStart:@"Registering student..."];
-                        [webHandler registerStamp:[currentStudent getId] :stampSerial :[currentUser.currentClass getId]];
-                    }
-                    else {
-                        [Utilities failAnimation:self.stampImage];
-                        isStamping = NO;
-                    }
-                }
-                else {
-                    [Utilities alertStatusWithTitle:@"Invalid Stamp" message:@"You must use a Classroom Hero stamp" cancel:nil otherTitles:nil tag:0 view:nil];
-                    isStamping = NO;
-                }
-            }
-            else {
-                [Utilities failAnimation:self.stampImage];
-                self.stampToRegisterLabel.text=@"Try  Stamping  Again";
-                self.nameLabel.hidden = NO;
-                isStamping = NO;
-            }
-        }
-        else {
-            isStamping  =  NO;
-        }
-    }
-    
-}
-
-
 - (void)setStudentLabels{
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Points", (long)[currentStudent getPoints]];
     NSString *name = [currentStudent getSerial];
-    if (![[currentStudent getSerial] isEqualToString:@""]){
-        self.stampIdLabel.text = [currentStudent getSerial];
-    }
-    else {
-        self.stampIdLabel.text = @"No stamp registered";
-    }
     [self.progressView setProgress:(float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount] animated:YES];
     
     isRegistered = ((![currentStudent.getSerial isEqualToString:@""]) || ![currentStudent getSerial]);
-    
-    if (isRegistered){
-        self.studentButton.hidden = NO;
-        self.stampToRegisterLabel.hidden = YES;
-    }
-    else {
-        self.stampToRegisterLabel.hidden = NO;
-        self.studentButton.hidden = YES;
-    }
 }
 
 
 - (void)configureProgressBar{
     BOOL customized = NO;
-    [self.progressView setProgressBarTrackColor:[Utilities CHGreenColor]];
+    [self.progressView setProgressBarTrackColor:[UIColor blackColor]];
+    [self.progressView setStartAngle:-90.0];
+
     [self.progressView setProgressBarWidth:(6.0f)];
-    [self.progressView  setProgressBarProgressColor:[UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0]];
+    [self.progressView  setProgressBarProgressColor:[Utilities CHGoldColor]];
     [self.progressView setBackgroundColor:[UIColor clearColor]];
     
     [self.progressView  setHintViewSpacing:(customized ? 10.0f : 0)];

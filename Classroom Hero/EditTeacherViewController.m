@@ -40,6 +40,26 @@
 }
 
 
+- (void) viewDidLayoutSubviews{
+    if (IS_IPAD_PRO) {
+        textFields = [[NSMutableArray alloc]initWithObjects:self.editPasswordTextField, self.confirmNewPasswordTextField, self.currentPasswordTextField, nil];
+        
+        for (UITextField *tf in textFields){
+            float x = tf.frame.origin.x;
+            float y = tf.frame.origin.y + 100;
+            float width = tf.frame.size.width;
+            float height = tf.frame.size.height;
+            [tf setFrame:CGRectMake(x, y, width, height)];
+        }
+        self.passwordTitleLabel.frame = CGRectMake(398, 556, 230, 49);
+
+        self.editPasswordButton.frame = CGRectMake(398, 930, 227, 53);
+        
+        self.separatorView.frame = CGRectMake(0, 450, 1336, 2);
+    }
+}
+
+
 - (IBAction)editNameClicked:(id)sender {
     [self hideKeyboard];
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, nil];
@@ -161,7 +181,7 @@
             [hud hide:YES];
             self.firstNameTextField.text = @"";
             self.lastNameTextField.text = @"";
-            [Utilities alertStatusWithTitle:@"Successfully edited name!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities alertStatusWithTitle:@"Success" message:@"Edited name" cancel:nil otherTitles:nil tag:0 view:nil];
             self.firstNameTextField.placeholder = currentUser.firstName;
             self.lastNameTextField.placeholder = currentUser.lastName;
             
@@ -177,7 +197,7 @@
             self.editPasswordTextField.text = @"";
             self.confirmNewPasswordTextField.text = @"";
             self.currentPasswordTextField.text = @"";
-            [Utilities alertStatusWithTitle:@"Successfully edited password!" message:nil cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities alertStatusWithTitle:@"Success" message:@"Edited password" cancel:nil otherTitles:nil tag:0 view:nil];
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
             [Flurry logEvent:@"Edit Teacher Password" withParameters:params];

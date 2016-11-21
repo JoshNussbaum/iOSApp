@@ -14,6 +14,7 @@
 @interface EditTeacherViewController : UIViewController <ConnectionHandlerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *editNameButton;
+@property (strong, nonatomic) IBOutlet UIView *separatorView;
 @property (strong, nonatomic) IBOutlet UIButton *editPasswordButton;
 @property (strong, nonatomic) IBOutlet UIButton *resetPasswordButton;
 @property (strong, nonatomic) IBOutlet UIButton *manageStampButton;
@@ -22,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet passwordTextField *currentPasswordTextField;
 @property (strong, nonatomic) IBOutlet passwordTextField *editPasswordTextField;
 @property (strong, nonatomic) IBOutlet passwordTextField *confirmNewPasswordTextField;
+@property (strong, nonatomic) IBOutlet UILabel *passwordTitleLabel;
 
 - (IBAction)editNameClicked:(id)sender;
 - (IBAction)editPasswordClicked:(id)sender;

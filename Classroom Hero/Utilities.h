@@ -11,16 +11,9 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "student.h"
 
-// Old stamps
-// key - d12276c2fac976865fdc
-// secret - bf700a42149799b02641b2c2d93dbd3c4f995db8
+#define IS_IPAD_PRO ([[UIScreen mainScreen] bounds].size.height == 1366)
+#define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 
-// New stamps
-// key - d6b63f411c3964fd84ba
-// secret - 6eb0fd53b6b13c6012d0d76e1634f92cd3e9f354
-
-static NSString * const snowshoe_app_key = @"d6b63f411c3964fd84ba";
-static NSString * const snowshoe_app_secret = @"6eb0fd53b6b13c6012d0d76e1634f92cd3e9f354";
 static NSString * const merchant_id = @"merchant.com.classroom-hero";
 
 @interface Utilities : NSObject
@@ -69,6 +62,8 @@ extern NSInteger ALL_STUDENT_CHECK_IN;
 extern NSInteger ALL_STUDENT_CHECK_OUT;
 extern NSInteger GET_USER_BY_STAMP;
 extern NSInteger RESET_PASSWORD;
+
+extern NSInteger menuItemFontSize;
 
 
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType;
@@ -187,12 +182,10 @@ extern NSInteger RESET_PASSWORD;
 
 + (id) getStudentWitharray:(NSMutableArray *)searchArray propertyName:(NSString *)propertyName searchString:(NSString *)searchString;
 
-
 + (NSString *)getPackageDescriptionWithpackageId:(NSInteger)packageId stamps:(NSInteger)stamps;
-
 
 + (long) getNavigationBarButtonSize;
 
-
++ (void) setFontSizeWithbuttons:(NSArray *)buttons font:(NSString *)font size:(float)size;
 
 @end

@@ -25,9 +25,12 @@
 
 @property (weak, nonatomic) IBOutlet CircleProgressBar *classProgressBar;
 
+@property (strong, nonatomic) IBOutlet UILabel *jarProgressLabel;
+
 @property (weak, nonatomic) IBOutlet CircleProgressBar *jarProgressBar;
 
 @property (strong, nonatomic) IBOutlet UIImageView *classLevelIcon;
+@property (strong, nonatomic) IBOutlet UIView *separatorView;
 
 // Menu
 @property (strong, nonatomic) IBOutlet UIButton *homeButton;
@@ -37,6 +40,10 @@
 
 
 // Class Stats
+@property (strong, nonatomic) IBOutlet UILabel *classTotalAwardsTitleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *studentAvgLevelTitleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *studentAvgPointsTitleLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *classTotalStampsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *classAvgLevelLabel;
 @property (strong, nonatomic) IBOutlet UILabel *classAvgPointsLabel;
