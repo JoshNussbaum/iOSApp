@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="VM1-vP-cnk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="VM1-vP-cnk">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -2212,23 +2212,6 @@
         <!--Award View Controller-->
         <scene sceneID="q2u-Nq-y2U">
             <objects>
-                <swipeGestureRecognizer direction="left" id="qeI-AU-sWu">
-                    <connections>
-                        <segue destination="mAJ-bY-EoJ" kind="push" identifier="award_to_class_jar" id="ZVi-Sk-Zt2"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <exit id="wum-BM-i6p" userLabel="Exit" sceneMemberID="exit"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oWq-DR-vbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="Bdh-NG-UAR">
-                    <connections>
-                        <segue destination="wum-BM-i6p" kind="unwind" unwindAction="unwindToHome:" id="N7W-t8-Ho2"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <tapGestureRecognizer id="C9T-rI-ALP">
-                    <connections>
-                        <outlet property="delegate" destination="gqC-DY-3f5" id="vYq-Ma-GTu"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <viewController storyboardIdentifier="AwardViewController" id="gqC-DY-3f5" customClass="AwardViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pvh-1z-sIM"/>
@@ -2509,7 +2492,7 @@
                                     <constraint firstAttribute="width" secondItem="ebp-Z3-Goo" secondAttribute="height" multiplier="391:875" id="JCB-9h-eXA"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddPointsTableViewCell" id="FX2-oP-paA">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="AwardMenuOptionTableViewCell" id="FX2-oP-paA" customClass="AwardMenuOptionTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FX2-oP-paA" id="qZV-hs-B5w">
@@ -2518,7 +2501,6 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-GG-iUV">
                                                     <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
-                                                    <color key="textColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -2529,72 +2511,12 @@
                                                 <constraint firstAttribute="bottom" secondItem="oNa-GG-iUV" secondAttribute="bottom" id="z7n-7z-3cK"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="oNa-GG-iUV" id="IVl-3v-nlU"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GenerateChestTableViewCell" id="2GX-QF-XkO">
+                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="StudentAwardTableViewCell" id="WhH-Je-Xtm" customClass="StudentAwardTableViewCell">
                                         <rect key="frame" x="0.0" y="72" width="391" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2GX-QF-XkO" id="hI9-Mc-0FQ">
-                                            <frame key="frameInset" width="391" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generate Chest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRM-mH-QQy">
-                                                    <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
-                                                    <color key="textColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="YRM-mH-QQy" secondAttribute="trailing" id="VPR-AS-Uy0"/>
-                                                <constraint firstItem="YRM-mH-QQy" firstAttribute="top" secondItem="hI9-Mc-0FQ" secondAttribute="top" id="dgv-Zk-5HZ"/>
-                                                <constraint firstItem="YRM-mH-QQy" firstAttribute="leading" secondItem="hI9-Mc-0FQ" secondAttribute="leading" id="gmB-BQ-hlp"/>
-                                                <constraint firstAttribute="bottom" secondItem="YRM-mH-QQy" secondAttribute="bottom" id="yfW-8w-YZ5"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AwardStudentsSelectAllCell" id="bxL-Rb-bJJ">
-                                        <rect key="frame" x="0.0" y="116" width="391" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bxL-Rb-bJJ" id="nCs-0h-BXo">
-                                            <frame key="frameInset" width="391" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select all " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkk-s4-pl7">
-                                                    <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
-                                                    <color key="textColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="lkk-s4-pl7" firstAttribute="top" secondItem="nCs-0h-BXo" secondAttribute="top" id="NQW-JE-bzl"/>
-                                                <constraint firstAttribute="trailing" secondItem="lkk-s4-pl7" secondAttribute="trailing" id="RfR-3s-lHO"/>
-                                                <constraint firstItem="lkk-s4-pl7" firstAttribute="leading" secondItem="nCs-0h-BXo" secondAttribute="leading" id="Xfe-KP-xtv"/>
-                                                <constraint firstAttribute="bottom" secondItem="lkk-s4-pl7" secondAttribute="bottom" id="ycE-NL-h2I"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AwardStudentsDeselectAllCell" id="pYM-5Y-zBe">
-                                        <rect key="frame" x="0.0" y="160" width="391" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pYM-5Y-zBe" id="LA9-TT-GbN">
-                                            <frame key="frameInset" width="391" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deselect all" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qE4-U4-lPq">
-                                                    <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
-                                                    <color key="textColor" red="0.4549019608" green="0.81960784310000001" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="qE4-U4-lPq" secondAttribute="trailing" id="1ys-y4-7mL"/>
-                                                <constraint firstItem="qE4-U4-lPq" firstAttribute="top" secondItem="LA9-TT-GbN" secondAttribute="top" id="eTy-yZ-V4y"/>
-                                                <constraint firstItem="qE4-U4-lPq" firstAttribute="leading" secondItem="LA9-TT-GbN" secondAttribute="leading" id="ltM-Kd-oR1"/>
-                                                <constraint firstAttribute="bottom" secondItem="qE4-U4-lPq" secondAttribute="bottom" id="mjF-cb-hGB"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentAwardTableViewCell" id="WhH-Je-Xtm" customClass="StudentAwardTableViewCell">
-                                        <rect key="frame" x="0.0" y="204" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WhH-Je-Xtm" id="6mA-3P-JGB">
                                             <frame key="frameInset" width="391" height="43"/>
@@ -2779,6 +2701,23 @@
                         <outlet property="studentsTableView" destination="ebp-Z3-Goo" id="XhQ-Vi-Wug"/>
                     </connections>
                 </viewController>
+                <swipeGestureRecognizer direction="left" id="qeI-AU-sWu">
+                    <connections>
+                        <segue destination="mAJ-bY-EoJ" kind="push" identifier="award_to_class_jar" id="ZVi-Sk-Zt2"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <exit id="wum-BM-i6p" userLabel="Exit" sceneMemberID="exit"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oWq-DR-vbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="Bdh-NG-UAR">
+                    <connections>
+                        <segue destination="wum-BM-i6p" kind="unwind" unwindAction="unwindToHome:" id="N7W-t8-Ho2"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <tapGestureRecognizer id="C9T-rI-ALP">
+                    <connections>
+                        <outlet property="delegate" destination="gqC-DY-3f5" id="vYq-Ma-GTu"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="6118" y="818"/>
         </scene>
@@ -3100,6 +3039,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 Points" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKs-0R-6wk">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rKs-0R-6wk" secondAttribute="height" multiplier="736:63" id="YgD-Sk-Gxj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="35"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNY-Tl-vWz">
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="bNY-Tl-vWz" secondAttribute="height" multiplier="44:19" constant="298" id="2ZS-lu-hSv"/>
@@ -3138,14 +3085,6 @@
                                     <constraint firstAttribute="width" secondItem="uZo-2Q-U9Q" secondAttribute="height" multiplier="1:1" id="KYW-mX-XNm"/>
                                 </constraints>
                             </imageView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 Points" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKs-0R-6wk">
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="rKs-0R-6wk" secondAttribute="height" multiplier="736:63" id="YgD-Sk-Gxj"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="35"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tCB-YH-9LY">
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIg-bK-VZU">
@@ -3404,7 +3343,7 @@
                         </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="kM9-Ih-djM">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UvD-he-CPE">
-                                <rect key="frame" x="697" y="-5" width="307" height="54"/>
+                                <rect key="frame" x="441" y="-5" width="307" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="27"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

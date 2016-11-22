@@ -46,6 +46,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
+
     isBuying = NO;
     showingStudents = NO;
     studentSelected = NO;
@@ -120,25 +122,25 @@
 
 
 - (IBAction)studentListClicked:(id)sender {
-    if (studentsData.count > 0){
-        if (itemsData.count > 0){
-            if (self.studentsTableView.hidden){
-                [self animateTableView:NO];
+    if (!isBuying){
+        if (studentsData.count > 0){
+            if (itemsData.count > 0){
+                if (self.studentsTableView.hidden){
+                    [self animateTableView:NO];
+                }
+                else{
+                    [self animateTableView:YES];
+                }
             }
-            else{
-                [self animateTableView:YES];
+            else {
+                [Utilities alertStatusWithTitle:@"Add items first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
             }
         }
         else {
-            [Utilities alertStatusWithTitle:@"Add items first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
+            [Utilities alertStatusWithTitle:@"Add students first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
         }
+        
     }
-    else {
-        [Utilities alertStatusWithTitle:@"Add students first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
-    }
-    
-
-    
 }
 
 
@@ -257,15 +259,14 @@
             self.editItemButton.hidden = NO;
             
             [[DatabaseHandler getSharedInstance] addItem:newItem];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
+            [Flurry logEvent:@"Add Item - Market View" withParameters:params];
             [itemsData insertObject:newItem atIndex:0];
             [self.picker reloadAllComponents];
             [self.picker selectRow:0 inComponent:0 animated:NO];
             [hud hide:YES];
             [self setItemLabel];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Item - Market View" withParameters:params];
 
         }
         else if (type == EDIT_ITEM){
@@ -507,7 +508,7 @@
     
     [self decrementScore:scores];
     
-    double delayInSeconds = 1.5;
+    double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         isBuying = NO;
@@ -526,7 +527,11 @@
         [scores replaceObjectAtIndex:0 withObject:[NSNumber numberWithInteger:score]];
         [self.studentPointsLabel setText:scoreDisplay];
         [self performSelector:@selector(decrementScore:) withObject:scores afterDelay:0.035];
-    }	
+    }
+    else {
+        self.studentPointsLabel.layer.zPosition = -2;
+
+    }
     
 }
 

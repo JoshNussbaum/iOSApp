@@ -297,6 +297,7 @@ NSInteger menuItemFontSize = 26;
 + (UIAlertView *) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type{
     if (!cancel) cancel = @"Close";
     if (!done) done = @"Done";
+    
     UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
                                                        message:message
                                                       delegate:view

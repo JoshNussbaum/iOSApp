@@ -124,7 +124,6 @@
     self->level++;
     self->progress = 0;
     self->nextLevel+= 5;
-    [self printClass];
 }
 
 

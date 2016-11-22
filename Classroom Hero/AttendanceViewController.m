@@ -36,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
     currentUser = [user getInstance];
     showingStudents = NO;
     isStamping = NO;
@@ -58,7 +59,6 @@
         student *selectedStudent = [checkedOutStudents objectForKey:studentId];
         currentStudent = selectedStudent;
     }
-    
     
     coins = [Utilities getCoinShakeSound];
 
@@ -112,7 +112,6 @@
     [self checkNewDay];
 }
 
-
 // ATTENDANCE CLICKED
 
 - (IBAction)attendanceClicked:(id)sender {
@@ -153,14 +152,14 @@
 
 
 - (IBAction)resetClicked:(id)sender {
-    if (studentsData.count > 0 && checkedOutStudents.count != studentsData.count){
+    if (!isStamping && studentsData.count > 0 && checkedOutStudents.count != studentsData.count){
         [Utilities alertStatusWithTitle:@"Confirm action" message:@"Check out all students?" cancel:nil otherTitles:@[@"Confirm"] tag:3 view:self];
     }
 }
 
 
 - (IBAction)checkInAllClicked:(id)sender {
-    if (checkedOutStudents.count > 0){
+    if (checkedOutStudents.count > 0 && !isStamping){
      [Utilities alertStatusWithTitle:@"Confirm action" message:@"Check in all students?" cancel:nil otherTitles:@[@"Confirm"] tag:4 view:self];
     }
 }
@@ -236,15 +235,14 @@
                 [currentUser.currentClass addPoints:1];
                 [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
                 [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
-
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+                
+                [Flurry logEvent:@"Check In" withParameters:params];
+                
                 [self coinAnimation];
                 
                 [self reloadTable];
                 [self.studentsPicker reloadAllComponents];
-
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-                [Flurry logEvent:@"Check In" withParameters:params];
             }
             else {
                 [currentStudent setCheckedIn:YES];

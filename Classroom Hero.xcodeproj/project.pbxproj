@@ -105,6 +105,7 @@
 		03DCFFDB1B6C6C8A00C451CC /* classjar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFDA1B6C6C8A00C451CC /* classjar.m */; };
 		03DCFFDE1B6C6FDA00C451CC /* school.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFDD1B6C6FDA00C451CC /* school.m */; };
 		03ED99BC1CDC75D000A8545A /* redapple.png in Resources */ = {isa = PBXBuildFile; fileRef = 03ED99BB1CDC75D000A8545A /* redapple.png */; };
+		03F18BF21DE3D91B00389248 /* AwardMenuOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F18BF11DE3D91B00389248 /* AwardMenuOptionTableViewCell.m */; };
 		03F46FB51B69CBAD00A695B2 /* DatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03F46FB81B69CC2700A695B2 /* class.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FB71B69CC2700A695B2 /* class.m */; };
 		03F46FBB1B6B54C200A695B2 /* student.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FBA1B6B54C200A695B2 /* student.m */; };
@@ -260,6 +261,8 @@
 		03DCFFDC1B6C6FDA00C451CC /* school.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = school.h; sourceTree = "<group>"; };
 		03DCFFDD1B6C6FDA00C451CC /* school.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = school.m; sourceTree = "<group>"; };
 		03ED99BB1CDC75D000A8545A /* redapple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redapple.png; sourceTree = "<group>"; };
+		03F18BF01DE3D91B00389248 /* AwardMenuOptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwardMenuOptionTableViewCell.h; sourceTree = "<group>"; };
+		03F18BF11DE3D91B00389248 /* AwardMenuOptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwardMenuOptionTableViewCell.m; sourceTree = "<group>"; };
 		03F46FB31B69CBAD00A695B2 /* DatabaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseHandler.h; sourceTree = "<group>"; };
 		03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseHandler.m; sourceTree = "<group>"; };
 		03F46FB61B69CC2700A695B2 /* class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = class.h; sourceTree = "<group>"; };
@@ -460,6 +463,8 @@
 				038898391BB3B6ED00D12468 /* StudentTableViewCell.m */,
 				0369CF8B1BE082EC00E8857D /* StudentAttendanceTableViewCell.h */,
 				0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */,
+				03F18BF01DE3D91B00389248 /* AwardMenuOptionTableViewCell.h */,
+				03F18BF11DE3D91B00389248 /* AwardMenuOptionTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -920,6 +925,7 @@
 				03A01EDA1B68A8C20037110E /* TutorialContentViewController.m in Sources */,
 				03F46FBB1B6B54C200A695B2 /* student.m in Sources */,
 				03B3A02E1B71D0A800B42E09 /* Utilities.m in Sources */,
+				03F18BF21DE3D91B00389248 /* AwardMenuOptionTableViewCell.m in Sources */,
 				03AA99E71B6333C300750758 /* main.m in Sources */,
 				038898371BB3AC4A00D12468 /* StudentsTableViewController.m in Sources */,
 				03BD41211BCAE5AE00879B46 /* AttendanceViewController.m in Sources */,

@@ -52,7 +52,8 @@
     }
     [[UITextField appearance] setTintColor:[Utilities CHBlueColor]];
     [Flurry startSession:@"646YZ8K3TTSHHSK43QKZ"];
-    
+    [Flurry setBackgroundSessionEnabled:YES];
+
     return YES;
 }
 
