@@ -421,7 +421,7 @@
     [self.picker selectRow:index inComponent:0 animated:YES];
     currentItem = [itemsData objectAtIndex:0];
     self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
-    NSString *points;
+    NSString *points = @"";
     if ([currentItem getCost] > 1){
         points = @"points";
     }
