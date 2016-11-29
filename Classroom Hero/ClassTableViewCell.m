@@ -61,6 +61,7 @@
 
 
 - (void)initializeCellWithClass:(class*)class_ :(NSInteger)classCount{
+    self.backgroundColor = [UIColor clearColor];
     self.nameLabel.text = [class_ getName];
     self.totalPointsLabel.text = [NSString stringWithFormat:@"%ld  Points", (long)[class_ getProgress]];
     float barProgress = (float)[class_ getProgress] / (float)[class_ getNextLevel];

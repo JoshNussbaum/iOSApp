@@ -115,22 +115,23 @@
 // ATTENDANCE CLICKED
 
 - (IBAction)attendanceClicked:(id)sender {
-    NSInteger index = [self.studentsPicker selectedRowInComponent:0];
-    NSNumber *studentId = [[checkedOutStudents allKeys] objectAtIndex:index];
-    
-    student *selectedStudent = [checkedOutStudents objectForKey:studentId];
-    currentStudent = selectedStudent;
-    if (showingStudents){
-        [self animateTableView:YES];
-    }
-    else if ((!isStamping) && ([checkedOutStudents count] > 0)){
-        isStamping = YES;
-        self.studentsPicker.hidden = YES;
-        [Utilities wiggleImage:self.stampImage sound:NO];
-        [self setStudentLabels];
-        [self checkNewDay];
-        didManuallyCheckIn = NO;
-        [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:YES];
+    if (checkedOutStudents.count > 0){
+        NSInteger index = [self.studentsPicker selectedRowInComponent:0];
+        NSNumber *studentId = [[checkedOutStudents allKeys] objectAtIndex:index];
+        
+        student *selectedStudent = [checkedOutStudents objectForKey:studentId];
+        currentStudent = selectedStudent;
+        if (showingStudents){
+            [self animateTableView:YES];
+        }
+        else if (!isStamping){
+            isStamping = YES;
+            self.studentsPicker.hidden = YES;
+            [Utilities wiggleImage:self.stampImage sound:NO];
+            [self setStudentLabels];
+            didManuallyCheckIn = NO;
+            [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:YES];
+        }
     }
 }
 
@@ -208,13 +209,15 @@
 
     if (data == nil){
         isStamping = NO;
+        [self hideLabels];
+        [self setStudentPreTouchLabel];
         [Utilities alertStatusNoConnection];
         return;
     }
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
 
     if ([successNumber boolValue] == YES){
-        [self checkNewDay];
+        //[self checkNewDay];
         if (type == STUDENT_CHECK_IN){
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
 
@@ -253,7 +256,6 @@
                 [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
                 
                 [self reloadTable];
-                [self checkNewDay];
                 [self.studentsPicker reloadAllComponents];
                 [self setStudentPreTouchLabel];
             }
@@ -355,6 +357,7 @@
 
 - (void)setStudentPreTouchLabel{
     if ([checkedOutStudents count] > 0){
+        self.studentsPicker.hidden = NO;
 
         NSInteger index = [self.studentsPicker selectedRowInComponent:0];
         NSNumber *studentId = [[checkedOutStudents allKeys] objectAtIndex:index];

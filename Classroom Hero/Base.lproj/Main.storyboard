@@ -566,7 +566,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96162405299999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="OgX-e8-URO" firstAttribute="top" secondItem="fW2-eL-Mws" secondAttribute="bottom" constant="15" id="4fx-9r-ZHf"/>
@@ -642,16 +642,6 @@
                                     <outlet property="delegate" destination="N40-iH-uTO" id="kE5-kJ-2Jz"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmd-q6-6z0">
-                                <rect key="frame" x="22" y="20" width="724" height="155"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Hmd-q6-6z0" secondAttribute="height" multiplier="71:15" constant="-9.6666666666666288" id="XTq-hl-pt5"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="35"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hiN-uu-7lr">
                                 <rect key="frame" x="128" y="245" width="513" height="30"/>
                                 <constraints>
@@ -701,8 +691,18 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmd-q6-6z0">
+                                <rect key="frame" x="49" y="20" width="670" height="155"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Hmd-q6-6z0" secondAttribute="height" multiplier="71:15" constant="-63.666666666666629" id="XTq-hl-pt5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96162405299999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="EdR-ee-oJI" firstAttribute="centerX" secondItem="ijq-Rn-6tu" secondAttribute="centerX" id="0zO-rA-RqJ"/>
@@ -710,7 +710,7 @@
                             <constraint firstItem="FeJ-HA-784" firstAttribute="top" secondItem="YRH-Mu-eRQ" secondAttribute="bottom" constant="128" id="3Ro-ib-WTu"/>
                             <constraint firstItem="5Ql-Om-rIq" firstAttribute="centerX" secondItem="ijq-Rn-6tu" secondAttribute="centerX" id="6V9-pj-lZt"/>
                             <constraint firstItem="FeJ-HA-784" firstAttribute="centerX" secondItem="ijq-Rn-6tu" secondAttribute="centerX" id="BFN-Ux-RXP"/>
-                            <constraint firstItem="Hmd-q6-6z0" firstAttribute="width" secondItem="ijq-Rn-6tu" secondAttribute="height" multiplier="355:512" constant="14" id="Cz2-jx-Uhm"/>
+                            <constraint firstItem="Hmd-q6-6z0" firstAttribute="width" secondItem="ijq-Rn-6tu" secondAttribute="height" multiplier="355:512" constant="-40" id="Cz2-jx-Uhm"/>
                             <constraint firstItem="5Ql-Om-rIq" firstAttribute="top" secondItem="XtP-rm-iKW" secondAttribute="bottom" constant="72" id="GjC-4H-nBD"/>
                             <constraint firstAttribute="trailing" secondItem="XtP-rm-iKW" secondAttribute="trailing" id="HIY-VY-nJe"/>
                             <constraint firstItem="XtP-rm-iKW" firstAttribute="leading" secondItem="ijq-Rn-6tu" secondAttribute="leading" id="KVM-6Z-tde"/>
@@ -796,7 +796,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="xap-Ee-43G" secondAttribute="height" multiplier="679:352" id="KEk-d2-NDm"/>
                                 </constraints>
-                                <string key="text">Easily  manage  a  token  economy;   Reward  students  as  they  check  in  for  attendance.  Distribute  points  for  positive  behavior.  View  statistics  to  see  who  could  use  more  motivation. </string>
+                                <string key="text">Easily  manage  a  token  economy;   Reward  students  as  they  check  in  for  attendance,  distribute  points  for  positive  behavior,  sell  items/privileges</string>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="60"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -826,7 +826,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96162405299999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ZcV-Yr-uw6" firstAttribute="top" secondItem="Ouy-Ff-fe9" secondAttribute="bottom" constant="39" id="0XY-tf-Cwd"/>
                             <constraint firstItem="UGt-4X-aAl" firstAttribute="width" secondItem="4tT-75-KmE" secondAttribute="height" multiplier="3:4" constant="1.5" id="14d-O7-8XL"/>
@@ -888,6 +888,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.96162405299999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="addClassCell" rowHeight="74" id="FI5-Kw-U0s">
                                 <rect key="frame" x="0.0" y="22" width="768" height="74"/>
@@ -905,12 +906,14 @@
                                             <color key="shadowColor" red="0.39243233199999999" green="0.77845203880000002" blue="0.95465677979999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                     </subviews>
+                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="8Xf-D0-Pvt" firstAttribute="centerY" secondItem="csd-9P-cat" secondAttribute="centerY" id="1jU-pR-AeE"/>
                                         <constraint firstItem="8Xf-D0-Pvt" firstAttribute="centerX" secondItem="csd-9P-cat" secondAttribute="centerX" id="Glg-EO-5uA"/>
                                         <constraint firstItem="8Xf-D0-Pvt" firstAttribute="width" secondItem="csd-9P-cat" secondAttribute="height" multiplier="153:73" id="yZ1-EJ-Shc"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="classCell" rowHeight="150" id="19w-rb-Agj" customClass="ClassTableViewCell">
                                 <rect key="frame" x="0.0" y="96" width="768" height="150"/>
@@ -920,7 +923,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="89 Students" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daW-LK-oq2">
-                                            <rect key="frame" x="526" y="97" width="191" height="33"/>
+                                            <rect key="frame" x="526" y="96" width="191" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="daW-LK-oq2" secondAttribute="height" multiplier="191:33" id="aTp-YV-P2t"/>
                                             </constraints>
@@ -942,7 +945,6 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEVEL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuz-AJ-wz0">
                                             <rect key="frame" x="625" y="13" width="85" height="38"/>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="uuz-AJ-wz0" secondAttribute="height" multiplier="85:38" id="7GE-Sc-IRi"/>
                                             </constraints>
@@ -953,7 +955,6 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jep-8e-JhC">
                                             <rect key="frame" x="530" y="51" width="79" height="37"/>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="jep-8e-JhC" secondAttribute="height" multiplier="79:37" id="aXR-Cn-IUt"/>
                                             </constraints>
@@ -963,7 +964,6 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kq-ha-lvh">
                                             <rect key="frame" x="637" y="51" width="60" height="37"/>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="9Kq-ha-lvh" secondAttribute="height" multiplier="60:37" id="Nbr-w3-0QH"/>
                                             </constraints>
@@ -973,7 +973,7 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Erin's Special Education Class That is two lines long" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZ9-ek-bKM">
                                             <rect key="frame" x="20" y="25" width="441.5" height="99"/>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="AZ9-ek-bKM" secondAttribute="height" multiplier="19:3" constant="-187" id="cbI-0O-vRo"/>
                                             </constraints>
@@ -1036,7 +1036,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="IF7-o3-AaP">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="f1G-uX-y8h">
-                                <rect key="frame" x="834" y="7" width="170" height="30"/>
+                                <rect key="frame" x="578" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="27"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1050,6 +1050,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="classTableView" destination="agj-Sb-U44" id="fQj-Vb-TB3"/>
                         <outlet property="editButton" destination="f1G-uX-y8h" id="CBM-ye-5Sb"/>
                         <segue destination="U2R-yA-zyV" kind="push" identifier="class_to_home" id="mtj-Wm-nfd"/>
                         <segue destination="eMN-Zh-xzp" kind="push" identifier="class_to_add_class" id="716-vg-ubi"/>
@@ -1178,7 +1179,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96162405299999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
@@ -1496,7 +1497,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dCI-xW-RY9">
-                            <rect key="frame" x="230.5" y="7" width="307" height="30"/>
+                            <rect key="frame" x="231" y="7" width="307" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="32"/>
                             <state key="normal" title="Student List">
@@ -1587,7 +1588,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96162405299999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Hh3-92-U36" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="585:1024" constant="163" id="8BQ-OY-KYj"/>
                             <constraint firstItem="Lcs-xr-9EI" firstAttribute="centerX" secondItem="dql-nu-kcC" secondAttribute="centerX" id="FSv-ju-FGb"/>
@@ -1835,7 +1836,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="6JK-gq-SLP">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Dhy-Rj-UlJ">
-                                <rect key="frame" x="834" y="7" width="170" height="30"/>
+                                <rect key="frame" x="578" y="7" width="170" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="27"/>
                                 <state key="normal" title="Tutorial">
@@ -2261,7 +2262,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AmA-ZV-xBJ">
-                            <rect key="frame" x="230.5" y="-5" width="307" height="54"/>
+                            <rect key="frame" x="231" y="-5" width="307" height="54"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="32"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2654,7 +2655,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-GG-iUV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="391" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="391" height="43"/>
                                                     <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -3615,6 +3616,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ewg-8k-sYO"/>
-        <segue reference="0OP-ML-Sf4"/>
+        <segue reference="bHb-Tt-ENY"/>
     </inferredMetricsTieBreakers>
 </document>

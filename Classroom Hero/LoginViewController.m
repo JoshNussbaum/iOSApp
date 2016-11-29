@@ -155,7 +155,7 @@
         else if (type == STAMP_TO_LOGIN){
             errorMessage = @"Error stamping to log in";
         }
-        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:nil];
+        [Utilities alertStatusWithTitle:errorMessage message:@"Invalid email / password combination" cancel:nil otherTitles:nil tag:0 view:nil];
         isStamping = NO;
     }
     

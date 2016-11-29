@@ -36,7 +36,7 @@
     if (flag == 2){
         [self.backButton setTitle:@"Back" forState:UIControlStateNormal];
         [self.skipButton setHidden:YES];
-        _pageTitles = @[@"Swipe  left  to  create  a  class  and  register  a  teacher  stamp", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  back  to  return  to  the  settings  screen"];
+        _pageTitles = @[@"Swipe  left  to  get  started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  back  to  return  to  the  settings  screen"];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
     
@@ -49,8 +49,6 @@
     [self.arrowLabel addGestureRecognizer:tapGesture];
 
     currentUser = [user getInstance];
-    // Do any additional setup after loading the view.
-
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
@@ -60,11 +58,9 @@
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     if (self.view.frame.size.height == 1366) {
         self.pageViewController.view.frame = CGRectMake(52, 0, self.view.frame.size.width - 104, self.view.frame.size.height-120);
-
     }
     else {
         self.pageViewController.view.frame = CGRectMake(52, 0, self.view.frame.size.width - 104, self.view.frame.size.height-60);
-
     }
     
     [self addChildViewController:_pageViewController];

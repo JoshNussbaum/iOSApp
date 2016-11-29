@@ -46,8 +46,6 @@
 
 - (void) setCheckedIn:(BOOL)checkedIn_;
 
-- (void) setSelected:(BOOL)selected_;
-
 // Read Functions
 -(NSInteger )getId;
 

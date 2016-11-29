@@ -513,7 +513,7 @@ NSInteger menuItemFontSize = 26;
 
 
 + (NSString *) getRandomCompliment{
-    NSArray *compliments = @[@"Outstanding! ",@"Splendid! ",@"Marvelous! ",@"Amazing! ",@"Impressive! ",@"Great! ",@"Good work! ",@"Fine  job!",@"Magnificent! ",@"Brilliant!",@"Exquisite!",@"Beautiful!",@"Incredible!",@"Wonderful!",@"Awesome!",@"Fantastic!",@"Tremendous!",@"Excellent!",@"Remarkable!",@"Astonishing! ",@"Phenomenal! ",@"Terrific! ",@"Stupendous! ",];
+    NSArray *compliments = @[@"Outstanding! ",@"Splendid! ",@"Marvelous! ",@"Amazing! ",@"Impressive! ",@"Great work!", @"Fine  job!",@"Magnificent! ",@"Brilliant!",@"Exquisite!", @"Incredible!", @"Wonderful!", @"Awesome!", @"Fantastic!", @"Tremendous!" ,@"Excellent!", @"Remarkable!", @"Astonishing! ", @"Phenomenal! ", @"Terrific! ", @"Stupendous!",];
     
     NSInteger randomInteger = arc4random() % (compliments.count-1);
     

@@ -550,7 +550,14 @@
         [self setScore];
     }
     self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
-    self.pointsLabel.text=[NSString stringWithFormat:@"%li", (long)[currentItem getCost]];
+    NSString *points;
+    if ([currentItem getCost] > 1){
+        points = @"points";
+    }
+    else {
+        points = @"point";
+    }
+    self.pointsLabel.text=[NSString stringWithFormat:@"%li %@", (long)[currentItem getCost], points];
 }
 
 

@@ -37,7 +37,6 @@ static NSString * const classCell = @"classCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
-    //[[UINavigationBar appearance] setTintColor:[Utilities CHBlueColor]];
     [self.tableView setBounces:NO];
 
 
@@ -226,6 +225,7 @@ static NSString * const classCell = @"classCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0){
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"addClassCell"];
+        cell.backgroundColor = [UIColor clearColor];
         return cell;
     }
     else {

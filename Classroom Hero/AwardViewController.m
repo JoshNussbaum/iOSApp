@@ -758,7 +758,7 @@ static NSInteger coinHeight = 250;
 
 
 - (void)addPoints:(NSInteger)points levelup:(bool)levelup{
-    self.pointsLabel.text = @"Great work!";
+    self.pointsLabel.text = [Utilities getRandomCompliment];
 
     AudioServicesPlaySystemSound(award);
     if (points == 3){
