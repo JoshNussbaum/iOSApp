@@ -104,6 +104,7 @@
 		03DCFFD81B6C67F300C451CC /* item.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFD71B6C67F300C451CC /* item.m */; };
 		03DCFFDB1B6C6C8A00C451CC /* classjar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFDA1B6C6C8A00C451CC /* classjar.m */; };
 		03DCFFDE1B6C6FDA00C451CC /* school.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFDD1B6C6FDA00C451CC /* school.m */; };
+		03E6D5A11DED5E9E00F289BA /* StoryboardiPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03E6D5A01DED5E9E00F289BA /* StoryboardiPhone.storyboard */; };
 		03ED99BC1CDC75D000A8545A /* redapple.png in Resources */ = {isa = PBXBuildFile; fileRef = 03ED99BB1CDC75D000A8545A /* redapple.png */; };
 		03F18BF21DE3D91B00389248 /* AwardMenuOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F18BF11DE3D91B00389248 /* AwardMenuOptionTableViewCell.m */; };
 		03F46FB51B69CBAD00A695B2 /* DatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -260,6 +261,7 @@
 		03DCFFDA1B6C6C8A00C451CC /* classjar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = classjar.m; sourceTree = "<group>"; };
 		03DCFFDC1B6C6FDA00C451CC /* school.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = school.h; sourceTree = "<group>"; };
 		03DCFFDD1B6C6FDA00C451CC /* school.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = school.m; sourceTree = "<group>"; };
+		03E6D5A01DED5E9E00F289BA /* StoryboardiPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StoryboardiPhone.storyboard; sourceTree = "<group>"; };
 		03ED99BB1CDC75D000A8545A /* redapple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redapple.png; sourceTree = "<group>"; };
 		03F18BF01DE3D91B00389248 /* AwardMenuOptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwardMenuOptionTableViewCell.h; sourceTree = "<group>"; };
 		03F18BF11DE3D91B00389248 /* AwardMenuOptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwardMenuOptionTableViewCell.m; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 				03AA99E81B6333C300750758 /* AppDelegate.h */,
 				03AA99E91B6333C300750758 /* AppDelegate.m */,
 				03AA99EE1B6333C300750758 /* Main.storyboard */,
+				03E6D5A01DED5E9E00F289BA /* StoryboardiPhone.storyboard */,
 				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
 				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
 				03AA9A591B633B8100750758 /* ConnectionHandler.h */,
@@ -755,6 +758,7 @@
 				03AA9A4A1B63399D00750758 /* login button.png in Resources */,
 				033A4DA81B75B25B006E90D6 /* bloop.wav in Resources */,
 				035BA0B91DDFC7DC003A9160 /* Icon-Small-50x50@2x.png in Resources */,
+				03E6D5A11DED5E9E00F289BA /* StoryboardiPhone.storyboard in Resources */,
 				033A4DA91B75B25B006E90D6 /* coin_shake.wav in Resources */,
 				03AA9A441B63399D00750758 /* itemsIcon.png in Resources */,
 				035BA0A61DDFC7DC003A9160 /* Icon-App-20x20@3x.png in Resources */,
@@ -1094,7 +1098,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1116,7 +1120,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -726,8 +726,7 @@ NSInteger menuItemFontSize = 26;
 }
 
 
-+ (BOOL)isIPadPro
-{
++ (BOOL)isIPadPro {
     UIScreen *mainScreen = [UIScreen mainScreen];
     CGFloat width = mainScreen.nativeBounds.size.width / mainScreen.nativeScale;
     CGFloat height = mainScreen.nativeBounds.size.height / mainScreen.nativeScale;
