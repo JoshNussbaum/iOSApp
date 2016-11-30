@@ -23,6 +23,13 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *heroImage;
 
+@property (strong, nonatomic) IBOutlet UIButton *addPointsButton;
+
+@property (strong, nonatomic) IBOutlet UIButton *subtractPointsButton;
+
+- (IBAction)addPointsClicked:(id)sender;
+
+- (IBAction)subtractPointsClicked:(id)sender;
 
 - (IBAction)backClicked:(id)sender;
 

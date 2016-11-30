@@ -76,6 +76,8 @@ extern NSInteger ALL_STUDENT_CHECK_IN;
 extern NSInteger ALL_STUDENT_CHECK_OUT;
 extern NSInteger GET_USER_BY_STAMP;
 extern NSInteger RESET_PASSWORD;
+extern NSInteger SUBTRACT_POINTS;
+extern NSInteger ADD_POINTS;
 
 extern NSInteger menuItemFontSize;
 
@@ -105,6 +107,9 @@ extern NSInteger menuItemFontSize;
 
 
 + (bool)isValidClassroomHeroStamp:(NSString *)serial;
+
+
++ (UIAlertView *) editAlertNumberWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
 
 
 + (UIAlertView *) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type;

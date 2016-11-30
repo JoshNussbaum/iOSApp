@@ -26,7 +26,6 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [currentUser reset];
-    
     isStamping = NO;
 }
 

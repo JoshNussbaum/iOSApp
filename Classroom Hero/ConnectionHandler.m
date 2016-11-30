@@ -54,6 +54,11 @@ static NSString * const REGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/a
 static NSString * const UNREGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/unregisterStamp";
 
 static NSString * const REWARD_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
+
+static NSString * const SUBTRACT_STUDENT_POINTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/subtractPoints";
+static NSString * const STUDENT_ADD_POINTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/addPoints";
+
+
 static NSString * const ADD_TO_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/fill";
 
 static NSString * const ORDER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/order";
@@ -288,6 +293,18 @@ static NSInteger connectionType;
     [self asynchronousWebCall:nil :url :PUT];
 }
 
+- (void)subtractPointsWithStudentId:(NSInteger)id points:(NSInteger)points{
+    NSString *url = [NSString stringWithFormat:@"%@/?id=%ld&points=%ld", SUBTRACT_STUDENT_POINTS_URL, (long)id, (long)points];
+    connectionType = SUBTRACT_POINTS;
+    [self asynchronousWebCall:nil :url :PUT];
+}
+
+- (void)addPointsWithStudentId:(NSInteger)id points:(NSInteger)points{
+    NSString *url = [NSString stringWithFormat:@"%@/?id=%ld&points=%ld", STUDENT_ADD_POINTS_URL, (long)id, (long)points];
+    connectionType = ADD_POINTS;
+    [self asynchronousWebCall:nil :url :PUT];
+}
+
 
 - (void)addToClassJar:(NSInteger)cjid :(NSInteger)points :(NSInteger)cid{
     NSString *url = [NSString stringWithFormat:@"%@/?id=%ld&points=%ld&cid=%ld", ADD_TO_JAR_URL, (long)cjid, (long)points, (long)cid];
@@ -493,7 +510,6 @@ static NSInteger connectionType;
         [request setHTTPBody: requestData];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
     }
-
     
     [NSURLConnection connectionWithRequest:request delegate:self];
 }
