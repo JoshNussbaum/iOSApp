@@ -21,6 +21,7 @@
     NSString *newStudentFirstName;
     NSString *newStudentLastName;
     ConnectionHandler *webHandler;
+    NSInteger points;
     
 }
 
@@ -30,6 +31,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    points = 0;
+    [Utilities makeRoundedButton:self.addPointsButton :nil];
+    [Utilities makeRoundedButton:self.subtractPointsButton :nil];
     
     isStamping = NO;
     currentUser = [user getInstance];
@@ -42,7 +46,6 @@
 
 
 - (void)viewDidLayoutSubviews{
-
     if (IS_IPAD_PRO) {
         self.nameLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:45];
         self.levelLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:38];
@@ -50,6 +53,16 @@
 
         self.heroImage.frame = CGRectMake(335, 590, 356, 412);
     }
+}
+
+
+- (IBAction)addPointsClicked:(id)sender {
+    [Utilities editAlertNumberWithtitle:@"Add points" message:@"Enter the number of points to add" cancel:nil done:@"Add points" input:nil tag:2 view:self];
+}
+
+
+- (IBAction)subtractPointsClicked:(id)sender {
+    [Utilities editAlertNumberWithtitle:@"Subtract points" message:@"Enter the number of points to subtract" cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
 }
 
 
@@ -71,16 +84,14 @@
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
     
-    newStudentFirstName = [alertView textFieldAtIndex:0].text;
-    newStudentLastName = [alertView textFieldAtIndex:1].text;
-    
     if (alertView.tag == 1){
         if (buttonIndex == 1){
+            newStudentFirstName = [alertView textFieldAtIndex:0].text;
+            newStudentLastName = [alertView textFieldAtIndex:1].text;
             NSString *errorMessage = [Utilities isInputValid:newStudentFirstName :@"Student First Name"];
             
             if (!errorMessage){
@@ -104,14 +115,34 @@
         
     }
     if (alertView.tag == 2){
-        [self activityStart:@"Unregistering student stamp..."];
-        newStudentFirstName = [currentStudent getFirstName];
-        newStudentLastName  = [currentStudent getLastName];
-        [webHandler unregisterStampWithid:[currentStudent getId]];
+        NSString *pointsToAdd = [alertView textFieldAtIndex:0].text;
+        NSString *errorMessage = [Utilities isNumeric:pointsToAdd];
+        if (!errorMessage){
+            points = pointsToAdd.integerValue;
+            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:points reinforcerId:0 schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+        }
+        else {
+            [Utilities alertStatusWithTitle:@"Error adding points" message:errorMessage cancel:nil otherTitles:nil tag:0 view:self];
+        }
+        
     }
     if (alertView.tag == 3){
-        [self activityStart:@"Deleting student..."];
-        [webHandler deleteStudent:[currentStudent getId]];
+        NSString *pointsToSubtract = [alertView textFieldAtIndex:0];
+        NSString *errorMessage = [Utilities isNumeric:pointsToSubtract];
+        if (!errorMessage){
+            points = pointsToSubtract.integerValue;
+            
+            if (points > [currentStudent getPoints]){
+                [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:points reinforcerId:0 schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+            }
+            else {
+                [Utilities alertStatusWithTitle:@"Error subtracting points" message:[NSString stringWithFormat:@"Student only has %ld points", (long)[currentStudent getPoints]] cancel:nil otherTitles:nil tag:0 view:self];
+            }
+            
+        }
+        else {
+            [Utilities alertStatusWithTitle:@"Error subtracting points" message:errorMessage cancel:nil otherTitles:nil tag:0 view:self];
+        }
     }
 }
 
@@ -142,7 +173,30 @@
             
             [Flurry logEvent:@"Delete Student" withParameters:params];
             [self.navigationController popViewControllerAnimated:YES];
+        }
+        else if (type == REWARD_STUDENT){
+            NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
+            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
+            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
+            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
+            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
+            NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
+            
+            [currentStudent setPoints:pointsNumber.integerValue];
+            [currentStudent setLevel:levelNumber.integerValue];
+            [currentStudent setProgress:progressNumber.integerValue];
+            [currentStudent setLevelUpAmount:lvlUpAmount];
+            [currentUser.currentClass addPoints:1];
+            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+            
+            [self setStudentLabels];
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+            
+            [Flurry logEvent:@"Reward Student - Student page" withParameters:params];
 
         }
         
@@ -162,6 +216,9 @@
         }
         else if (type == UNREGISTER_STAMP){
             errorMessage = @"Error unregistering student";
+        }
+        else {
+            return;
         }
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
     }

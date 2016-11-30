@@ -53,6 +53,8 @@ NSInteger ALL_STUDENT_CHECK_OUT = 40;
 NSInteger GET_USER_BY_STAMP = 41;
 NSInteger RESET_PASSWORD = 42;
 NSInteger REWARD_STUDENT_BULK = 43;
+NSInteger SUBTRACT_POINTS = 43;
+
 
 NSInteger menuItemFontSize = 26;
 
@@ -255,17 +257,11 @@ NSInteger menuItemFontSize = 26;
 
 
 + (NSString *)isInputValid:(NSString *)input :(NSString *)inputName{
-    
-    
-    
     NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
     if ([[input stringByTrimmingCharactersInSet: set] length] == 0)
     {
         return [NSString stringWithFormat:@"%@ may not contain only white spaces", inputName];
     }
-    
-
-    
     NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~] "];
     for (NSUInteger i = 0; i < [input length]; ++i) {
         unichar uchar = [input characterAtIndex:i] ;
@@ -285,12 +281,30 @@ NSInteger menuItemFontSize = 26;
 
 + (bool)isValidClassroomHeroStamp:(NSString *)serial{
     return YES;
-//    if([serial hasPrefix:@"ClassroomHero"]){
-//        return YES;
-//    }
-//    else {
-//        return NO;
-//    }
+}
+
+
++ (UIAlertView *) editAlertNumberWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, nil];
+    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [[alertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:0]setPlaceholder:input];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setPlaceholder:@"Points"];
+
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    alertView.tag = tag;
+    [alertView show];
+    return alertView;
 }
 
 

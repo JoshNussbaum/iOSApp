@@ -34,7 +34,7 @@ static int screenNumber;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    titles = @[@"Swipe  left  to  create  a  class  and  register  a  teacher  stamp", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"For  any  questions, email  classroomheroservices@gmail.com"];
+    titles = @[@"Swipe  left  to  get started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"For  any  questions, email  classroomheroservices@gmail.com"];
     screenNumber = 0;
     isStamping = NO;
     currentUser = [user getInstance];

@@ -54,6 +54,9 @@ static NSString * const REGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/a
 static NSString * const UNREGISTER_STAMP_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/unregisterStamp";
 
 static NSString * const REWARD_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
+
+static NSString * const SUBTRACT_STUDENT_POINTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/subtract";
+
 static NSString * const ADD_TO_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/fill";
 
 static NSString * const ORDER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/order";
@@ -285,6 +288,12 @@ static NSInteger connectionType;
     NSString *url = [NSString stringWithFormat:@"%@/%ld/rewardAllStudents", REWARD_ALL_STUDENTS_URL, (long)cid];
     connectionType = REWARD_ALL_STUDENTS;
     
+    [self asynchronousWebCall:nil :url :PUT];
+}
+
+- (void)subtractPointsWithStudentId:(NSInteger)id points:(NSInteger)points{
+    NSString *url = [NSString stringWithFormat:@"%@/?id=%ld&points=%ld", SUBTRACT_STUDENT_POINTS_URL, (long)id, (long)points];
+    connectionType = SUBTRACT_POINTS;
     [self asynchronousWebCall:nil :url :PUT];
 }
 

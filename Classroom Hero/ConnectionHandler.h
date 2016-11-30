@@ -94,6 +94,9 @@
 - (void)rewardAllStudentsWithcid:(NSInteger)cid;
 
 
+- (void)subtractPointsWithStudentId:(NSInteger)id points:(NSInteger)points;
+
+
 - (void)addToClassJar:(NSInteger)cjid :(NSInteger)points :(NSInteger)cid;
 
 

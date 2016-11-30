@@ -1544,7 +1544,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level 100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1X-cM-A2A">
-                                <rect key="frame" x="290" y="198" width="188" height="37.5"/>
+                                <rect key="frame" x="290" y="228" width="188" height="37.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="x1X-cM-A2A" secondAttribute="height" multiplier="206:41" id="c0M-EU-Wz4"/>
                                 </constraints>
@@ -1552,34 +1552,28 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqC-Ux-j30" customClass="CircleProgressBar">
-                                <rect key="frame" x="318" y="274" width="125" height="125"/>
+                                <rect key="frame" x="318" y="313" width="125" height="125"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="cqC-Ux-j30" secondAttribute="height" multiplier="1:1" id="TWO-WV-K3T"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coinsack.png" translatesAutoresizingMaskIntoConstraints="NO" id="dql-nu-kcC">
-                                <rect key="frame" x="324.5" y="896" width="119" height="120"/>
+                                <rect key="frame" x="324" y="607" width="119" height="120"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="dql-nu-kcC" secondAttribute="height" multiplier="119:120" id="qnA-0L-ua9"/>
+                                    <constraint firstAttribute="width" secondItem="dql-nu-kcC" secondAttribute="height" multiplier="119:120" id="gMt-VF-3c9"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10000 Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcs-xr-9EI">
-                                <rect key="frame" x="260" y="847" width="248" height="41"/>
+                                <rect key="frame" x="260" y="531" width="248" height="41"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Lcs-xr-9EI" secondAttribute="height" multiplier="248:41" id="aXh-Uy-Mbv"/>
+                                    <constraint firstAttribute="width" secondItem="Lcs-xr-9EI" secondAttribute="height" multiplier="248:41" id="NCN-K9-yiK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="32"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="apple hero.png" translatesAutoresizingMaskIntoConstraints="NO" id="kVO-9t-Cox">
-                                <rect key="frame" x="251" y="462" width="267" height="308"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="kVO-9t-Cox" secondAttribute="height" multiplier="267:308" id="Qnz-Uj-I5y"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Anderson William-Horvat Nussbaum III" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hh3-92-U36">
-                                <rect key="frame" x="10" y="73" width="748" height="96"/>
+                                <rect key="frame" x="10" y="85" width="748" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Hh3-92-U36" secondAttribute="height" multiplier="585:97" constant="169.03092783505156" id="Kyw-44-Rhe"/>
                                 </constraints>
@@ -1587,26 +1581,57 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mz9-7S-041">
+                                <rect key="frame" x="224" y="801" width="320" height="50"/>
+                                <color key="backgroundColor" red="0.39243233199999999" green="0.77845203880000002" blue="0.95465677979999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="mz9-7S-041" secondAttribute="height" multiplier="32:5" id="BNS-kb-rtT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Add points">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="addPointsClicked:" destination="Xxy-ye-LqB" eventType="touchUpInside" id="yRt-bc-i4t"/>
+                                </connections>
+                            </button>
+                            <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a3q-2C-Pz2">
+                                <rect key="frame" x="224" y="930" width="320" height="50"/>
+                                <color key="backgroundColor" red="0.39243233199999999" green="0.77845203880000002" blue="0.95465677979999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="a3q-2C-Pz2" secondAttribute="height" multiplier="32:5" id="Hot-Jg-SR4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="Subtract points">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="subtractPointsClicked:" destination="Xxy-ye-LqB" eventType="touchUpInside" id="fVo-AA-j41"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96162405299999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="dql-nu-kcC" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="119:1024" id="1eE-nN-G38"/>
                             <constraint firstItem="Hh3-92-U36" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="585:1024" constant="163" id="8BQ-OY-KYj"/>
-                            <constraint firstItem="Lcs-xr-9EI" firstAttribute="centerX" secondItem="dql-nu-kcC" secondAttribute="centerX" id="FSv-ju-FGb"/>
-                            <constraint firstItem="LPf-tT-cPU" firstAttribute="top" secondItem="dql-nu-kcC" secondAttribute="bottom" constant="8" id="Fid-ba-vs3"/>
                             <constraint firstItem="Hh3-92-U36" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="IO1-Vm-zZ1"/>
                             <constraint firstItem="cqC-Ux-j30" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="125:1024" id="JjJ-AB-YK2"/>
-                            <constraint firstItem="Hh3-92-U36" firstAttribute="top" secondItem="eFp-6F-tlk" secondAttribute="bottom" constant="9" id="P8r-Dl-sM9"/>
-                            <constraint firstItem="cqC-Ux-j30" firstAttribute="top" secondItem="x1X-cM-A2A" secondAttribute="bottom" constant="38.5" id="V3k-fE-1va"/>
-                            <constraint firstItem="dql-nu-kcC" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="119:1024" id="Xy4-ck-fMV"/>
-                            <constraint firstItem="dql-nu-kcC" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="YrU-Pf-gsv"/>
-                            <constraint firstItem="Lcs-xr-9EI" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="31:128" id="ZoG-OS-HN0"/>
-                            <constraint firstItem="x1X-cM-A2A" firstAttribute="top" secondItem="Hh3-92-U36" secondAttribute="bottom" constant="29" id="c3H-fp-PTa"/>
+                            <constraint firstItem="Lcs-xr-9EI" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="P8C-Mr-Em3"/>
+                            <constraint firstItem="Hh3-92-U36" firstAttribute="top" secondItem="eFp-6F-tlk" secondAttribute="bottom" constant="21" id="P8r-Dl-sM9"/>
+                            <constraint firstItem="a3q-2C-Pz2" firstAttribute="top" secondItem="mz9-7S-041" secondAttribute="bottom" constant="79" id="Uex-5X-vsr"/>
+                            <constraint firstItem="cqC-Ux-j30" firstAttribute="top" secondItem="x1X-cM-A2A" secondAttribute="bottom" constant="47.5" id="V3k-fE-1va"/>
+                            <constraint firstItem="a3q-2C-Pz2" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="bxU-it-1TJ"/>
+                            <constraint firstItem="x1X-cM-A2A" firstAttribute="top" secondItem="Hh3-92-U36" secondAttribute="bottom" constant="47" id="c3H-fp-PTa"/>
                             <constraint firstItem="cqC-Ux-j30" firstAttribute="centerX" secondItem="x1X-cM-A2A" secondAttribute="centerX" constant="-3.5" id="jVB-PH-QDe"/>
-                            <constraint firstItem="dql-nu-kcC" firstAttribute="top" secondItem="Lcs-xr-9EI" secondAttribute="bottom" constant="8" id="kgL-dD-PAx"/>
+                            <constraint firstItem="Lcs-xr-9EI" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="31:128" id="jjz-NQ-u1H"/>
+                            <constraint firstItem="mz9-7S-041" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="lEu-RT-hE4"/>
                             <constraint firstItem="x1X-cM-A2A" firstAttribute="centerX" secondItem="Hh3-92-U36" secondAttribute="centerX" id="nsH-wG-mRM"/>
-                            <constraint firstItem="kVO-9t-Cox" firstAttribute="top" secondItem="cqC-Ux-j30" secondAttribute="bottom" constant="63" id="oEP-QZ-nqI"/>
-                            <constraint firstItem="kVO-9t-Cox" firstAttribute="width" secondItem="XsU-bi-HCf" secondAttribute="height" multiplier="267:1024" id="qcC-4c-H3M"/>
-                            <constraint firstItem="kVO-9t-Cox" firstAttribute="centerX" secondItem="cqC-Ux-j30" secondAttribute="centerX" constant="4" id="yMT-uc-R6o"/>
+                            <constraint firstItem="LPf-tT-cPU" firstAttribute="top" secondItem="a3q-2C-Pz2" secondAttribute="bottom" constant="44" id="o6V-E1-K0w"/>
+                            <constraint firstItem="Lcs-xr-9EI" firstAttribute="top" secondItem="cqC-Ux-j30" secondAttribute="bottom" constant="93" id="sIR-id-uI9"/>
+                            <constraint firstItem="dql-nu-kcC" firstAttribute="centerX" secondItem="XsU-bi-HCf" secondAttribute="centerX" id="sXZ-ey-8vg"/>
+                            <constraint firstItem="dql-nu-kcC" firstAttribute="top" secondItem="Lcs-xr-9EI" secondAttribute="bottom" constant="35" id="v5A-m8-fC4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Hero Page" id="RQz-w6-CM3">
@@ -1638,11 +1663,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="heroImage" destination="kVO-9t-Cox" id="h5P-PD-tTk"/>
+                        <outlet property="addPointsButton" destination="mz9-7S-041" id="CiW-Us-zkP"/>
                         <outlet property="levelLabel" destination="x1X-cM-A2A" id="bms-Os-FZJ"/>
                         <outlet property="nameLabel" destination="Hh3-92-U36" id="t1x-zT-4w7"/>
                         <outlet property="pointsLabel" destination="Lcs-xr-9EI" id="xHb-VV-RA2"/>
                         <outlet property="progressView" destination="cqC-Ux-j30" id="MNJ-Pj-kAP"/>
+                        <outlet property="subtractPointsButton" destination="a3q-2C-Pz2" id="mrK-kW-fed"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfW-Vd-zfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
