@@ -119,7 +119,7 @@
         NSString *errorMessage = [Utilities isNumeric:pointsToAdd];
         if (!errorMessage){
             points = pointsToAdd.integerValue;
-            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:points reinforcerId:0 schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+            [webHandler addPointsWithStudentId:[currentStudent getId] points:points];
         }
         else {
             [Utilities alertStatusWithTitle:@"Error adding points" message:errorMessage cancel:nil otherTitles:nil tag:0 view:self];
@@ -127,13 +127,13 @@
         
     }
     if (alertView.tag == 3){
-        NSString *pointsToSubtract = [alertView textFieldAtIndex:0];
+        NSString *pointsToSubtract = [alertView textFieldAtIndex:0].text;
         NSString *errorMessage = [Utilities isNumeric:pointsToSubtract];
         if (!errorMessage){
             points = pointsToSubtract.integerValue;
             
-            if (points > [currentStudent getPoints]){
-                [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:points reinforcerId:0 schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+            if (points < [currentStudent getPoints]){
+                [webHandler subtractPointsWithStudentId:[currentStudent getId] points:points];
             }
             else {
                 [Utilities alertStatusWithTitle:@"Error subtracting points" message:[NSString stringWithFormat:@"Student only has %ld points", (long)[currentStudent getPoints]] cancel:nil otherTitles:nil tag:0 view:self];
@@ -151,6 +151,7 @@
     [hud hide:YES];
     if (data == nil){
         [Utilities alertStatusNoConnection];
+        return;
     }
     
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
@@ -174,7 +175,7 @@
             [Flurry logEvent:@"Delete Student" withParameters:params];
             [self.navigationController popViewControllerAnimated:YES];
         }
-        else if (type == REWARD_STUDENT){
+        else if (type == ADD_POINTS || type == SUBTRACT_POINTS){
             NSDictionary *studentDictionary = [data objectForKey:@"student"];
             
             NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
@@ -217,8 +218,11 @@
         else if (type == UNREGISTER_STAMP){
             errorMessage = @"Error unregistering student";
         }
-        else {
-            return;
+        else if (type == ADD_POINTS){
+            errorMessage = @"Error adding points";
+        }
+        else if (type == SUBTRACT_POINTS){
+            errorMessage = @"Error subtracting points";
         }
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
     }

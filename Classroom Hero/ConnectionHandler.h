@@ -97,6 +97,9 @@
 - (void)subtractPointsWithStudentId:(NSInteger)id points:(NSInteger)points;
 
 
+- (void)addPointsWithStudentId:(NSInteger)id points:(NSInteger)points;
+
+
 - (void)addToClassJar:(NSInteger)cjid :(NSInteger)points :(NSInteger)cid;
 
 

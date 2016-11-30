@@ -54,6 +54,7 @@ NSInteger GET_USER_BY_STAMP = 41;
 NSInteger RESET_PASSWORD = 42;
 NSInteger REWARD_STUDENT_BULK = 43;
 NSInteger SUBTRACT_POINTS = 43;
+NSInteger ADD_POINTS = 44;
 
 
 NSInteger menuItemFontSize = 26;

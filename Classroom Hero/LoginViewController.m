@@ -25,10 +25,7 @@
 
 
 - (void)viewDidAppear:(BOOL)animated{
-    self.emailTextField.text = @"nussbaum.joshua@gmail.com";
-    self.passwordTextField.text = @"josh";
     [currentUser reset];
-    
     isStamping = NO;
 }
 
