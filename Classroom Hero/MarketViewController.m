@@ -47,7 +47,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
-
+    self.studentsTableView.layer.borderWidth = 2.0;
+    self.studentsTableView.layer.borderColor = [Utilities CHGreenColor].CGColor;
+    
     isBuying = NO;
     showingStudents = NO;
     studentSelected = NO;
@@ -603,11 +605,19 @@
 }
 
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor clearColor];
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (itemsData.count > 0){
         
         studentIndex = indexPath.row;
         student *selectedStudent = [studentsData objectAtIndex:studentIndex];
+        StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+        cell.backgroundColor = [Utilities CHBlueColor];
         if (selectedStudent == currentStudent){
             currentStudent = nil;
             [tableView deselectRowAtIndexPath:indexPath animated:YES];

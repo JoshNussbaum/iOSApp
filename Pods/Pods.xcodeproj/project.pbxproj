@@ -7,51 +7,71 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		105682AF1B93F34C93F85127542DBF11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4891CD9DE4712AA85D7B68ED2F2D59C8 /* CoreGraphics.framework */; };
-		14A0B914C8A7F8EEE1317349A990C581 /* CircleProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DF30DDF442CF3F44BF57F7078A02A62 /* CircleProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1592E7C3059060DAA3A6D976250E7FD9 /* CircleProgressBar-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E08858F78EE86453B1C8C220AD8EF5A3 /* CircleProgressBar-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0990267CC8119860698D3232ED9624BB /* YLProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = B44D18CF86C276802A54B35EA1C20420 /* YLProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1497FCBD501AA633176392E412DDC0B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
+		14A0B914C8A7F8EEE1317349A990C581 /* CircleProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 69BF0F03D5889AD0E0065FF59D826A1B /* CircleProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1592E7C3059060DAA3A6D976250E7FD9 /* CircleProgressBar-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B38D8F633E2F267EFF79A2E9FF4E46BE /* CircleProgressBar-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		171B76B1870F4F2D54B33EFA1BE6FDA6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475981F50A3C5EFB769B34DC54AEABE5 /* UIKit.framework */; };
-		2987C649249D3D6BD709E0EE98688ED1 /* Flurry-iOS-SDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 25F961194444F5A0FDE387CBAF7722C5 /* Flurry-iOS-SDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		232C3F70132496D1265F4F1DF56958C6 /* FDKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C141DEF73E7073690872AE1CA0EF87 /* FDKeychain.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		268118D6B9C12DB9C25AA7774245F0DC /* FDKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7848958EAAF12C3BBCCC216F87A1D /* FDKeychain.m */; };
+		2987C649249D3D6BD709E0EE98688ED1 /* Flurry-iOS-SDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1771E77360AE2D582DEAE68C34636E0B /* Flurry-iOS-SDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29D409C0228C2AAB8AD81EF22A516105 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4891CD9DE4712AA85D7B68ED2F2D59C8 /* CoreGraphics.framework */; };
-		319A52E615993CB658BC704C0A70358A /* JSBadgeView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F9E25F6EDED681A4F75996A7A6C66D /* JSBadgeView-dummy.m */; };
-		3669A589CF25F50A51C05EDEFEC7CC1E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
+		2F26FF349FBE573CD2E9662DD6F4579D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475981F50A3C5EFB769B34DC54AEABE5 /* UIKit.framework */; };
+		319A52E615993CB658BC704C0A70358A /* JSBadgeView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC34BFB0AFA6347AC58B3BDBC10296B /* JSBadgeView-dummy.m */; };
 		37CAE3E3247E6FC1674F274D58B328CE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E406EC31B1DAC5565C72C09E831CCFD /* Security.framework */; };
 		3AD75743F410E1D31869045A66F09F5B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 372EAE7D2E39834A02E03B6BDDDBE862 /* QuartzCore.framework */; };
-		485FE7C3F102E00E161A9ABDA099FFF1 /* YLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D57AF60FD2D7C8CD2C488B49E4BC131 /* YLProgressBar.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		48D2027CD0C4D2330CFC831FDAF7FC39 /* Pods-Classroom Hero-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 13FA39185F50821B20FA10C5C0C9543A /* Pods-Classroom Hero-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C208D085A1C0C97D56A365F85A609CD /* Flurry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F54182850DFAC5F7FC2348C5111C1DF /* Flurry.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		557D0F2F240FD079894CBCF3ED020D37 /* Flurry-iOS-SDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEBA864F74FB1FACCFC33E55274029 /* Flurry-iOS-SDK-dummy.m */; };
-		57E9B041CC1D8988C38DDC97CAEFCD76 /* MBProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 304737E1A87D9566D34BD7718AC9B8AD /* MBProgressHUD-dummy.m */; };
-		5A544BCC492CDEE154E2EBB971DA23D7 /* YLProgressBar-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D09F6EFC39333328022B8DC8363D5AA /* YLProgressBar-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4AEC60DEDC2240DE59552A5921FE77F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
+		4C208D085A1C0C97D56A365F85A609CD /* Flurry.h in Headers */ = {isa = PBXBuildFile; fileRef = 96898BD6E7C01FA416461A2437B3D5A3 /* Flurry.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54BC88B53C68FB03605A8FD9F2E76B85 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E406EC31B1DAC5565C72C09E831CCFD /* Security.framework */; };
+		557D0F2F240FD079894CBCF3ED020D37 /* Flurry-iOS-SDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF05714A99F0800A5FC741A817E183B /* Flurry-iOS-SDK-dummy.m */; };
+		57E9B041CC1D8988C38DDC97CAEFCD76 /* MBProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F7C7E0910097A5BA7659F056E42099 /* MBProgressHUD-dummy.m */; };
+		5A7F53C69719B1750084644C837DC654 /* Pods-Classroom Hero-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 565DBC08C96D126DA560D8FA4BB239F5 /* Pods-Classroom Hero-dummy.m */; };
+		5C4AF016923A2D6BFFF8251ED533D782 /* FDKeychain-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 53AC68C14A039D002C7A174B29238B43 /* FDKeychain-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FB835BD10BBB478520B050F1A421BEF /* Pods-Classroom HeroTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E719639954B2295D4A03A4FC18F72CB /* Pods-Classroom HeroTests-dummy.m */; };
 		64CAD1E63B207ACCDDA58C3FC67471B1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38833F789A74310AC02F21B1AC34CAED /* SystemConfiguration.framework */; };
 		669D5178B96381A9733845EF02017A44 /* Pods-Classroom HeroTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5CF518BB4EB59CC32705B54B63D810 /* Pods-Classroom HeroTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		745C0807A5ADD9087997AB4C488308F4 /* JSBadgeView.h in Headers */ = {isa = PBXBuildFile; fileRef = A26AB590C94412989C77E4D869014D18 /* JSBadgeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D597BA961966B66409E9A3B3FBAF0F9 /* YLProgressBar-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4758F1CBAAA9C44A9D5CDA2892628030 /* YLProgressBar-dummy.m */; };
+		745C0807A5ADD9087997AB4C488308F4 /* JSBadgeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FA176E60825DFFA527320E5B54F2866 /* JSBadgeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		777180FA48B5001F9348FB956EEFE91F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475981F50A3C5EFB769B34DC54AEABE5 /* UIKit.framework */; };
-		7FA1FDC003B51BD9EEDAE2E3D55382E3 /* CircleProgressBar-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 382462F0E93637CAA42A0B7CCB63249D /* CircleProgressBar-dummy.m */; };
+		7E12547AA5BE433B0221C88E3C4770C2 /* YLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FE5E53E631518758E249E510791E06 /* YLProgressBar.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		7E166FAB6BE9C171075514EC2A9A7F2F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4891CD9DE4712AA85D7B68ED2F2D59C8 /* CoreGraphics.framework */; };
+		7FA1FDC003B51BD9EEDAE2E3D55382E3 /* CircleProgressBar-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9846F663B44091E74A4A48F56648EF /* CircleProgressBar-dummy.m */; };
 		8E2883AA7689E3656301C84D93BA9924 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
-		9E68DAD6168F3372D48FF752C831CD21 /* FlurryEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 9277338FDD5302D193D09064BBF06844 /* FlurryEmpty.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A30483B60EA4074487A1288F3C66107F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475981F50A3C5EFB769B34DC54AEABE5 /* UIKit.framework */; };
-		AA00DCC0C8174B2D7E48EEC3C768B047 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1744E8FD5B5FE253B2694096A535FD /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		B25457593E6ED0BA173BCD5D7D90C6E4 /* CircleProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5767B5EA181CFC555E106C425D911B55 /* CircleProgressBar.m */; };
-		B3CFD0E65088F61FF8DBDE5C9E280E69 /* JSBadgeView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D1F9D6654B2ED941714B95DAD0A1BE8 /* JSBadgeView.bundle */; };
-		B646C96E2D7DF54445B3719F800D79E9 /* MBProgressHUD-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D5AF30821922AAD807E3C4D4012EB6 /* MBProgressHUD-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BFD47852FF069D72E49ECB61FAA3D969 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B40F0A910C84E080FA1A17C5DBDE6F84 /* JSBadgeView.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		90A971352A7551D2502739287B74AE55 /* YLProgressBar-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AB365B2A7736E6DCCC129BC1873A2AE3 /* YLProgressBar-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9E68DAD6168F3372D48FF752C831CD21 /* FlurryEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E68A25A338AF5D1286327735D1A0C6 /* FlurryEmpty.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		AA00DCC0C8174B2D7E48EEC3C768B047 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAEAB982E829B3BC706C1EC22CB97EC /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		B25457593E6ED0BA173BCD5D7D90C6E4 /* CircleProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E720D455C60A911597A330F28C0431B /* CircleProgressBar.m */; };
+		B3CFD0E65088F61FF8DBDE5C9E280E69 /* JSBadgeView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E11DDD1ABF49495195192038C77021BC /* JSBadgeView.bundle */; };
+		B646C96E2D7DF54445B3719F800D79E9 /* MBProgressHUD-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E4AF984A6E671F7AF343BF2EC855773 /* MBProgressHUD-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BFD47852FF069D72E49ECB61FAA3D969 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 078965EFF77EA23BE87307A93AB231E7 /* JSBadgeView.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		C71E5934A64A22C4EA382DF8FB05E127 /* Pods-Classroom Hero-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 13FA39185F50821B20FA10C5C0C9543A /* Pods-Classroom Hero-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7994DD63644F6D6E74CFC4D3C02CFB0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
-		CF8AE5D73D4AE159DCE3693394AFF112 /* Pods-Classroom Hero-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 565DBC08C96D126DA560D8FA4BB239F5 /* Pods-Classroom Hero-dummy.m */; };
-		D206EDC84CE44D5DC711ADD087BC4B17 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 73213C52C341ABDB8AFA5ECC20692FB3 /* MBProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D58A115621622560D0DBE2EA432E5F8D /* YLProgressBar-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 398ED8FCACD94D32270CB4E2D2B98A6A /* YLProgressBar-dummy.m */; };
-		D78A793D6A9B9ABF1D527D08A427D7D3 /* JSBadgeView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A8674FFBB791CA632DDD91CCEC61ECD1 /* JSBadgeView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D206EDC84CE44D5DC711ADD087BC4B17 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 9293310069901C48C0C328D84BF5FB2D /* MBProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D78A793D6A9B9ABF1D527D08A427D7D3 /* JSBadgeView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B18CE7AC19F76EAEB0DFC271443683 /* JSBadgeView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E284A71FD5343390B66A4464D1FA10CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
 		E48C80666D14841AD94CA0A7A8C0AB03 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
 		E717387707B9641F9156469E9E2CA00C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
-		F29D786DA28FDFB8CAB0741D32748D10 /* YLProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 96DF5D767AC1247CBB5ED7228821C8F6 /* YLProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F53A60B68D38497B64BA5B015BB3C852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
+		EC44DF34C8E4DAC4E1F161ABB8BCB3A0 /* FDKeychain-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E8913F17EFA05B46788245499DAE01 /* FDKeychain-dummy.m */; };
 		F59B19F310A220B422C74C4501350E5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */; };
 		FC2A8FC3716377A71E6A9933A7F58329 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 372EAE7D2E39834A02E03B6BDDDBE862 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		46A2BF9AA3B1BEED068F3F427535BD11 /* PBXContainerItemProxy */ = {
+		0D1D5847DD99228BF5B0A2DE8A19C861 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B545B48FA0CEE58E0B8D9309EE4CFF7C;
+			remoteInfo = CircleProgressBar;
+		};
+		10470E5DBF740FAE749CEB3A1BF7E173 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B1714E816AE794962516E2ECBB40A5A;
+			remoteInfo = MBProgressHUD;
+		};
+		1051F66582EEEE2CDE5282B6ADAE0552 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -65,114 +85,116 @@
 			remoteGlobalIDString = A25615DF9BF8FFAF6A63BF1D878DC7DB;
 			remoteInfo = "JSBadgeView-JSBadgeView";
 		};
-		7BF11C43BF961ABA5BB07BDA0CFEA477 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6B1714E816AE794962516E2ECBB40A5A;
-			remoteInfo = MBProgressHUD;
-		};
-		B47CB17C85B4014084053B3122FC4FC3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B545B48FA0CEE58E0B8D9309EE4CFF7C;
-			remoteInfo = CircleProgressBar;
-		};
-		C736805767740CCDFBCB2F389D4DC2F6 /* PBXContainerItemProxy */ = {
+		6C9B8ADC4B28CB8A0F85ADBA84EC46BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4BFA2674723F961A1A340F2B9A1E78FD;
 			remoteInfo = "Flurry-iOS-SDK";
 		};
-		FEA069C7F9031370A853F9ED33B7C096 /* PBXContainerItemProxy */ = {
+		6F7B8FE3855CD569D8D8474D3D08D923 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4C6F63F6E3D5A3A8C392A2039DF0FAE2;
+			remoteGlobalIDString = A23407DEBEF3145E393948D1F92C688A;
+			remoteInfo = FDKeychain;
+		};
+		B0025C510F4962A0B1F7DFFAF52113C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C75130A5061A9BD11C8360D739153ADB;
 			remoteInfo = YLProgressBar;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		02830324245C32B15FFEF4127FAC62E9 /* MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
-		0B4631572FF37F11F67E424F71FDA7FF /* libFlurry_7.6.0.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libFlurry_7.6.0.a; path = Flurry/libFlurry_7.6.0.a; sourceTree = "<group>"; };
+		038FD3B51C2D7168987405A825C61F1F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		078965EFF77EA23BE87307A93AB231E7 /* JSBadgeView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = Pod/Classes/JSBadgeView.m; sourceTree = "<group>"; };
+		086834DD4BDD63C61EAC0981DFCC8018 /* CircleProgressBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CircleProgressBar.framework; path = CircleProgressBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CAEAB982E829B3BC706C1EC22CB97EC /* MBProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		0F9846F663B44091E74A4A48F56648EF /* CircleProgressBar-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CircleProgressBar-dummy.m"; sourceTree = "<group>"; };
+		101363A690CCB4DB4FDE857B6332E400 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
+		13104F841F697215C3371251617115A9 /* ResourceBundle-JSBadgeView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-JSBadgeView-Info.plist"; sourceTree = "<group>"; };
 		13FA39185F50821B20FA10C5C0C9543A /* Pods-Classroom Hero-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Classroom Hero-umbrella.h"; sourceTree = "<group>"; };
-		1728976296913A88851127E2350674CC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15D286870A3C6B6FDBF56FDDC47135CB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1771E77360AE2D582DEAE68C34636E0B /* Flurry-iOS-SDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Flurry-iOS-SDK-umbrella.h"; sourceTree = "<group>"; };
+		1A421FA3D549F5AB13798B6A8949877E /* Flurry-iOS-SDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Flurry-iOS-SDK-prefix.pch"; sourceTree = "<group>"; };
+		1A5A03198770D62F0FEB88E9FF511D44 /* FDKeychain.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = FDKeychain.modulemap; sourceTree = "<group>"; };
+		1CC34BFB0AFA6347AC58B3BDBC10296B /* JSBadgeView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JSBadgeView-dummy.m"; sourceTree = "<group>"; };
 		1D04E261B8950FC5089D055119DEF7B7 /* Pods-Classroom Hero.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Classroom Hero.modulemap"; sourceTree = "<group>"; };
-		1D1F9D6654B2ED941714B95DAD0A1BE8 /* JSBadgeView.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = JSBadgeView.bundle; path = JSBadgeView.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		24E218616C0E252F9F4850E41F89ADD3 /* JSBadgeView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JSBadgeView.framework; path = JSBadgeView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		258DD3B0A2F197995CBD688C6B8CF139 /* YLProgressBar-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YLProgressBar-prefix.pch"; sourceTree = "<group>"; };
-		25F961194444F5A0FDE387CBAF7722C5 /* Flurry-iOS-SDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Flurry-iOS-SDK-umbrella.h"; sourceTree = "<group>"; };
-		27D5AF30821922AAD807E3C4D4012EB6 /* MBProgressHUD-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-umbrella.h"; sourceTree = "<group>"; };
-		300CA531F4E9FD47AD6D2F168333AB57 /* CircleProgressBar.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CircleProgressBar.xcconfig; sourceTree = "<group>"; };
-		304737E1A87D9566D34BD7718AC9B8AD /* MBProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		2787DE132A3D7010BE215125FDA563D0 /* YLProgressBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = YLProgressBar.framework; path = YLProgressBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C9E4988380C787707369178BFFC8D42 /* JSBadgeView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JSBadgeView.framework; path = JSBadgeView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FA176E60825DFFA527320E5B54F2866 /* JSBadgeView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = Pod/Classes/JSBadgeView.h; sourceTree = "<group>"; };
 		342E9738771A6DC70951524FC5D6F62D /* Pods-Classroom Hero-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Classroom Hero-acknowledgements.markdown"; sourceTree = "<group>"; };
-		36B640324D9A18F3320B525C0F548F43 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		372EAE7D2E39834A02E03B6BDDDBE862 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		382462F0E93637CAA42A0B7CCB63249D /* CircleProgressBar-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CircleProgressBar-dummy.m"; sourceTree = "<group>"; };
 		38833F789A74310AC02F21B1AC34CAED /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		398ED8FCACD94D32270CB4E2D2B98A6A /* YLProgressBar-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "YLProgressBar-dummy.m"; sourceTree = "<group>"; };
-		3DE0A165BA3922B5167C38B92410EA27 /* MBProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MBProgressHUD.framework; path = MBProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D4D42FD499815CBEF3B7B84A47C528B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3EE7848958EAAF12C3BBCCC216F87A1D /* FDKeychain.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FDKeychain.m; path = FDKeychain/FDKeychain.m; sourceTree = "<group>"; };
+		3F5C41FC7126857CEEB8ADC9567B67B1 /* Flurry-iOS-SDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Flurry-iOS-SDK.modulemap"; sourceTree = "<group>"; };
 		436A4A31460401FDE6D5B00DFB3F1D41 /* Pods-Classroom HeroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Classroom HeroTests.debug.xcconfig"; sourceTree = "<group>"; };
+		43FE5E53E631518758E249E510791E06 /* YLProgressBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = YLProgressBar.m; path = YLProgressBar/YLProgressBar.m; sourceTree = "<group>"; };
+		4758F1CBAAA9C44A9D5CDA2892628030 /* YLProgressBar-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "YLProgressBar-dummy.m"; sourceTree = "<group>"; };
 		475981F50A3C5EFB769B34DC54AEABE5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		47B9952B3A94CC1BAEE341857991A531 /* JSBadgeView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = JSBadgeView.modulemap; sourceTree = "<group>"; };
 		4891CD9DE4712AA85D7B68ED2F2D59C8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		49EAE390FF989601F8AAA1DBF9C3292B /* Pods-Classroom Hero-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Classroom Hero-resources.sh"; sourceTree = "<group>"; };
-		4D09F6EFC39333328022B8DC8363D5AA /* YLProgressBar-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YLProgressBar-umbrella.h"; sourceTree = "<group>"; };
-		53B1306BF0206CF6C22B41BF74685B70 /* Flurry-iOS-SDK.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Flurry-iOS-SDK.xcconfig"; sourceTree = "<group>"; };
+		53AC68C14A039D002C7A174B29238B43 /* FDKeychain-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FDKeychain-umbrella.h"; sourceTree = "<group>"; };
 		565DBC08C96D126DA560D8FA4BB239F5 /* Pods-Classroom Hero-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Classroom Hero-dummy.m"; sourceTree = "<group>"; };
-		57443E23A8232E48D8540336E7B59BE0 /* Pods_Classroom_HeroTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Classroom_HeroTests.framework; path = "Pods-Classroom HeroTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5767B5EA181CFC555E106C425D911B55 /* CircleProgressBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CircleProgressBar.m; path = CircleProgressBarDemo/CircleProgressBar/CircleProgressBar.m; sourceTree = "<group>"; };
-		57FF728F6A7E0EF46485F5CA0FC1D923 /* YLProgressBar.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = YLProgressBar.xcconfig; sourceTree = "<group>"; };
 		5E406EC31B1DAC5565C72C09E831CCFD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		5F54182850DFAC5F7FC2348C5111C1DF /* Flurry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = Flurry/Flurry.h; sourceTree = "<group>"; };
-		6F6FDEA8E3D25BE1A6ED19AEA5C7FD18 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		71F789EBACF0343CC5DD54E3E504438D /* Pods_Classroom_Hero.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Classroom_Hero.framework; path = "Pods-Classroom Hero.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		73213C52C341ABDB8AFA5ECC20692FB3 /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		75A593C8F1200BD39BCB93EBE7A18E67 /* CircleProgressBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CircleProgressBar.framework; path = CircleProgressBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FD3D3545D3C7AF3DF9DCD4B3105D7A5 /* YLProgressBar-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YLProgressBar-prefix.pch"; sourceTree = "<group>"; };
+		62B8F83CB581EBDBA5C84351F320F52F /* CircleProgressBar.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CircleProgressBar.modulemap; sourceTree = "<group>"; };
+		66E8913F17EFA05B46788245499DAE01 /* FDKeychain-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FDKeychain-dummy.m"; sourceTree = "<group>"; };
+		69BF0F03D5889AD0E0065FF59D826A1B /* CircleProgressBar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CircleProgressBar.h; path = CircleProgressBarDemo/CircleProgressBar/CircleProgressBar.h; sourceTree = "<group>"; };
+		6E4AF984A6E671F7AF343BF2EC855773 /* MBProgressHUD-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-umbrella.h"; sourceTree = "<group>"; };
+		70CDC5C7BDEBF0EB039CB667AAA8AFFA /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		748BD372724A142AD59F562E4DFBAB5C /* MBProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MBProgressHUD.framework; path = MBProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ED177F20D105D2D9ECBEE36EFBF837 /* YLProgressBar.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = YLProgressBar.xcconfig; sourceTree = "<group>"; };
+		76E68A25A338AF5D1286327735D1A0C6 /* FlurryEmpty.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FlurryEmpty.m; path = Flurry/FlurryEmpty.m; sourceTree = "<group>"; };
+		7DFE65351EC2E7200E3AA320DF560CD6 /* Flurry_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Flurry_iOS_SDK.framework; path = "Flurry-iOS-SDK.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8042647978E70EE8F0ECD5FB48FF8DF0 /* Pods-Classroom Hero.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Classroom Hero.debug.xcconfig"; sourceTree = "<group>"; };
 		826B232FCD868E92CAF18426A4C046D7 /* Pods-Classroom HeroTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Classroom HeroTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		84161BCF7D37F61E1F29BB03AE556E3A /* Pods_Classroom_HeroTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Classroom_HeroTests.framework; path = "Pods-Classroom HeroTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8597AA594189E21AD217F8E4D495F75F /* JSBadgeView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JSBadgeView.xcconfig; sourceTree = "<group>"; };
 		8641F185BF912EE7A4D44DAF53D4B2C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		881D21D2A5CA0ACCEC1133A0851AE44A /* Pods-Classroom HeroTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Classroom HeroTests.modulemap"; sourceTree = "<group>"; };
 		88EF1F6B6731823E33D83C732803DC0B /* Pods-Classroom Hero.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Classroom Hero.release.xcconfig"; sourceTree = "<group>"; };
-		8D57AF60FD2D7C8CD2C488B49E4BC131 /* YLProgressBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = YLProgressBar.m; path = YLProgressBar/YLProgressBar.m; sourceTree = "<group>"; };
-		8F181D952DC993960F79AB69CA1567D4 /* Flurry-iOS-SDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Flurry-iOS-SDK.modulemap"; sourceTree = "<group>"; };
-		909DD273F9FBAE19B8B0C515C303B22D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9277338FDD5302D193D09064BBF06844 /* FlurryEmpty.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FlurryEmpty.m; path = Flurry/FlurryEmpty.m; sourceTree = "<group>"; };
+		89FF31C2E0B457EA63EE0F6155161092 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8AD1EF3D092372B509368816FAD5AE5A /* Pods_Classroom_Hero.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Classroom_Hero.framework; path = "Pods-Classroom Hero.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F86EE9BC9B566880810D8FC31DF7767 /* MBProgressHUD.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = MBProgressHUD.modulemap; sourceTree = "<group>"; };
+		9293310069901C48C0C328D84BF5FB2D /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		96DF5D767AC1247CBB5ED7228821C8F6 /* YLProgressBar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YLProgressBar.h; path = YLProgressBar/YLProgressBar.h; sourceTree = "<group>"; };
+		96898BD6E7C01FA416461A2437B3D5A3 /* Flurry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = Flurry/Flurry.h; sourceTree = "<group>"; };
+		97E99FEBCD1BD2AACF4F8E250CABEF46 /* CircleProgressBar-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CircleProgressBar-prefix.pch"; sourceTree = "<group>"; };
 		9B7E1CFE49EB1E38929EBF38BA5F6B47 /* Pods-Classroom HeroTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Classroom HeroTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		9BCEBA864F74FB1FACCFC33E55274029 /* Flurry-iOS-SDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Flurry-iOS-SDK-dummy.m"; sourceTree = "<group>"; };
-		9DF30DDF442CF3F44BF57F7078A02A62 /* CircleProgressBar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CircleProgressBar.h; path = CircleProgressBarDemo/CircleProgressBar/CircleProgressBar.h; sourceTree = "<group>"; };
 		9E719639954B2295D4A03A4FC18F72CB /* Pods-Classroom HeroTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Classroom HeroTests-dummy.m"; sourceTree = "<group>"; };
-		9F60FC1DAF8001960C88208608E1565D /* JSBadgeView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSBadgeView-prefix.pch"; sourceTree = "<group>"; };
-		A26AB590C94412989C77E4D869014D18 /* JSBadgeView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = Pod/Classes/JSBadgeView.h; sourceTree = "<group>"; };
-		A8674FFBB791CA632DDD91CCEC61ECD1 /* JSBadgeView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSBadgeView-umbrella.h"; sourceTree = "<group>"; };
-		ABCDEE7C01704220DCB631004B234BDE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B0F9E25F6EDED681A4F75996A7A6C66D /* JSBadgeView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JSBadgeView-dummy.m"; sourceTree = "<group>"; };
-		B40F0A910C84E080FA1A17C5DBDE6F84 /* JSBadgeView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = Pod/Classes/JSBadgeView.m; sourceTree = "<group>"; };
-		B4425B336C671C5624D09256FC651D1D /* Flurry-iOS-SDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Flurry-iOS-SDK-prefix.pch"; sourceTree = "<group>"; };
-		B96D93A6CD5854B8240A2604FE155F39 /* ResourceBundle-JSBadgeView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-JSBadgeView-Info.plist"; sourceTree = "<group>"; };
+		9E720D455C60A911597A330F28C0431B /* CircleProgressBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CircleProgressBar.m; path = CircleProgressBarDemo/CircleProgressBar/CircleProgressBar.m; sourceTree = "<group>"; };
+		AB365B2A7736E6DCCC129BC1873A2AE3 /* YLProgressBar-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YLProgressBar-umbrella.h"; sourceTree = "<group>"; };
+		AFB2EDE565F4A9BA376C27299781D64F /* JSBadgeView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSBadgeView-prefix.pch"; sourceTree = "<group>"; };
+		B0C141DEF73E7073690872AE1CA0EF87 /* FDKeychain.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FDKeychain.h; path = FDKeychain/FDKeychain.h; sourceTree = "<group>"; };
+		B38D8F633E2F267EFF79A2E9FF4E46BE /* CircleProgressBar-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CircleProgressBar-umbrella.h"; sourceTree = "<group>"; };
+		B44D18CF86C276802A54B35EA1C20420 /* YLProgressBar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YLProgressBar.h; path = YLProgressBar/YLProgressBar.h; sourceTree = "<group>"; };
+		B5F7C7E0910097A5BA7659F056E42099 /* MBProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		B96EC7E450228C006B6AD87FDA634AC2 /* FDKeychain-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FDKeychain-prefix.pch"; sourceTree = "<group>"; };
+		B9B18CE7AC19F76EAEB0DFC271443683 /* JSBadgeView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSBadgeView-umbrella.h"; sourceTree = "<group>"; };
+		BAF2F1980FEBAFD24F3E558AE9D4A5FD /* FDKeychain.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FDKeychain.xcconfig; sourceTree = "<group>"; };
 		BD0779461E43AE100BC644F3D1528A60 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C22525F02E9323835AC5BF9FEB4D143B /* CircleProgressBar-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CircleProgressBar-prefix.pch"; sourceTree = "<group>"; };
+		BFF05714A99F0800A5FC741A817E183B /* Flurry-iOS-SDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Flurry-iOS-SDK-dummy.m"; sourceTree = "<group>"; };
+		C086EE3EF54674B86FFF54055466EDD6 /* libFlurry_7.6.0.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libFlurry_7.6.0.a; path = Flurry/libFlurry_7.6.0.a; sourceTree = "<group>"; };
 		C33E6B82EF5571D53A48D0B5A4300386 /* Pods-Classroom Hero-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Classroom Hero-acknowledgements.plist"; sourceTree = "<group>"; };
-		C341495F50DFD3FC79D899CDC1079765 /* MBProgressHUD.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = MBProgressHUD.modulemap; sourceTree = "<group>"; };
 		C484A3412ABDB34827C219ACB163CE50 /* Pods-Classroom HeroTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Classroom HeroTests-resources.sh"; sourceTree = "<group>"; };
 		C543B8A1C819AD7469D12DF96226D9F1 /* Pods-Classroom HeroTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Classroom HeroTests-frameworks.sh"; sourceTree = "<group>"; };
-		C6D4587B61639E76FD979F6F1C262442 /* CircleProgressBar.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CircleProgressBar.modulemap; sourceTree = "<group>"; };
+		CA199409E30DB255F456603BA30668FB /* YLProgressBar.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = YLProgressBar.modulemap; sourceTree = "<group>"; };
+		CA28F7612631807B318624C2C5D32C62 /* Flurry-iOS-SDK.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Flurry-iOS-SDK.xcconfig"; sourceTree = "<group>"; };
 		CBA4EBB8982989070F3B8C11B30B5737 /* Pods-Classroom HeroTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Classroom HeroTests.release.xcconfig"; sourceTree = "<group>"; };
 		CE5CF518BB4EB59CC32705B54B63D810 /* Pods-Classroom HeroTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Classroom HeroTests-umbrella.h"; sourceTree = "<group>"; };
-		D34A5360DF4B79D478755B7A932958F8 /* YLProgressBar.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = YLProgressBar.modulemap; sourceTree = "<group>"; };
 		D60B63734C7C27B7E694488E55DACC79 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D62D9644571A966B84B319D922D6F11E /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
-		DD1744E8FD5B5FE253B2694096A535FD /* MBProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		E08858F78EE86453B1C8C220AD8EF5A3 /* CircleProgressBar-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CircleProgressBar-umbrella.h"; sourceTree = "<group>"; };
+		E11DDD1ABF49495195192038C77021BC /* JSBadgeView.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = JSBadgeView.bundle; path = JSBadgeView.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		E78DE92B1F12949473C1EDD145864DD6 /* JSBadgeView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = JSBadgeView.modulemap; sourceTree = "<group>"; };
 		EB93E7C2342CEBCAC48A4005F5BBAC66 /* Pods-Classroom Hero-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Classroom Hero-frameworks.sh"; sourceTree = "<group>"; };
-		ED34114A28A162A24E94825AC92B0E30 /* JSBadgeView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JSBadgeView.xcconfig; sourceTree = "<group>"; };
-		FAE60664939EA55C646E6A487F02B034 /* Flurry_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Flurry_iOS_SDK.framework; path = "Flurry-iOS-SDK.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FC1E8D347ADC81F4E3E9BB384EA24187 /* YLProgressBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = YLProgressBar.framework; path = YLProgressBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFE6B15A08BC82B6E98F94C9AC242BFC /* CircleProgressBar.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CircleProgressBar.xcconfig; sourceTree = "<group>"; };
+		F5AB3D20BB1D2076E571269B16840B19 /* MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		F89631F75530796A2D4C390BF8D508B3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB8F5BB54B0065BCBEFCAB5AAA08C4A9 /* FDKeychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FDKeychain.framework; path = FDKeychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,11 +207,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		345CB9B0F0F3BD13F6BAE98B0503D093 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AEC60DEDC2240DE59552A5921FE77F0 /* Foundation.framework in Frameworks */,
+				54BC88B53C68FB03605A8FD9F2E76B85 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		413C068968ACD9C8965FEB9D89250F77 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8E2883AA7689E3656301C84D93BA9924 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E03776CDB1755F6F7EC5CC4E40709FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E166FAB6BE9C171075514EC2A9A7F2F /* CoreGraphics.framework in Frameworks */,
+				E284A71FD5343390B66A4464D1FA10CA /* Foundation.framework in Frameworks */,
+				2F26FF349FBE573CD2E9662DD6F4579D /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		60496E8D061385A3DEFE5DB28F622E54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1497FCBD501AA633176392E412DDC0B5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,16 +249,6 @@
 				C7994DD63644F6D6E74CFC4D3C02CFB0 /* Foundation.framework in Frameworks */,
 				FC2A8FC3716377A71E6A9933A7F58329 /* QuartzCore.framework in Frameworks */,
 				171B76B1870F4F2D54B33EFA1BE6FDA6 /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6B893DCDE8351B49384A5B4A809C1C56 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				105682AF1B93F34C93F85127542DBF11 /* CoreGraphics.framework in Frameworks */,
-				F53A60B68D38497B64BA5B015BB3C852 /* Foundation.framework in Frameworks */,
-				A30483B60EA4074487A1288F3C66107F /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,14 +269,6 @@
 				37CAE3E3247E6FC1674F274D58B328CE /* Security.framework in Frameworks */,
 				64CAD1E63B207ACCDDA58C3FC67471B1 /* SystemConfiguration.framework in Frameworks */,
 				777180FA48B5001F9348FB956EEFE91F /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AA5143850CFA1E56561C3D30244AF27C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3669A589CF25F50A51C05EDEFEC7CC1E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,27 +300,23 @@
 			path = "Target Support Files/Pods-Classroom HeroTests";
 			sourceTree = "<group>";
 		};
-		0EEDCC08B5269FCBB6D625E46C949879 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				1728976296913A88851127E2350674CC /* Info.plist */,
-				47B9952B3A94CC1BAEE341857991A531 /* JSBadgeView.modulemap */,
-				ED34114A28A162A24E94825AC92B0E30 /* JSBadgeView.xcconfig */,
-				B0F9E25F6EDED681A4F75996A7A6C66D /* JSBadgeView-dummy.m */,
-				9F60FC1DAF8001960C88208608E1565D /* JSBadgeView-prefix.pch */,
-				A8674FFBB791CA632DDD91CCEC61ECD1 /* JSBadgeView-umbrella.h */,
-				B96D93A6CD5854B8240A2604FE155F39 /* ResourceBundle-JSBadgeView-Info.plist */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/JSBadgeView";
-			sourceTree = "<group>";
-		};
 		0F75DF6C7C5F002280EC53F48E80B587 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				F8F6D5DCFBFD8887C7BCDADCF54DB4EA /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1CFC9E4BCEAAE3DC31DC00B1626D17A5 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				9293310069901C48C0C328D84BF5FB2D /* MBProgressHUD.h */,
+				0CAEAB982E829B3BC706C1EC22CB97EC /* MBProgressHUD.m */,
+				E1CC41445C33B218F0C7DC4A205F77B2 /* Support Files */,
+			);
+			name = MBProgressHUD;
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		226D482E7FD8BE3020DC2BD00737E46A /* Targets Support Files */ = {
@@ -301,44 +328,44 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		23D82690935EDB4F052AE15DE7969AE4 /* Support Files */ = {
+		2546DDA310F9E53D636718557139528F /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				ABCDEE7C01704220DCB631004B234BDE /* Info.plist */,
-				D34A5360DF4B79D478755B7A932958F8 /* YLProgressBar.modulemap */,
-				57FF728F6A7E0EF46485F5CA0FC1D923 /* YLProgressBar.xcconfig */,
-				398ED8FCACD94D32270CB4E2D2B98A6A /* YLProgressBar-dummy.m */,
-				258DD3B0A2F197995CBD688C6B8CF139 /* YLProgressBar-prefix.pch */,
-				4D09F6EFC39333328022B8DC8363D5AA /* YLProgressBar-umbrella.h */,
+				F89631F75530796A2D4C390BF8D508B3 /* Info.plist */,
+				E78DE92B1F12949473C1EDD145864DD6 /* JSBadgeView.modulemap */,
+				8597AA594189E21AD217F8E4D495F75F /* JSBadgeView.xcconfig */,
+				1CC34BFB0AFA6347AC58B3BDBC10296B /* JSBadgeView-dummy.m */,
+				AFB2EDE565F4A9BA376C27299781D64F /* JSBadgeView-prefix.pch */,
+				B9B18CE7AC19F76EAEB0DFC271443683 /* JSBadgeView-umbrella.h */,
+				13104F841F697215C3371251617115A9 /* ResourceBundle-JSBadgeView-Info.plist */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/YLProgressBar";
+			path = "../Target Support Files/JSBadgeView";
 			sourceTree = "<group>";
 		};
-		323C799162B7AA36D6B91F0B1E869BD4 /* Products */ = {
+		4A19C6D85772450AF4620E3175F1714B /* CircleProgressBar */ = {
 			isa = PBXGroup;
 			children = (
-				75A593C8F1200BD39BCB93EBE7A18E67 /* CircleProgressBar.framework */,
-				FAE60664939EA55C646E6A487F02B034 /* Flurry_iOS_SDK.framework */,
-				1D1F9D6654B2ED941714B95DAD0A1BE8 /* JSBadgeView.bundle */,
-				24E218616C0E252F9F4850E41F89ADD3 /* JSBadgeView.framework */,
-				3DE0A165BA3922B5167C38B92410EA27 /* MBProgressHUD.framework */,
-				71F789EBACF0343CC5DD54E3E504438D /* Pods_Classroom_Hero.framework */,
-				57443E23A8232E48D8540336E7B59BE0 /* Pods_Classroom_HeroTests.framework */,
-				FC1E8D347ADC81F4E3E9BB384EA24187 /* YLProgressBar.framework */,
+				69BF0F03D5889AD0E0065FF59D826A1B /* CircleProgressBar.h */,
+				9E720D455C60A911597A330F28C0431B /* CircleProgressBar.m */,
+				AC6BFA63137F6AA9ED4E856190CD54E5 /* Support Files */,
 			);
-			name = Products;
+			name = CircleProgressBar;
+			path = CircleProgressBar;
 			sourceTree = "<group>";
 		};
-		48EE98B0EB57AFB78E2E0463A1C32E74 /* JSBadgeView */ = {
+		6DFDDAE227A2AA324103D63E4110A53D /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				A26AB590C94412989C77E4D869014D18 /* JSBadgeView.h */,
-				B40F0A910C84E080FA1A17C5DBDE6F84 /* JSBadgeView.m */,
-				0EEDCC08B5269FCBB6D625E46C949879 /* Support Files */,
+				1A5A03198770D62F0FEB88E9FF511D44 /* FDKeychain.modulemap */,
+				BAF2F1980FEBAFD24F3E558AE9D4A5FD /* FDKeychain.xcconfig */,
+				66E8913F17EFA05B46788245499DAE01 /* FDKeychain-dummy.m */,
+				B96EC7E450228C006B6AD87FDA634AC2 /* FDKeychain-prefix.pch */,
+				53AC68C14A039D002C7A174B29238B43 /* FDKeychain-umbrella.h */,
+				15D286870A3C6B6FDBF56FDDC47135CB /* Info.plist */,
 			);
-			name = JSBadgeView;
-			path = JSBadgeView;
+			name = "Support Files";
+			path = "../Target Support Files/FDKeychain";
 			sourceTree = "<group>";
 		};
 		73CD0D0E11F7CF698B684A39E763FD19 /* Pods-Classroom Hero */ = {
@@ -359,119 +386,147 @@
 			path = "Target Support Files/Pods-Classroom Hero";
 			sourceTree = "<group>";
 		};
-		7970C3D7456684257BEB325A8F7B8725 /* Flurry-iOS-SDK */ = {
-			isa = PBXGroup;
-			children = (
-				7AFED77298EF115DE42EA0699F275A62 /* FlurrySDK */,
-				7D55256C2623C0A863A34B3208E9858F /* Support Files */,
-			);
-			name = "Flurry-iOS-SDK";
-			path = "Flurry-iOS-SDK";
-			sourceTree = "<group>";
-		};
-		7AFED77298EF115DE42EA0699F275A62 /* FlurrySDK */ = {
-			isa = PBXGroup;
-			children = (
-				5F54182850DFAC5F7FC2348C5111C1DF /* Flurry.h */,
-				9277338FDD5302D193D09064BBF06844 /* FlurryEmpty.m */,
-				A9A815D65456FFAC47A7D029A599A965 /* Frameworks */,
-			);
-			name = FlurrySDK;
-			sourceTree = "<group>";
-		};
-		7CD740E54CE874C6B3693C5F105312F7 /* CircleProgressBar */ = {
-			isa = PBXGroup;
-			children = (
-				9DF30DDF442CF3F44BF57F7078A02A62 /* CircleProgressBar.h */,
-				5767B5EA181CFC555E106C425D911B55 /* CircleProgressBar.m */,
-				AA9D5EB1AF1666FAC6DE98711AB0FD80 /* Support Files */,
-			);
-			name = CircleProgressBar;
-			path = CircleProgressBar;
-			sourceTree = "<group>";
-		};
-		7D55256C2623C0A863A34B3208E9858F /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				8F181D952DC993960F79AB69CA1567D4 /* Flurry-iOS-SDK.modulemap */,
-				53B1306BF0206CF6C22B41BF74685B70 /* Flurry-iOS-SDK.xcconfig */,
-				9BCEBA864F74FB1FACCFC33E55274029 /* Flurry-iOS-SDK-dummy.m */,
-				B4425B336C671C5624D09256FC651D1D /* Flurry-iOS-SDK-prefix.pch */,
-				25F961194444F5A0FDE387CBAF7722C5 /* Flurry-iOS-SDK-umbrella.h */,
-				6F6FDEA8E3D25BE1A6ED19AEA5C7FD18 /* Info.plist */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/Flurry-iOS-SDK";
-			sourceTree = "<group>";
-		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				0F75DF6C7C5F002280EC53F48E80B587 /* Frameworks */,
-				964A288C34327358490A159363858CB1 /* Pods */,
-				323C799162B7AA36D6B91F0B1E869BD4 /* Products */,
+				F150123B7CD4B279683675FFEAE7A9C5 /* Pods */,
+				F2EEC7E508E659BE4FA267BCA9E39423 /* Products */,
 				226D482E7FD8BE3020DC2BD00737E46A /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		964A288C34327358490A159363858CB1 /* Pods */ = {
+		8571D916488DB17098C6FC5E6E8B6939 /* JSBadgeView */ = {
 			isa = PBXGroup;
 			children = (
-				7CD740E54CE874C6B3693C5F105312F7 /* CircleProgressBar */,
-				7970C3D7456684257BEB325A8F7B8725 /* Flurry-iOS-SDK */,
-				48EE98B0EB57AFB78E2E0463A1C32E74 /* JSBadgeView */,
-				D7A290AE96443279987E4E8375032C44 /* MBProgressHUD */,
-				FAE7269CCF6E8347ED623C6A291D0E45 /* YLProgressBar */,
+				2FA176E60825DFFA527320E5B54F2866 /* JSBadgeView.h */,
+				078965EFF77EA23BE87307A93AB231E7 /* JSBadgeView.m */,
+				2546DDA310F9E53D636718557139528F /* Support Files */,
 			);
-			name = Pods;
+			name = JSBadgeView;
+			path = JSBadgeView;
 			sourceTree = "<group>";
 		};
-		9E66B9C3391C60B08BB746EBAEDBE95D /* Support Files */ = {
+		AC6BFA63137F6AA9ED4E856190CD54E5 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				36B640324D9A18F3320B525C0F548F43 /* Info.plist */,
-				C341495F50DFD3FC79D899CDC1079765 /* MBProgressHUD.modulemap */,
-				D62D9644571A966B84B319D922D6F11E /* MBProgressHUD.xcconfig */,
-				304737E1A87D9566D34BD7718AC9B8AD /* MBProgressHUD-dummy.m */,
-				02830324245C32B15FFEF4127FAC62E9 /* MBProgressHUD-prefix.pch */,
-				27D5AF30821922AAD807E3C4D4012EB6 /* MBProgressHUD-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/MBProgressHUD";
-			sourceTree = "<group>";
-		};
-		A9A815D65456FFAC47A7D029A599A965 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0B4631572FF37F11F67E424F71FDA7FF /* libFlurry_7.6.0.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AA9D5EB1AF1666FAC6DE98711AB0FD80 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				C6D4587B61639E76FD979F6F1C262442 /* CircleProgressBar.modulemap */,
-				300CA531F4E9FD47AD6D2F168333AB57 /* CircleProgressBar.xcconfig */,
-				382462F0E93637CAA42A0B7CCB63249D /* CircleProgressBar-dummy.m */,
-				C22525F02E9323835AC5BF9FEB4D143B /* CircleProgressBar-prefix.pch */,
-				E08858F78EE86453B1C8C220AD8EF5A3 /* CircleProgressBar-umbrella.h */,
-				909DD273F9FBAE19B8B0C515C303B22D /* Info.plist */,
+				62B8F83CB581EBDBA5C84351F320F52F /* CircleProgressBar.modulemap */,
+				EFE6B15A08BC82B6E98F94C9AC242BFC /* CircleProgressBar.xcconfig */,
+				0F9846F663B44091E74A4A48F56648EF /* CircleProgressBar-dummy.m */,
+				97E99FEBCD1BD2AACF4F8E250CABEF46 /* CircleProgressBar-prefix.pch */,
+				B38D8F633E2F267EFF79A2E9FF4E46BE /* CircleProgressBar-umbrella.h */,
+				70CDC5C7BDEBF0EB039CB667AAA8AFFA /* Info.plist */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/CircleProgressBar";
 			sourceTree = "<group>";
 		};
-		D7A290AE96443279987E4E8375032C44 /* MBProgressHUD */ = {
+		B5A7ACC7D36A597D45B4A1F6CA5EFE66 /* FDKeychain */ = {
 			isa = PBXGroup;
 			children = (
-				73213C52C341ABDB8AFA5ECC20692FB3 /* MBProgressHUD.h */,
-				DD1744E8FD5B5FE253B2694096A535FD /* MBProgressHUD.m */,
-				9E66B9C3391C60B08BB746EBAEDBE95D /* Support Files */,
+				B0C141DEF73E7073690872AE1CA0EF87 /* FDKeychain.h */,
+				3EE7848958EAAF12C3BBCCC216F87A1D /* FDKeychain.m */,
+				6DFDDAE227A2AA324103D63E4110A53D /* Support Files */,
 			);
-			name = MBProgressHUD;
-			path = MBProgressHUD;
+			name = FDKeychain;
+			path = FDKeychain;
+			sourceTree = "<group>";
+		};
+		C9CCE3C844428AB25B59EFC10299ADBF /* FlurrySDK */ = {
+			isa = PBXGroup;
+			children = (
+				96898BD6E7C01FA416461A2437B3D5A3 /* Flurry.h */,
+				76E68A25A338AF5D1286327735D1A0C6 /* FlurryEmpty.m */,
+				F58B5FF57F8582779786DC0B525BFB0A /* Frameworks */,
+			);
+			name = FlurrySDK;
+			sourceTree = "<group>";
+		};
+		E1CC41445C33B218F0C7DC4A205F77B2 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				038FD3B51C2D7168987405A825C61F1F /* Info.plist */,
+				8F86EE9BC9B566880810D8FC31DF7767 /* MBProgressHUD.modulemap */,
+				101363A690CCB4DB4FDE857B6332E400 /* MBProgressHUD.xcconfig */,
+				B5F7C7E0910097A5BA7659F056E42099 /* MBProgressHUD-dummy.m */,
+				F5AB3D20BB1D2076E571269B16840B19 /* MBProgressHUD-prefix.pch */,
+				6E4AF984A6E671F7AF343BF2EC855773 /* MBProgressHUD-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/MBProgressHUD";
+			sourceTree = "<group>";
+		};
+		E1CC8A3840898CD9DCD763B67DA87B40 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3F5C41FC7126857CEEB8ADC9567B67B1 /* Flurry-iOS-SDK.modulemap */,
+				CA28F7612631807B318624C2C5D32C62 /* Flurry-iOS-SDK.xcconfig */,
+				BFF05714A99F0800A5FC741A817E183B /* Flurry-iOS-SDK-dummy.m */,
+				1A421FA3D549F5AB13798B6A8949877E /* Flurry-iOS-SDK-prefix.pch */,
+				1771E77360AE2D582DEAE68C34636E0B /* Flurry-iOS-SDK-umbrella.h */,
+				3D4D42FD499815CBEF3B7B84A47C528B /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Flurry-iOS-SDK";
+			sourceTree = "<group>";
+		};
+		E893EBCFBA56C024BDB7C20284A3893F /* Flurry-iOS-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				C9CCE3C844428AB25B59EFC10299ADBF /* FlurrySDK */,
+				E1CC8A3840898CD9DCD763B67DA87B40 /* Support Files */,
+			);
+			name = "Flurry-iOS-SDK";
+			path = "Flurry-iOS-SDK";
+			sourceTree = "<group>";
+		};
+		F150123B7CD4B279683675FFEAE7A9C5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4A19C6D85772450AF4620E3175F1714B /* CircleProgressBar */,
+				B5A7ACC7D36A597D45B4A1F6CA5EFE66 /* FDKeychain */,
+				E893EBCFBA56C024BDB7C20284A3893F /* Flurry-iOS-SDK */,
+				8571D916488DB17098C6FC5E6E8B6939 /* JSBadgeView */,
+				1CFC9E4BCEAAE3DC31DC00B1626D17A5 /* MBProgressHUD */,
+				F77562E6DC1A605C17735852D5AA8C3D /* YLProgressBar */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F2EEC7E508E659BE4FA267BCA9E39423 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				086834DD4BDD63C61EAC0981DFCC8018 /* CircleProgressBar.framework */,
+				FB8F5BB54B0065BCBEFCAB5AAA08C4A9 /* FDKeychain.framework */,
+				7DFE65351EC2E7200E3AA320DF560CD6 /* Flurry_iOS_SDK.framework */,
+				E11DDD1ABF49495195192038C77021BC /* JSBadgeView.bundle */,
+				2C9E4988380C787707369178BFFC8D42 /* JSBadgeView.framework */,
+				748BD372724A142AD59F562E4DFBAB5C /* MBProgressHUD.framework */,
+				8AD1EF3D092372B509368816FAD5AE5A /* Pods_Classroom_Hero.framework */,
+				84161BCF7D37F61E1F29BB03AE556E3A /* Pods_Classroom_HeroTests.framework */,
+				2787DE132A3D7010BE215125FDA563D0 /* YLProgressBar.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F58B5FF57F8582779786DC0B525BFB0A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C086EE3EF54674B86FFF54055466EDD6 /* libFlurry_7.6.0.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F77562E6DC1A605C17735852D5AA8C3D /* YLProgressBar */ = {
+			isa = PBXGroup;
+			children = (
+				B44D18CF86C276802A54B35EA1C20420 /* YLProgressBar.h */,
+				43FE5E53E631518758E249E510791E06 /* YLProgressBar.m */,
+				FA7411BFBDD8F073DD1B55D6F11707ED /* Support Files */,
+			);
+			name = YLProgressBar;
+			path = YLProgressBar;
 			sourceTree = "<group>";
 		};
 		F8F6D5DCFBFD8887C7BCDADCF54DB4EA /* iOS */ = {
@@ -487,15 +542,18 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		FAE7269CCF6E8347ED623C6A291D0E45 /* YLProgressBar */ = {
+		FA7411BFBDD8F073DD1B55D6F11707ED /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				96DF5D767AC1247CBB5ED7228821C8F6 /* YLProgressBar.h */,
-				8D57AF60FD2D7C8CD2C488B49E4BC131 /* YLProgressBar.m */,
-				23D82690935EDB4F052AE15DE7969AE4 /* Support Files */,
+				89FF31C2E0B457EA63EE0F6155161092 /* Info.plist */,
+				CA199409E30DB255F456603BA30668FB /* YLProgressBar.modulemap */,
+				74ED177F20D105D2D9ECBEE36EFBF837 /* YLProgressBar.xcconfig */,
+				4758F1CBAAA9C44A9D5CDA2892628030 /* YLProgressBar-dummy.m */,
+				5FD3D3545D3C7AF3DF9DCD4B3105D7A5 /* YLProgressBar-prefix.pch */,
+				AB365B2A7736E6DCCC129BC1873A2AE3 /* YLProgressBar-umbrella.h */,
 			);
-			name = YLProgressBar;
-			path = YLProgressBar;
+			name = "Support Files";
+			path = "../Target Support Files/YLProgressBar";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -518,20 +576,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		904D5AC7467AC784D141A51AE65A4F06 /* Headers */ = {
+		7F8A57989C8A858BE54D906C3871160A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48D2027CD0C4D2330CFC831FDAF7FC39 /* Pods-Classroom Hero-umbrella.h in Headers */,
+				90A971352A7551D2502739287B74AE55 /* YLProgressBar-umbrella.h in Headers */,
+				0990267CC8119860698D3232ED9624BB /* YLProgressBar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC79A7A5CCFAB509EF5138E09309C267 /* Headers */ = {
+		9808BF488571986FC52B46FA7D371CC1 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A544BCC492CDEE154E2EBB971DA23D7 /* YLProgressBar-umbrella.h in Headers */,
-				F29D786DA28FDFB8CAB0741D32748D10 /* YLProgressBar.h in Headers */,
+				C71E5934A64A22C4EA382DF8FB05E127 /* Pods-Classroom Hero-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A55D0E94051CF0D1869BBA3A78CA442F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C4AF016923A2D6BFFF8251ED533D782 /* FDKeychain-umbrella.h in Headers */,
+				232C3F70132496D1265F4F1DF56958C6 /* FDKeychain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,28 +632,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		02A2036DBD2DE74BDCF160D8A28613A2 /* Pods-Classroom Hero */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6E9837D58EBB76B83FA0480A3D8E1B05 /* Build configuration list for PBXNativeTarget "Pods-Classroom Hero" */;
-			buildPhases = (
-				08D258D08AE96E083DF6A85A880F62F0 /* Sources */,
-				AA5143850CFA1E56561C3D30244AF27C /* Frameworks */,
-				904D5AC7467AC784D141A51AE65A4F06 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E8A54B5D2D8D59DF60B766E8793C6585 /* PBXTargetDependency */,
-				3675D255E17E246E11E1A1F2F5A052AF /* PBXTargetDependency */,
-				B9A52AC3ED1C983F4965E88987CFF9F6 /* PBXTargetDependency */,
-				948FF1705E39745B60653FC7805F4F41 /* PBXTargetDependency */,
-				E533D6324D0A045DC5460042FB39F059 /* PBXTargetDependency */,
-			);
-			name = "Pods-Classroom Hero";
-			productName = "Pods-Classroom Hero";
-			productReference = 71F789EBACF0343CC5DD54E3E504438D /* Pods_Classroom_Hero.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		4713F0C254D824AFCE023D25B1184AF3 /* JSBadgeView */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 68F233E73388180ABE2BF263A216BE90 /* Build configuration list for PBXNativeTarget "JSBadgeView" */;
@@ -603,7 +648,7 @@
 			);
 			name = JSBadgeView;
 			productName = JSBadgeView;
-			productReference = 24E218616C0E252F9F4850E41F89ADD3 /* JSBadgeView.framework */;
+			productReference = 2C9E4988380C787707369178BFFC8D42 /* JSBadgeView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		4BFA2674723F961A1A340F2B9A1E78FD /* Flurry-iOS-SDK */ = {
@@ -620,24 +665,7 @@
 			);
 			name = "Flurry-iOS-SDK";
 			productName = "Flurry-iOS-SDK";
-			productReference = FAE60664939EA55C646E6A487F02B034 /* Flurry_iOS_SDK.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		4C6F63F6E3D5A3A8C392A2039DF0FAE2 /* YLProgressBar */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 66C2D4D9D555B4D8145F398DDD437B3B /* Build configuration list for PBXNativeTarget "YLProgressBar" */;
-			buildPhases = (
-				F9DA8B442DDF9AE89D85FC59B0450BD4 /* Sources */,
-				6B893DCDE8351B49384A5B4A809C1C56 /* Frameworks */,
-				CC79A7A5CCFAB509EF5138E09309C267 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = YLProgressBar;
-			productName = YLProgressBar;
-			productReference = FC1E8D347ADC81F4E3E9BB384EA24187 /* YLProgressBar.framework */;
+			productReference = 7DFE65351EC2E7200E3AA320DF560CD6 /* Flurry_iOS_SDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		4CA48FEE25DAC333CBDAE070ED31391B /* Pods-Classroom HeroTests */ = {
@@ -654,7 +682,7 @@
 			);
 			name = "Pods-Classroom HeroTests";
 			productName = "Pods-Classroom HeroTests";
-			productReference = 57443E23A8232E48D8540336E7B59BE0 /* Pods_Classroom_HeroTests.framework */;
+			productReference = 84161BCF7D37F61E1F29BB03AE556E3A /* Pods_Classroom_HeroTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		6B1714E816AE794962516E2ECBB40A5A /* MBProgressHUD */ = {
@@ -671,7 +699,24 @@
 			);
 			name = MBProgressHUD;
 			productName = MBProgressHUD;
-			productReference = 3DE0A165BA3922B5167C38B92410EA27 /* MBProgressHUD.framework */;
+			productReference = 748BD372724A142AD59F562E4DFBAB5C /* MBProgressHUD.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A23407DEBEF3145E393948D1F92C688A /* FDKeychain */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7FC303A9C27FBD39BA3BF1AE3DF190D5 /* Build configuration list for PBXNativeTarget "FDKeychain" */;
+			buildPhases = (
+				5D60DE531B731E04E3E2DE171B62AA31 /* Sources */,
+				345CB9B0F0F3BD13F6BAE98B0503D093 /* Frameworks */,
+				A55D0E94051CF0D1869BBA3A78CA442F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FDKeychain;
+			productName = FDKeychain;
+			productReference = FB8F5BB54B0065BCBEFCAB5AAA08C4A9 /* FDKeychain.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		A25615DF9BF8FFAF6A63BF1D878DC7DB /* JSBadgeView-JSBadgeView */ = {
@@ -688,7 +733,7 @@
 			);
 			name = "JSBadgeView-JSBadgeView";
 			productName = "JSBadgeView-JSBadgeView";
-			productReference = 1D1F9D6654B2ED941714B95DAD0A1BE8 /* JSBadgeView.bundle */;
+			productReference = E11DDD1ABF49495195192038C77021BC /* JSBadgeView.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		B545B48FA0CEE58E0B8D9309EE4CFF7C /* CircleProgressBar */ = {
@@ -705,7 +750,47 @@
 			);
 			name = CircleProgressBar;
 			productName = CircleProgressBar;
-			productReference = 75A593C8F1200BD39BCB93EBE7A18E67 /* CircleProgressBar.framework */;
+			productReference = 086834DD4BDD63C61EAC0981DFCC8018 /* CircleProgressBar.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C75130A5061A9BD11C8360D739153ADB /* YLProgressBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DBF26A063A6E8283EAC669E69B7BA66F /* Build configuration list for PBXNativeTarget "YLProgressBar" */;
+			buildPhases = (
+				5F337C38D7513FE786DCEAB897E1FA58 /* Sources */,
+				5E03776CDB1755F6F7EC5CC4E40709FC /* Frameworks */,
+				7F8A57989C8A858BE54D906C3871160A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YLProgressBar;
+			productName = YLProgressBar;
+			productReference = 2787DE132A3D7010BE215125FDA563D0 /* YLProgressBar.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		DD8B3E4FA3AEECBED0C86B4148F136C4 /* Pods-Classroom Hero */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2A7F8B1F7C459262EBABC02C416B38F /* Build configuration list for PBXNativeTarget "Pods-Classroom Hero" */;
+			buildPhases = (
+				EA1DF3B9411A577DBB4B6A29BD434C46 /* Sources */,
+				60496E8D061385A3DEFE5DB28F622E54 /* Frameworks */,
+				9808BF488571986FC52B46FA7D371CC1 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CCBD997CB21C72052B4513CEF59C85E9 /* PBXTargetDependency */,
+				4EB21419D70865106B19F4609792AAA0 /* PBXTargetDependency */,
+				40E6E0BEC5EE3B6D889573ABCB65B99D /* PBXTargetDependency */,
+				FC9D1C22D49A71DDC5DEEF5B36AA264A /* PBXTargetDependency */,
+				A40085F059A10994611D7BBB50E796EF /* PBXTargetDependency */,
+				281FD13A8675D5E8C094171A6883EF3D /* PBXTargetDependency */,
+			);
+			name = "Pods-Classroom Hero";
+			productName = "Pods-Classroom Hero";
+			productReference = 8AD1EF3D092372B509368816FAD5AE5A /* Pods_Classroom_Hero.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -725,18 +810,19 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 323C799162B7AA36D6B91F0B1E869BD4 /* Products */;
+			productRefGroup = F2EEC7E508E659BE4FA267BCA9E39423 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				B545B48FA0CEE58E0B8D9309EE4CFF7C /* CircleProgressBar */,
+				A23407DEBEF3145E393948D1F92C688A /* FDKeychain */,
 				4BFA2674723F961A1A340F2B9A1E78FD /* Flurry-iOS-SDK */,
 				4713F0C254D824AFCE023D25B1184AF3 /* JSBadgeView */,
 				A25615DF9BF8FFAF6A63BF1D878DC7DB /* JSBadgeView-JSBadgeView */,
 				6B1714E816AE794962516E2ECBB40A5A /* MBProgressHUD */,
-				02A2036DBD2DE74BDCF160D8A28613A2 /* Pods-Classroom Hero */,
+				DD8B3E4FA3AEECBED0C86B4148F136C4 /* Pods-Classroom Hero */,
 				4CA48FEE25DAC333CBDAE070ED31391B /* Pods-Classroom HeroTests */,
-				4C6F63F6E3D5A3A8C392A2039DF0FAE2 /* YLProgressBar */,
+				C75130A5061A9BD11C8360D739153ADB /* YLProgressBar */,
 			);
 		};
 /* End PBXProject section */
@@ -760,14 +846,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		08D258D08AE96E083DF6A85A880F62F0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CF8AE5D73D4AE159DCE3693394AFF112 /* Pods-Classroom Hero-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1D08B092449E50F2AA08C688A2E39113 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -793,12 +871,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5D60DE531B731E04E3E2DE171B62AA31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC44DF34C8E4DAC4E1F161ABB8BCB3A0 /* FDKeychain-dummy.m in Sources */,
+				268118D6B9C12DB9C25AA7774245F0DC /* FDKeychain.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D9F4A386169F298C8544D099324BB28 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				57E9B041CC1D8988C38DDC97CAEFCD76 /* MBProgressHUD-dummy.m in Sources */,
 				AA00DCC0C8174B2D7E48EEC3C768B047 /* MBProgressHUD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F337C38D7513FE786DCEAB897E1FA58 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D597BA961966B66409E9A3B3FBAF0F9 /* YLProgressBar-dummy.m in Sources */,
+				7E12547AA5BE433B0221C88E3C4770C2 /* YLProgressBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,23 +915,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F9DA8B442DDF9AE89D85FC59B0450BD4 /* Sources */ = {
+		EA1DF3B9411A577DBB4B6A29BD434C46 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58A115621622560D0DBE2EA432E5F8D /* YLProgressBar-dummy.m in Sources */,
-				485FE7C3F102E00E161A9ABDA099FFF1 /* YLProgressBar.m in Sources */,
+				5A7F53C69719B1750084644C837DC654 /* Pods-Classroom Hero-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3675D255E17E246E11E1A1F2F5A052AF /* PBXTargetDependency */ = {
+		281FD13A8675D5E8C094171A6883EF3D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "Flurry-iOS-SDK";
-			target = 4BFA2674723F961A1A340F2B9A1E78FD /* Flurry-iOS-SDK */;
-			targetProxy = C736805767740CCDFBCB2F389D4DC2F6 /* PBXContainerItemProxy */;
+			name = YLProgressBar;
+			target = C75130A5061A9BD11C8360D739153ADB /* YLProgressBar */;
+			targetProxy = B0025C510F4962A0B1F7DFFAF52113C9 /* PBXContainerItemProxy */;
 		};
 		3CA907C5D592851561EC3E1B6724DBCF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -843,29 +938,35 @@
 			target = A25615DF9BF8FFAF6A63BF1D878DC7DB /* JSBadgeView-JSBadgeView */;
 			targetProxy = 57DEF9B3E7EBE11152ACAF0E6473D014 /* PBXContainerItemProxy */;
 		};
-		948FF1705E39745B60653FC7805F4F41 /* PBXTargetDependency */ = {
+		40E6E0BEC5EE3B6D889573ABCB65B99D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Flurry-iOS-SDK";
+			target = 4BFA2674723F961A1A340F2B9A1E78FD /* Flurry-iOS-SDK */;
+			targetProxy = 6C9B8ADC4B28CB8A0F85ADBA84EC46BB /* PBXContainerItemProxy */;
+		};
+		4EB21419D70865106B19F4609792AAA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FDKeychain;
+			target = A23407DEBEF3145E393948D1F92C688A /* FDKeychain */;
+			targetProxy = 6F7B8FE3855CD569D8D8474D3D08D923 /* PBXContainerItemProxy */;
+		};
+		A40085F059A10994611D7BBB50E796EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MBProgressHUD;
 			target = 6B1714E816AE794962516E2ECBB40A5A /* MBProgressHUD */;
-			targetProxy = 7BF11C43BF961ABA5BB07BDA0CFEA477 /* PBXContainerItemProxy */;
+			targetProxy = 10470E5DBF740FAE749CEB3A1BF7E173 /* PBXContainerItemProxy */;
 		};
-		B9A52AC3ED1C983F4965E88987CFF9F6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JSBadgeView;
-			target = 4713F0C254D824AFCE023D25B1184AF3 /* JSBadgeView */;
-			targetProxy = 46A2BF9AA3B1BEED068F3F427535BD11 /* PBXContainerItemProxy */;
-		};
-		E533D6324D0A045DC5460042FB39F059 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = YLProgressBar;
-			target = 4C6F63F6E3D5A3A8C392A2039DF0FAE2 /* YLProgressBar */;
-			targetProxy = FEA069C7F9031370A853F9ED33B7C096 /* PBXContainerItemProxy */;
-		};
-		E8A54B5D2D8D59DF60B766E8793C6585 /* PBXTargetDependency */ = {
+		CCBD997CB21C72052B4513CEF59C85E9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CircleProgressBar;
 			target = B545B48FA0CEE58E0B8D9309EE4CFF7C /* CircleProgressBar */;
-			targetProxy = B47CB17C85B4014084053B3122FC4FC3 /* PBXContainerItemProxy */;
+			targetProxy = 0D1D5847DD99228BF5B0A2DE8A19C861 /* PBXContainerItemProxy */;
+		};
+		FC9D1C22D49A71DDC5DEEF5B36AA264A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JSBadgeView;
+			target = 4713F0C254D824AFCE023D25B1184AF3 /* JSBadgeView */;
+			targetProxy = 1051F66582EEEE2CDE5282B6ADAE0552 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -916,7 +1017,7 @@
 		};
 		04DCA3CBC8393481BB486ECDB1230F34 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53B1306BF0206CF6C22B41BF74685B70 /* Flurry-iOS-SDK.xcconfig */;
+			baseConfigurationReference = CA28F7612631807B318624C2C5D32C62 /* Flurry-iOS-SDK.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -937,6 +1038,37 @@
 				MODULEMAP_FILE = "Target Support Files/Flurry-iOS-SDK/Flurry-iOS-SDK.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = Flurry_iOS_SDK;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1A4D95355885AFB79FFB578B8572D4D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BAF2F1980FEBAFD24F3E558AE9D4A5FD /* FDKeychain.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/FDKeychain/FDKeychain-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FDKeychain/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/FDKeychain/FDKeychain.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = FDKeychain;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -982,7 +1114,7 @@
 		};
 		33A04A45F939B225B9361BD5EE0BA0E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D62D9644571A966B84B319D922D6F11E /* MBProgressHUD.xcconfig */;
+			baseConfigurationReference = 101363A690CCB4DB4FDE857B6332E400 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1051,7 +1183,131 @@
 			};
 			name = Release;
 		};
-		56EBEB2D60B895B5C81F8893F1822001 /* Release */ = {
+		45751EFB15937F1C1209C8CB1E7FEBE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74ED177F20D105D2D9ECBEE36EFBF837 /* YLProgressBar.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/YLProgressBar/YLProgressBar-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/YLProgressBar/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/YLProgressBar/YLProgressBar.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = YLProgressBar;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		59F1AF6E5C57EBE3B42D4DD30DCD817F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74ED177F20D105D2D9ECBEE36EFBF837 /* YLProgressBar.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/YLProgressBar/YLProgressBar-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/YLProgressBar/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/YLProgressBar/YLProgressBar.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = YLProgressBar;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6F8713CF1DA6AC0BFBD856CEA3A95B90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8597AA594189E21AD217F8E4D495F75F /* JSBadgeView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/JSBadgeView/JSBadgeView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JSBadgeView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JSBadgeView/JSBadgeView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = JSBadgeView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		73AA5AEA4DE8E2A739DE114EABD8A9D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8597AA594189E21AD217F8E4D495F75F /* JSBadgeView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/JSBadgeView/JSBadgeView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JSBadgeView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JSBadgeView/JSBadgeView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = JSBadgeView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		823BBFCC48FDDE2A3F7DCBF80DA54428 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 88EF1F6B6731823E33D83C732803DC0B /* Pods-Classroom Hero.release.xcconfig */;
 			buildSettings = {
@@ -1086,102 +1342,9 @@
 			};
 			name = Release;
 		};
-		6F8713CF1DA6AC0BFBD856CEA3A95B90 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED34114A28A162A24E94825AC92B0E30 /* JSBadgeView.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/JSBadgeView/JSBadgeView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/JSBadgeView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/JSBadgeView/JSBadgeView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = JSBadgeView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		73AA5AEA4DE8E2A739DE114EABD8A9D4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED34114A28A162A24E94825AC92B0E30 /* JSBadgeView.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/JSBadgeView/JSBadgeView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/JSBadgeView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/JSBadgeView/JSBadgeView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = JSBadgeView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		77E567FE4429AE28D2075D0E0B219BC9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57FF728F6A7E0EF46485F5CA0FC1D923 /* YLProgressBar.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/YLProgressBar/YLProgressBar-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/YLProgressBar/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/YLProgressBar/YLProgressBar.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = YLProgressBar;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		84F1F22D07CF52FDE5719C37A687E12F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED34114A28A162A24E94825AC92B0E30 /* JSBadgeView.xcconfig */;
+			baseConfigurationReference = 8597AA594189E21AD217F8E4D495F75F /* JSBadgeView.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/JSBadgeView";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1198,7 +1361,7 @@
 		};
 		972CA8236715A57CCBC973245CE6140B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 300CA531F4E9FD47AD6D2F168333AB57 /* CircleProgressBar.xcconfig */;
+			baseConfigurationReference = EFE6B15A08BC82B6E98F94C9AC242BFC /* CircleProgressBar.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1229,7 +1392,7 @@
 		};
 		A8B21D7A8E95C7DB13F1C8144BFFB85A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED34114A28A162A24E94825AC92B0E30 /* JSBadgeView.xcconfig */;
+			baseConfigurationReference = 8597AA594189E21AD217F8E4D495F75F /* JSBadgeView.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/JSBadgeView";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1246,7 +1409,7 @@
 		};
 		B0112C2E43ADD1F75C0F2BD35942FCEF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D62D9644571A966B84B319D922D6F11E /* MBProgressHUD.xcconfig */;
+			baseConfigurationReference = 101363A690CCB4DB4FDE857B6332E400 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1275,9 +1438,9 @@
 			};
 			name = Release;
 		};
-		BCE883E6965858837378948B89AA5E0E /* Debug */ = {
+		B4EADE378748AC84F67E746069231659 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57FF728F6A7E0EF46485F5CA0FC1D923 /* YLProgressBar.xcconfig */;
+			baseConfigurationReference = 8042647978E70EE8F0ECD5FB48FF8DF0 /* Pods-Classroom Hero.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1290,14 +1453,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/YLProgressBar/YLProgressBar-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/YLProgressBar/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-Classroom Hero/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/YLProgressBar/YLProgressBar.modulemap";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Classroom Hero/Pods-Classroom Hero.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = YLProgressBar;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Classroom_Hero;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1343,7 +1510,7 @@
 		};
 		C5A86D53F204AB6DAC2AC536254A1837 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53B1306BF0206CF6C22B41BF74685B70 /* Flurry-iOS-SDK.xcconfig */;
+			baseConfigurationReference = CA28F7612631807B318624C2C5D32C62 /* Flurry-iOS-SDK.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1374,7 +1541,7 @@
 		};
 		D1629D5A0A8B6FF6407DE1D3EA34754A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 300CA531F4E9FD47AD6D2F168333AB57 /* CircleProgressBar.xcconfig */;
+			baseConfigurationReference = EFE6B15A08BC82B6E98F94C9AC242BFC /* CircleProgressBar.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1403,40 +1570,36 @@
 			};
 			name = Debug;
 		};
-		F8FD45FFCB2A62C5C5E7DB52910D1EF6 /* Debug */ = {
+		FDC94506F7690514D8D4C7131A5123B3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8042647978E70EE8F0ECD5FB48FF8DF0 /* Pods-Classroom Hero.debug.xcconfig */;
+			baseConfigurationReference = BAF2F1980FEBAFD24F3E558AE9D4A5FD /* FDKeychain.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Classroom Hero/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/FDKeychain/FDKeychain-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FDKeychain/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Classroom Hero/Pods-Classroom Hero.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Classroom_Hero;
+				MODULEMAP_FILE = "Target Support Files/FDKeychain/FDKeychain.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = FDKeychain;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1486,15 +1649,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		66C2D4D9D555B4D8145F398DDD437B3B /* Build configuration list for PBXNativeTarget "YLProgressBar" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BCE883E6965858837378948B89AA5E0E /* Debug */,
-				77E567FE4429AE28D2075D0E0B219BC9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		68F233E73388180ABE2BF263A216BE90 /* Build configuration list for PBXNativeTarget "JSBadgeView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1504,11 +1658,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6E9837D58EBB76B83FA0480A3D8E1B05 /* Build configuration list for PBXNativeTarget "Pods-Classroom Hero" */ = {
+		7FC303A9C27FBD39BA3BF1AE3DF190D5 /* Build configuration list for PBXNativeTarget "FDKeychain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F8FD45FFCB2A62C5C5E7DB52910D1EF6 /* Debug */,
-				56EBEB2D60B895B5C81F8893F1822001 /* Release */,
+				1A4D95355885AFB79FFB578B8572D4D0 /* Debug */,
+				FDC94506F7690514D8D4C7131A5123B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2A7F8B1F7C459262EBABC02C416B38F /* Build configuration list for PBXNativeTarget "Pods-Classroom Hero" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4EADE378748AC84F67E746069231659 /* Debug */,
+				823BBFCC48FDDE2A3F7DCBF80DA54428 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DBF26A063A6E8283EAC669E69B7BA66F /* Build configuration list for PBXNativeTarget "YLProgressBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59F1AF6E5C57EBE3B42D4DD30DCD817F /* Debug */,
+				45751EFB15937F1C1209C8CB1E7FEBE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

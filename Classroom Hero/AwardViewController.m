@@ -87,6 +87,8 @@ static NSInteger coinHeight = 250;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
+    self.studentsTableView.layer.borderWidth = 2.0;
+    self.studentsTableView.layer.borderColor = [Utilities CHBlueColor].CGColor;
     currentUser = [user getInstance];
     reinforcerData = [[DatabaseHandler getSharedInstance]getReinforcers:[currentUser.currentClass getId]];
     studentsData = [[NSMutableDictionary alloc]init];
@@ -1167,7 +1169,9 @@ static NSInteger coinHeight = 250;
 
 
 - (void)manuallyAddPointsSuccess{
-    [Utilities alertStatusWithTitle:@"Success" message:@"Added points" cancel:nil otherTitles:nil tag:0 view:self];
+    [Utilities disappearingAlertView:@"Successfully added points" message:nil otherTitles:nil tag:0 view:self time:1.0];
+    
+    [Utilities wiggleImage:self.stampImage sound:NO];
     isStamping = NO;
     chestTappable = NO;
 }
@@ -1195,6 +1199,9 @@ static NSInteger coinHeight = 250;
         [selectedStudents removeAllObjects];
         for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
             NSInteger index = indexPath.row;
+            StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+            cell.backgroundColor = [UIColor clearColor];
+            
             [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
         }
         
@@ -1207,6 +1214,10 @@ static NSInteger coinHeight = 250;
 
 - (void)selectAllClicked{
     if (!isStamping && !chestPoint){
+        if (selectedStudents.count == studentsData.count){
+            [self deselectAllClicked];
+            return;
+        }
         for (NSInteger index = 0; index < studentsData.count; index++) {
             NSNumber *studentId = [[studentsData allKeys] objectAtIndex:index];
             
@@ -1215,6 +1226,9 @@ static NSInteger coinHeight = 250;
         }
         for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForVisibleRows) {
             NSInteger index = indexPath.row;
+            StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+            cell.backgroundColor = [Utilities CHBlueColor];
+            
             [self.studentsTableView selectRowAtIndexPath:indexPath
                                                 animated:NO
                                           scrollPosition:UITableViewScrollPositionNone];
@@ -1334,6 +1348,8 @@ static NSInteger coinHeight = 250;
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
+    // Section View
+    
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 60)];
     
     // Make the sections
@@ -1368,8 +1384,35 @@ static NSInteger coinHeight = 250;
     
     // Add images to the sections
     
-    float x = (width / 2) - 30;
+    float x = (width / 2) - 45;
     
+    UILabel *addPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,5,90,50)];
+    addPointsLabel.text = @"Add points";
+
+    
+    UILabel *generateChestLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,5,90,50)];
+    generateChestLabel.text = @"Generate chest";
+
+    UILabel *selectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,5,90,50)];
+    selectAllLabel.text = @"Select all";
+    
+    UILabel *deselectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,5,90,50)];
+    deselectAllLabel.text = @"Deselect all";
+    
+    NSArray *labels = @[addPointsLabel, generateChestLabel, selectAllLabel, deselectAllLabel];
+    
+    for (UILabel *label in labels){
+        label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
+        label.numberOfLines = 2;
+        label.textAlignment = NSTextAlignmentCenter;
+        [Utilities makeRoundedLabel:label :[UIColor blackColor]];
+    }
+    [addPointsSection addSubview:addPointsLabel];
+    [chestSection addSubview:generateChestLabel];
+    [selectAllSection addSubview:selectAllLabel];
+    [deselectAllSection addSubview:deselectAllLabel];
+    
+    /*
     UIImageView *addPointsImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x,0,60,60)];
     addPointsImageView.image=[UIImage imageNamed:@"coin.png"];
     [addPointsSection addSubview:addPointsImageView];
@@ -1378,28 +1421,26 @@ static NSInteger coinHeight = 250;
     generateChestImageView.image=[UIImage imageNamed:@"treasure_chest.png"];
     [chestSection addSubview:generateChestImageView];
     
+    UIImageView *selectAllImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x + 5,5,50,50)];
+    selectAllImageView.image=[UIImage imageNamed:@"selectAll.png"];
+    [selectAllSection addSubview:selectAllImageView];
+    
+    
+    UIImageView *deselectAllImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x + 5,5,50,50)];
+    deselectAllImageView.image=[UIImage imageNamed:@"deselectAll.png"];
+    [deselectAllSection addSubview:deselectAllImageView];
+    */
+    
+    // Add sections to the section view
     
     NSArray *sections = @[addPointsSection, chestSection, selectAllSection, deselectAllSection];
     for (UIView *view in sections){
-        [view setBackgroundColor:[UIColor colorWithRed:(arc4random() % 255)/255.0 green:(arc4random() % 255)/255.0 blue:187.0/255.0 alpha:1.0]];
+        [view setBackgroundColor:[Utilities CHBlueColor]];
         
         [sectionView addSubview:view];
     }
     
-    
-    //    [sectionView setBackgroundColor:[UIColor colorWithRed:111.0/255.0 green:183.0/255.0 blue:187.0/255.0 alpha:1.0]];
-    //    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 100, 16)];
-    //    label.font = [UIFont boldSystemFontOfSize:12.0f];
-    //    label.text=@"HERRRRO";
-    //    label.textColor = [UIColor whiteColor];
-    //    label.textAlignment=UITextAlignmentLeft;
-    //
-    //    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(self.studentsTableView.frame.size.width - 130, 4, 120, 16)];
-    //    label2.font = [UIFont boldSystemFontOfSize:12.0f];
-    //    label2.textColor = [UIColor whiteColor];
-    //    label2.text=@"HERRRRO";
-    //    label2.textAlignment=UITextAlignmentRight;
-    
+
     
     return sectionView;
 }
@@ -1430,6 +1471,10 @@ static NSInteger coinHeight = 250;
     
     currentStudent = [studentsData objectForKey:studentId];
     
+    StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor clearColor];
+
+    
     if ([selectedStudents objectForKey:studentId]){
         [selectedStudents removeObjectForKey:studentId];
     }
@@ -1454,7 +1499,9 @@ static NSInteger coinHeight = 250;
         NSNumber *studentId = [[studentsData allKeys] objectAtIndex:studentIndex];
         
         student *selectedStudent = [studentsData objectForKey:studentId];
-        
+        StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+        cell.backgroundColor = [Utilities CHBlueColor];
+
         [selectedStudents setObject:selectedStudent forKey:studentId];
         
         if ([selectedStudents count] > 0 && chestTappable){

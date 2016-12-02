@@ -9,7 +9,7 @@
 #import "LoginViewController.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
-
+#import "FDKeychain.h"
 
 @interface LoginViewController (){
     ConnectionHandler *webHandler;
@@ -27,6 +27,26 @@
 - (void)viewDidAppear:(BOOL)animated{
     [currentUser reset];
     isStamping = NO;
+    
+    NSError *passwordError = nil;
+    
+    NSString *password = [FDKeychain itemForKey: @"password"
+                                     forService: @"Classroom Hero"
+                                          error: &passwordError];
+    NSError *emailError = nil;
+    
+    NSString *email = [FDKeychain itemForKey: @"email"
+                                     forService: @"Classroom Hero"
+                                          error: &emailError];
+    if (passwordError == nil && emailError == nil){
+        self.emailTextField.text = email;
+        self.passwordTextField.text = password;
+    }
+    
+//    
+//    KeychainWrapper *keychain = [[KeychainWrapper alloc]init];
+//    self.emailTextField.text = [keychain myObjectForKey:@"email"];
+//    self.passwordTextField.text = [keychain myObjectForKey:@"password"];
 }
 
 
@@ -171,8 +191,25 @@
     currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
     currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];
     
-    self.passwordTextField.text=@"";
+    NSError *error = nil;
+
+    [FDKeychain saveItem: self.emailTextField.text
+                  forKey: @"email"
+              forService: @"Classroom Hero"
+                   error: &error];
     
+    [FDKeychain saveItem: self.passwordTextField.text
+                  forKey: @"password"
+              forService: @"Classroom Hero"
+                   error: &error];
+    
+    
+//    KeychainWrapper *keychain = [[KeychainWrapper alloc]init];
+//    [keychain mySetObject:self.emailTextField.text forKey:@"email"];
+//    [keychain mySetObject:self.passwordTextField.text forKey:@"password"];
+//    
+//    [keychain writeToKeychain];
+//    
     if (currentUser.accountStatus == 0){
         [self performSegueWithIdentifier:@"login_to_tutorial" sender:nil];
     }

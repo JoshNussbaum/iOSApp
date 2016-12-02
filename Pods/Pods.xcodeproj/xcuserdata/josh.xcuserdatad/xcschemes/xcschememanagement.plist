@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FDKeychain.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Flurry-iOS-SDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,22 +52,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>02A2036DBD2DE74BDCF160D8A28613A2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>4713F0C254D824AFCE023D25B1184AF3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>4BFA2674723F961A1A340F2B9A1E78FD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4C6F63F6E3D5A3A8C392A2039DF0FAE2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +72,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A23407DEBEF3145E393948D1F92C688A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A25615DF9BF8FFAF6A63BF1D878DC7DB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B545B48FA0CEE58E0B8D9309EE4CFF7C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C75130A5061A9BD11C8360D739153ADB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DD8B3E4FA3AEECBED0C86B4148F136C4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -494,7 +494,27 @@ NSInteger menuItemFontSize = 26;
 }
 
 
++ (void) disappearingAlertView:(NSString *)title message:(NSString *)message otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view time:(double)delayInSeconds{
 
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:nil];
+    for (NSString *title in otherTitles){
+        [alertView addButtonWithTitle:title];
+    }
+    alertView.tag = tag;
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    [alertView show];
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [alertView dismissWithClickedButtonIndex:0 animated:YES];
+    });
+
+}
 
 
 + (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view{

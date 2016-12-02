@@ -22,6 +22,9 @@
 		033A4DAE1B75B25B006E90D6 /* register_fail.wav in Resources */ = {isa = PBXBuildFile; fileRef = 033A4DA31B75B25B006E90D6 /* register_fail.wav */; };
 		033A4DAF1B75B25B006E90D6 /* sale.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 033A4DA41B75B25B006E90D6 /* sale.mp3 */; };
 		033A4DB01B75B25B006E90D6 /* teacherstamp.wav in Resources */ = {isa = PBXBuildFile; fileRef = 033A4DA51B75B25B006E90D6 /* teacherstamp.wav */; };
+		033AD09B1DF00F0C00027405 /* deselectAll.png in Resources */ = {isa = PBXBuildFile; fileRef = 033AD0991DF00F0C00027405 /* deselectAll.png */; };
+		033AD09C1DF00F0C00027405 /* selectAll.png in Resources */ = {isa = PBXBuildFile; fileRef = 033AD09A1DF00F0C00027405 /* selectAll.png */; };
+		033AD09E1DF103CC00027405 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033AD09D1DF103CC00027405 /* Security.framework */; };
 		034075D71B980A60008E14B2 /* AwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034075D61B980A60008E14B2 /* AwardViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		034075DA1B980CBB008E14B2 /* ClassJarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034075D91B980CBA008E14B2 /* ClassJarViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03492CF21B8863DB0015CD78 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03492CF11B8863DB0015CD78 /* HomeViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -142,6 +145,9 @@
 		033A4DA31B75B25B006E90D6 /* register_fail.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = register_fail.wav; path = "Classroom Hero/sounds/register_fail.wav"; sourceTree = SOURCE_ROOT; };
 		033A4DA41B75B25B006E90D6 /* sale.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sale.mp3; path = "Classroom Hero/sounds/sale.mp3"; sourceTree = SOURCE_ROOT; };
 		033A4DA51B75B25B006E90D6 /* teacherstamp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = teacherstamp.wav; path = "Classroom Hero/sounds/teacherstamp.wav"; sourceTree = SOURCE_ROOT; };
+		033AD0991DF00F0C00027405 /* deselectAll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deselectAll.png; sourceTree = "<group>"; };
+		033AD09A1DF00F0C00027405 /* selectAll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectAll.png; sourceTree = "<group>"; };
+		033AD09D1DF103CC00027405 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		034075D51B980A60008E14B2 /* AwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwardViewController.h; sourceTree = "<group>"; };
 		034075D61B980A60008E14B2 /* AwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwardViewController.m; sourceTree = "<group>"; };
 		034075D81B980CBA008E14B2 /* ClassJarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassJarViewController.h; sourceTree = "<group>"; };
@@ -283,6 +289,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033AD09E1DF103CC00027405 /* Security.framework in Frameworks */,
 				03DCFFD51B6C63FC00C451CC /* libsqlite3.dylib in Frameworks */,
 				AADD903AECA7FD40514682E2 /* Pods_Classroom_Hero.framework in Frameworks */,
 			);
@@ -567,6 +574,8 @@
 		03AA9A141B63399D00750758 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				033AD0991DF00F0C00027405 /* deselectAll.png */,
+				033AD09A1DF00F0C00027405 /* selectAll.png */,
 				0300D5F41DE2D05000E29E83 /* glowing_chest.png */,
 				03FC7E251DDDB32300C2ABFD /* jar_body.png */,
 				03ED99BB1CDC75D000A8545A /* redapple.png */,
@@ -625,6 +634,7 @@
 		884D67DE316D649C30B9C4A3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				033AD09D1DF103CC00027405 /* Security.framework */,
 				03DCFFD41B6C63FC00C451CC /* libsqlite3.dylib */,
 				E7818F5B4750C1C2B463B96A /* Pods_Classroom_Hero.framework */,
 				AEBA75A968A88E67CBF5DE79 /* Pods_Classroom_HeroTests.framework */,
@@ -757,10 +767,12 @@
 				035BA0B91DDFC7DC003A9160 /* Icon-Small-50x50@2x.png in Resources */,
 				033A4DA91B75B25B006E90D6 /* coin_shake.wav in Resources */,
 				03AA9A441B63399D00750758 /* itemsIcon.png in Resources */,
+				033AD09C1DF00F0C00027405 /* selectAll.png in Resources */,
 				035BA0A61DDFC7DC003A9160 /* Icon-App-20x20@3x.png in Resources */,
 				03AA9A411B63399D00750758 /* homeIcon.png in Resources */,
 				03AA9A3B1B63399D00750758 /* ch-logo.png in Resources */,
 				033A4DA61B75B25B006E90D6 /* achievement.wav in Resources */,
+				033AD09B1DF00F0C00027405 /* deselectAll.png in Resources */,
 				03DC9D991B7334F6005C7562 /* Notes in Resources */,
 				035BA0B71DDFC7DC003A9160 /* Icon-App-83.5x83.5@2x.png in Resources */,
 				035BA0AC1DDFC7DC003A9160 /* Icon-App-40x40@3x.png in Resources */,
