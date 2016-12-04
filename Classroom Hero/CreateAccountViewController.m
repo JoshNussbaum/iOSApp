@@ -12,6 +12,7 @@
 #import "RegisterStudentsViewController.h"
 #import "TutorialViewController.h"
 #import "Flurry.h"
+#import "FDKeychain.h"
 
 
 @interface CreateAccountViewController (){
@@ -128,6 +129,17 @@
             currentUser.password = self.passwordTextField.text;
             currentUser.id = tid;
             currentUser.accountStatus = 0;
+            
+            NSError *error = nil;
+            [FDKeychain saveItem: self.emailTextField.text
+                          forKey: @"email"
+                      forService: @"Classroom Hero"
+                           error: &error];
+            
+            [FDKeychain saveItem: self.passwordTextField.text
+                          forKey: @"password"
+                      forService: @"Classroom Hero"
+                           error: &error];
             
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSString stringWithFormat:@"%ld", (long)tid], @"Teacher ID",

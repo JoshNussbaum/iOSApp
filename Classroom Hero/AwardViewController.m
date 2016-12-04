@@ -84,11 +84,14 @@ static NSInteger coinHeight = 250;
 @implementation AwardViewController
 
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
-    self.studentsTableView.layer.borderWidth = 2.0;
-    self.studentsTableView.layer.borderColor = [Utilities CHBlueColor].CGColor;
+    self.studentsTableView.layer.borderWidth = 1.5;
+    self.studentsTableView.layer.borderColor = [UIColor blackColor].CGColor;
     currentUser = [user getInstance];
     reinforcerData = [[DatabaseHandler getSharedInstance]getReinforcers:[currentUser.currentClass getId]];
     studentsData = [[NSMutableDictionary alloc]init];
@@ -138,23 +141,13 @@ static NSInteger coinHeight = 250;
         button.exclusiveTouch = YES;
     }
 
-    CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 16);
-
-    self.progressView = [[YLProgressBar alloc]initWithFrame:levelRect];
-    self.progressView.hidden = YES;
-    self.progressView.hideStripes = YES;
-    //self.progressView.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeProgress;
-    self.progressView.type = YLProgressBarTypeRounded;
-    self.progressView.tintColor = [UIColor clearColor];
-    self.progressView.progressTintColor = [Utilities CHBlueColor];
-    self.progressView.indicatorTextLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:15.0];
-    
     [Utilities makeRoundedLabel:self.notificationLabel :nil];
-    [self.view addSubview:self.progressView];
 }
 
 
 - (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+
     if (IS_IPAD_PRO) {
         NSArray *menuButtons = @[self.homeButton, self.jarButton, self.marketButton, self.awardButton];
         
@@ -168,7 +161,22 @@ static NSInteger coinHeight = 250;
         self.levelLabel.font = [UIFont fontWithName:@"GillSans-Light" size:40];
 
     }
+    
+    if(![self.progressView isDescendantOfView:self.view]) {
+        CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 16);
+        
+        self.progressView = [[YLProgressBar alloc]initWithFrame:levelRect];
+        self.progressView.hidden = YES;
+        self.progressView.hideStripes = YES;
+        //self.progressView.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeProgress;
+        self.progressView.type = YLProgressBarTypeRounded;
+        self.progressView.tintColor = [UIColor clearColor];
+        self.progressView.progressTintColor = [Utilities CHBlueColor];
+        self.progressView.indicatorTextLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:15.0];
+        [self.view addSubview:self.progressView];
+    }
 }
+
 
 
 - (void)getStudentsData{
@@ -181,7 +189,6 @@ static NSInteger coinHeight = 250;
 
 
 - (void)viewDidAppear:(BOOL)animated{
-    levelRect = CGRectMake(self.levelView.frame.origin.x, self.levelView.frame.origin.y, self.levelView.frame.size.width, self.levelView.frame.size.height);
     isStamping = NO;
 
     // 3 Coins Rects
@@ -1169,9 +1176,7 @@ static NSInteger coinHeight = 250;
 
 
 - (void)manuallyAddPointsSuccess{
-    [Utilities disappearingAlertView:@"Successfully added points" message:nil otherTitles:nil tag:0 view:self time:1.0];
-    
-    [Utilities wiggleImage:self.stampImage sound:NO];
+    [Utilities disappearingAlertView:@"Successfully added points" message:nil otherTitles:nil tag:0 view:self time:0.8];
     isStamping = NO;
     chestTappable = NO;
 }
@@ -1197,8 +1202,9 @@ static NSInteger coinHeight = 250;
     if (!isStamping && !chestPoint){
         currentStudent = nil;
         [selectedStudents removeAllObjects];
-        for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
-            NSInteger index = indexPath.row;
+        for (NSInteger row = 0; row < [self.studentsTableView numberOfRowsInSection:0]; row++) {
+            NSInteger index = row;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
             cell.backgroundColor = [UIColor clearColor];
             
@@ -1224,14 +1230,12 @@ static NSInteger coinHeight = 250;
             student *selectedStudent = [studentsData objectForKey:studentId];
             [selectedStudents setObject:selectedStudent forKey:studentId];
         }
-        for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForVisibleRows) {
-            NSInteger index = indexPath.row;
+        for (NSInteger row = 0; row < [self.studentsTableView numberOfRowsInSection:0]; row++) {
+            NSInteger index = row;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
-            cell.backgroundColor = [Utilities CHBlueColor];
+            cell.backgroundColor = [Utilities CHGreenColor];
             
-            [self.studentsTableView selectRowAtIndexPath:indexPath
-                                                animated:NO
-                                          scrollPosition:UITableViewScrollPositionNone];
         }
         if (chestTappable){
             [self displayStudent:chestTappable];
@@ -1277,9 +1281,6 @@ static NSInteger coinHeight = 250;
                 
                 // get all the student IDs and make the web call
                 
-            }
-            else {
-                [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
             }
         }
         
@@ -1351,6 +1352,8 @@ static NSInteger coinHeight = 250;
     // Section View
     
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 60)];
+    sectionView.layer.borderWidth = 1.5;
+    sectionView.layer.borderColor = [UIColor blackColor].CGColor;
     
     // Make the sections
     
@@ -1384,25 +1387,26 @@ static NSInteger coinHeight = 250;
     
     // Add images to the sections
     
-    float x = (width / 2) - 45;
+    float x = (width / 2) - 43;
     
-    UILabel *addPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,5,90,50)];
+    UILabel *addPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
     addPointsLabel.text = @"Add points";
 
     
-    UILabel *generateChestLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,5,90,50)];
+    UILabel *generateChestLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
     generateChestLabel.text = @"Generate chest";
 
-    UILabel *selectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,5,90,50)];
+    UILabel *selectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
     selectAllLabel.text = @"Select all";
     
-    UILabel *deselectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,5,90,50)];
+    UILabel *deselectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
     deselectAllLabel.text = @"Deselect all";
     
     NSArray *labels = @[addPointsLabel, generateChestLabel, selectAllLabel, deselectAllLabel];
     
     for (UILabel *label in labels){
-        label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
+        label.font = [UIFont fontWithName:@"GillSans-Bold" size:16];
+        label.textColor = [UIColor blackColor];
         label.numberOfLines = 2;
         label.textAlignment = NSTextAlignmentCenter;
         [Utilities makeRoundedLabel:label :[UIColor blackColor]];
@@ -1500,7 +1504,7 @@ static NSInteger coinHeight = 250;
         
         student *selectedStudent = [studentsData objectForKey:studentId];
         StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
-        cell.backgroundColor = [Utilities CHBlueColor];
+        cell.backgroundColor = [Utilities CHGreenColor];
 
         [selectedStudents setObject:selectedStudent forKey:studentId];
         

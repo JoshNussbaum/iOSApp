@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "student.h"
+#import "ConnectionHandler.h"
 
-@interface StudentTableViewCell : UITableViewCell
+@interface StudentTableViewCell : UITableViewCell <ConnectionHandlerDelegate>{
+    student *currentStudent;
+}
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 
@@ -17,8 +20,16 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 
+@property (strong, nonatomic) IBOutlet UIButton *minusOneButton;
 
-- (void)initializeWithStudent:(student *)currentStudent;
+@property (strong, nonatomic) IBOutlet UIButton *plusOneButton;
 
+
+- (void)initializeWithStudent:(student *)currentStudent_;
+
+
+- (IBAction)plusOneClicked:(id)sender;
+
+- (IBAction)minusOneClicked:(id)sender;
 
 @end

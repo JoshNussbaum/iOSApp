@@ -108,7 +108,7 @@
 }
 
 - (void)viewDidLayoutSubviews{
-    
+    [super viewDidLayoutSubviews];
     if (self.view.frame.size.height == 1366) {
         NSArray *menuButtons = @[self.homeButton, self.jarButton, self.marketButton, self.awardButton];
         

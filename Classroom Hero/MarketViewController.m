@@ -47,8 +47,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
-    self.studentsTableView.layer.borderWidth = 2.0;
-    self.studentsTableView.layer.borderColor = [Utilities CHGreenColor].CGColor;
+    self.studentsTableView.layer.borderWidth = 1.5;
+    self.studentsTableView.layer.borderColor = [UIColor blackColor].CGColor;
     
     isBuying = NO;
     showingStudents = NO;
@@ -83,6 +83,8 @@
 
 
 - (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+
     if (IS_IPAD_PRO) {
         NSArray *menuButtons = @[self.homeButton, self.jarButton, self.marketButton, self.awardButton];
         
@@ -617,7 +619,7 @@
         studentIndex = indexPath.row;
         student *selectedStudent = [studentsData objectAtIndex:studentIndex];
         StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
-        cell.backgroundColor = [Utilities CHBlueColor];
+        cell.backgroundColor = [Utilities CHGreenColor];
         if (selectedStudent == currentStudent){
             currentStudent = nil;
             [tableView deselectRowAtIndexPath:indexPath animated:YES];

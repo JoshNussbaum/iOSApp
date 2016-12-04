@@ -42,11 +42,6 @@
         self.emailTextField.text = email;
         self.passwordTextField.text = password;
     }
-    
-//    
-//    KeychainWrapper *keychain = [[KeychainWrapper alloc]init];
-//    self.emailTextField.text = [keychain myObjectForKey:@"email"];
-//    self.passwordTextField.text = [keychain myObjectForKey:@"password"];
 }
 
 

@@ -81,6 +81,8 @@
 
 
 - (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+
     if ([self.studentsTableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.studentsTableView setSeparatorInset:UIEdgeInsetsZero];
     }
