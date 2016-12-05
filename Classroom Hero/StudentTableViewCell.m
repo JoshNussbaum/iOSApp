@@ -9,7 +9,7 @@
 #import "StudentTableViewCell.h"
 #import "Utilities.h"
 #import "DatabaseHandler.h"
-#import "Flurry.h"
+#import <Google/Analytics.h>
 
 
 @interface StudentTableViewCell (){
@@ -71,6 +71,12 @@
 
 - (IBAction)minusOneClicked:(id)sender {
     if ([currentStudent getPoints] > 0 && !connectionInProgress){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Minus One Clicked"
+                                                               label:[currentStudent fullName]
+                                                               value:@1] build]];
         connectionInProgress = YES;
         [webHandler subtractPointsWithStudentId:[currentStudent getId] points:1];
     }
@@ -78,6 +84,12 @@
 
 - (IBAction)plusOneClicked:(id)sender {
     if (!connectionInProgress){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Plus One Clicked"
+                                                               label:[currentStudent fullName]
+                                                               value:@1] build]];
         connectionInProgress = YES;
         [webHandler addPointsWithStudentId:[currentStudent getId] points:1];
     }
@@ -138,10 +150,10 @@
             
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             if (type == ADD_POINTS){
-                [Flurry logEvent:@"Add Points - Student Table View" withParameters:params];
+                // add points - student able view cell
             }
             else {
-                [Flurry logEvent:@"Subtract Points - Student Table View" withParameters:params];
+                // subtract points
             }
             connectionInProgress = NO;
             

@@ -21,7 +21,7 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "StudentsTableViewController.h"
-#import "Flurry.h"
+#import <Google/Analytics.h>
 
 
 @interface ClassJarViewController (){
@@ -62,6 +62,13 @@
 
 
 @implementation ClassJarViewController
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Class Jar"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 
 - (void)viewDidLoad {
@@ -248,6 +255,12 @@
     if (currentClassJar != nil){
         if (!isStamping){
             if (!isJarFull){
+                id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+                
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                      action:@"Add Jar Points"
+                                                                       label:[currentClassJar getName]
+                                                                       value:@1] build]];
                 isStamping = YES;
                 [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
             }
@@ -347,9 +360,6 @@
             self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
             self.classJarProgressLabel.hidden = NO;
             
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Jar - Jar View" withParameters:params];
         }
         else if (type == EDIT_JAR){
             self.classJarName.text = newClassJarName;
@@ -381,19 +391,11 @@
             }
             self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
 
-        
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Edit Jar" withParameters:params];
-
         }
         else if (type == ADD_TO_JAR){
             tmpProgress = [currentClassJar getProgress];
             [currentClassJar updateJar:currentPoints];
             [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentClassJar getName], @"Jar Name", [NSString stringWithFormat:@"%ld", (long)[currentClassJar getId]], @"Jar ID", [NSString stringWithFormat:@"%ld", (long)currentPoints], @"Points", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add To Jar" withParameters:params];
             [self addCoins];
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];

@@ -14,8 +14,7 @@
 #import "StudentsTableViewController.h"
 #import "StudentAwardTableViewCell.h"
 #import "AwardMenuOptionTableViewCell.h"
-#import "Flurry.h"
-
+#import <Google/Analytics.h>
 
 static NSInteger coinWidth = 250;
 static NSInteger coinHeight = 250;
@@ -84,7 +83,11 @@ static NSInteger coinHeight = 250;
 @implementation AwardViewController
 
 
-
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Award"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 
 - (void)viewDidLoad {
@@ -368,9 +371,6 @@ static NSInteger coinHeight = 250;
             [self.categoryPicker reloadAllComponents];
             [self setReinforcerName];
 
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-            [Flurry logEvent:@"Edit Reinforcer" withParameters:params];
         }
         else if (type == ADD_REINFORCER){
             if (chestTappable){
@@ -394,10 +394,6 @@ static NSInteger coinHeight = 250;
             self.editReinforcerButton.hidden = NO;
             self.categoryPicker.hidden = NO;
 
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-            [Flurry logEvent:@"Add Reinforcer - Award View" withParameters:params];
-
         }
         else if (type == DELETE_REINFORCER){
             [[DatabaseHandler getSharedInstance]deleteReinforcer:[currentReinforcer getId]];
@@ -410,9 +406,6 @@ static NSInteger coinHeight = 250;
                 self.reinforcerValue.text = @"";
                 self.editReinforcerButton.hidden = YES;
 
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-                [Flurry logEvent:@"Delete Reinforcer" withParameters:params];
             }
             else {
                 [self setReinforcerName];
@@ -447,14 +440,11 @@ static NSInteger coinHeight = 250;
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
             if (chestPoint){
-                [Flurry logEvent:@"Reward Student Chest" withParameters:params];
-
                 self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
                 [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
             }
             
             else {
-                [Flurry logEvent:@"Reward Student Manual" withParameters:params];
                 [self hideStudent];
                 [self setReinforcerName];
                 self.categoryPicker.hidden = NO;
@@ -497,13 +487,10 @@ static NSInteger coinHeight = 250;
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", [NSString stringWithFormat:@"%ld", (long)studentCount], @"Number of students", nil];
             
             if (chestPoint){
-                [Flurry logEvent:@"Reward Bulk Student Chest" withParameters:params];
-
                 self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
                 [self addPoints:[currentReinforcer getValue] levelup:NO ];
             }
             else {
-                [Flurry logEvent:@"Reward Bulk Student Manual" withParameters:params];
                 [self manuallyAddPointsSuccess];
             }
         }
@@ -737,6 +724,12 @@ static NSInteger coinHeight = 250;
 
 - (IBAction)chestClicked:(id)sender {
     if (chestTappable && !showingStudents){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Chest Point"
+                                                               label:[currentReinforcer getName]
+                                                               value:@1] build]];
         chestTappable = NO;
         chestPoint = YES;
         isStamping = YES;
@@ -1299,6 +1292,12 @@ static NSInteger coinHeight = 250;
         // Add Points Manually
         NSInteger studentCount = selectedStudents.count;
         if (studentCount > 0){
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                  action:@"Add Points Manually"
+                                                                   label:[currentReinforcer getName]
+                                                                   value:@1] build]];
             isStamping = YES;
             NSInteger reinforcerId = [currentReinforcer getId];
             NSInteger pointsEarned = [currentReinforcer getValue];

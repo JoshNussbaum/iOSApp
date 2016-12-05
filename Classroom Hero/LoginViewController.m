@@ -10,6 +10,8 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "FDKeychain.h"
+#import <Google/Analytics.h>
+
 
 @interface LoginViewController (){
     ConnectionHandler *webHandler;
@@ -22,6 +24,13 @@
 @end
 
 @implementation LoginViewController
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Login"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 
 - (void)viewDidAppear:(BOOL)animated{

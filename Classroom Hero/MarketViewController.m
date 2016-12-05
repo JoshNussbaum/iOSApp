@@ -12,7 +12,8 @@
 #import "MBProgressHUD.h"
 #import "StudentsTableViewController.h"
 #import "StudentAwardTableViewCell.h"
-#import "Flurry.h"
+#import <Google/Analytics.h>
+
 
 @interface MarketViewController (){
     user *currentUser;
@@ -35,13 +36,19 @@
     BOOL showingStudents;
     BOOL studentSelected;
     NSInteger studentIndex;
-    
     BOOL isBuying;
 }
 
 @end
 
 @implementation MarketViewController
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Market"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 
 - (void)viewDidLoad {
@@ -236,6 +243,12 @@
     
     else if (alertView.tag == 3 ){
         //self.picker.hidden = YES;
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Sell Item"
+                                                               label:[currentItem getName]
+                                                               value:@1] build]];
         [webHandler studentTransactionWithsid:[currentStudent getId] iid:[currentItem getId] cost:[currentItem getCost] cid:[currentUser.currentClass getId]];
     }
     else if (alertView.tag == 4){
@@ -263,9 +276,6 @@
             self.editItemButton.hidden = NO;
             
             [[DatabaseHandler getSharedInstance] addItem:newItem];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Item - Market View" withParameters:params];
             [itemsData insertObject:newItem atIndex:0];
             [self.picker reloadAllComponents];
             [self.picker selectRow:0 inComponent:0 animated:NO];
@@ -285,9 +295,6 @@
             self.pointsLabel.text = [NSString stringWithFormat:@"%@ points", newItemCost];
             [self setScore];
             [hud hide:YES];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Edit Item" withParameters:params];
 
         }
         else if (type == DELETE_ITEM){
@@ -314,9 +321,7 @@
                 [self setItemLabel];
             }
             [hud hide:YES];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Delete Item" withParameters:params];
+
 
         }
         else if (type == STUDENT_TRANSACTION){
@@ -347,10 +352,6 @@
             [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             [Utilities wiggleImage:self.sackImage sound:NO];
-            
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentItem getName], @"Item Name", [NSString stringWithFormat:@"%ld", (long)[currentItem getId]], @"Item ID", [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]], @"Item Cost", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Reward Student" withParameters:params];
             
         }
 

@@ -12,8 +12,7 @@
 #import "StudentViewController.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
-#import "Flurry.h"
-
+#import <Google/Analytics.h>
 
 @interface StudentsTableViewController (){
     user *currentUser;
@@ -30,6 +29,12 @@
 @end
 
 @implementation StudentsTableViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Students"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -115,11 +120,6 @@
             [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
             [studentsData addObject:newStudent];
             [self.tableView reloadData];
-            
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Student - Students View" withParameters:params];
-
         }
         else {
             [Utilities alertStatusWithTitle:@"Error adding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];

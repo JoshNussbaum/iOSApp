@@ -11,12 +11,11 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "TutorialViewController.h"
-#import "RegisterStudentsViewController.h"
 #import "AwardViewController.h"
 #import "ClassJarViewController.h"
 #import "MarketViewController.h"
 #import "StudentsTableViewController.h"
-
+#import <Google/Analytics.h>
 
 @interface HomeViewController (){
     user *currentUser;
@@ -26,6 +25,13 @@
 @end
 
 @implementation HomeViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Home"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

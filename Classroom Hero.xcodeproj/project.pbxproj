@@ -52,6 +52,7 @@
 		035BA0B71DDFC7DC003A9160 /* Icon-App-83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035BA0A01DDFC7DC003A9160 /* Icon-App-83.5x83.5@2x.png */; };
 		035BA0B81DDFC7DC003A9160 /* Icon-Small-50x50@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035BA0A11DDFC7DC003A9160 /* Icon-Small-50x50@1x.png */; };
 		035BA0B91DDFC7DC003A9160 /* Icon-Small-50x50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035BA0A21DDFC7DC003A9160 /* Icon-Small-50x50@2x.png */; };
+		035DF79D1DF4B07200C74F6C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 035DF79C1DF4B07200C74F6C /* GoogleService-Info.plist */; };
 		036811561B8C49B400690294 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036811551B8C49B400690294 /* AboutViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0369CF8D1BE082EC00E8857D /* StudentAttendanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		036E4ED41B9832EA00A06B25 /* MarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E4ED31B9832EA00A06B25 /* MarketViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -179,6 +180,7 @@
 		035BA0A01DDFC7DC003A9160 /* Icon-App-83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		035BA0A11DDFC7DC003A9160 /* Icon-Small-50x50@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50x50@1x.png"; sourceTree = "<group>"; };
 		035BA0A21DDFC7DC003A9160 /* Icon-Small-50x50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50x50@2x.png"; sourceTree = "<group>"; };
+		035DF79C1DF4B07200C74F6C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		036811541B8C49B400690294 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		036811551B8C49B400690294 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		0369CF8B1BE082EC00E8857D /* StudentAttendanceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentAttendanceTableViewCell.h; sourceTree = "<group>"; };
@@ -531,15 +533,16 @@
 		03AA99E41B6333C300750758 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				03AA99E51B6333C300750758 /* Info.plist */,
+				035DF79C1DF4B07200C74F6C /* GoogleService-Info.plist */,
 				034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */,
 				034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */,
 				03AA99F31B6333C400750758 /* LaunchScreen.xib */,
+				03AA99E61B6333C300750758 /* main.m */,
 				03DC9D811B732C7F005C7562 /* sounds */,
 				033855751B89C97D00173600 /* icons */,
 				03AA9A141B63399D00750758 /* img */,
 				03AA9A0D1B63381B00750758 /* fonts */,
-				03AA99E51B6333C300750758 /* Info.plist */,
-				03AA99E61B6333C300750758 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -776,6 +779,7 @@
 				03DC9D991B7334F6005C7562 /* Notes in Resources */,
 				035BA0B71DDFC7DC003A9160 /* Icon-App-83.5x83.5@2x.png in Resources */,
 				035BA0AC1DDFC7DC003A9160 /* Icon-App-40x40@3x.png in Resources */,
+				035DF79D1DF4B07200C74F6C /* GoogleService-Info.plist in Resources */,
 				03AA99F51B6333C400750758 /* LaunchScreen.xib in Resources */,
 				033A4DAF1B75B25B006E90D6 /* sale.mp3 in Resources */,
 				03AA9A401B63399D00750758 /* cork.png in Resources */,
@@ -1083,18 +1087,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Josh  Nussbaum (B28Q4692N6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = (
 					"$(inherited)",
 					"-ObjC",
 					"-framework",
 					"\"CircleProgressBar\"",
-					"-framework",
-					"\"Flurry_iOS_SDK\"",
 					"-framework",
 					"\"JSBadgeView\"",
 					"-framework",
@@ -1119,11 +1120,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Josh  Nussbaum (B28Q4692N6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Classroomhero.Classroom-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

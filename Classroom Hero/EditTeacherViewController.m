@@ -10,7 +10,7 @@
 #import "TutorialViewController.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
-#import "Flurry.h"
+#import <Google/Analytics.h>
 
 @interface EditTeacherViewController (){
     user *currentUser;
@@ -25,6 +25,12 @@
 @end
 
 @implementation EditTeacherViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Settings"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -185,11 +191,6 @@
             self.firstNameTextField.placeholder = currentUser.firstName;
             self.lastNameTextField.placeholder = currentUser.lastName;
             
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Edit Teacher Name" withParameters:params];
-            
-            
         }
         else if (type == EDIT_TEACHER_PASSWORD){
             currentUser.password = self.editPasswordTextField.text;
@@ -198,17 +199,11 @@
             self.confirmNewPasswordTextField.text = @"";
             self.currentPasswordTextField.text = @"";
             [Utilities alertStatusWithTitle:@"Success" message:@"Edited password" cancel:nil otherTitles:nil tag:0 view:nil];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Edit Teacher Password" withParameters:params];
         }
         
         else if (type == RESET_PASSWORD){
             [hud hide:YES];
             [Utilities alertStatusWithTitle:@"Password recovery email sent" message:@"Check your inbox for an email containing instructions to reset your password" cancel:nil otherTitles:nil tag:0 view:nil];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Reset Teacher Password" withParameters:params];
         }
         else{
             [Utilities alertStatusNoConnection];
