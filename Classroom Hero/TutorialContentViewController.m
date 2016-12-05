@@ -12,7 +12,6 @@
 #import "Class.h"
 #import "Utilities.h"
 #import "NSString+FontAwesome.h"
-#import "Flurry.h"
 
 static int screenNumber;
 
@@ -269,8 +268,7 @@ static int screenNumber;
             [self.textField1 becomeFirstResponder];
 
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Class - Tutorial" withParameters:params];
+            // google analytics
 
             
         }
@@ -281,9 +279,6 @@ static int screenNumber;
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[tmpClass getId] :[tmpClass getSchoolId]];
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  student  or  swipe  left  to  continue"]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Student - Tutorial" withParameters:params];
 
         }
         
@@ -295,9 +290,6 @@ static int screenNumber;
             [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  reinforcer  or  swipe  left  to  continue"]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Reinforcer - Tutorial" withParameters:params];
         }
         else if (type == ADD_ITEM){
             NSString *itemName = self.textField1.text;
@@ -307,9 +299,6 @@ static int screenNumber;
             [[DatabaseHandler getSharedInstance] addItem:newItem];
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  item  or  swipe  left  to  continue"]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Item - Tutorial" withParameters:params];
         }
         
         else if (type == ADD_JAR){
@@ -320,9 +309,6 @@ static int screenNumber;
             [[DatabaseHandler getSharedInstance] addClassJar:newJar];
             [self setTitleAndClear:[NSString stringWithFormat:@"Replace  your  jar  or  swipe  left  to  continue"]];
             [self.textField1 becomeFirstResponder];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Jar - Tutorial" withParameters:params];
         }
         
         

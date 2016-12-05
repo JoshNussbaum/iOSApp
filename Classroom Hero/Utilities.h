@@ -109,6 +109,9 @@ extern NSInteger menuItemFontSize;
 + (bool)isValidClassroomHeroStamp:(NSString *)serial;
 
 
++ (void) disappearingAlertView:(NSString *)title message:(NSString *)message otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view time:(double)delayInSeconds;
+
+
 + (UIAlertView *) editAlertNumberWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
 
 

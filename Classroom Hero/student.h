@@ -80,4 +80,6 @@
 // Misc Functions
 -(void) printStudent;
 
+-(NSString *)fullName;
+
 @end

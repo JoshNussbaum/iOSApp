@@ -14,8 +14,7 @@
 #import "StudentsTableViewController.h"
 #import "StudentAwardTableViewCell.h"
 #import "AwardMenuOptionTableViewCell.h"
-#import "Flurry.h"
-
+#import <Google/Analytics.h>
 
 static NSInteger coinWidth = 250;
 static NSInteger coinHeight = 250;
@@ -84,9 +83,18 @@ static NSInteger coinHeight = 250;
 @implementation AwardViewController
 
 
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Award"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
+    self.studentsTableView.layer.borderWidth = 1.5;
+    self.studentsTableView.layer.borderColor = [UIColor blackColor].CGColor;
     currentUser = [user getInstance];
     reinforcerData = [[DatabaseHandler getSharedInstance]getReinforcers:[currentUser.currentClass getId]];
     studentsData = [[NSMutableDictionary alloc]init];
@@ -136,23 +144,13 @@ static NSInteger coinHeight = 250;
         button.exclusiveTouch = YES;
     }
 
-    CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 16);
-
-    self.progressView = [[YLProgressBar alloc]initWithFrame:levelRect];
-    self.progressView.hidden = YES;
-    self.progressView.hideStripes = YES;
-    //self.progressView.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeProgress;
-    self.progressView.type = YLProgressBarTypeRounded;
-    self.progressView.tintColor = [UIColor clearColor];
-    self.progressView.progressTintColor = [Utilities CHBlueColor];
-    self.progressView.indicatorTextLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:15.0];
-    
     [Utilities makeRoundedLabel:self.notificationLabel :nil];
-    [self.view addSubview:self.progressView];
 }
 
 
 - (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+
     if (IS_IPAD_PRO) {
         NSArray *menuButtons = @[self.homeButton, self.jarButton, self.marketButton, self.awardButton];
         
@@ -166,7 +164,22 @@ static NSInteger coinHeight = 250;
         self.levelLabel.font = [UIFont fontWithName:@"GillSans-Light" size:40];
 
     }
+    
+    if(![self.progressView isDescendantOfView:self.view]) {
+        CGRect levelRect = CGRectMake(self.levelBar.frame.origin.x, self.levelBar.frame.origin.y, self.levelBar.frame.size.width, 16);
+        
+        self.progressView = [[YLProgressBar alloc]initWithFrame:levelRect];
+        self.progressView.hidden = YES;
+        self.progressView.hideStripes = YES;
+        //self.progressView.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeProgress;
+        self.progressView.type = YLProgressBarTypeRounded;
+        self.progressView.tintColor = [UIColor clearColor];
+        self.progressView.progressTintColor = [Utilities CHBlueColor];
+        self.progressView.indicatorTextLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:15.0];
+        [self.view addSubview:self.progressView];
+    }
 }
+
 
 
 - (void)getStudentsData{
@@ -179,7 +192,6 @@ static NSInteger coinHeight = 250;
 
 
 - (void)viewDidAppear:(BOOL)animated{
-    levelRect = CGRectMake(self.levelView.frame.origin.x, self.levelView.frame.origin.y, self.levelView.frame.size.width, self.levelView.frame.size.height);
     isStamping = NO;
 
     // 3 Coins Rects
@@ -359,9 +371,6 @@ static NSInteger coinHeight = 250;
             [self.categoryPicker reloadAllComponents];
             [self setReinforcerName];
 
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-            [Flurry logEvent:@"Edit Reinforcer" withParameters:params];
         }
         else if (type == ADD_REINFORCER){
             if (chestTappable){
@@ -385,10 +394,6 @@ static NSInteger coinHeight = 250;
             self.editReinforcerButton.hidden = NO;
             self.categoryPicker.hidden = NO;
 
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-            [Flurry logEvent:@"Add Reinforcer - Award View" withParameters:params];
-
         }
         else if (type == DELETE_REINFORCER){
             [[DatabaseHandler getSharedInstance]deleteReinforcer:[currentReinforcer getId]];
@@ -401,9 +406,6 @@ static NSInteger coinHeight = 250;
                 self.reinforcerValue.text = @"";
                 self.editReinforcerButton.hidden = YES;
 
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-                [Flurry logEvent:@"Delete Reinforcer" withParameters:params];
             }
             else {
                 [self setReinforcerName];
@@ -438,14 +440,11 @@ static NSInteger coinHeight = 250;
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
             if (chestPoint){
-                [Flurry logEvent:@"Reward Student Chest" withParameters:params];
-
                 self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
                 [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
             }
             
             else {
-                [Flurry logEvent:@"Reward Student Manual" withParameters:params];
                 [self hideStudent];
                 [self setReinforcerName];
                 self.categoryPicker.hidden = NO;
@@ -488,13 +487,10 @@ static NSInteger coinHeight = 250;
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", [NSString stringWithFormat:@"%ld", (long)studentCount], @"Number of students", nil];
             
             if (chestPoint){
-                [Flurry logEvent:@"Reward Bulk Student Chest" withParameters:params];
-
                 self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
                 [self addPoints:[currentReinforcer getValue] levelup:NO ];
             }
             else {
-                [Flurry logEvent:@"Reward Bulk Student Manual" withParameters:params];
                 [self manuallyAddPointsSuccess];
             }
         }
@@ -728,6 +724,12 @@ static NSInteger coinHeight = 250;
 
 - (IBAction)chestClicked:(id)sender {
     if (chestTappable && !showingStudents){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Chest Point"
+                                                               label:[currentReinforcer getName]
+                                                               value:@1] build]];
         chestTappable = NO;
         chestPoint = YES;
         isStamping = YES;
@@ -1167,7 +1169,7 @@ static NSInteger coinHeight = 250;
 
 
 - (void)manuallyAddPointsSuccess{
-    [Utilities alertStatusWithTitle:@"Success" message:@"Added points" cancel:nil otherTitles:nil tag:0 view:self];
+    [Utilities disappearingAlertView:@"Successfully added points" message:nil otherTitles:nil tag:0 view:self time:0.8];
     isStamping = NO;
     chestTappable = NO;
 }
@@ -1188,6 +1190,146 @@ static NSInteger coinHeight = 250;
 
 #pragma mark - Table view data source
 
+
+- (void)deselectAllClicked{
+    if (!isStamping && !chestPoint){
+        currentStudent = nil;
+        [selectedStudents removeAllObjects];
+        for (NSInteger row = 0; row < [self.studentsTableView numberOfRowsInSection:0]; row++) {
+            NSInteger index = row;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+            cell.backgroundColor = [UIColor clearColor];
+            
+            [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
+        }
+        
+        if (chestTappable){
+            [self displayStudent:chestTappable];
+        }
+    }
+}
+
+
+- (void)selectAllClicked{
+    if (!isStamping && !chestPoint){
+        if (selectedStudents.count == studentsData.count){
+            [self deselectAllClicked];
+            return;
+        }
+        for (NSInteger index = 0; index < studentsData.count; index++) {
+            NSNumber *studentId = [[studentsData allKeys] objectAtIndex:index];
+            
+            student *selectedStudent = [studentsData objectForKey:studentId];
+            [selectedStudents setObject:selectedStudent forKey:studentId];
+        }
+        for (NSInteger row = 0; row < [self.studentsTableView numberOfRowsInSection:0]; row++) {
+            NSInteger index = row;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+            cell.backgroundColor = [Utilities CHGreenColor];
+            
+        }
+        if (chestTappable){
+            [self displayStudent:chestTappable];
+        }
+    }
+}
+
+
+- (void)generateChestClicked{
+    if (!isStamping && !chestPoint){
+        NSInteger studentCount = selectedStudents.count;
+        
+        if (chestTappable && [selectedStudents isEqualToDictionary:selectedStudentsWhenGenerateChestClicked]) {
+            self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
+            
+            [selectedStudents removeAllObjects];
+            
+            for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
+                NSInteger index = indexPath.row;
+                [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
+            }
+            
+            chestTappable = NO;
+            chestPoint = NO;
+            [self hideStudent];
+            self.categoryPicker.hidden = NO;
+            [self setReinforcerName];
+            return;
+        }
+        else {
+            if (studentCount > 0){
+                self.stampImage.image = [UIImage imageNamed:@"glowing_chest"];
+                
+                selectedStudentsWhenGenerateChestClicked = [NSMutableDictionary dictionaryWithDictionary:selectedStudents];
+                chestTappable = YES;
+                
+                
+                NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+                student *selectedStudent = [selectedStudents objectForKey:studentId];
+                currentStudent = selectedStudent;
+                [self animateTableView:YES];
+                [self displayStudent:YES];
+                
+                // get all the student IDs and make the web call
+                
+            }
+        }
+        
+    }
+}
+
+
+- (void)addPointsClicked{
+    if (!isStamping && !chestPoint){
+        if (chestTappable){
+            [self hideStudent];
+            [self setReinforcerName];
+            self.categoryPicker.hidden = NO;
+            chestTappable = NO;
+        }
+        // Add Points Manually
+        NSInteger studentCount = selectedStudents.count;
+        if (studentCount > 0){
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                  action:@"Add Points Manually"
+                                                                   label:[currentReinforcer getName]
+                                                                   value:@1] build]];
+            isStamping = YES;
+            NSInteger reinforcerId = [currentReinforcer getId];
+            NSInteger pointsEarned = [currentReinforcer getValue];
+            
+            if (studentCount > 1){
+                NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
+                
+                for (NSNumber *studentId in selectedStudents) {
+                    [selectedStudentIds addObject:studentId];
+                }
+                
+                [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+            }
+            
+            else {
+                NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+                
+                student *selectedStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:studentId.integerValue];
+                
+                currentStudent = selectedStudent;
+                
+                
+                [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                
+            }
+            
+        }
+
+    }
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
@@ -1195,60 +1337,146 @@ static NSInteger coinHeight = 250;
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    if (studentsData.count > 0) {
-        return studentsData.count + 4;
+    return studentsData.count;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 60;
+}
+
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    // Section View
+    
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 60)];
+    sectionView.layer.borderWidth = 1.5;
+    sectionView.layer.borderColor = [UIColor blackColor].CGColor;
+    
+    // Make the sections
+    
+    float width = tableView.frame.size.width / 4;
+    
+    UIView *addPointsSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 60)];
+    UIView *chestSection = [[UIView alloc] initWithFrame:CGRectMake(width, 0, width, 60)];
+    UIView *selectAllSection = [[UIView alloc] initWithFrame:CGRectMake(width * 2, 0, width, 60)];
+    UIView *deselectAllSection = [[UIView alloc] initWithFrame:CGRectMake(width * 3, 0, width, 60)];
+    
+    // Add gestures to the sections
+    UITapGestureRecognizer *addPointsGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(addPointsClicked)];
+    [addPointsSection addGestureRecognizer:addPointsGesture];
+    
+    UITapGestureRecognizer *generateChestGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(generateChestClicked)];
+    [chestSection addGestureRecognizer:generateChestGesture];
+    
+    UITapGestureRecognizer *selectAllGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(selectAllClicked)];
+    [selectAllSection addGestureRecognizer:selectAllGesture];
+    
+    UITapGestureRecognizer *deselectAllGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(deselectAllClicked)];
+    [deselectAllSection addGestureRecognizer:deselectAllGesture];
+    
+    // Add images to the sections
+    
+    float x = (width / 2) - 43;
+    
+    UILabel *addPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    addPointsLabel.text = @"Add points";
+
+    
+    UILabel *generateChestLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    generateChestLabel.text = @"Generate chest";
+
+    UILabel *selectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    selectAllLabel.text = @"Select all";
+    
+    UILabel *deselectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    deselectAllLabel.text = @"Deselect all";
+    
+    NSArray *labels = @[addPointsLabel, generateChestLabel, selectAllLabel, deselectAllLabel];
+    
+    for (UILabel *label in labels){
+        label.font = [UIFont fontWithName:@"GillSans-Bold" size:16];
+        label.textColor = [UIColor blackColor];
+        label.numberOfLines = 2;
+        label.textAlignment = NSTextAlignmentCenter;
+        [Utilities makeRoundedLabel:label :[UIColor blackColor]];
     }
-    else return 4;
+    [addPointsSection addSubview:addPointsLabel];
+    [chestSection addSubview:generateChestLabel];
+    [selectAllSection addSubview:selectAllLabel];
+    [deselectAllSection addSubview:deselectAllLabel];
+    
+    /*
+    UIImageView *addPointsImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x,0,60,60)];
+    addPointsImageView.image=[UIImage imageNamed:@"coin.png"];
+    [addPointsSection addSubview:addPointsImageView];
+    
+    UIImageView *generateChestImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x,0,60,60)];
+    generateChestImageView.image=[UIImage imageNamed:@"treasure_chest.png"];
+    [chestSection addSubview:generateChestImageView];
+    
+    UIImageView *selectAllImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x + 5,5,50,50)];
+    selectAllImageView.image=[UIImage imageNamed:@"selectAll.png"];
+    [selectAllSection addSubview:selectAllImageView];
+    
+    
+    UIImageView *deselectAllImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x + 5,5,50,50)];
+    deselectAllImageView.image=[UIImage imageNamed:@"deselectAll.png"];
+    [deselectAllSection addSubview:deselectAllImageView];
+    */
+    
+    // Add sections to the section view
+    
+    NSArray *sections = @[addPointsSection, chestSection, selectAllSection, deselectAllSection];
+    for (UIView *view in sections){
+        [view setBackgroundColor:[Utilities CHBlueColor]];
+        
+        [sectionView addSubview:view];
+    }
+    
+
+    
+    return sectionView;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < 4){
-        AwardMenuOptionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AwardMenuOptionTableViewCell"];
-        cell.contentView.exclusiveTouch = YES;
-        cell.exclusiveTouch = YES;
-        NSString *titleLabel = @"";
-        if (indexPath.row == 0){
-            titleLabel = @"Add points";
-        }
-        else if (indexPath.row == 1){
-            titleLabel = @"Generate Chest";
-        }
-        else if (indexPath.row == 2){
-            titleLabel = @"Select all";
-        }
-        else if (indexPath.row == 3){
-            titleLabel = @"Deselect all";
-        }
-        [cell initializeWithTitle:titleLabel];
-        return cell;
+    StudentAwardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentAwardTableViewCell" forIndexPath:indexPath];
+    NSNumber *studentId = [[studentsData allKeys] objectAtIndex:indexPath.row];
+    
+    student *student_ = [studentsData objectForKey:studentId];
+    
+    BOOL selected;
+    if ([selectedStudents objectForKey:studentId]){
+        selected = YES;
     }
     else {
-        StudentAwardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentAwardTableViewCell" forIndexPath:indexPath];
-        NSNumber *studentId = [[studentsData allKeys] objectAtIndex:(indexPath.row-4)];
-
-        student *student_ = [studentsData objectForKey:studentId];
-        
-        BOOL selected;
-        if ([selectedStudents objectForKey:studentId]){
-            selected = YES;
-        }
-        else {
-            selected = NO;
-        }
-        [cell initializeWithStudent:student_ selected:selected];
-        return cell;
+        selected = NO;
     }
+    [cell initializeWithStudent:student_ selected:selected];
+    return cell;
 }
 
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    studentIndex = indexPath.row - 4;
+    studentIndex = indexPath.row;
     
     NSNumber *studentId = [[studentsData allKeys] objectAtIndex:studentIndex];
     
     currentStudent = [studentsData objectForKey:studentId];
+    
+    StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor clearColor];
+
     
     if ([selectedStudents objectForKey:studentId]){
         [selectedStudents removeObjectForKey:studentId];
@@ -1264,168 +1492,32 @@ static NSInteger coinHeight = 250;
         self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
         
     }
-
+    
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (!isStamping && !chestPoint){
-        if (indexPath.row == 0){
-            if (chestTappable){
-                [self hideStudent];
-                [self setReinforcerName];
-                self.categoryPicker.hidden = NO;
-                chestTappable = NO;
-            }
-            // Add Points Manually
-            NSInteger studentCount = selectedStudents.count;
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            if (studentCount > 0){
-                isStamping = YES;
-                NSInteger reinforcerId = [currentReinforcer getId];
-                NSInteger pointsEarned = [currentReinforcer getValue];
-                
-                if (studentCount > 1){
-                    NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
-                    
-                    for (NSNumber *studentId in selectedStudents) {
-                        [selectedStudentIds addObject:studentId];
-                    }
-                    
-                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
-                }
-                
-                else {
-                    NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
-                    
-                    student *selectedStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:studentId.integerValue];
-                    
-                    currentStudent = selectedStudent;
-                    
-                    
-                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
-                    
-                }
-                
-            }
-            else {
-                [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
-            }
-        }
-        else if (indexPath.row == 1){
-            // Generate Chest
-            NSInteger studentCount = selectedStudents.count;
-            
-            if (chestTappable && [selectedStudents isEqualToDictionary:selectedStudentsWhenGenerateChestClicked]) {
-                self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
-                
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                
-                [selectedStudents removeAllObjects];
-                
-                for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
-                    NSInteger index = indexPath.row;
-                    [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
-                }
-                
-                chestTappable = NO;
-                chestPoint = NO;
-                [self hideStudent];
-                self.categoryPicker.hidden = NO;
-                [self setReinforcerName];
-                return;
-            }
-            else {
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                if (studentCount > 0){
-                    self.stampImage.image = [UIImage imageNamed:@"glowing_chest"];
-                    
-                    selectedStudentsWhenGenerateChestClicked = [NSMutableDictionary dictionaryWithDictionary:selectedStudents];
-                    chestTappable = YES;
-                    
-                    
-                    NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
-                    student *selectedStudent = [selectedStudents objectForKey:studentId];
-                    currentStudent = selectedStudent;
-                    [self animateTableView:YES];
-                    [self displayStudent:YES];
-                    
-                    // get all the student IDs and make the web call
-                    
-                }
-                else {
-                    [Utilities alertStatusWithTitle:@"Select students first" message:nil cancel:nil otherTitles:nil tag:1 view:self];
-                }
-            }
-            
-        }
-        else if (indexPath.row == 2){
-            // select all
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            
-            for (NSInteger index = 0; index < studentsData.count; index++) {
-                NSNumber *studentId = [[studentsData allKeys] objectAtIndex:index];
-                
-                student *selectedStudent = [studentsData objectForKey:studentId];
-                [selectedStudents setObject:selectedStudent forKey:studentId];
-            }
-            for (NSIndexPath *indexPath in tableView.indexPathsForVisibleRows) {
-                NSInteger index = indexPath.row;
-                if (index > 3){
-                    [self.studentsTableView selectRowAtIndexPath:indexPath
-                                                        animated:NO
-                                                  scrollPosition:UITableViewScrollPositionNone];
-                }
-            }
-            if (chestTappable){
-                [self displayStudent:chestTappable];
-            }
-            
-        }
-        else if (indexPath.row == 3){
-            // de select all
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            currentStudent = nil;
-            [selectedStudents removeAllObjects];
-            for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
-                NSInteger index = indexPath.row;
-                [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
-            }
-            
-            if (chestTappable){
-                [self displayStudent:chestTappable];
-            }
+        studentIndex = indexPath.row ;
+        NSNumber *studentId = [[studentsData allKeys] objectAtIndex:studentIndex];
+        
+        student *selectedStudent = [studentsData objectForKey:studentId];
+        StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+        cell.backgroundColor = [Utilities CHGreenColor];
+
+        [selectedStudents setObject:selectedStudent forKey:studentId];
+        
+        if ([selectedStudents count] > 0 && chestTappable){
+            [self displayStudent:chestTappable];
         }
         
-        else {
-            studentIndex = indexPath.row - 4;
-            NSNumber *studentId = [[studentsData allKeys] objectAtIndex:studentIndex];
-            
-            student *selectedStudent = [studentsData objectForKey:studentId];
-            
-            [selectedStudents setObject:selectedStudent forKey:studentId];
-            
-            if ([selectedStudents count] > 0 && chestTappable){
-                [self displayStudent:chestTappable];
-            }
-            
-            
-        }
+        
     }
     else{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
     }
     
-}
-
-
--(void)printSelectedStudents{
-    NSString *students = @"";
-    for (NSNumber *index in selectedStudents){
-        student *stud = [selectedStudents objectForKey:index];
-        students = [students stringByAppendingString:[NSString stringWithFormat:@"Student -> %@, %@. Index -> %ld.\n", [stud getFirstName], [stud getLastName], (long)index.integerValue]];
-    }
 }
 
 
@@ -1497,5 +1589,12 @@ static NSInteger coinHeight = 250;
 }
 
 
+-(void)printSelectedStudents{
+    NSString *students = @"";
+    for (NSNumber *index in selectedStudents){
+        student *stud = [selectedStudents objectForKey:index];
+        students = [students stringByAppendingString:[NSString stringWithFormat:@"Student -> %@, %@. Index -> %ld.\n", [stud getFirstName], [stud getLastName], (long)index.integerValue]];
+    }
+}
 
 @end

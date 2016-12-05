@@ -9,8 +9,7 @@
 #import "StudentViewController.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
-#import "Flurry.h"
-
+#import <Google/Analytics.h>
 
 @interface StudentViewController (){
     user *currentUser;
@@ -28,6 +27,13 @@
 @end
 
 @implementation StudentViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Student"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -162,17 +168,11 @@
             [hud hide:YES];
             [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
             [self setStudentLabels];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Edit Student" withParameters:params];
 
         }
         else if (type == DELETE_STUDENT){
             [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
             [hud hide:YES];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Delete Student" withParameters:params];
             [self.navigationController popViewControllerAnimated:YES];
         }
         else if (type == ADD_POINTS || type == SUBTRACT_POINTS){
@@ -194,10 +194,6 @@
             [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             
             [self setStudentLabels];
-            
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Reward Student - Student page" withParameters:params];
 
         }
         

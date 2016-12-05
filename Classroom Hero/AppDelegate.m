@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "Utilities.h"
-#import "Flurry.h"
+#import <Google/Analytics.h>
+
 
 @interface AppDelegate ()
 
@@ -27,8 +28,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    // Configure tracker from GoogleService-Info.plist.
+    NSError *configureError;
+    [[GGLContext sharedInstance] configureWithError:&configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
     
+    // Optional: configure GAI options.
+    GAI *gai = [GAI sharedInstance];
+    gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     
     NSShadow* shadow = [NSShadow new];
     shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
@@ -51,8 +60,6 @@
         [[UINavigationBar appearance] setTintColor:[Utilities CHBlueColor]];
     }
     [[UITextField appearance] setTintColor:[Utilities CHBlueColor]];
-    [Flurry startSession:@"646YZ8K3TTSHHSK43QKZ"];
-    [Flurry setBackgroundSessionEnabled:YES];
 
     return YES;
 }

@@ -12,7 +12,7 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "HomeViewController.h"
-#import "Flurry.h"
+#import <Google/Analytics.h>
 
 static NSString * const classCell = @"classCell";
 
@@ -32,6 +32,12 @@ static NSString * const classCell = @"classCell";
 @end
 
 @implementation ClassTableViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Classes"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 
 - (void)viewDidLoad {
@@ -142,9 +148,6 @@ static NSString * const classCell = @"classCell";
             [[DatabaseHandler getSharedInstance] editClass:tmpClass];
             [classes replaceObjectAtIndex:index withObject:tmpClass];
             [self.tableView reloadData];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-            [Flurry logEvent:@"Edit Class" withParameters:params];
         }
 
         else if (type == DELETE_CLASS){
@@ -155,10 +158,6 @@ static NSString * const classCell = @"classCell";
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             NSArray *indexPaths = @[indexPath];
             [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[tmpClass getId]], @"Class ID", nil];
-
-            [Flurry logEvent:@"Edit Class" withParameters:params];
 
         }
     }

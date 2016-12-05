@@ -9,9 +9,9 @@
 #import "CreateAccountViewController.h"
 #import "MBProgressHUD.h"
 #import "Utilities.h"
-#import "RegisterStudentsViewController.h"
 #import "TutorialViewController.h"
-#import "Flurry.h"
+#import "FDKeychain.h"
+#import <Google/Analytics.h>
 
 
 @interface CreateAccountViewController (){
@@ -26,6 +26,12 @@
 @end
 
 @implementation CreateAccountViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Create Account"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 
 - (void)viewDidLoad {
@@ -129,13 +135,17 @@
             currentUser.id = tid;
             currentUser.accountStatus = 0;
             
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [NSString stringWithFormat:@"%ld", (long)tid], @"Teacher ID",
-                                    [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name",
-                                    [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil
-                                    ];
+            NSError *error = nil;
+            [FDKeychain saveItem: self.emailTextField.text
+                          forKey: @"email"
+                      forService: @"Classroom Hero"
+                           error: &error];
             
-            [Flurry logEvent:@"Create Account" withParameters:params];
+            [FDKeychain saveItem: self.passwordTextField.text
+                          forKey: @"password"
+                      forService: @"Classroom Hero"
+                           error: &error];
+            
             
             [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
 

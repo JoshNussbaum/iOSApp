@@ -11,7 +11,7 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
-#import "Flurry.h"
+#import <Google/Analytics.h>
 
 @interface AttendanceViewController (){
     BOOL showingStudents;
@@ -32,6 +32,13 @@
 @end
 
 @implementation AttendanceViewController
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Attendance"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 
 - (void)viewDidLoad {
@@ -81,6 +88,8 @@
 
 
 - (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+
     if ([self.studentsTableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.studentsTableView setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -125,6 +134,12 @@
             [self animateTableView:YES];
         }
         else if (!isStamping){
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                  action:@"Attendance Clicked"
+                                                                   label:[currentStudent fullName]
+                                                                   value:@1] build]];
             isStamping = YES;
             self.studentsPicker.hidden = YES;
             [Utilities wiggleImage:self.stampImage sound:NO];
@@ -173,19 +188,44 @@
     }
 
     if (alertView.tag == 1){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Manually Check In Student"
+                                                               label:[currentStudent fullName]
+                                                               value:@1] build]];
         didManuallyCheckIn = YES;
         [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:NO];
     }
 
     else if (alertView.tag == 2){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Manually Check Out Student"
+                                                               label:[currentStudent fullName]
+                                                               value:@1] build]];
         didManuallyCheckIn = YES;
         [webHandler checkOutStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
     }
     else if (alertView.tag == 3){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Check Out All Students"
+                                                               label:[currentUser.currentClass getName]
+                                                               value:@1] build]];
         [self activityStart:@"Checking out all students"];
+        
         [webHandler checkOutAllStudentsWithclassId:[currentUser.currentClass getId]];
     }
     else if (alertView.tag == 4){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Check In All Students"
+                                                               label:[currentUser.currentClass getName]
+                                                               value:@1] build]];
         [self activityStart:@"Checking in all students"];
         [webHandler checkInAllStudentsWithclassId:[currentUser.currentClass getId]];
     }
@@ -238,9 +278,6 @@
                 [currentUser.currentClass addPoints:1];
                 [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
                 [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-                
-                [Flurry logEvent:@"Check In" withParameters:params];
                 
                 [self coinAnimation];
                 
@@ -250,9 +287,6 @@
             else {
                 [currentStudent setCheckedIn:YES];
                 [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-                [Flurry logEvent:@"Check In Manual" withParameters:params];
                 [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
                 
                 [self reloadTable];
@@ -271,9 +305,6 @@
             [self.studentsPicker reloadAllComponents];
             [self setStudentPreTouchLabel];
             [self reloadTable];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-            [Flurry logEvent:@"Check Out" withParameters:params];
         }
 
         else if (type == ALL_STUDENT_CHECK_IN || type == ALL_STUDENT_CHECK_OUT){
@@ -295,17 +326,11 @@
             NSString *checkedInString;
             if (checkedIn) {
                 checkedInString = @"in";
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-                [Flurry logEvent:@"Check In All" withParameters:params];
 
             }
             else {
                 checkedInString = @"out";
 
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-
-                [Flurry logEvent:@"Check Out All" withParameters:params];
             }
 
             [Utilities alertStatusWithTitle:@"Success" message:[NSString stringWithFormat:@"Checked %@ all students", checkedInString] cancel:nil otherTitles:nil tag:0 view:self];

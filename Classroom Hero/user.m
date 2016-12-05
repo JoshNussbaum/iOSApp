@@ -52,6 +52,9 @@ static user *instance = nil;
     NSLog(@"\nUser name -> %@, %@,\nUser email -> %@,\nUser account status -> %ld,\nUser serial -> %@,\nUser current class -> %@", self->firstName, self->lastName, self->email, (long)self->accountStatus, self->serial, [self->currentClass getName]);
 }
 
+-(NSString *)fullName{
+    return [NSString stringWithFormat:@"%@ %@", self->firstName, self->lastName];
+}
 
 
 @end

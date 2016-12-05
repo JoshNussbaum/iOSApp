@@ -10,7 +10,7 @@
 #import "DatabaseHandler.h"
 #import "Utilities.h"
 #import "MBProgressHUD.h"
-#import "Flurry.h"
+#import <Google/Analytics.h>
 
 @interface CreateClassViewController (){
     NSInteger index;
@@ -23,6 +23,13 @@
 @end
 
 @implementation CreateClassViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Create Class"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -120,11 +127,6 @@
             
             self.classNameTextField.text = @"";
             self.classGradeTextField.text = @"";
-            
-            
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[newClass getId]], @"Class ID", nil];
-            
-            [Flurry logEvent:@"Add Class - Create Class" withParameters:params];
             [self.navigationController popViewControllerAnimated:YES];
             
         } else {

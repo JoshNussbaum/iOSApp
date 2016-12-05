@@ -8,12 +8,19 @@
 
 #import "AboutViewController.h"
 #import "Utilities.h"
+#import <Google/Analytics.h>
 
 @interface AboutViewController ()
 
 @end
 
 @implementation AboutViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"About"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

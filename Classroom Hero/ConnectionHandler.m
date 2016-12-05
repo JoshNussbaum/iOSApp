@@ -244,7 +244,6 @@ static NSInteger connectionType;
     connectionType = GET_SCHOOLS;
     
     [self asynchronousWebCall:nil :GET_SCHOOLS_URL :GET];
-    
 }
 
 - (void)registerStamp:(NSInteger)id :(NSString *)serial :(NSInteger)cid{

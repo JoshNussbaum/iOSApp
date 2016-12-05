@@ -207,5 +207,9 @@
     NSLog(@"\n Student UID => %ld,\n Student First Name => %@,\n Student Last Name => %@,\n Student Serial => %@\n Student Points => %ld,\n Student Progress => %ld,\n Student Level => %ld,\n Student LevelUpAmount => %ld,\n Total Points => %ld,\n %@", (long)self->id, self->firstName, self->lastName, self->serial, (long)self->points,  (long)self->progress, (long)self->lvl,  (long)self->lvlupamount, (long)self->totalpoints, checkedInString);
 }
 
+-(NSString *)fullName{
+    return [NSString stringWithFormat:@"%@ %@", self->firstName, self->lastName];
+}
+
 
 @end

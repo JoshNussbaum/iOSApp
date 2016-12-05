@@ -27,5 +27,7 @@
 
 -(void)printUser;
 
+-(NSString *)fullName;
+
 
 @end

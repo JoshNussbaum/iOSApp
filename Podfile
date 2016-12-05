@@ -7,9 +7,9 @@ target 'Classroom Hero' do
 pod 'MBProgressHUD', '~> 0.9.1'
 pod 'JSBadgeView'
 pod 'CircleProgressBar', '~> 0.21'
-pod 'Flurry-iOS-SDK/FlurrySDK', '~> 7.6.0'
 pod 'YLProgressBar', '~> 3.8.0'
-
+pod 'FDKeychain', '~> 1.3'
+pod 'Google/Analytics'
 end
 
 target 'Classroom HeroTests' do

@@ -10,20 +10,25 @@
 #import "Utilities.h"
 #import "NSString+FontAwesome.h"
 #import "Class.h"
-
+#import <Google/Analytics.h>
 
 @interface TutorialViewController (){
     user *currentUser;
     NSInteger flag;
     NSInteger pageIndex;
     class *tmpClass;
-    
 }
-
 
 @end
 
 @implementation TutorialViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Tutorial"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

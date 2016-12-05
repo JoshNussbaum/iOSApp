@@ -14,7 +14,7 @@
 - (void)initializeWithStudent:(student *)student selected:(BOOL)selected{
     self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [student getFirstName], [student getLastName]];
     if (selected){
-        self.backgroundColor = [Utilities CHBlueColor];
+        self.backgroundColor = [Utilities CHGreenColor];
     }else self.backgroundColor = [UIColor clearColor];
 }
 
