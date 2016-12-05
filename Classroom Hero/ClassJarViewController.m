@@ -462,10 +462,9 @@
                          animations:^{
                              if (IS_IPAD_PRO){
                                  [coin setFrame:CGRectMake(self.jarImage.frame.origin.x + self.jarImage.frame.size.width/2 - 110, self.jarImage.frame.origin.y+(self.jarImage.frame.size.height-270), self.coinImage.frame.size.width, self.coinImage.frame.size.height)];
-
                              }
                              else {
-                                 [coin setFrame:CGRectMake(self.jarImage.frame.origin.x + self.jarImage.frame.size.width/2 - 85, self.jarImage.frame.origin.y+(self.jarImage.frame.size.height-230), self.coinImage.frame.size.width, self.coinImage.frame.size.height)];
+                                 [coin setFrame:CGRectMake(self.jarImage.frame.origin.x + self.jarImage.frame.size.width/2 - 90, self.jarImage.frame.origin.y+(self.jarImage.frame.size.height-230), self.coinImage.frame.size.width, self.coinImage.frame.size.height)];
 
                              }
                          }

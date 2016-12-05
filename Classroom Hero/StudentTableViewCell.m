@@ -143,9 +143,7 @@
             [currentStudent setLevel:levelNumber.integerValue];
             [currentStudent setProgress:progressNumber.integerValue];
             [currentStudent setLevelUpAmount:lvlUpAmount];
-            [currentUser.currentClass addPoints:1];
             [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
             self.pointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
             
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
