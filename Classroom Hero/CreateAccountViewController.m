@@ -46,8 +46,14 @@
 //    [Utilities setTextFieldPlaceholder:self.emailTextField :@"Email" :[UIColor blackColor]];
 //    [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[UIColor blackColor]];
 //    [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[UIColor blackColor]];
+    [Utilities makeRounded:self.createAccountButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
     
-    [Utilities makeRoundedButton:self.createAccountButton :[UIColor whiteColor]];
+    textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.passwordTextField, self.confirmPasswordTextField, nil];
+    
+    for (UITextField *tf in textFields){
+        [Utilities makeRounded:tf.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    }
+    
 }
 
 - (void)viewDidLayoutSubviews{

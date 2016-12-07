@@ -258,7 +258,7 @@
                 id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
                 
                 [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                                      action:@"Add Jar Points"
+                                                                      action:@"Add Points (Class Jar)"
                                                                        label:[currentClassJar getName]
                                                                        value:@1] build]];
                 isStamping = YES;

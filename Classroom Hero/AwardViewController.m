@@ -727,7 +727,7 @@ static NSInteger coinHeight = 250;
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                              action:@"Chest Point"
+                                                              action:@"Add Points (Chest)"
                                                                label:[currentReinforcer getName]
                                                                value:@1] build]];
         chestTappable = NO;
@@ -1295,7 +1295,7 @@ static NSInteger coinHeight = 250;
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                                  action:@"Add Points Manually"
+                                                                  action:@"Add Points (Manual)"
                                                                    label:[currentReinforcer getName]
                                                                    value:@1] build]];
             isStamping = YES;

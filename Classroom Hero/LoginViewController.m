@@ -35,6 +35,8 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [currentUser reset];
+    self.emailTextField.text = @"nussbaum.joshua@gmail.com";
+    self.passwordTextField.text = @"josh";
     isStamping = NO;
     
     NSError *passwordError = nil;
@@ -68,8 +70,10 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
 
-    [Utilities makeRoundedButton:self.forgotPasswordButton :[Utilities CHBlueColor]];
+
+    [Utilities makeRoundedButton:self.forgotPasswordButton :nil];
     self.logInButton.layer.borderWidth = .6;
     self.logInButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.createAccountButton.layer.borderWidth = .6;
@@ -80,8 +84,11 @@
     
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
+    [Utilities makeRounded:self.emailTextField.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:self.passwordTextField.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
     
 }
+
 
 - (IBAction)loginClicked:(id)sender{
     [self hideKeyboard];
@@ -126,7 +133,7 @@
 
 
 - (IBAction)forgotPasswordClicked:(id)sender {
-    UIAlertView *av = [Utilities editAlertTextWithtitle:@"Forgot password" message:@"Enter your email to reset your password" cancel:@"Cancel" done:@"Reset" delete:NO input:@"Email" tag:1 view:self capitalizationType:UITextAutocapitalizationTypeNone];
+    UIAlertView *av = [Utilities editAlertTextWithtitle:@"Password Reset" message:@"Enter your email below and we'll email you a link to reset your password" cancel:@"Cancel" done:@"Send email" delete:NO input:@"Email" tag:1 view:self capitalizationType:UITextAutocapitalizationTypeNone];
     if (self.emailTextField.text){
         [[av textFieldAtIndex:0]setText:self.emailTextField.text];
     }
@@ -145,6 +152,12 @@
     }
     
     if (alertView.tag == 1){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Reset Password"
+                                                               label:@"Login"
+                                                               value:@1] build]];
         [webHandler resetPasswordWithemail:email];
     }
 

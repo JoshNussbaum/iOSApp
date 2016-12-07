@@ -17,14 +17,13 @@
     MBProgressHUD *hud;
     NSMutableArray *textFields;
     NSString *errorMessage;
-    
     ConnectionHandler *webHandler;
-
 }
 
 @end
 
 @implementation EditTeacherViewController
+
 
 - (void)viewWillAppear:(BOOL)animated{
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -32,8 +31,11 @@
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
+
     currentUser = [user getInstance];
     NSArray *buttons = @[self.editNameButton, self.editPasswordButton, self.resetPasswordButton];
     for (UIButton *button in buttons){
@@ -43,6 +45,18 @@
     self.lastNameTextField.placeholder = currentUser.lastName;
     
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    textFields = [[NSMutableArray alloc]initWithObjects:self.editPasswordTextField, self.confirmNewPasswordTextField, self.currentPasswordTextField, self.firstNameTextField, self.lastNameTextField, nil];
+    
+    for (UITextField *tf in textFields){
+        [Utilities makeRounded:tf.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    }
+    [Utilities makeRounded:self.editNameButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:self.editPasswordButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:self.resetPasswordButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+
+    
+    //    [Utilities makeRounded:_textField1.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+
 }
 
 
@@ -135,10 +149,6 @@
 }
 
 
-- (IBAction)manageStampClicked:(id)sender {
-    [self performSegueWithIdentifier:@"edit_teacher_to_manage_stamp" sender:self];
-}
-
 - (IBAction)tutorialClicked:(id)sender {
     [self performSegueWithIdentifier:@"settings_to_tutorial" sender:self];
 }
@@ -151,6 +161,12 @@
     }
     
     else if (alertView.tag == 1){
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                              action:@"Reset Password"
+                                                               label:@"Settings"
+                                                               value:@1] build]];
         [webHandler resetPasswordWithemail:currentUser.email];
         [self activityStart:@"Recovering password..."];
 
@@ -162,6 +178,7 @@
 - (IBAction)backClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"settings_to_tutorial"]){

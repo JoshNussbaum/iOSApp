@@ -74,7 +74,7 @@
     
     NSArray *buttons = @[self.startOverButton, self.skipButton, self.backButton];
     for (UIButton *button in buttons){
-        [Utilities makeRoundedButton:button :[Utilities CHBlueColor]];
+        [Utilities makeRounded:button.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
     }
     tmpClass = currentUser.currentClass;
     [[NSNotificationCenter defaultCenter] addObserver:self

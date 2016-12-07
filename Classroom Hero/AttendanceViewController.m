@@ -137,7 +137,7 @@
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                                  action:@"Attendance Clicked"
+                                                                  action:@"Attendance Check In (Click)"
                                                                    label:[currentStudent fullName]
                                                                    value:@1] build]];
             isStamping = YES;
@@ -191,7 +191,7 @@
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                              action:@"Manually Check In Student"
+                                                              action:@"Attendance Check In (Manual)"
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         didManuallyCheckIn = YES;
@@ -202,7 +202,7 @@
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                              action:@"Manually Check Out Student"
+                                                              action:@"Attendance Check Out (Manual)"
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         didManuallyCheckIn = YES;
@@ -212,7 +212,7 @@
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                              action:@"Check Out All Students"
+                                                              action:@"Attendance Check Out All"
                                                                label:[currentUser.currentClass getName]
                                                                value:@1] build]];
         [self activityStart:@"Checking out all students"];
@@ -223,7 +223,7 @@
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                              action:@"Check In All Students"
+                                                              action:@"Attendance Check In All"
                                                                label:[currentUser.currentClass getName]
                                                                value:@1] build]];
         [self activityStart:@"Checking in all students"];
@@ -332,8 +332,7 @@
                 checkedInString = @"out";
 
             }
-
-            [Utilities alertStatusWithTitle:@"Success" message:[NSString stringWithFormat:@"Checked %@ all students", checkedInString] cancel:nil otherTitles:nil tag:0 view:self];
+            [Utilities disappearingAlertView:[NSString stringWithFormat:@"Checked %@ all students", checkedInString] message:nil otherTitles:nil tag:0 view:self time:1.0];
 
         }
     }

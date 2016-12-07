@@ -71,6 +71,12 @@ extern NSInteger menuItemFontSize;
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType;
 
 
++ (UIColor *)CHLightBlueColor;
+
+
++ (UIColor *)CHLightGreenColor;
+
+
 + (UIColor *) CHBlueColor;
 
 
@@ -124,6 +130,8 @@ extern NSInteger menuItemFontSize;
 
 + (void) makeRoundedLabel:(UILabel *)label :(UIColor *)color;
 
+
++ (void) makeRounded:(CALayer *)layer color:(UIColor *)color borderWidth:(float)borderWidth cornerRadius:(float)cornerRadius;
 
 + (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view;
 

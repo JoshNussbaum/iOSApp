@@ -42,6 +42,7 @@ static NSString * const classCell = @"classCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //[self.tableView setSeparatorColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
     [self.tableView setBounces:NO];
 

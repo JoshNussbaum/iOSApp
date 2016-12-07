@@ -97,6 +97,11 @@
             [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
         }
     }
+    else if (alertView.tag == 2){
+        [self activityStart:@"Deleting Student..."];
+        [webHandler deleteStudent:[currentStudent getId]];
+    }
+
 }
 
 
@@ -123,6 +128,18 @@
         }
         else {
             [Utilities alertStatusWithTitle:@"Error adding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            return;
+        }
+    }
+    else if (type == DELETE_STUDENT){
+        if([successNumber boolValue] == YES)
+        {
+            [studentsData removeObject:currentStudent];
+            currentStudent = nil;
+            [self.tableView reloadData];
+        }
+        else {
+            [Utilities alertStatusWithTitle:@"Error deleting student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
             return;
         }
     }
@@ -182,6 +199,21 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        
+        [Utilities alertStatusWithTitle:@"Confirm Delete" message:[NSString stringWithFormat:@"Are you sure you want to delete %@?", [currentStudent fullName]]  cancel:@"Cancel"  otherTitles:@[@"Delete"] tag:2 view:self];
+    }
+}
+
 
 
 - (void)viewDidLayoutSubviews{

@@ -199,6 +199,21 @@ NSInteger menuItemFontSize = 26;
 }
 
 
++ (UIColor *)CHLightGreenColor{
+    UIColor *CHBlueColor = [UIColor colorWithRed:245.0/255.0 green:255.0/255.0 blue:245.0/255.0 alpha:1.0] ;
+    
+    return CHBlueColor;
+
+}
+
+
++ (UIColor *)CHLightBlueColor{
+    UIColor *CHBlueColor = [UIColor colorWithRed:245.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0] ;
+    
+    return CHBlueColor;
+}
+
+
 + (UIColor *)CHBlueColor{
     UIColor *CHBlueColor = [UIColor colorWithRed:116.0/255.0 green:209.0/255.0 blue:246.0/255.0 alpha:1.0] ;
 
@@ -468,7 +483,7 @@ NSInteger menuItemFontSize = 26;
 
 + (void) makeRoundedButton:(UIButton *)button :(UIColor *)color{
     button.layer.cornerRadius = 5;
-    button.layer.borderWidth = .8;
+    button.layer.borderWidth = 1.0;
     button.clipsToBounds = YES;
     if (color != nil){
         button.layer.borderColor = color.CGColor;
@@ -489,6 +504,19 @@ NSInteger menuItemFontSize = 26;
     }
     else {
         label.layer.borderColor = [UIColor clearColor].CGColor;
+        
+    }
+}
+
+
++ (void) makeRounded:(CALayer *)layer color:(UIColor *)color borderWidth:(float)borderWidth cornerRadius:(float)cornerRadius{
+    layer.cornerRadius = cornerRadius;
+    layer.borderWidth = borderWidth;
+    if (color != nil){
+        layer.borderColor = color.CGColor;
+    }
+    else {
+        layer.borderColor = [UIColor clearColor].CGColor;
         
     }
 }

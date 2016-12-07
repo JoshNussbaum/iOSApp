@@ -242,11 +242,10 @@
     }
     
     else if (alertView.tag == 3 ){
-        //self.picker.hidden = YES;
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                              action:@"Sell Item"
+                                                              action:@"Market Transaction"
                                                                label:[currentItem getName]
                                                                value:@1] build]];
         [webHandler studentTransactionWithsid:[currentStudent getId] iid:[currentItem getId] cost:[currentItem getCost] cid:[currentUser.currentClass getId]];

@@ -47,6 +47,9 @@
     
     [self configureProgressBar];
     [self setStudentLabels];
+    [Utilities makeRounded:self.addPointsButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:self.subtractPointsButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+
     
 }
 
@@ -107,12 +110,12 @@
                     [webHandler editStudent:[currentStudent getId] :newStudentFirstName :newStudentLastName];
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error adding item" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities alertStatusWithTitle:@"Error adding student" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
                     return;
                 }
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error adding item" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                [Utilities alertStatusWithTitle:@"Error adding student" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
             }
         }
         else if (buttonIndex == 2){
@@ -125,6 +128,13 @@
         NSString *errorMessage = [Utilities isNumeric:pointsToAdd];
         if (!errorMessage){
             points = pointsToAdd.integerValue;
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                  action:@"Add Points (Student Page)"
+                                                                   label:[currentStudent fullName]
+                                                                   value:@1] build]];
+            [webHandler resetPasswordWithemail:currentUser.email];
             [webHandler addPointsWithStudentId:[currentStudent getId] points:points];
         }
         else {
@@ -139,6 +149,12 @@
             points = pointsToSubtract.integerValue;
             
             if (points < [currentStudent getPoints]){
+                id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+                
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                      action:@"Subtract Points (Student Page)"
+                                                                       label:[currentStudent fullName]
+                                                                       value:@1] build]];
                 [webHandler subtractPointsWithStudentId:[currentStudent getId] points:points];
             }
             else {
@@ -248,7 +264,7 @@
     
     [self.progressView  setHintViewSpacing:(customized ? 10.0f : 0)];
     [self.progressView  setHintViewBackgroundColor:[UIColor clearColor]];
-    [self.progressView  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:12.0f]];
+    [self.progressView  setHintTextFont:[UIFont fontWithName:@"Gil Sans" size:25.0f]];
     [self.progressView  setHintTextColor:[UIColor blackColor]];
     [self.progressView  setHintViewSpacing:40.0f];
     [self.progressView  setHintTextGenerationBlock:(customized ? ^NSString *(CGFloat progress) {

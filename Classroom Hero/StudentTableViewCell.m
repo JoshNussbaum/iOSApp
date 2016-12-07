@@ -74,7 +74,7 @@
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                              action:@"Minus One Clicked"
+                                                              action:@"Subtract Points (-1)"
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         connectionInProgress = YES;
@@ -87,7 +87,7 @@
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                              action:@"Plus One Clicked"
+                                                              action:@"Add Points (+1)"
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         connectionInProgress = YES;

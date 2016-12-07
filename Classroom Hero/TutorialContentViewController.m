@@ -40,8 +40,11 @@ static int screenNumber;
     
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
-    [Utilities makeRoundedButton:self.button :[Utilities CHBlueColor]];
-    
+    [Utilities makeRounded:self.button.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+
+    [Utilities makeRounded:_textField1.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:_textField2.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+
     
     self.schoolPicker.delegate = self;
     
@@ -254,10 +257,6 @@ static int screenNumber;
     NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     
     if ([successNumber boolValue] == YES){
-        if (type != GET_SCHOOLS){
-            AudioServicesPlaySystemSound([Utilities getAwardSound]);
-        }
-
 
         if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
