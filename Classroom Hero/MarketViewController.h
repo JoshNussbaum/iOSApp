@@ -41,6 +41,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *divider1;
 @property (strong, nonatomic) IBOutlet UIView *divider2;
+@property (strong, nonatomic) IBOutlet UIButton *openTableViewButton;
 
 - (IBAction)homeClicked:(id)sender;
 
@@ -53,5 +54,8 @@
 - (IBAction)studentListClicked:(id)sender;
 
 - (IBAction)purchaseClicked:(id)sender;
+
+- (IBAction)studentListClicked:(id)sender;
+
 
 @end

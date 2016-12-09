@@ -33,14 +33,14 @@ static int screenNumber;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    titles = @[@"Swipe  left  to  get started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"For  any  questions, email  classroomheroservices@gmail.com"];
+    titles = @[@"Swipe  left  to  get started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  categories", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"For  any  questions, email  classroomheroservices@gmail.com"];
     screenNumber = 0;
     isStamping = NO;
     currentUser = [user getInstance];
     
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     
-    [Utilities makeRounded:self.button.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:self.button.layer color:nil borderWidth:0.5f cornerRadius:5];
 
     [Utilities makeRounded:_textField1.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
     [Utilities makeRounded:_textField2.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
@@ -52,6 +52,7 @@ static int screenNumber;
     
     [self setPage];
 }
+
 
 - (void) viewDidLayoutSubviews{
     if (IS_IPAD_PRO) {
@@ -73,7 +74,7 @@ static int screenNumber;
             [self onPage:@"Student first name" :@"Student last name" :@"Add  student" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 3:
-            [self onPage:@"e.g. Participation points" :@"e.g. 3" :@"Add  reinforcer" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"e.g. Participation points" :@"e.g. 3" :@"Add  category" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 4:
             [self onPage:@"e.g. Day late homework pass" :@"e.g. 30" :@"Add  item" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
@@ -125,21 +126,22 @@ static int screenNumber;
                         [webHandler addClass:currentUser.id :className :gradeNumber.integerValue :1];
                     }
                     else {
-                        [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be less than 1000" cancel:nil otherTitles:nil tag:0 view:nil];
+                        [Utilities disappearingAlertView:@"Error adding class" message:@"Grade must be lass than 1000" otherTitles:nil tag:0 view:self time:2.0];
                     }
                     
                 }
                 else{
-                    [Utilities alertStatusWithTitle:@"Error adding class" message:gradeErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities disappearingAlertView:@"Error adding class" message:gradeErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                 }
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error adding class" message:[NSString stringWithFormat:@"A class with name \"%@\" already exists", className] cancel:nil otherTitles:nil tag:0 view:nil];
+                [Utilities disappearingAlertView:@"Error adding class" message:[NSString stringWithFormat:@"A class with name \"%@\" already exists", className] otherTitles:nil tag:0 view:self time:2.0];
+
                 
             }
         }
         else{
-            [Utilities alertStatusWithTitle:@"Error adding class" message:classErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities disappearingAlertView:@"Error adding class" message:classErrorMessage otherTitles:nil tag:0 view:self time:2.0];
             
         }
     }
@@ -159,33 +161,33 @@ static int screenNumber;
                         
                     }
                     else {
-                        [Utilities alertStatusWithTitle:@"Error adding student" message:lastErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                        [Utilities disappearingAlertView:@"Error adding student" message:lastErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                         
                         return;
                     }
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error adding student" message:firstErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities disappearingAlertView:@"Error adding student" message:firstErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                     
                 }
             }
             else if (self.pageIndex == 3){
                 NSString *reinforcerName = self.textField1.text;
                 NSString *reinforcerValue = self.textField2.text;
-                NSString *reinforcerErrorMessage = [Utilities isInputValid:reinforcerName :@"Reinforcer name"];
+                NSString *reinforcerErrorMessage = [Utilities isInputValid:reinforcerName :@"Category name"];
                 if (!reinforcerErrorMessage){
                     NSString *valueErrorMessage = [Utilities isNumeric:reinforcerValue];
                     if (!valueErrorMessage) {
-                        [self activityStart:@"Adding reinforcer..."];
+                        [self activityStart:@"Adding category..."];
                         [webHandler addReinforcer:[tmpClass getId] :reinforcerName :reinforcerValue.integerValue];
                     }
                     else {
-                        [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:valueErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                        [Utilities disappearingAlertView:@"Error adding category" message:valueErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                         return;
                     }
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:reinforcerErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities disappearingAlertView:@"Error adding category" message:reinforcerErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                     return;
                 }
             }
@@ -203,13 +205,13 @@ static int screenNumber;
                         
                     }
                     else {
-                        [Utilities alertStatusWithTitle:@"Error adding item" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                        [Utilities disappearingAlertView:@"Error adding item" message:costErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                         
                         return;
                     }
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error adding item" message:nameErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities disappearingAlertView:@"Error adding item" message:nameErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                     
                 }
             }
@@ -229,17 +231,17 @@ static int screenNumber;
                         if (!([jarCost integerValue] > 0)){
                             costErrorMessage = @"Jar total must be greater than 0";
                         }
-                        [Utilities alertStatusWithTitle:@"Error adding jar" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                        [Utilities disappearingAlertView:@"Error adding jar" message:costErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                         return;
                     }
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error adding jar" message:nameErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities disappearingAlertView:@"Error adding jar" message:nameErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                 }
             }
         }
         else {
-            [Utilities alertStatusWithTitle:@"Procedural Error" message:@"You must create a class first!" cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities disappearingAlertView:@"Procedural error" message:@"You must create a class first" otherTitles:nil tag:0 view:self time:2.0];
         }
         
     }
@@ -287,7 +289,7 @@ static int screenNumber;
             NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
             reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :[tmpClass getId] :reinforcerName :reinforcerValue];
             [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
-            [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  reinforcer  or  swipe  left  to  continue"]];
+            [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  category  or  swipe  left  to  continue"]];
             [self.textField1 becomeFirstResponder];
         }
         else if (type == ADD_ITEM){
@@ -329,7 +331,7 @@ static int screenNumber;
             errorMessage = @"Error adding student";
         }
         else if (type == ADD_REINFORCER){
-            errorMessage = @"Error adding reinforcer";
+            errorMessage = @"Error adding category";
         }
         else if (type == ADD_ITEM){
             errorMessage = @"Error adding item";

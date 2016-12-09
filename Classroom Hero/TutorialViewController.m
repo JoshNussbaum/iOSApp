@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (flag == 1){
-        _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  get  started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  continue  to  begin  your  adventure  with  Classroom  Hero!"];
+        _pageTitles = @[@"Welcome  to  Classroom  Hero!  Swipe  left  to  get  started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  categories", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  continue  to  begin  your  adventure  with  Classroom  Hero!"];
         self.backButton.enabled = YES;
         self.backButton.hidden = NO;
 
@@ -41,7 +41,7 @@
     if (flag == 2){
         [self.backButton setTitle:@"Back" forState:UIControlStateNormal];
         [self.skipButton setHidden:YES];
-        _pageTitles = @[@"Swipe  left  to  get  started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  reinforcers", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  back  to  return  to  the  settings  screen"];
+        _pageTitles = @[@"Swipe  left  to  get  started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  categories", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Click  back  to  return  to  the  settings  screen"];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
     
@@ -74,7 +74,7 @@
     
     NSArray *buttons = @[self.startOverButton, self.skipButton, self.backButton];
     for (UIButton *button in buttons){
-        [Utilities makeRounded:button.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+        [Utilities makeRounded:button.layer color:nil borderWidth:0.5f cornerRadius:5];
     }
     tmpClass = currentUser.currentClass;
     [[NSNotificationCenter defaultCenter] addObserver:self

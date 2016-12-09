@@ -35,8 +35,6 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [currentUser reset];
-    self.emailTextField.text = @"nussbaum.joshua@gmail.com";
-    self.passwordTextField.text = @"josh";
     isStamping = NO;
     
     NSError *passwordError = nil;

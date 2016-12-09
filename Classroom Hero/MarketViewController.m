@@ -62,6 +62,7 @@
     studentSelected = NO;
     webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     [Utilities makeRoundedButton:self.purchaseButton :nil];
+    [Utilities makeRoundedButton:self.openTableViewButton :nil];
     
     currentUser = [user getInstance];
     
@@ -114,6 +115,23 @@
 }
 
 
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
+}
+
+
+- (IBAction)openTableViewClicked:(id)sender {
+    if (!isBuying){
+        [self animateTableView:NO];
+    }
+}
+
 - (IBAction)homeClicked:(id)sender {
     self.homeButton.enabled = NO;
     [self performSegueWithIdentifier:@"market_to_home" sender:nil];
@@ -129,29 +147,6 @@
 - (IBAction)classJarClicked:(id)sender {
     self.jarButton.enabled = NO;
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-- (IBAction)studentListClicked:(id)sender {
-    if (!isBuying){
-        if (studentsData.count > 0){
-            if (itemsData.count > 0){
-                if (self.studentsTableView.hidden){
-                    [self animateTableView:NO];
-                }
-                else{
-                    [self animateTableView:YES];
-                }
-            }
-            else {
-                [Utilities alertStatusWithTitle:@"Add items first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
-            }
-        }
-        else {
-            [Utilities alertStatusWithTitle:@"Add students first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
-        }
-        
-    }
 }
 
 
@@ -173,7 +168,6 @@
 - (IBAction)addItemClicked:(id)sender {
     if (!isBuying){
         [Utilities editAlertTextWithtitle:@"Add item" message:nil cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
-
     }
 }
 
@@ -196,7 +190,7 @@
     newItemCost = [alertView textFieldAtIndex:1].text;
     
     if (alertView.tag == 1){
-        NSString *errorMessage = [Utilities isInputValid:newItemName :@"Item Name"];
+        NSString *errorMessage = [Utilities isInputValid:newItemName :@"Item name"];
         
         if (!errorMessage){
             NSString *costErrorMessage = [Utilities isNumeric:newItemCost];
@@ -205,18 +199,19 @@
                 [webHandler addItem:[currentUser.currentClass getId] :newItemName :newItemCost.integerValue];
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error adding item" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                [Utilities editAlertTextWithtitle:@"Error adding item" message:costErrorMessage cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
+
                 return;
             }
         }
         else {
-            [Utilities alertStatusWithTitle:@"Error adding item" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities editAlertTextWithtitle:@"Error adding item" message:errorMessage cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
         }
         
     }
     else if (alertView.tag == 2){
         if (buttonIndex == 1){
-            NSString *errorMessage = [Utilities isInputValid:newItemName :@"Item Name"];
+            NSString *errorMessage = [Utilities isInputValid:newItemName :@"Item name"];
             
             if (!errorMessage){
                 NSString *costErrorMessage = [Utilities isNumeric:newItemCost];
@@ -226,12 +221,13 @@
                     [webHandler editItem:[currentItem getId] :newItemName :newItemCost.integerValue];
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error editing item" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities editTextWithtitle:@"Error editing item" message:costErrorMessage cancel:@"Cancel" done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
+
                     return;
                 }
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error editing item" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                [Utilities editTextWithtitle:@"Error editing item" message:errorMessage cancel:@"Cancel" done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
             }
         }
         else if (buttonIndex == 2){
@@ -578,9 +574,7 @@
         
         return NO;
     }
-    if (self.studentsTableView.hidden == NO){
-        [self animateTableView:YES];
-    }
+
     return YES;
 }
 
@@ -623,10 +617,8 @@
         if (selectedStudent == currentStudent){
             currentStudent = nil;
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            
-            [self hideStudent];
-            [self animateTableView:YES];
-            
+            cell.backgroundColor = [UIColor clearColor];
+
         }
         else {
             currentStudent = selectedStudent;
@@ -656,23 +648,13 @@
 
 
 - (void)animateTableView:(BOOL)open{
-    if (!open){
+
+    if (open){
         self.studentsTableView.alpha = 0.0;
+    }else{
+        self.studentsTableView.alpha = 1.0;
     }
-    [UIView animateWithDuration:.2
-                     animations:^{
-                         
-                         if (open){
-                             self.studentsTableView.alpha = 0.0;
-                         }else{
-                             self.studentsTableView.alpha = 1.0;
-                             self.studentsTableView.hidden = open;
-                         }
-                     }
-                     completion:^(BOOL finished) {
-                         self.studentsTableView.hidden = open;
-                     }
-     ];
+    self.studentsTableView.hidden = open;
 }
 
 

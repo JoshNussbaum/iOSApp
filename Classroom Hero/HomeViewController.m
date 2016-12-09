@@ -36,18 +36,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title  = @"Home Screen";
     currentUser = [user getInstance];
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
     self.teacherNameLabel.text = name;
     self.classNameLabel.text = [currentUser.currentClass getName];
     [self configureProgressBars];
 
-    NSArray *buttons = @[self.classesButton, self.attendanceButton];
+    NSArray *buttons = @[self.classesButton];
     for (UIButton *button in buttons){
         [Utilities makeRoundedButton:button :nil];
         button.exclusiveTouch = YES;
     }
+    [Utilities makeRounded:self.attendanceButton.layer color:nil borderWidth:1.0f cornerRadius:10];
     NSArray *menuButtons = @[self.homeButton, self.awardButton, self.jarButton, self.marketButton];
     for (UIButton *button in menuButtons){
         button.exclusiveTouch = YES;

@@ -239,7 +239,8 @@
         else if (type == RESET_PASSWORD){
             errorMessage = @"Error resetting password";
         }
-        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        [Utilities disappearingAlertView:errorMessage message:message otherTitles:nil tag:0 view:self time:2.0];
+
         [hud hide:YES];
 
     }

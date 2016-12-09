@@ -200,7 +200,7 @@ NSInteger menuItemFontSize = 26;
 
 
 + (UIColor *)CHLightGreenColor{
-    UIColor *CHBlueColor = [UIColor colorWithRed:245.0/255.0 green:255.0/255.0 blue:245.0/255.0 alpha:1.0] ;
+    UIColor *CHBlueColor = [UIColor colorWithRed:245.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0] ;
     
     return CHBlueColor;
 
@@ -252,6 +252,9 @@ NSInteger menuItemFontSize = 26;
 
 
 + (NSString *) isNumeric:(NSString *)input{
+    if (input.length == 0){
+        return @"All fields are required";
+    }
     NSScanner *sc = [NSScanner scannerWithString: input];
     
     if ( [sc scanFloat:NULL] && input.integerValue >= 0)
@@ -274,6 +277,9 @@ NSInteger menuItemFontSize = 26;
 
 + (NSString *)isInputValid:(NSString *)input :(NSString *)inputName{
     NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+    if (input.length == 0){
+        return @"All fields are required";
+    }
     if ([[input stringByTrimmingCharactersInSet: set] length] == 0)
     {
         return [NSString stringWithFormat:@"%@ may not contain only white spaces", inputName];

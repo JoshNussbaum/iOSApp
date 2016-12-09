@@ -53,6 +53,10 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *chestButton;
 @property (strong, nonatomic) IBOutlet UILabel *notificationLabel;
+@property (strong, nonatomic) IBOutlet UIButton *openStudentTableViewButton;
+
+
+- (IBAction)openStudentTableViewClicked:(id)sender;
 
 - (IBAction)chestClicked:(id)sender;
 

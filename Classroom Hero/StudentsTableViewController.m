@@ -38,6 +38,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [Utilities CHLightBlueColor];
+
     currentUser = [user getInstance];
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
@@ -90,11 +92,12 @@
                 [webHandler addStudent:[currentUser.currentClass getId] :studentFirstName :studentLastName :[currentUser.currentClass getSchoolId]];
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                [Utilities editAlertAddStudentWithtitle:@"Error adding student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
+
             }
         }
         else {
-            [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities editAlertAddStudentWithtitle:@"Error adding student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
         }
     }
     else if (alertView.tag == 2){
@@ -127,7 +130,7 @@
             [self.tableView reloadData];
         }
         else {
-            [Utilities alertStatusWithTitle:@"Error adding student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities disappearingAlertView:@"Error adding student" message:message otherTitles:nil tag:0 view:self time:2.0];
             return;
         }
     }
@@ -139,7 +142,7 @@
             [self.tableView reloadData];
         }
         else {
-            [Utilities alertStatusWithTitle:@"Error deleting student" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities disappearingAlertView:@"Error deleting student" message:message otherTitles:nil tag:0 view:self time:2.0];
             return;
         }
     }

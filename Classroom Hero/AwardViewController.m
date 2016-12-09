@@ -73,6 +73,7 @@ static NSInteger coinHeight = 250;
     
     BOOL chestTappable;
     BOOL chestPoint;
+    BOOL uncategorizedPoint;
     
     NSMutableDictionary *selectedStudentsWhenGenerateChestClicked;
 }
@@ -128,7 +129,7 @@ static NSInteger coinHeight = 250;
 
     if (!reinforcerData || [reinforcerData count] == 0) {
         self.categoryPicker.hidden = YES;
-        self.reinforcerLabel.text=@"Add reinforcers above";
+        self.reinforcerLabel.text=@"Add categories above";
         self.reinforcerValue.text = @"";
         self.editReinforcerButton.hidden = YES;
 
@@ -143,8 +144,37 @@ static NSInteger coinHeight = 250;
     for (UIButton *button in menuButtons){
         button.exclusiveTouch = YES;
     }
-
+    [Utilities makeRoundedButton:self.openStudentTableViewButton :nil];
     [Utilities makeRoundedLabel:self.notificationLabel :nil];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated{
+    isStamping = NO;
+    
+    // 3 Coins Rects
+    aOneRect = self.aOne.frame;
+    aTwoRect = self.aTwo.frame;
+    aThreeRect = self.aThree.frame;
+    
+    // 2 Coins Rects
+    bOneRect = self.bOne.frame;
+    bTwoRect = self.bTwo.frame;
+    
+    // 1 Coin Rect
+    cOneRect = self.cOne.frame;
+    coinViewRect = self.coinImage.frame;
+    coinLabelRect = self.coinPointsLabel.frame;
+    
+    coinRect = self.aTwo.frame;
+    
+    self.jarButton.enabled = YES;
+    self.classJarIconButton.enabled = YES;
+    self.homeButton.enabled = YES;
+    self.homeIconButton.enabled = YES;
+    self.marketButton.enabled = YES;
+    self.marketIconButton.enabled = YES;
+    
 }
 
 
@@ -181,42 +211,12 @@ static NSInteger coinHeight = 250;
 }
 
 
-
 - (void)getStudentsData{
     NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
     
     for (student *tmpStudent in studentsDataArray){
         [studentsData setObject:tmpStudent forKey:[NSNumber numberWithInteger:[tmpStudent getId]]];
     }
-}
-
-
-- (void)viewDidAppear:(BOOL)animated{
-    isStamping = NO;
-
-    // 3 Coins Rects
-    aOneRect = self.aOne.frame;
-    aTwoRect = self.aTwo.frame;
-    aThreeRect = self.aThree.frame;
-
-    // 2 Coins Rects
-    bOneRect = self.bOne.frame;
-    bTwoRect = self.bTwo.frame;
-
-    // 1 Coin Rect
-    cOneRect = self.cOne.frame;
-    coinViewRect = self.coinImage.frame;
-    coinLabelRect = self.coinPointsLabel.frame;
-
-    coinRect = self.aTwo.frame;
-
-    self.jarButton.enabled = YES;
-    self.classJarIconButton.enabled = YES;
-    self.homeButton.enabled = YES;
-    self.homeIconButton.enabled = YES;
-    self.marketButton.enabled = YES;
-    self.marketIconButton.enabled = YES;
-
 }
 
 
@@ -247,31 +247,9 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (IBAction)studentListClicked:(id)sender {
-    if (studentsData.count > 0){
-        if (reinforcerData.count > 0){
-            if (self.studentsTableView.hidden){
-                [self animateTableView:NO];
-            }
-            else{
-                
-                [self animateTableView:YES];
-            }
-        }
-        else {
-            [Utilities alertStatusWithTitle:@"Add reinforcers first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
-        }
-
-    }
-    else {
-        [Utilities alertStatusWithTitle:@"Add students first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
-    }
-}
-
-
 - (IBAction)addReinforcerClicked:(id)sender {
     if (!chestTappable && !isStamping){
-        [Utilities editAlertTextWithtitle:@"Add Reinforcer" message:nil cancel:@"Cancel"  done:nil delete:NO textfields:@[@"Reinforcer name", @"Reinforcer value"] tag:2 view:self];
+        [Utilities editAlertTextWithtitle:@"Add category" message:nil cancel:@"Cancel"  done:nil delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
     }
 }
 
@@ -280,7 +258,7 @@ static NSInteger coinHeight = 250;
     if (reinforcerData.count > 0 && !chestTappable && !isStamping){
         index = [self.categoryPicker selectedRowInComponent:0];
         currentReinforcer = [reinforcerData objectAtIndex:index];
-        [Utilities editTextWithtitle:@"Edit Reinforcer" message:nil cancel:nil done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
+        [Utilities editTextWithtitle:@"Edit Category" message:nil cancel:nil done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
     }
 
 }
@@ -295,7 +273,7 @@ static NSInteger coinHeight = 250;
             NSString *newReinforcerName = [alertView textFieldAtIndex:0].text;
             NSString *newReinforcerValue = [alertView textFieldAtIndex:1].text;
 
-            NSString *errorMessage = [Utilities isInputValid:newReinforcerName :@"Reinforcer Name"];
+            NSString *errorMessage = [Utilities isInputValid:newReinforcerName :@"Category name"];
 
             if (!errorMessage){
                 NSString *valueErrorMessage = [Utilities isNumeric:newReinforcerValue];
@@ -306,11 +284,11 @@ static NSInteger coinHeight = 250;
                     [webHandler editReinforcer:[currentReinforcer getId] :newReinforcerName :newReinforcerValue.integerValue];
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:valueErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities editTextWithtitle:@"Error edting category" message:valueErrorMessage cancel:nil done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
                 }
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error editing reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                [Utilities editTextWithtitle:@"Error edting category" message:errorMessage cancel:nil done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
             }
         }
         else if (buttonIndex == 2){
@@ -323,25 +301,73 @@ static NSInteger coinHeight = 250;
         tmpName = [alertView textFieldAtIndex:0].text;
         tmpValue = [alertView textFieldAtIndex:1].text;
 
-        NSString *errorMessage = [Utilities isInputValid:tmpName :@"Reinforcer Name"];
+        NSString *errorMessage = [Utilities isInputValid:tmpName :@"Category name"];
 
         if (!errorMessage){
             NSString *valueErrorMessage = [Utilities isNumeric:tmpValue];
             if (!valueErrorMessage){
-                [self activityStart:@"Adding Reinforcer..."];
+                [self activityStart:@"Adding Category..."];
                 [webHandler addReinforcer:[currentUser.currentClass getId] :tmpName :tmpValue.integerValue];
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:valueErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                [Utilities editAlertTextWithtitle:@"Error adding category" message:valueErrorMessage cancel:@"Cancel"  done:nil delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
+
             }
 
         }
         else {
-            [Utilities alertStatusWithTitle:@"Error adding reinforcer" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities editAlertTextWithtitle:@"Error adding category" message:errorMessage cancel:@"Cancel"  done:nil delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
         }
     }
     else if (alertView.tag == 3){
         [webHandler deleteReinforcer:[currentReinforcer getId]];
+    }
+    else if (alertView.tag == 4){
+        tmpValue = [alertView textFieldAtIndex:0].text;
+
+        NSInteger studentCount = selectedStudents.count;
+        NSString *errorMessage = [Utilities isNumeric:tmpValue];
+
+        if (!errorMessage) {
+            if (studentCount > 0){
+                uncategorizedPoint = YES;
+                id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+                
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                      action:@"Add Uncategorized Points (Manual)"
+                                                                       label:[currentReinforcer getName]
+                                                                       value:@1] build]];
+                isStamping = YES;
+                
+                
+                if (studentCount > 1){
+                    NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
+                    
+                    for (NSNumber *studentId in selectedStudents) {
+                        [selectedStudentIds addObject:studentId];
+                    }
+                    
+                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:tmpValue.integerValue reinforcerId:0 schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                }
+                
+                else {
+                    NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+                    
+                    student *selectedStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:studentId.integerValue];
+                    
+                    currentStudent = selectedStudent;
+                    
+                    
+                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:tmpValue.integerValue reinforcerId:0 schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                    
+                }
+                
+            }
+
+        }
+        else {
+            [Utilities editAlertNumberWithtitle:@"Error adding points" message:errorMessage cancel:nil done:@"Add points" input:nil tag:4 view:self];
+        }
     }
 
 }
@@ -402,7 +428,7 @@ static NSInteger coinHeight = 250;
 
             if (!reinforcerData || [reinforcerData count] == 0) {
                 self.categoryPicker.hidden = YES;
-                self.reinforcerLabel.text=@"Add  reinforcers  above";
+                self.reinforcerLabel.text=@"Add  categories  above";
                 self.reinforcerValue.text = @"";
                 self.editReinforcerButton.hidden = YES;
 
@@ -437,7 +463,6 @@ static NSInteger coinHeight = 250;
             [studentsData setObject:currentStudent forKey:idNumber];
             [selectedStudents setObject:currentStudent forKey:idNumber];
 
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
             
             if (chestPoint){
                 self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
@@ -445,6 +470,7 @@ static NSInteger coinHeight = 250;
             }
             
             else {
+                AudioServicesPlaySystemSound(award);
                 [self hideStudent];
                 [self setReinforcerName];
                 self.categoryPicker.hidden = NO;
@@ -484,13 +510,12 @@ static NSInteger coinHeight = 250;
             
             tmpPoints = ([currentStudent getPoints] - pointsAwarded);
             
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [currentReinforcer getName], @"Reinforcer Name", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getId]], @"Reinforcer ID", [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]], @"Reinforcer Value", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", [NSString stringWithFormat:@"%ld", (long)studentCount], @"Number of students", nil];
-            
             if (chestPoint){
                 self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
                 [self addPoints:[currentReinforcer getValue] levelup:NO ];
             }
             else {
+                AudioServicesPlaySystemSound(award);
                 [self manuallyAddPointsSuccess];
             }
         }
@@ -590,33 +615,33 @@ static NSInteger coinHeight = 250;
             else {
                 if (skippedStudents > 0) {
                     if (skippedStudents == 1){
-                        displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@",  and  %i  other", skippedStudents]];
+                        displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", and %i other", skippedStudents]];
                     }
                     else if (skippedStudents > 1){
-                        displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@",  %@  and  %i  others", firstName, skippedStudents]];
+                        displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", %@ and %i  others", firstName, skippedStudents]];
                     }
                     
                 }
                 else {
-                    displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@",  and  %@", firstName]];
+                    displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", and %@", firstName]];
                 }
                 return displayString;
             }
         }
         else if (index != (selectedStudents.count - 1)) {
             len += 4;
-            displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@",  %@", firstName]];
+            displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", %@", firstName]];
         }
         else {
             len += 7;
             if (skippedStudents == 1){
-                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@",  %@  and  %i  other", firstName, skippedStudents]];
+                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", %@ and %i other", firstName, skippedStudents]];
             }
             else if (skippedStudents > 1){
-                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@",  %@  and  %i  others", firstName, skippedStudents]];
+                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", %@ and %i others", firstName, skippedStudents]];
             }
             else {
-                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@",  and  %@", firstName]];
+                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", and %@", firstName]];
 
             }
         }
@@ -633,7 +658,6 @@ static NSInteger coinHeight = 250;
 
     if (studentsCount == 0){
         self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
-        chestTappable = NO;
         [self hideStudent];
         self.categoryPicker.hidden = NO;
         [self setReinforcerName];
@@ -687,7 +711,7 @@ static NSInteger coinHeight = 250;
             self.pointsLabel.hidden = NO;
         }
         else {
-            self.pointsLabel.text = @"Tap to unlock";
+            self.pointsLabel.text = @"Tap the chest to unlock";
             self.pointsLabel.hidden = NO;
         }
 
@@ -721,6 +745,14 @@ static NSInteger coinHeight = 250;
 
 /* Animations for Awarding Points */
 
+
+- (IBAction)openStudentTableViewClicked:(id)sender {
+    if (!chestPoint){
+        [self animateTableView:NO];
+        [self hideStudent];
+        self.categoryPicker.hidden = NO;
+    }
+}
 
 - (IBAction)chestClicked:(id)sender {
     if (chestTappable && !showingStudents){
@@ -936,12 +968,14 @@ static NSInteger coinHeight = 250;
 
 
 - (void)hideStudent{
-    self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
+    chestTappable = NO;
     self.nameLabel.hidden=YES;
     self.pointsLabel.hidden=YES;
     self.levelLabel.hidden=YES;
     self.sackImage.hidden=YES;
     self.progressView.hidden=YES;
+    [self animateTableView:NO];
+
 }
 
 
@@ -951,6 +985,7 @@ static NSInteger coinHeight = 250;
     isStamping = NO;
     chestPoint = NO;
     [self.coinPointsLabel setFont:[UIFont fontWithName:@"GillSans-Bold" size:42.0]];
+    [self animateTableView:NO];
 }
 
 
@@ -1169,7 +1204,18 @@ static NSInteger coinHeight = 250;
 
 
 - (void)manuallyAddPointsSuccess{
-    [Utilities disappearingAlertView:@"Successfully added points" message:nil otherTitles:nil tag:0 view:self time:0.8];
+    NSString *successString;
+    float time = 0;
+    if (uncategorizedPoint){
+        time = 1.7;
+        successString = [NSString stringWithFormat:@"+%@ to %@", tmpValue, [self displayStringForMultipleSelectedStudents]];
+    }
+    else {
+        time = 2.2;
+        successString = [NSString stringWithFormat:@"+%ld for %@ to %@", (long)[currentReinforcer getValue], [currentReinforcer getName], [self displayStringForMultipleSelectedStudents]];
+    }
+    
+    [Utilities disappearingAlertView:successString message:nil otherTitles:nil tag:0 view:self time:time];
     isStamping = NO;
     chestTappable = NO;
 }
@@ -1180,10 +1226,11 @@ static NSInteger coinHeight = 250;
         
         return NO;
     }
-    if (self.studentsTableView.hidden == NO){
-        [self animateTableView:YES];
-    }
-    
+//    if (chestTappable && ![touch.view isDescendantOfView:self.chestButton]){
+//        [self animateTableView:NO];
+//        [self hideStudent];
+//        self.categoryPicker.hidden = NO;
+//    }
     return YES;
 }
 
@@ -1226,7 +1273,9 @@ static NSInteger coinHeight = 250;
         for (NSInteger row = 0; row < [self.studentsTableView numberOfRowsInSection:0]; row++) {
             NSInteger index = row;
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            [self.studentsTableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+            
             cell.backgroundColor = [Utilities CHGreenColor];
             
         }
@@ -1242,7 +1291,6 @@ static NSInteger coinHeight = 250;
         NSInteger studentCount = selectedStudents.count;
         
         if (chestTappable && [selectedStudents isEqualToDictionary:selectedStudentsWhenGenerateChestClicked]) {
-            self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
             
             [selectedStudents removeAllObjects];
             
@@ -1250,7 +1298,7 @@ static NSInteger coinHeight = 250;
                 NSInteger index = indexPath.row;
                 [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
             }
-            
+            uncategorizedPoint = NO;
             chestTappable = NO;
             chestPoint = NO;
             [self hideStudent];
@@ -1260,7 +1308,7 @@ static NSInteger coinHeight = 250;
         }
         else {
             if (studentCount > 0){
-                self.stampImage.image = [UIImage imageNamed:@"glowing_chest"];
+                [self animateTableView:YES];
                 
                 selectedStudentsWhenGenerateChestClicked = [NSMutableDictionary dictionaryWithDictionary:selectedStudents];
                 chestTappable = YES;
@@ -1269,7 +1317,7 @@ static NSInteger coinHeight = 250;
                 NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
                 student *selectedStudent = [selectedStudents objectForKey:studentId];
                 currentStudent = selectedStudent;
-                [self animateTableView:YES];
+        
                 [self displayStudent:YES];
                 
                 // get all the student IDs and make the web call
@@ -1292,10 +1340,11 @@ static NSInteger coinHeight = 250;
         // Add Points Manually
         NSInteger studentCount = selectedStudents.count;
         if (studentCount > 0){
+            uncategorizedPoint = NO;
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                                  action:@"Add Points (Manual)"
+                                                                  action:@"Add Categorized Points (Manual)"
                                                                    label:[currentReinforcer getName]
                                                                    value:@1] build]];
             isStamping = YES;
@@ -1330,6 +1379,17 @@ static NSInteger coinHeight = 250;
 }
 
 
+- (void)manualPointsClicked{
+    NSInteger studentCount = selectedStudents.count;
+    if (studentCount > 0){
+        if (!isStamping && !chestPoint){
+            UIAlertView * av = [Utilities editAlertNumberWithtitle:@"Uncategorized Points" message:[self displayStringForMultipleSelectedStudents] cancel:nil done:@"Add points" input:nil tag:4 view:self];
+            
+        }
+    }
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
@@ -1356,18 +1416,25 @@ static NSInteger coinHeight = 250;
     
     // Make the sections
     
-    float width = tableView.frame.size.width / 4;
+    float width = tableView.frame.size.width / 5;
     
     UIView *addPointsSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 60)];
-    UIView *chestSection = [[UIView alloc] initWithFrame:CGRectMake(width, 0, width, 60)];
-    UIView *selectAllSection = [[UIView alloc] initWithFrame:CGRectMake(width * 2, 0, width, 60)];
-    UIView *deselectAllSection = [[UIView alloc] initWithFrame:CGRectMake(width * 3, 0, width, 60)];
+    UIView *manualPointsSection = [[UIView alloc] initWithFrame:CGRectMake(width, 0, width, 60)];
+    UIView *chestSection = [[UIView alloc] initWithFrame:CGRectMake(width * 2, 0, width, 60)];
+    UIView *selectAllSection = [[UIView alloc] initWithFrame:CGRectMake(width * 3, 0, width, 60)];
+    UIView *deselectAllSection = [[UIView alloc] initWithFrame:CGRectMake(width * 4, 0, width, 60)];
     
     // Add gestures to the sections
     UITapGestureRecognizer *addPointsGesture =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(addPointsClicked)];
     [addPointsSection addGestureRecognizer:addPointsGesture];
+    
+    UITapGestureRecognizer *manualPointsGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(manualPointsClicked)];
+    [manualPointsSection addGestureRecognizer:manualPointsGesture];
+    
     
     UITapGestureRecognizer *generateChestGesture =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -1384,33 +1451,38 @@ static NSInteger coinHeight = 250;
                                             action:@selector(deselectAllClicked)];
     [deselectAllSection addGestureRecognizer:deselectAllGesture];
     
-    // Add images to the sections
     
     float x = (width / 2) - 43;
     
     UILabel *addPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
-    addPointsLabel.text = @"Add points";
+    addPointsLabel.text = @"Category Points";
 
+    UILabel *manualPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    manualPointsLabel.text = @"Manual Points";
     
     UILabel *generateChestLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
-    generateChestLabel.text = @"Generate chest";
+    generateChestLabel.text = @"Generate Chest";
 
     UILabel *selectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
-    selectAllLabel.text = @"Select all";
+    selectAllLabel.text = @"Select All";
     
     UILabel *deselectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
-    deselectAllLabel.text = @"Deselect all";
+    deselectAllLabel.text = @"Deselect All";
     
-    NSArray *labels = @[addPointsLabel, generateChestLabel, selectAllLabel, deselectAllLabel];
+    NSArray *labels = @[addPointsLabel, manualPointsLabel, generateChestLabel, selectAllLabel, deselectAllLabel];
     
     for (UILabel *label in labels){
-        label.font = [UIFont fontWithName:@"GillSans-Bold" size:16];
+        label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
+        label.shadowColor = [UIColor blackColor];
         label.textColor = [UIColor blackColor];
         label.numberOfLines = 2;
         label.textAlignment = NSTextAlignmentCenter;
-        [Utilities makeRoundedLabel:label :[UIColor blackColor]];
+        label.backgroundColor = [UIColor whiteColor];
+        [Utilities makeRoundedLabel:label :nil];
     }
+    
     [addPointsSection addSubview:addPointsLabel];
+    [manualPointsSection addSubview:manualPointsLabel];
     [chestSection addSubview:generateChestLabel];
     [selectAllSection addSubview:selectAllLabel];
     [deselectAllSection addSubview:deselectAllLabel];
@@ -1436,7 +1508,7 @@ static NSInteger coinHeight = 250;
     
     // Add sections to the section view
     
-    NSArray *sections = @[addPointsSection, chestSection, selectAllSection, deselectAllSection];
+    NSArray *sections = @[addPointsSection, manualPointsSection, chestSection, selectAllSection, deselectAllSection];
     for (UIView *view in sections){
         [view setBackgroundColor:[Utilities CHBlueColor]];
         
@@ -1481,41 +1553,25 @@ static NSInteger coinHeight = 250;
     if ([selectedStudents objectForKey:studentId]){
         [selectedStudents removeObjectForKey:studentId];
     }
-    if ([selectedStudents count] > 0 && chestTappable){
-        [self displayStudent:chestTappable];
-    }
-    else {
-        chestTappable = NO;
-        [self hideStudent];
-        self.categoryPicker.hidden = NO;
-        [self setReinforcerName];
-        self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
-        
-    }
     
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (!isStamping && !chestPoint){
-        studentIndex = indexPath.row ;
-        NSNumber *studentId = [[studentsData allKeys] objectAtIndex:studentIndex];
+    studentIndex = indexPath.row ;
+    NSNumber *studentId = [[studentsData allKeys] objectAtIndex:studentIndex];
+    student *selectedStudent = [studentsData objectForKey:studentId];
+    StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+    
         
-        student *selectedStudent = [studentsData objectForKey:studentId];
-        StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
-        cell.backgroundColor = [Utilities CHGreenColor];
-
-        [selectedStudents setObject:selectedStudent forKey:studentId];
-        
-        if ([selectedStudents count] > 0 && chestTappable){
-            [self displayStudent:chestTappable];
-        }
-        
-        
-    }
-    else{
+    if ([selectedStudents objectForKey:studentId]) {
+        [selectedStudents removeObjectForKey:studentId];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
+    }
+    else {
+        cell.backgroundColor = [Utilities CHGreenColor];
+        [selectedStudents setObject:selectedStudent forKey:studentId];
     }
     
 }
@@ -1587,6 +1643,17 @@ static NSInteger coinHeight = 250;
 - (IBAction)unwindToAward:(UIStoryboardSegue *)unwindSegue {
 
 }
+
+- (IBAction)studentListClicked:(id)sender {
+    UIStoryboard *storyboard = self.storyboard;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.2;
+    transition.type = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
+    [self.navigationController pushViewController:stvc animated:NO];
+}
+
 
 
 -(void)printSelectedStudents{

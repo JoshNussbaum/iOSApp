@@ -69,12 +69,14 @@
     }
     
     if (![errorMessage isEqualToString:@""]){
-        [Utilities alertStatusWithTitle:@"Error adding class" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+        [Utilities disappearingAlertView:@"Error adding class" message:errorMessage otherTitles:nil tag:0 view:self time:2.0];
+
         return;
         
     }
     if (self.classGradeTextField.text.length > 3){
-        [Utilities alertStatusWithTitle:@"Error adding class" message:@"Grade must be 3 numbers or less"  cancel:nil otherTitles:nil tag:0 view:nil];
+        [Utilities disappearingAlertView:@"Error adding class" message:@"Grade must be less than 1000" otherTitles:nil tag:0 view:self time:2.0];
+
         return;
         
     }
@@ -130,7 +132,7 @@
             [self.navigationController popViewControllerAnimated:YES];
             
         } else {
-            [Utilities alertStatusWithTitle:@"Error editing class" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities disappearingAlertView:@"Error adding class" message:message otherTitles:nil tag:0 view:self time:2.0];
             return;
         }
         

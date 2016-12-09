@@ -302,37 +302,55 @@
    
     NSString *errorMessage = [Utilities isInputValid:newClassJarName :@"Class jar name"];
     
-    if (!errorMessage){
-        errorMessage = [Utilities isNumeric:newClassJarTotal];
+    if (alertView.tag == 1){
         if (!errorMessage){
-            if (alertView.tag == 1){
+            errorMessage = [Utilities isNumeric:newClassJarTotal];
+            if (!errorMessage){
+                
                 [self activityStart:@"Adding class jar..."];
                 [webHandler addJar:[currentUser.currentClass getId] :newClassJarName :newClassJarTotal.integerValue];
-
+                
             }
-            else if (alertView.tag == 2){
+            else {
+                [Utilities editAlertTextWithtitle:@"Error adding class jar" message:errorMessage cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
+                
+            }
+            
+        }
+        else {
+            [Utilities editAlertTextWithtitle:@"Error adding class jar" message:errorMessage cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
+        }
+
+        
+    }
+    else if (alertView.tag == 2){
+        if (!errorMessage){
+            errorMessage = [Utilities isNumeric:newClassJarTotal];
+            if (!errorMessage){
                 [self activityStart:@"Editing class jar..."];
                 if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
                     [Utilities alertStatusWithTitle:@"Warning" message:@"Your new total is less than your current progress. Proceeding will reset your progress to 0" cancel:@"Cancel" otherTitles:@[@"Proceed"] tag:3 view:self];
-
                 }
                 else{
                     [webHandler editJar:[currentClassJar getId] :newClassJarName :newClassJarTotal.integerValue :[currentClassJar getProgress]];
                 }
             }
-            else if (alertView.tag == 3){
-                [webHandler editJar:[currentClassJar getId] :newClassJarName :newClassJarTotal.integerValue :0];
-            }
             
+            else {
+                [Utilities editTextWithtitle:@"Edit Class Jar" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
+                
+            }
         }
         else {
-            [Utilities alertStatusWithTitle:@"Error adding class jar" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities editTextWithtitle:@"Edit Class Jar" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
+
         }
-        
     }
-    else {
-        [Utilities alertStatusWithTitle:@"Error adding class jar" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+    
+    else if (alertView.tag == 3){
+        [webHandler editJar:[currentClassJar getId] :newClassJarName :newClassJarTotal.integerValue :0];
     }
+    
 }
 	
 

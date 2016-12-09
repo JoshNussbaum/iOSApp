@@ -101,10 +101,10 @@
         if (buttonIndex == 1){
             newStudentFirstName = [alertView textFieldAtIndex:0].text;
             newStudentLastName = [alertView textFieldAtIndex:1].text;
-            NSString *errorMessage = [Utilities isInputValid:newStudentFirstName :@"Student First Name"];
+            NSString *errorMessage = [Utilities isInputValid:newStudentFirstName :@"First name"];
             
             if (!errorMessage){
-                NSString *costErrorMessage = [Utilities isInputValid:newStudentLastName :@"Student Last Name"];
+                NSString *costErrorMessage = [Utilities isInputValid:newStudentLastName :@"Last name"];
                 if (!costErrorMessage){
                     [self activityStart:@"Editing Student..."];
                     [webHandler editStudent:[currentStudent getId] :newStudentFirstName :newStudentLastName];
@@ -138,7 +138,7 @@
             [webHandler addPointsWithStudentId:[currentStudent getId] points:points];
         }
         else {
-            [Utilities alertStatusWithTitle:@"Error adding points" message:errorMessage cancel:nil otherTitles:nil tag:0 view:self];
+            [Utilities editAlertNumberWithtitle:@"Error adding points" message:errorMessage cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
         }
         
     }
@@ -158,12 +158,13 @@
                 [webHandler subtractPointsWithStudentId:[currentStudent getId] points:points];
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error subtracting points" message:[NSString stringWithFormat:@"Student only has %ld points", (long)[currentStudent getPoints]] cancel:nil otherTitles:nil tag:0 view:self];
+                [Utilities editAlertNumberWithtitle:@"Error subtracting points" message:[NSString stringWithFormat:@"Student only has %ld points"] cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
+
             }
             
         }
         else {
-            [Utilities alertStatusWithTitle:@"Error subtracting points" message:errorMessage cancel:nil otherTitles:nil tag:0 view:self];
+            [Utilities editAlertNumberWithtitle:@"Error subtracting points" message:errorMessage cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
         }
     }
 }
