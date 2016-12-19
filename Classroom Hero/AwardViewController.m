@@ -88,6 +88,7 @@ static NSInteger coinHeight = 250;
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Award"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    [self getStudentsData];
 }
 
 
@@ -175,6 +176,8 @@ static NSInteger coinHeight = 250;
     self.marketButton.enabled = YES;
     self.marketIconButton.enabled = YES;
     
+    [self.studentsTableView reloadData];
+    
 }
 
 
@@ -212,7 +215,7 @@ static NSInteger coinHeight = 250;
 
 
 - (void)getStudentsData{
-    NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
+    NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
     
     for (student *tmpStudent in studentsDataArray){
         [studentsData setObject:tmpStudent forKey:[NSNumber numberWithInteger:[tmpStudent getId]]];
@@ -471,11 +474,7 @@ static NSInteger coinHeight = 250;
             
             else {
                 AudioServicesPlaySystemSound(award);
-                [self hideStudent];
-                [self setReinforcerName];
-                self.categoryPicker.hidden = NO;
                 [self manuallyAddPointsSuccess];
-
             }
         }
         
@@ -1287,95 +1286,110 @@ static NSInteger coinHeight = 250;
 
 
 - (void)generateChestClicked{
-    if (!isStamping && !chestPoint){
-        NSInteger studentCount = selectedStudents.count;
-        
-        if (chestTappable && [selectedStudents isEqualToDictionary:selectedStudentsWhenGenerateChestClicked]) {
+    if (reinforcerData.count > 0 ){
+        if (!isStamping && !chestPoint){
+            NSInteger studentCount = selectedStudents.count;
             
-            [selectedStudents removeAllObjects];
+            if (chestTappable && [selectedStudents isEqualToDictionary:selectedStudentsWhenGenerateChestClicked]) {
+                
+                [selectedStudents removeAllObjects];
+                
+                for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
+                    NSInteger index = indexPath.row;
+                    [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
+                }
+                uncategorizedPoint = NO;
+                chestTappable = NO;
+                chestPoint = NO;
+                [self hideStudent];
+                self.categoryPicker.hidden = NO;
+                [self setReinforcerName];
+                return;
+            }
+            else {
+                if (studentCount > 0){
+                    [self animateTableView:YES];
+                    
+                    selectedStudentsWhenGenerateChestClicked = [NSMutableDictionary dictionaryWithDictionary:selectedStudents];
+                    chestTappable = YES;
+                    
+                    
+                    NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+                    student *selectedStudent = [selectedStudents objectForKey:studentId];
+                    currentStudent = selectedStudent;
+                    
+                    [self displayStudent:YES];
+                    
+                    // get all the student IDs and make the web call
+                    
+                }
+            }
             
-            for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
-                NSInteger index = indexPath.row;
-                [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
-            }
-            uncategorizedPoint = NO;
-            chestTappable = NO;
-            chestPoint = NO;
-            [self hideStudent];
-            self.categoryPicker.hidden = NO;
-            [self setReinforcerName];
-            return;
         }
-        else {
-            if (studentCount > 0){
-                [self animateTableView:YES];
-                
-                selectedStudentsWhenGenerateChestClicked = [NSMutableDictionary dictionaryWithDictionary:selectedStudents];
-                chestTappable = YES;
-                
-                
-                NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
-                student *selectedStudent = [selectedStudents objectForKey:studentId];
-                currentStudent = selectedStudent;
-        
-                [self displayStudent:YES];
-                
-                // get all the student IDs and make the web call
-                
-            }
-        }
-        
     }
+    else {
+        [Utilities disappearingAlertView:@"Error generating chest" message:@"Add categories first" otherTitles:nil tag:0 view:self time:1.5];
+    }
+
 }
 
 
 - (void)addPointsClicked{
-    if (!isStamping && !chestPoint){
-        if (chestTappable){
-            [self hideStudent];
-            [self setReinforcerName];
-            self.categoryPicker.hidden = NO;
-            chestTappable = NO;
-        }
-        // Add Points Manually
-        NSInteger studentCount = selectedStudents.count;
-        if (studentCount > 0){
-            uncategorizedPoint = NO;
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-            
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
-                                                                  action:@"Add Categorized Points (Manual)"
-                                                                   label:[currentReinforcer getName]
-                                                                   value:@1] build]];
-            isStamping = YES;
-            NSInteger reinforcerId = [currentReinforcer getId];
-            NSInteger pointsEarned = [currentReinforcer getValue];
-            
-            if (studentCount > 1){
-                NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
+    if (reinforcerData.count > 0 ){
+        if (!isStamping && !chestPoint){
+            if (chestTappable){
+                [self hideStudent];
+                [self setReinforcerName];
+                self.categoryPicker.hidden = NO;
+                chestTappable = NO;
+            }
+            // Add Points Manually
+            NSInteger studentCount = selectedStudents.count;
+            if (studentCount > 0){
+                uncategorizedPoint = NO;
+                id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
                 
-                for (NSNumber *studentId in selectedStudents) {
-                    [selectedStudentIds addObject:studentId];
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                      action:@"Add Categorized Points (Manual)"
+                                                                       label:[currentReinforcer getName]
+                                                                       value:@1] build]];
+                isStamping = YES;
+                NSInteger reinforcerId = [currentReinforcer getId];
+                NSInteger pointsEarned = [currentReinforcer getValue];
+                
+                if (studentCount > 1){
+                    NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
+                    
+                    for (NSNumber *studentId in selectedStudents) {
+                        [selectedStudentIds addObject:studentId];
+                    }
+                    
+                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
                 }
                 
-                [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
-            }
-            
-            else {
-                NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
-                
-                student *selectedStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:studentId.integerValue];
-                
-                currentStudent = selectedStudent;
-                
-                
-                [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                else {
+                    NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
+                    
+                    student *selectedStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:studentId.integerValue];
+                    
+                    currentStudent = selectedStudent;
+                    
+                    
+                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                    
+                }
                 
             }
             
         }
+        
+    }
+    else {
+        [Utilities disappearingAlertView:@"Error adding points" message:@"Add categories first" otherTitles:nil tag:0 view:self time:1.5];
 
     }
+    
+    
 }
 
 

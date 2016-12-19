@@ -222,7 +222,7 @@ NSInteger menuItemFontSize = 26;
 
 
 + (UIColor *) CHGreenColor{
-    UIColor *CHGreenColor = [UIColor colorWithRed:124.0/255.0 green:166.0/255.0 blue:115/255.0 alpha:1.0] ;
+    UIColor *CHGreenColor = [UIColor colorWithRed:100.0/255.0 green:191.0/255.0 blue:95.0/255.0 alpha:1.0] ;
     
     return CHGreenColor;
 }

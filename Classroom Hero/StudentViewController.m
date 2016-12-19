@@ -47,8 +47,8 @@
     
     [self configureProgressBar];
     [self setStudentLabels];
-    [Utilities makeRounded:self.addPointsButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
-    [Utilities makeRounded:self.subtractPointsButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:self.addPointsButton.layer color:nil borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:self.subtractPointsButton.layer color:nil borderWidth:0.5f cornerRadius:5];
 
     
 }
@@ -119,7 +119,7 @@
             }
         }
         else if (buttonIndex == 2){
-            [Utilities alertStatusWithTitle:@"Confirm delete" message:[NSString stringWithFormat:@"Really delete %@?", [currentStudent getFirstName]] cancel:@"Cancel" otherTitles:@[@"Delete"] tag:3 view:self];
+            [Utilities alertStatusWithTitle:@"Confirm delete" message:[NSString stringWithFormat:@"Really delete %@?", [currentStudent getFirstName]] cancel:@"Cancel" otherTitles:@[@"Delete"] tag:4 view:self];
         }
         
     }
@@ -138,13 +138,13 @@
             [webHandler addPointsWithStudentId:[currentStudent getId] points:points];
         }
         else {
-            [Utilities editAlertNumberWithtitle:@"Error adding points" message:errorMessage cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
+            [Utilities editAlertNumberWithtitle:@"Error adding points" message:errorMessage cancel:nil done:@"Add points" input:nil tag:2 view:self];
         }
         
     }
     if (alertView.tag == 3){
         NSString *pointsToSubtract = [alertView textFieldAtIndex:0].text;
-        NSString *errorMessage = [Utilities isNumeric:pointsToSubtract];
+        NSString *errorMessage = nil;//[Utilities isNumeric:pointsToSubtract];
         if (!errorMessage){
             points = pointsToSubtract.integerValue;
             
@@ -166,6 +166,10 @@
         else {
             [Utilities editAlertNumberWithtitle:@"Error subtracting points" message:errorMessage cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
         }
+    }
+    if (alertView.tag == 4){
+        [self activityStart:@"Deleting student..."];
+        [webHandler deleteStudent:[currentStudent getId]];
     }
 }
 
@@ -189,6 +193,8 @@
         }
         else if (type == DELETE_STUDENT){
             [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
+            [currentUser.studentIds removeObject:[NSNumber numberWithInteger:[currentStudent getId]]];
+
             [hud hide:YES];
             [self.navigationController popViewControllerAnimated:YES];
         }

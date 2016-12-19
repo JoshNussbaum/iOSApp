@@ -107,27 +107,26 @@
 
         if (type == ADD_POINTS || type == SUBTRACT_POINTS){
             UIColor *backgroundColor;
-//            if (type == ADD_POINTS){
-//                [Utilities CHGoldColor];
-//                backgroundColor = [UIColor colorWithRed:124.0/255.0 green:166.0/255.0 blue:115/255.0 alpha:0.8];
-//            }
-//            else {
-//                backgroundColor = [UIColor colorWithRed:255.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:0.8];
-//            }
-//            [UIView animateWithDuration:0.2
-//                             animations:^{
-//                                 self.backgroundColor = backgroundColor;
-//;
-//                             }
-//                             completion:^(BOOL finished) {
-//                                 double delayInSeconds = 0.2;
-//                                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//                                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//                                     self.backgroundColor = [UIColor clearColor];
-//
-//                                 });
-//                             }
-//             ];
+            if (type == ADD_POINTS){
+                backgroundColor = [Utilities CHGreenColor];
+            }
+            else {
+                backgroundColor = [UIColor colorWithRed:255.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:0.8];
+            }
+            [UIView animateWithDuration:0.1
+                             animations:^{
+                                 self.backgroundColor = backgroundColor;
+;
+                             }
+                             completion:^(BOOL finished) {
+                                 double delayInSeconds = 0.2;
+                                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                     self.backgroundColor = [UIColor clearColor];
+
+                                 });
+                             }
+             ];
             
             
             NSDictionary *studentDictionary = [data objectForKey:@"student"];

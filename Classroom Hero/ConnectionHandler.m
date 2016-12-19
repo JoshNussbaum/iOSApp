@@ -10,8 +10,9 @@
 #import "Utilities.h"
 
 
-//http://ehorvat.webfactional.com/apps/ch/
 //http://107.206.158.62:1337/classroom-web-services/
+//http://ehorvat.webfactional.com/apps/ch/
+//http://107.206.158.62:1337/api/
 
 static NSString * const LOGIN_URL = @"http://ehorvat.webfactional.com/apps/ch/services/login/auth";
 static NSString * const STAMP_TO_LOGIN_URL = @"http://ehorvat.webfactional.com/apps/ch/services/login/auth/stamp";
@@ -107,7 +108,7 @@ static NSInteger connectionType;
 
 - (void)logIn:(NSString *)email :(NSString *)password :(double)date{
     connectionType = LOGIN;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"username\": \"%@\", \"password\": \"%@\", \"date\": %ld}", email, password, (long)date];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"username\": \"%@\", \"password\": \"%@\", \"date\": %ld, \"role\": 1}", email, password, (long)date];
     
     [self asynchronousWebCall:jsonRequest :LOGIN_URL :POST];
 }
@@ -478,7 +479,8 @@ static NSInteger connectionType;
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *response = nil;
     NSData *urlData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
+    NSLog(@"Check out the request -> %@", request);
+
     if ([response statusCode] >= 200 && [response statusCode] < 300)
     {
         NSError *err = nil;
@@ -499,6 +501,8 @@ static NSInteger connectionType;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:10];
+    
+    NSLog(@"Check out the request -> %@", request);
     [request setHTTPMethod:httpMethod];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -538,7 +542,7 @@ static NSInteger connectionType;
                               JSONObjectWithData:responseData
                               options:NSJSONReadingMutableContainers
                               error:&err];
-    //NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
+    NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
     
     [delegate_ dataReady:jsonData :connectionType];
 }

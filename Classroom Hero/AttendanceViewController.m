@@ -53,11 +53,11 @@
     checkedOutStudents = [[NSMutableDictionary alloc] init];
     // Check to see if it's a different day.
     if (!([[Utilities getCurrentDate] isEqualToString:[currentUser.currentClass getCurrentDate]])){
-        [[DatabaseHandler getSharedInstance]updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:NO];
+        [[DatabaseHandler getSharedInstance]updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:NO studentIds:currentUser.studentIds];
         [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
     }
 
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
+    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
     [self setCheckedOutStudents];
 
     if ([checkedOutStudents count] > 0){
@@ -309,11 +309,11 @@
 
         else if (type == ALL_STUDENT_CHECK_IN || type == ALL_STUDENT_CHECK_OUT){
             BOOL checkedIn = (type == ALL_STUDENT_CHECK_IN ? YES: NO);
-            [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:checkedIn];
+            [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:checkedIn studentIds:currentUser.studentIds];
 
             [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] editClass:currentUser.currentClass];
-            studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
+            studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
             [checkedOutStudents removeAllObjects];
             if (!checkedIn){
                 [self setCheckedOutStudents];

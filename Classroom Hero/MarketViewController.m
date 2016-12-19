@@ -48,6 +48,7 @@
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Market"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
 }
 
 
@@ -67,7 +68,7 @@
     currentUser = [user getInstance];
     
     itemsData = [[DatabaseHandler getSharedInstance ] getItems:[currentUser.currentClass getId]];
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES];
+    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
     
     self.picker.dataSource = self;
     self.picker.delegate = self;
@@ -112,6 +113,8 @@
     self.classJarIconButton.enabled = YES;
     self.homeButton.enabled = YES;
     self.homeIconButton.enabled = YES;
+    
+    [self.studentsTableView reloadData];
 }
 
 
@@ -129,6 +132,13 @@
 - (IBAction)openTableViewClicked:(id)sender {
     if (!isBuying){
         [self animateTableView:NO];
+        for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
+            NSInteger index = indexPath.row;
+            StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
+            cell.backgroundColor = [UIColor clearColor];
+            [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
+        }
+        currentStudent = nil;
     }
 }
 
@@ -630,7 +640,7 @@
     }
     else {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [Utilities alertStatusWithTitle:@"Must add items first" message:nil cancel:nil otherTitles:nil tag:0 view:self];
+        [Utilities disappearingAlertView:@"Error selecting student" message:@"Add items first" otherTitles:nil tag:0 view:self time:1.5];
     }
 
 }

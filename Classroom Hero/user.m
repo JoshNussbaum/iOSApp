@@ -18,6 +18,8 @@
 @synthesize accountStatus;
 @synthesize serial;
 @synthesize currentClass;
+@synthesize studentIds;
+@synthesize students;
 
 static user *instance = nil;
 
@@ -32,6 +34,8 @@ static user *instance = nil;
             instance->password=@"";
             instance->accountStatus = 0;
             instance->serial=nil;
+            instance->studentIds=nil;
+            instance->students=nil;
         }
     }
     return instance;
@@ -45,11 +49,13 @@ static user *instance = nil;
     self->accountStatus = 0;
     self->serial = nil;
     self->currentClass = nil;
+    self->studentIds = nil;
+    self->students = nil;
 }
 
 
 -(void)printUser{
-    NSLog(@"\nUser name -> %@, %@,\nUser email -> %@,\nUser account status -> %ld,\nUser serial -> %@,\nUser current class -> %@", self->firstName, self->lastName, self->email, (long)self->accountStatus, self->serial, [self->currentClass getName]);
+    NSLog(@"\nUser name -> %@, %@,\nUser email -> %@,\nUser account status -> %ld,\nUser serial -> %@,\nUser current class -> %@,\n Student IDs -> %@", self->firstName, self->lastName, self->email, (long)self->accountStatus, self->serial, [self->currentClass getName], self->studentIds);
 }
 
 -(NSString *)fullName{

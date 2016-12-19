@@ -274,6 +274,15 @@ static NSString * const classCell = @"classCell";
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             class *selectedClass = [self getClassByIndexPath:indexPath];
             currentUser.currentClass = selectedClass;
+            NSMutableArray *studentIds = [[DatabaseHandler getSharedInstance] getStudentIds:[selectedClass getId]];
+            currentUser.studentIds = studentIds;
+//            NSMutableArray *students = [[DatabaseHandler getSharedInstance] getStudents:[selectedClass getId] :NO studentIds:studentIds];
+//            NSMutableDictionary *studentsDictionary = [[NSMutableDictionary alloc]init];
+//            for (student *stud in students){
+//                NSNumber *studentId = [NSNumber numberWithInteger:[stud getId]];
+//                studentsDictionary[studentId] = stud;
+//            }
+//            currentUser.students = studentsDictionary;
             [self performSegueWithIdentifier:@"class_to_home" sender:nil];
         }
     }

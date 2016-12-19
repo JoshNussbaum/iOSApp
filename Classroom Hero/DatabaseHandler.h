@@ -65,7 +65,7 @@
 - (class *)getClassWithstudentId:(NSInteger)studentId;
 
 
-- (NSMutableArray *)getStudents:(NSInteger)cid :(BOOL)attendance;
+- (NSMutableArray *)getStudents:(NSInteger)cid :(BOOL)attendance studentIds:(NSMutableArray *)studentIds;
 
 
 - (NSMutableArray *)getReinforcers:(NSInteger)cid;
@@ -82,6 +82,7 @@
 
 - (student *)getStudentWithID:(NSInteger)sid;
 
+- (NSMutableArray *)getStudentIds:(NSInteger )cid;
 
 - (NSMutableArray *)getSchools;
 
@@ -104,7 +105,7 @@
 - (NSInteger)getNumberOfPointsInSchool:(NSInteger)schoolId;
 
 
-- (NSMutableDictionary *)getClassStats:(NSInteger)classId;
+- (NSMutableDictionary *)getClassStats:(NSInteger)classId :(NSMutableArray *)studentIds;
 
 
 // Update Functions
@@ -123,14 +124,11 @@
 
 - (void)updateClassJar:(classjar *)updatedClassJar;
 
-- (void)rewardAllStudentsInClassWithid:(NSInteger)classId;
-
 - (void)unregisterAllStudentsInClassWithid:(NSInteger)classId;
 
 - (void)updateStudentCheckedIn:(NSInteger)studentId :(BOOL)checkedIn;
 
-- (void)updateAllStudentsCheckedInWithclassId:(NSInteger)classId checkedIn:(BOOL)checkedIn;
-
+- (void)updateAllStudentsCheckedInWithclassId:(NSInteger)classId checkedIn:(BOOL)checkedIn studentIds:(NSMutableArray *)studentIds;
 
 // Delete Functions
 
@@ -144,6 +142,9 @@
 
 
 - (void)deleteItem:(NSInteger)iid;
+
+
+- (void)deleteClassJar:(NSInteger)cjid;
 
 
 - (void)resetDatabase;

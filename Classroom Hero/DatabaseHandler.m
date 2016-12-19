@@ -437,8 +437,7 @@ static sqlite3_stmt *statement = nil;
 }
 
 
-- (NSMutableArray *)getStudents:(NSInteger)cid :(BOOL)attendance{
-    NSMutableArray *studentIds = [self getStudentIds:cid];
+- (NSMutableArray *)getStudents:(NSInteger)cid :(BOOL)attendance studentIds:(NSMutableArray *)studentIds{
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
@@ -1001,13 +1000,13 @@ static sqlite3_stmt *statement = nil;
 }
 
 
-- (NSMutableDictionary *)getClassStats:(NSInteger)classId{
+- (NSMutableDictionary *)getClassStats:(NSInteger)classId :(NSMutableArray *)studentIds{
 
 // Get Total stamps by students progress
 
 
     NSMutableDictionary *stats = [[NSMutableDictionary alloc] init];
-    NSMutableArray *students = [self getStudents:classId :NO];
+    NSMutableArray *students = [self getStudents:classId :NO studentIds:studentIds];
     if (students.count > 0){
         NSInteger totalLevels = 0;
         NSInteger totalPoints = 0;
@@ -1150,14 +1149,6 @@ static sqlite3_stmt *statement = nil;
     sqlite3_close(database);
 }
 
-// Rework this to only get student Ids
-- (void)rewardAllStudentsInClassWithid:(NSInteger)classId{
-    NSMutableArray *resultArray = [self getStudents:classId :NO];
-    for (student *student in resultArray){
-        [student addPoints:1];
-        [self updateStudent:student];
-    }
-}
 
 - (void)unregisterAllStudentsInClassWithid:(NSInteger)classId{
     NSMutableArray *studentIds = [self getStudentIds:classId];
@@ -1185,8 +1176,8 @@ static sqlite3_stmt *statement = nil;
     sqlite3_close(database);
 }
 
-- (void)updateAllStudentsCheckedInWithclassId:(NSInteger)classId checkedIn:(BOOL)checkedIn{
-    NSMutableArray *students = [self getStudents:classId :YES];
+- (void)updateAllStudentsCheckedInWithclassId:(NSInteger)classId checkedIn:(BOOL)checkedIn studentIds:(NSMutableArray *)studentIds{
+    NSMutableArray *students = [self getStudents:classId :YES studentIds:studentIds];
     for (student *stud in students){
         [self updateStudentCheckedIn:[stud getId] :checkedIn];
     }
@@ -1266,6 +1257,23 @@ static sqlite3_stmt *statement = nil;
     sqlite3_close(database);
 }
 
+
+- (void)deleteClassJar:(NSInteger)cjid{
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"DELETE FROM ClassJar where id=%ld", (long)cjid];
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(database,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            sqlite3_step(statement);
+            
+        }
+    }
+    sqlite3_reset(statement);
+    sqlite3_close(database);
+}
 
 
 - (void)deleteStudentClassMatches:(NSInteger)classId{

@@ -106,7 +106,7 @@
 
     NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
 
-    NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId]];
+    NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId] :currentUser.studentIds];
     NSInteger totalStamps = 0;
     NSInteger partialProgress = 0;
     NSInteger n = [currentUser.currentClass getLevel];

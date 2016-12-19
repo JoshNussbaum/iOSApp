@@ -1,6 +1,16 @@
-Chest needs to be glowing to indicate that it is tappable
+We're going to cache studentIds in user oject
 
-Need some animations and stuff
+So now we gotta update the cached studentIds when doing student operations
+
+Keep all of the students data cached (To avoid calling DB over and over)
 
 
+Get all students when a class is selected.
+Add attribute to user, students: Dictionary {
+                                                "studentId": student,
+                                                "studentId": student
+                                            }
 
+When to update student dictionary on user object:
+    - When a student is added/edited/deleted
+    - When points are awarded on Award / StudentTableView / StudentTableViewCell / Market / Attendance / Student View

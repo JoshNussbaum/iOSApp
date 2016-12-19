@@ -19,6 +19,8 @@
 @property(nonatomic)NSInteger accountStatus;
 @property(nonatomic)NSString *serial;
 @property(nonatomic)class *currentClass;
+@property(nonatomic)NSMutableArray *studentIds;
+@property(nonatomic)NSMutableDictionary *students;
 
 
 +(user *)getInstance;

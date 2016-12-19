@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import <Google/Analytics.h>
 
+
 @interface StudentsTableViewController (){
     user *currentUser;
     NSMutableArray *studentsData;
@@ -24,6 +25,8 @@
     NSString *studentLastName;
     bool editingStudent;
     bool clicked;
+    BOOL editing_;
+    NSMutableArray *selectedStudentIds;
 }
 
 @end
@@ -38,20 +41,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    selectedStudentIds = [[NSMutableArray alloc]init];
+    editingStudent = NO;
+    editing_ = NO;
     self.view.backgroundColor = [Utilities CHLightBlueColor];
 
     currentUser = [user getInstance];
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
+    
+    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO studentIds:currentUser.studentIds];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
     
     [self.tableView setBounces:NO];
 }
 
-
 - (void)viewDidAppear:(BOOL)animated{
     clicked = NO;
     if (editingStudent) {
-        studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO];
+        studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO studentIds:currentUser.studentIds];
         [self.tableView reloadData];
         editingStudent = NO;
     }
@@ -59,17 +65,22 @@
 
 }
 
-
 - (IBAction)addStudentClicked:(id)sender {
     [Utilities editAlertAddStudentWithtitle:@"Add student" message:nil cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
 }
 
+- (IBAction)editButtonClicked:(id)sender {
+    if (editing_){
+        editing_ = NO;
+    }else editing_ = YES;
+    
+    [self setEditing:editing_ animated:YES];
+}
 
 - (IBAction)backClicked:(id)sender {
     self.backButton.enabled = NO;
     [self.navigationController popViewControllerAnimated:NO];
 }
-
 
 - (void)alertView: (UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == [alertView cancelButtonIndex]){
@@ -127,6 +138,7 @@
             student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
             [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
             [studentsData addObject:newStudent];
+            [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
             [self.tableView reloadData];
         }
         else {
@@ -138,6 +150,8 @@
         if([successNumber boolValue] == YES)
         {
             [studentsData removeObject:currentStudent];
+            [currentUser.studentIds removeObject:[NSNumber numberWithInteger:[currentStudent getId]]];
+
             currentStudent = nil;
             [self.tableView reloadData];
         }
@@ -158,6 +172,28 @@
 }
 
 
+- (void)subtractPointsClicked{
+    if (editing_ && selectedStudentIds.count > 0){
+        
+    }
+    else {
+        [Utilities disappearingAlertView:@"Click edit and select students first" message:nil otherTitles:nil tag:0 view:self time:1.8];
+    }
+    
+}
+
+
+- (void)addPointsClicked{
+    NSLog(@"Here is the selected student count %d", selectedStudentIds.count);
+    if (editing_ && selectedStudentIds.count > 0){
+        
+    }
+    else {
+        [Utilities disappearingAlertView:@"Click edit and add students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
+    }
+    
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -165,10 +201,77 @@
     return 1;
 }
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return studentsData.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 60;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    // Section View
+    
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 60)];
+//    sectionView.layer.borderWidth = 1.5;
+//    sectionView.layer.borderColor = [UIColor blackColor].CGColor;
+    
+    // Make the sections
+    
+    float width = tableView.frame.size.width / 2;
+    
+    UIView *addPointsSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 60)];
+    UIView *subtractPointsSection = [[UIView alloc] initWithFrame:CGRectMake(width, 0, width, 60)];
+    
+    // Add gestures to the sections
+    UITapGestureRecognizer *addPointsGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(addPointsClicked)];
+    [addPointsSection addGestureRecognizer:addPointsGesture];
+    
+    UITapGestureRecognizer *subtractPointsGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(subtractPointsClicked)];
+    [subtractPointsSection addGestureRecognizer:subtractPointsGesture];
+
+    
+    
+    float x = (width / 2) - 43;
+    
+    UILabel *addPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    addPointsLabel.text = @"Add Points";
+    
+    UILabel *subtractPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    subtractPointsLabel.text = @"Subtract Points";
+    
+    
+    NSArray *labels = @[addPointsLabel, subtractPointsLabel];
+    
+    for (UILabel *label in labels){
+        label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
+        label.shadowColor = [UIColor blackColor];
+        label.textColor = [UIColor blackColor];
+        label.numberOfLines = 2;
+        label.textAlignment = NSTextAlignmentCenter;
+        label.backgroundColor = [UIColor whiteColor];
+        [Utilities makeRoundedLabel:label :nil];
+    }
+    
+    [addPointsSection addSubview:addPointsLabel];
+    [subtractPointsSection addSubview:subtractPointsLabel];
+    
+    NSArray *sections = @[addPointsSection, subtractPointsSection];
+    for (UIView *view in sections){
+        [view setBackgroundColor:[Utilities CHGreenColor]];
+        
+        [sectionView addSubview:view];
+    }
+    
+    
+    
+    return sectionView;
 }
 
 
@@ -183,8 +286,30 @@
 }
 
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+    NSNumber *studentId = [NSNumber numberWithInteger:[currentStudent getId]];
+    if ([selectedStudentIds containsObject:studentId]){
+        [selectedStudentIds removeObject:studentId];
+    }
+
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (studentsData.count > 0 && !clicked){
+    if (editing_ && studentsData.count > 0){
+        NSLog(@"We did select while editing");
+        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        NSNumber *studentId = [NSNumber numberWithInteger:[currentStudent getId]];
+        if ([selectedStudentIds containsObject:studentId]){
+            [selectedStudentIds removeObject:studentId];
+        }
+        else {
+
+            [selectedStudentIds addObject:studentId];
+        }
+    }
+    else if (studentsData.count > 0 && !clicked){
         clicked = YES;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
@@ -201,6 +326,16 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated { //Implement this method
+    [super setEditing:editing animated:animated];
+    [self.tableView setEditing:editing animated:animated];
+    editing_ = editing;
+    
+    
+    
+    
 }
 
 

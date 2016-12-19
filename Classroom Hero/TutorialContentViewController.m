@@ -33,7 +33,7 @@ static int screenNumber;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    titles = @[@"Swipe  left  to  get started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  categories", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"For  any  questions, email  classroomheroservices@gmail.com"];
+    titles = @[@"Swipe  left  to  get started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  categories", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Thank  you  for  using  Classroom  Hero!"];
     screenNumber = 0;
     isStamping = NO;
     currentUser = [user getInstance];
@@ -216,28 +216,35 @@ static int screenNumber;
                 }
             }
             else if (self.pageIndex == 5){
-                NSString *jarName = self.textField1.text;
-                NSString *jarCost = self.textField2.text;
-                
-                NSString *nameErrorMessage = [Utilities isInputValid:jarName :@"Jar name"];
-                if (!nameErrorMessage){
-                    NSString *costErrorMessage = [Utilities isNumeric:jarCost];
-                    if (!costErrorMessage && [jarCost integerValue] > 0) {
-                        [self activityStart:@"Adding jar..."];
-                        [webHandler addJar:[tmpClass getId] :jarName :jarCost.integerValue];
-                        
+                classjar *oldJar = [[DatabaseHandler getSharedInstance]getClassJar:[tmpClass getId]];
+                if (oldJar == nil){
+                    NSString *jarName = self.textField1.text;
+                    NSString *jarCost = self.textField2.text;
+                    
+                    NSString *nameErrorMessage = [Utilities isInputValid:jarName :@"Jar name"];
+                    if (!nameErrorMessage){
+                        NSString *costErrorMessage = [Utilities isNumeric:jarCost];
+                        if (!costErrorMessage && [jarCost integerValue] > 0) {
+                            [self activityStart:@"Adding jar..."];
+                            [webHandler addJar:[tmpClass getId] :jarName :jarCost.integerValue];
+                            
+                        }
+                        else {
+                            if (!([jarCost integerValue] > 0)){
+                                costErrorMessage = @"Jar total must be greater than 0";
+                            }
+                            [Utilities disappearingAlertView:@"Error adding jar" message:costErrorMessage otherTitles:nil tag:0 view:self time:2.0];
+                            return;
+                        }
                     }
                     else {
-                        if (!([jarCost integerValue] > 0)){
-                            costErrorMessage = @"Jar total must be greater than 0";
-                        }
-                        [Utilities disappearingAlertView:@"Error adding jar" message:costErrorMessage otherTitles:nil tag:0 view:self time:2.0];
-                        return;
+                        [Utilities disappearingAlertView:@"Error adding jar" message:nameErrorMessage otherTitles:nil tag:0 view:self time:2.0];
                     }
                 }
                 else {
-                    [Utilities disappearingAlertView:@"Error adding jar" message:nameErrorMessage otherTitles:nil tag:0 view:self time:2.0];
+                    [Utilities disappearingAlertView:@"Error adding jar" message:@"A class jar already exists for this class, edit it from the class jar screen" otherTitles:nil tag:0 view:self time:1.5];
                 }
+     
             }
         }
         else {
@@ -278,6 +285,8 @@ static int screenNumber;
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
             student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[tmpClass getId] :[tmpClass getSchoolId]];
+            [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
+
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  student  or  swipe  left  to  continue"]];
             [self.textField1 becomeFirstResponder];
 
@@ -308,7 +317,7 @@ static int screenNumber;
             NSInteger jarId = [[data objectForKey:@"id"] integerValue];
             classjar *newJar = [[classjar alloc]initWithid:jarId cid:[tmpClass getId]  name:jarName progress:0 total:jarTotal];
             [[DatabaseHandler getSharedInstance] addClassJar:newJar];
-            [self setTitleAndClear:[NSString stringWithFormat:@"Replace  your  jar  or  swipe  left  to  continue"]];
+            [self setTitleAndClear:[NSString stringWithFormat:@"Edit  your  jar  from  the  class  jar  screen.  Swipe  left  to  continue"]];
             [self.textField1 becomeFirstResponder];
         }
         
