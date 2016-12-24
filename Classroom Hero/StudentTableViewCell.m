@@ -26,8 +26,8 @@
 - (void)initializeWithStudent:(student *)currentStudent_{
     connectionInProgress = NO;
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     currentStudent = currentStudent_;
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     [Utilities makeRoundedButton:self.plusOneButton :[UIColor blackColor]];
     [Utilities makeRoundedButton:self.minusOneButton :[UIColor blackColor]];
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];

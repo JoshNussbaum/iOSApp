@@ -78,7 +78,7 @@
     self.createAccountButton.layer.borderColor = [UIColor whiteColor].CGColor;
     
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
@@ -110,7 +110,7 @@
     else {
         [self activityStart:@"Logging in..."];
         [[DatabaseHandler getSharedInstance] resetDatabase];
-        [webHandler logIn:self.emailTextField.text :self.passwordTextField.text :[[NSDate date] timeIntervalSince1970]];
+        [webHandler logIn:self.emailTextField.text :self.passwordTextField.text];
     }
 }
 
@@ -168,10 +168,10 @@
         [Utilities alertStatusNoConnection];
         return;
     }
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+    NSString *errorMessage = [data objectForKey: @"message"];
     
-    if ([successNumber boolValue] == YES){
-        if (type == LOGIN || type == STAMP_TO_LOGIN){
+    if (!errorMessage){
+        if (type == LOGIN){
             
             [Utilities wiggleImage:self.stampImage sound:NO];
             [self loginSuccess:data];
@@ -181,15 +181,7 @@
         }
     }
     else {
-        NSString *message = [data objectForKey:@"message"];
-        NSString *errorMessage;
-        if (type == LOGIN){
-            errorMessage = @"Error logging in";
-        }
-        else if (type == STAMP_TO_LOGIN){
-            errorMessage = @"Error stamping to log in";
-        }
-        [Utilities alertStatusWithTitle:errorMessage message:@"Invalid email / password combination" cancel:nil otherTitles:nil tag:0 view:nil];
+        [Utilities alertStatusWithTitle:@"Error logging in" message:@"Invalid email / password combination" cancel:nil otherTitles:nil tag:0 view:nil];
         isStamping = NO;
     }
     
@@ -198,13 +190,12 @@
 
 - (void)loginSuccess:(NSDictionary *)data{
     [[DatabaseHandler getSharedInstance] login:data];
-    currentUser.accountStatus = [[[data objectForKey:@"login"] objectForKey:@"accountStatus"] integerValue];
     currentUser.email = self.emailTextField.text;
     currentUser.password = self.passwordTextField.text;
-    currentUser.serial = [[data objectForKey:@"login"] objectForKey:@"stamp"];
-    currentUser.firstName = [[data objectForKey:@"login"] objectForKey:@"fname"];
-    currentUser.lastName = [[data objectForKey:@"login"] objectForKey:@"lname"];
-    currentUser.id = [[[data objectForKey:@"login"] objectForKey:@"uid"] integerValue];
+    currentUser.firstName = [data objectForKey:@"first_name"];
+    currentUser.lastName = [data objectForKey:@"last_name"];
+    currentUser.id = [[data objectForKey:@"id"] integerValue];
+    currentUser.token = [data objectForKey:@"token"];
     
     NSError *error = nil;
 
@@ -225,12 +216,8 @@
 //    
 //    [keychain writeToKeychain];
 //    
-    if (currentUser.accountStatus == 0){
-        [self performSegueWithIdentifier:@"login_to_tutorial" sender:nil];
-    }
-    else {
-        [self performSegueWithIdentifier:@"login_to_class" sender:nil];
-    }
+
+    [self performSegueWithIdentifier:@"login_to_class" sender:nil];
     [hud hide:YES];
 }
 

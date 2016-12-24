@@ -103,7 +103,7 @@ static NSInteger coinHeight = 250;
     selectedStudentsWhenGenerateChestClicked = [[NSMutableDictionary alloc]init];
     [self getStudentsData];
     
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     selectedStudents = [[NSMutableDictionary alloc] init];
     self.categoryPicker.delegate = self;
     self.categoryPicker.dataSource = self;
@@ -350,7 +350,7 @@ static NSInteger coinHeight = 250;
                         [selectedStudentIds addObject:studentId];
                     }
                     
-                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:tmpValue.integerValue reinforcerId:0 schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:tmpValue.integerValue reinforcerId:0 classId:[currentUser.currentClass getId]];
                 }
                 
                 else {
@@ -361,7 +361,7 @@ static NSInteger coinHeight = 250;
                     currentStudent = selectedStudent;
                     
                     
-                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:tmpValue.integerValue reinforcerId:0 schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:tmpValue.integerValue reinforcerId:0 classId:[currentUser.currentClass getId]];
                     
                 }
                 
@@ -778,10 +778,10 @@ static NSInteger coinHeight = 250;
                 [selectedStudentIds addObject:studentId];
             }
             
-            [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+            [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId classId:[currentUser.currentClass getId]];
         }
         else {
-            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId classId:[currentUser.currentClass getId]];
             
         }
         
@@ -1364,7 +1364,7 @@ static NSInteger coinHeight = 250;
                         [selectedStudentIds addObject:studentId];
                     }
                     
-                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId   classId:[currentUser.currentClass getId]];
                 }
                 
                 else {
@@ -1375,7 +1375,7 @@ static NSInteger coinHeight = 250;
                     currentStudent = selectedStudent;
                     
                     
-                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId schoolId:[currentUser.currentClass getSchoolId] classId:[currentUser.currentClass getId]];
+                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId   classId:[currentUser.currentClass getId]];
                     
                 }
                 

@@ -35,7 +35,7 @@
     [super viewDidLoad];
     
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
 
     self.classNameTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
     self.classGradeTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
@@ -84,8 +84,8 @@
     [self hideKeyboard];
     NSString *className = self.classNameTextField.text;
     NSInteger classGrade = [self.classGradeTextField.text integerValue];
-    newClass = [[class alloc]init:0 :className :classGrade :1 :1 :0 :30 :[Utilities getCurrentDate]];
-    [webHandler addClass:currentUser.id :className :classGrade :1];
+    newClass = [[class alloc]init:0 :className :classGrade :1 :1 :30 :[Utilities getCurrentDate]];
+    [webHandler addClass:currentUser.id :className :classGrade];
     
 }
 
@@ -113,13 +113,11 @@
         [Utilities alertStatusNoConnection];
         return;
     }
-    
-    NSString *message = [data objectForKey:@"message"];
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
 
     if (type == ADD_CLASS){
-        
-        if([successNumber boolValue] == YES)
+        NSString *errorMessage = [data objectForKey: @"message"];
+
+        if(!errorMessage)
         {
             AudioServicesPlaySystemSound([Utilities getTheSoundOfSuccess]);
             
@@ -132,7 +130,7 @@
             [self.navigationController popViewControllerAnimated:YES];
             
         } else {
-            [Utilities disappearingAlertView:@"Error adding class" message:message otherTitles:nil tag:0 view:self time:2.0];
+            [Utilities disappearingAlertView:@"Error adding class" message:errorMessage otherTitles:nil tag:0 view:self time:2.0];
             return;
         }
         

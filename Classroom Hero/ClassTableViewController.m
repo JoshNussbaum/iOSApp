@@ -45,10 +45,8 @@ static NSString * const classCell = @"classCell";
     //[self.tableView setSeparatorColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
     [self.tableView setBounces:NO];
-
-
-    webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
     currentUser = [user getInstance];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     classes = [[DatabaseHandler getSharedInstance] getClasses];
     editingEnabled = NO;
 
@@ -114,8 +112,8 @@ static NSString * const classCell = @"classCell";
                 NSInteger grade = newClassGrade.integerValue;
                 class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];
-                [webHandler editClass:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId]];
-                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getSchoolId] :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getCurrentDate]];
+                [webHandler editClass:[selectedClass getId] :newClassName :grade];
+                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getCurrentDate]];
             }
             else {
                 [Utilities alertStatusWithTitle:@"Error editing class" message:gradeErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -141,9 +139,9 @@ static NSString * const classCell = @"classCell";
         return;
     }
 
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     NSString *message = [data objectForKey:@"message"];
-    if([successNumber boolValue] == YES)
+
+    if(!message)
     {
         if (type == EDIT_CLASS){
             [[DatabaseHandler getSharedInstance] editClass:tmpClass];
@@ -161,18 +159,6 @@ static NSString * const classCell = @"classCell";
             [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 
         }
-    }
-    else {
-        NSString *message = [data objectForKey:@"message"];
-        NSString *errorMessage;
-
-        if (type == EDIT_CLASS){
-            errorMessage = @"Error editing class";
-        }
-        else if (type == DELETE_CLASS){
-            errorMessage = @"Error deleting class";
-        }
-        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
     }
 
 }

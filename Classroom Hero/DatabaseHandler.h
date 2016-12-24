@@ -33,7 +33,7 @@
 - (void)addClass:(class *)cl;
 
 
-- (void)addStudent:(student *)ss :(NSInteger)cid :(NSInteger)schoolId;
+- (void)addStudent:(student *)ss :(NSInteger)cid;
 
 
 - (void)addStudentToClass:(NSInteger)studentId :(NSInteger)classId;

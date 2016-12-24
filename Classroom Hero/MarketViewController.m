@@ -57,15 +57,15 @@
     self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
     self.studentsTableView.layer.borderWidth = 1.5;
     self.studentsTableView.layer.borderColor = [UIColor blackColor].CGColor;
-    
+    currentUser = [user getInstance];
+
     isBuying = NO;
     showingStudents = NO;
     studentSelected = NO;
-    webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     [Utilities makeRoundedButton:self.purchaseButton :nil];
     [Utilities makeRoundedButton:self.openTableViewButton :nil];
     
-    currentUser = [user getInstance];
     
     itemsData = [[DatabaseHandler getSharedInstance ] getItems:[currentUser.currentClass getId]];
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
@@ -386,7 +386,7 @@
                 
                 currentStudent = [[student alloc]initWithid:idNumber.integerValue firstName:fname lastName:lname serial:stamp lvl:levelNumber.integerValue progress:progressNumber.integerValue lvlupamount:lvlUpAmount points:pointsNumber.integerValue totalpoints:totalPoints.integerValue checkedin:NO];
                 
-                [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1 :[currentUser.currentClass getSchoolId]];
+                [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1];
             }
             [self displayStudent];
             

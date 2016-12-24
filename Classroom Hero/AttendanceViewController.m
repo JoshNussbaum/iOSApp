@@ -49,7 +49,7 @@
     isStamping = NO;
     self.studentsTableView.delegate = self;
     [self.studentsTableView setBounces:NO];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     checkedOutStudents = [[NSMutableDictionary alloc] init];
     // Check to see if it's a different day.
     if (!([[Utilities getCurrentDate] isEqualToString:[currentUser.currentClass getCurrentDate]])){
@@ -145,7 +145,7 @@
             [Utilities wiggleImage:self.stampImage sound:NO];
             [self setStudentLabels];
             didManuallyCheckIn = NO;
-            [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:YES];
+            [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
         }
     }
 }
@@ -195,7 +195,7 @@
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         didManuallyCheckIn = YES;
-        [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId] stamp:NO];
+        [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
     }
 
     else if (alertView.tag == 2){

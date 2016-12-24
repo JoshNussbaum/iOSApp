@@ -44,7 +44,7 @@
     self.firstNameTextField.placeholder = currentUser.firstName;
     self.lastNameTextField.placeholder = currentUser.lastName;
     
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     textFields = [[NSMutableArray alloc]initWithObjects:self.editPasswordTextField, self.confirmNewPasswordTextField, self.currentPasswordTextField, self.firstNameTextField, self.lastNameTextField, nil];
     
     for (UITextField *tf in textFields){

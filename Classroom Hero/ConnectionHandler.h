@@ -19,25 +19,26 @@
 {
     user *currentUser;
     id delegate_;
+    NSString *token_;
     NSMutableData *responseData;
 }
 
-- (id)initWithDelegate:(id<ConnectionHandlerDelegate>)delegate;
+- (id)initWithDelegate:(id<ConnectionHandlerDelegate>)delegate token:(NSString *)token;
 
 
 +(ConnectionHandler *)getSharedInstance;
 
 
-- (void)logIn:(NSString *)email :(NSString *)password :(double)date;
+- (void)logIn:(NSString *)email :(NSString *)password;
 
 
 - (void)createAccount:(NSString *)email :(NSString *)password :(NSString *)fname :(NSString *)lname;
 
 
-- (void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade :(NSInteger)schoolId;
+- (void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade;
 
 
-- (void)editClass:(NSInteger)id :(NSString *)name :(NSInteger)grade :(NSInteger)schoolId;
+- (void)editClass:(NSInteger)id :(NSString *)name :(NSInteger)grade;
 
 
 - (void)deleteClass:(NSInteger)id;
@@ -70,7 +71,7 @@
 - (void)deleteJar:(NSInteger)id;
 
 
-- (void)addStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname :(NSInteger)schoolId;
+- (void)addStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname;
 
 
 - (void)editStudent:(NSInteger)id :(NSString *)fname :(NSString *)lname;
@@ -82,13 +83,10 @@
 - (void)getSchools;
 
 
-- (void)registerStamp:(NSInteger)id :(NSString *)serial :(NSInteger)cid;
+- (void)rewardStudentWithid:(NSInteger)id pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId classId:(NSInteger)classId;
 
 
-- (void)rewardStudentWithid:(NSInteger)id pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId classId:(NSInteger)classId;
-
-
-- (void)rewardStudentsWithids:(NSMutableArray *)ids pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId schoolId:(NSInteger)schoolId classId:(NSInteger)classId;
+- (void)rewardStudentsWithids:(NSMutableArray *)ids pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId classId:(NSInteger)classId;
 
 
 - (void)rewardAllStudentsWithcid:(NSInteger)cid;
@@ -106,31 +104,16 @@
 - (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost cid:(NSInteger)cid;
 
 
-- (void)unregisterStampWithid:(NSInteger)id;
-
-
 - (void)editTeacherNameWithid:(NSInteger)id firstName:(NSString *)firstName lastName:(NSString *)lastName;
 
 
 - (void)editTeacherPasswordWithemail:(NSString *)email oldPassword:(NSString *)oldPassword newPassword:(NSString *)newPassword;
 
 
-- (void)stampToLogin:(NSString *)stampSerial;
+- (void)getClassStatsWithclassId:(NSInteger)classId;
 
 
-- (void)getClassStatsWithclassId:(NSInteger)classId schoolId:(NSInteger)schoolId;
-
-
-- (void)identifyStampWithserial:(NSString *)serial;
-
-
-- (void)unregisterAllStampsWithClassId:(NSInteger)classId;
-
-
-- (void)getStudentBySerialwithserial:(NSString *)serial :(NSInteger)schoolId;
-
-
-- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId stamp:(BOOL)stamp;
+- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId;
 
 
 - (void)checkOutStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId;
@@ -140,9 +123,6 @@
 
 
 - (void)checkOutAllStudentsWithclassId:(NSInteger)classId;
-
-
-- (void)getUserBySerialWithserial:(NSString *)serial;
 
 
 - (void)resetPasswordWithemail:(NSString *)email;

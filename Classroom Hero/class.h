@@ -12,7 +12,6 @@
     NSInteger id;
     NSString *name;
     NSInteger gradeNumber;
-    NSInteger schoolId;
     NSInteger level;
     NSInteger progress;
     NSInteger nextLevel;
@@ -21,7 +20,7 @@
 
 -(id) init;
 
--(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)schoolId_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_;
+-(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_;
 
 // Creation Functions
 
@@ -43,8 +42,6 @@
 -(NSString *) getName;
 
 -(NSInteger) getGradeNumber;
-
--(NSInteger) getSchoolId;
 
 -(NSInteger) getLevel;
 

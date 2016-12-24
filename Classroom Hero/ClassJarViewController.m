@@ -75,7 +75,7 @@
     [super viewDidLoad];
     coinsShowing = NO;
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     currentClassJar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     [Utilities makeRoundedButton:self.addPointsButton :nil];
     

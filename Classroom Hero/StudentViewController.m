@@ -43,7 +43,7 @@
     
     isStamping = NO;
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     
     [self configureProgressBar];
     [self setStudentLabels];

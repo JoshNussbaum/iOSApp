@@ -49,7 +49,7 @@
     currentUser = [user getInstance];
     
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO studentIds:currentUser.studentIds];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     
     [self.tableView setBounces:NO];
 }
@@ -100,7 +100,7 @@
             errorMessage = [Utilities isInputValid:studentLastName :@"Student last name"];
             if (!errorMessage){
                 [self activityStart:@"Adding Student..."];
-                [webHandler addStudent:[currentUser.currentClass getId] :studentFirstName :studentLastName :[currentUser.currentClass getSchoolId]];
+                [webHandler addStudent:[currentUser.currentClass getId] :studentFirstName :studentLastName];
             }
             else {
                 [Utilities editAlertAddStudentWithtitle:@"Error adding student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
@@ -136,7 +136,7 @@
         {
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
             student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
-            [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId] :[currentUser.currentClass getSchoolId]];
+            [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId]];
             [studentsData addObject:newStudent];
             [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
             [self.tableView reloadData];

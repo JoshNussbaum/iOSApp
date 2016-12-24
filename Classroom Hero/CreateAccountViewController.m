@@ -39,7 +39,7 @@
     [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
 
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc] initWithDelegate:self token:currentUser.token];
     
 //    [Utilities setTextFieldPlaceholder:self.firstNameTextField :@"First name" :[UIColor blackColor]];
 //    [Utilities setTextFieldPlaceholder:self.lastNameTextField :@"Last name" :[UIColor blackColor]];
@@ -125,9 +125,9 @@
         return;
     }
     if (type == CREATE_ACCOUNT){
-        NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
+        NSString *errorMessage = [data objectForKey: @"message"];
 
-        if([successNumber boolValue] == YES)
+        if(!errorMessage)
         {
             NSInteger tid = [[data objectForKey:@"id"] integerValue];
 
@@ -158,8 +158,7 @@
             
         }
         else {
-            NSString *message = [data objectForKey:@"message"];
-            [Utilities alertStatusWithTitle:@"Error creating account" message:message cancel:nil otherTitles:nil tag:0 view:nil];
+            [Utilities alertStatusWithTitle:@"Error creating account" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
             return;
         }
     }

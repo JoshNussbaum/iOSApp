@@ -38,7 +38,7 @@ static int screenNumber;
     isStamping = NO;
     currentUser = [user getInstance];
     
-    webHandler = [[ConnectionHandler alloc] initWithDelegate:self];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
     
     [Utilities makeRounded:self.button.layer color:nil borderWidth:0.5f cornerRadius:5];
 
@@ -123,7 +123,7 @@ static int screenNumber;
                 if (!gradeErrorMessage) {
                     if (!(gradeNumber.length > 3)){
                         [self activityStart:@"Validating class data..."];
-                        [webHandler addClass:currentUser.id :className :gradeNumber.integerValue :1];
+                        [webHandler addClass:currentUser.id :className :gradeNumber.integerValue];
                     }
                     else {
                         [Utilities disappearingAlertView:@"Error adding class" message:@"Grade must be lass than 1000" otherTitles:nil tag:0 view:self time:2.0];
@@ -157,7 +157,7 @@ static int screenNumber;
                     NSString *lastErrorMessage = [Utilities isInputValid:lastName :@"Last name"];
                     if (!lastErrorMessage) {
                         [self activityStart:@"Adding student..."];
-                        [webHandler addStudent:[tmpClass getId] :firstName :lastName :[tmpClass getSchoolId]];
+                        [webHandler addStudent:[tmpClass getId] :firstName :lastName];
                         
                     }
                     else {
@@ -269,7 +269,7 @@ static int screenNumber;
 
         if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
-            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :1 :1 :0 :30 :[Utilities getCurrentDate]];
+            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :1 :1 :30 :[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             tmpClass = newClass;
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  class  or  swipe  left  to  continue"]];
@@ -284,7 +284,7 @@ static int screenNumber;
         else if (type == ADD_STUDENT){
             NSInteger studentId = [[data objectForKey:@"id"] integerValue];
             student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
-            [[DatabaseHandler getSharedInstance] addStudent:newStudent :[tmpClass getId] :[tmpClass getSchoolId]];
+            [[DatabaseHandler getSharedInstance] addStudent:newStudent :[tmpClass getId]];
             [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
 
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  student  or  swipe  left  to  continue"]];

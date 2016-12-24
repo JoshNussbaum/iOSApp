@@ -20,6 +20,7 @@
 @synthesize currentClass;
 @synthesize studentIds;
 @synthesize students;
+@synthesize token;
 
 static user *instance = nil;
 
@@ -36,6 +37,7 @@ static user *instance = nil;
             instance->serial=nil;
             instance->studentIds=nil;
             instance->students=nil;
+            instance->token=nil;
         }
     }
     return instance;
@@ -51,6 +53,7 @@ static user *instance = nil;
     self->currentClass = nil;
     self->studentIds = nil;
     self->students = nil;
+    self->token = nil;
 }
 
 
