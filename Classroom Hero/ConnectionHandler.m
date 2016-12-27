@@ -21,7 +21,7 @@ static NSString * const ADD_CLASS_URL = @"http://107.206.158.62:1337/api/class/c
 static NSString * const EDIT_CLASS_URL = @"http://107.206.158.62:1337/api/class";
 static NSString * const DELETE_CLASS_URL = @"http://107.206.158.62:1337/api/class";
 
-static NSString * const ADD_REINFORCER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/reinforcer/add";
+static NSString * const ADD_REINFORCER_URL = @"http://107.206.158.62:1337/api/class/";
 static NSString * const EDIT_REINFORCER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/reinforcer/edit";
 static NSString * const DELETE_REINFORCER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/reinforcer/delete";
 
@@ -146,8 +146,9 @@ static NSInteger connectionType;
 
 
 - (void)addReinforcer:(NSInteger)id :(NSString *)name :(NSInteger)value{
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/reinforcer/create/", ADD_REINFORCER_URL, (long)id];
     connectionType = ADD_REINFORCER;
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"cid\":%ld,\"name\":\"%@\",\"value\":%ld}", (long)id, name, (long)value];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"name\":\"%@\",\"value\":%ld}", name, (long)value];
     
     [self asynchronousWebCall:jsonRequest :ADD_REINFORCER_URL :POST];
 }
@@ -473,7 +474,9 @@ static NSInteger connectionType;
                               options:NSJSONReadingMutableContainers
                               error:&err];
     NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
-    
+    if (!jsonData){
+        jsonData = [NSDictionary dictionaryWithObject:@"1" forKey:@"success"];
+    }
     [delegate_ dataReady:jsonData :connectionType];
 }
 

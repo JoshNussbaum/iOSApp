@@ -258,14 +258,16 @@ static int screenNumber;
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
     //NSLog(@"In Tutorial and here is the data =>\n %@ \nand type = %ld", data, (long)type);
     [hud hide:YES];
+    
     if (data == nil){
         [Utilities alertStatusNoConnection];
-        isStamping = NO;
         return;
     }
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     
-    if ([successNumber boolValue] == YES){
+    NSString *message = [data objectForKey:@"message"];
+    
+    if(!message)
+    {
 
         if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
@@ -330,26 +332,7 @@ static int screenNumber;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SetTmpClass" object:tmpClassDict];
     }
     else {
-        NSString *errorMessage = nil;
-        NSString *message = [data objectForKey:@"message"];
-        
-        if (type == ADD_CLASS){
-            errorMessage = @"Error adding class";
-        }
-        else if (type == ADD_STUDENT){
-            errorMessage = @"Error adding student";
-        }
-        else if (type == ADD_REINFORCER){
-            errorMessage = @"Error adding category";
-        }
-        else if (type == ADD_ITEM){
-            errorMessage = @"Error adding item";
-        }
-        else if (type == ADD_JAR){
-            errorMessage = @"Error adding jar";
-        }
-        isStamping = NO;
-        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        [Utilities alertStatusNoConnection];
     }
 
 }

@@ -160,6 +160,9 @@ static NSString * const classCell = @"classCell";
 
         }
     }
+    else {
+        [Utilities alertStatusNoConnection];
+    }
 
 }
 
