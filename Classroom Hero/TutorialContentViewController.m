@@ -268,7 +268,6 @@ static int screenNumber;
     
     if(!message)
     {
-
         if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
             class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :1 :1 :30 :[Utilities getCurrentDate]];
