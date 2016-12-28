@@ -9,68 +9,67 @@
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-
 //http://107.206.158.62:1337/classroom-web-services/
 //http://ehorvat.webfactional.com/apps/ch/
 //http://107.206.158.62:1337/api/
 
+
+static NSString * const CLASS_URL = @"http://107.206.158.62:1337/api/class/";
+static NSString * const ADD_CLASS_URL = @"http://107.206.158.62:1337/api/class/create/";
+
 static NSString * const LOGIN_URL = @"http://107.206.158.62:1337/api/users/login/";
 static NSString * const CREATE_ACCOUNT_URL = @"http://107.206.158.62:1337/api/users/register/";
 
-static NSString * const ADD_CLASS_URL = @"http://107.206.158.62:1337/api/class/create/";
-static NSString * const EDIT_CLASS_URL = @"http://107.206.158.62:1337/api/class";
-static NSString * const DELETE_CLASS_URL = @"http://107.206.158.62:1337/api/class";
+static NSString * const REINFORCER_URL = @"http://107.206.158.62:1337/api/class/";
+static NSString * const ADD_REINFORCER_URL = @"http://107.206.158.62:1337/api/reinforcer/";
+static NSString * const EDIT_REINFORCER_URL = @"http://107.206.158.62:1337/api/reinforcer/edit";
+static NSString * const DELETE_REINFORCER_URL = @"http://107.206.158.62:1337/api/reinforcer/delete";
 
-static NSString * const ADD_REINFORCER_URL = @"http://107.206.158.62:1337/api/class/";
-static NSString * const EDIT_REINFORCER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/reinforcer/edit";
-static NSString * const DELETE_REINFORCER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/reinforcer/delete";
+static NSString * const ITEM_URL = @"http://107.206.158.62:1337/api/item/";
+static NSString * const ADD_ITEM_URL = @"http://107.206.158.62:1337/api/item/add";
+static NSString * const EDIT_ITEM_URL = @"http://107.206.158.62:1337/api/item/edit";
+static NSString * const DELETE_ITEM_URL = @"http://107.206.158.62:1337/api/item/delete";
 
-static NSString * const ADD_ITEM_URL = @"http://ehorvat.webfactional.com/apps/ch/services/item/add";
-static NSString * const EDIT_ITEM_URL = @"http://ehorvat.webfactional.com/apps/ch/services/item/edit";
-static NSString * const DELETE_ITEM_URL = @"http://ehorvat.webfactional.com/apps/ch/services/item/delete";
+static NSString * const JAR_URL = @"http://107.206.158.62:1337/api/jar/add";
+static NSString * const ADD_JAR_URL = @"http://107.206.158.62:1337/api/jar/add";
+static NSString * const EDIT_JAR_URL = @"http://107.206.158.62:1337/api/jar/edit";
+static NSString * const DELETE_JAR_URL = @"http://107.206.158.62:1337/api/jar/delete";
 
-static NSString * const ADD_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/add";
-static NSString * const EDIT_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/edit";
-static NSString * const DELETE_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/delete";
-
+static NSString * const STUDENT_URL = @"http://107.206.158.62:1337/api/student/";
 static NSString * const ADD_STUDENT_URL = @"http://107.206.158.62:1337/api/class/";
-static NSString * const EDIT_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/edit";
-static NSString * const DELETE_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/delete";
+static NSString * const EDIT_STUDENT_URL = @"http://107.206.158.62:1337/api/student/edit";
+static NSString * const DELETE_STUDENT_URL = @"http://107.206.158.62:1337/api/student/delete";
 
-static NSString * const REWARD_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/reward";
-static NSString * const REWARD_STUDENT_BULK_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/reward/bulk";
+static NSString * const REWARD_STUDENT_URL = @"http://107.206.158.62:1337/api/student/reward";
+static NSString * const REWARD_STUDENT_BULK_URL = @"http://107.206.158.62:1337/api/student/reward/bulk";
 
-static NSString * const CHECK_IN_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/checkin";
-static NSString * const CHECK_OUT_STUDENT_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/checkout";
-static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
-static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
+static NSString * const CHECK_IN_STUDENT_URL = @"http://107.206.158.62:1337/api/student/checkin";
+static NSString * const CHECK_OUT_STUDENT_URL = @"http://107.206.158.62:1337/api/student/checkout";
+static NSString * const CHECK_IN_ALL_STUDENTS_URL = @"http://107.206.158.62:1337/api/class";
+static NSString * const CHECK_OUT_ALL_STUDENTS_URL = @"http://107.206.158.62:1337/api/class";
 
-static NSString * const STUDENT_TRANSACTION_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/transaction";
+static NSString * const STUDENT_TRANSACTION_URL = @"http://107.206.158.62:1337/api/student/transaction";
 
-static NSString * const GET_SCHOOLS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/schools/get";
+static NSString * const GET_SCHOOLS_URL = @"http://107.206.158.62:1337/api/schools/get";
 
-static NSString * const REWARD_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
+static NSString * const REWARD_ALL_STUDENTS_URL = @"http://107.206.158.62:1337/api/class";
 
-static NSString * const SUBTRACT_STUDENT_POINTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/subtractPoints";
-static NSString * const STUDENT_ADD_POINTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/student/addPoints";
-
-
-static NSString * const ADD_TO_JAR_URL = @"http://ehorvat.webfactional.com/apps/ch/services/jar/fill";
-
-static NSString * const ORDER_URL = @"http://ehorvat.webfactional.com/apps/ch/services/register/order";
-
-static NSString * const EDIT_TEACHER_NAME_URL = @"http://ehorvat.webfactional.com/apps/ch/services/user/settings/editName";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://ehorvat.webfactional.com/apps/ch/services/user/settings/changePassword";
-static NSString * const RESET_PASSWORD_URL = @"http://ehorvat.webfactional.com/apps/ch/services/user/settings/recoverPassword";
+static NSString * const SUBTRACT_STUDENT_POINTS_URL = @"http://107.206.158.62:1337/api/student/subtractPoints";
+static NSString * const STUDENT_ADD_POINTS_URL = @"http://107.206.158.62:1337/api/student/addPoints";
 
 
-static NSString * const GET_CLASS_STATS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class/stats";
+static NSString * const ADD_TO_JAR_URL = @"http://107.206.158.62:1337/api/jar/fill";
 
-static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://ehorvat.webfactional.com/apps/ch/services/class";
+static NSString * const ORDER_URL = @"http://107.206.158.62:1337/api/register/order";
+
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://107.206.158.62:1337/api/user/settings/editName";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://107.206.158.62:1337/api/user/settings/changePassword";
+static NSString * const RESET_PASSWORD_URL = @"http://107.206.158.62:1337/api/user/settings/recoverPassword";
 
 
+static NSString * const GET_CLASS_STATS_URL = @"http://107.206.158.62:1337/api/class/stats";
+static NSString * const UNREGISTER_ALL_STUDENTS_URL = @"http://107.206.158.62:1337/api/class";
 
-//[[NSDate date] timeIntervalSince1970];
 static NSString *POST = @"POST";
 static NSString *PUT = @"PUT";
 static NSString *GET = @"GET";
@@ -119,16 +118,21 @@ static NSInteger connectionType;
 
 - (void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade {
     connectionType = ADD_CLASS;
+<<<<<<< HEAD
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"teacher\":%ld,\"name\":\"%@\", \"grade\":\"%@\"}", (long)id, name, grade];
+=======
+    NSString *url = [NSString stringWithFormat:@"%@/create", CLASS_URL];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"teacher\":%ld,\"name\":\"%@\", \"grade\":%ld}", (long)id, name, (long)grade];
+>>>>>>> master
     
-    [self asynchronousWebCall:jsonRequest :ADD_CLASS_URL :POST];
+    [self asynchronousWebCall:jsonRequest :url :POST];
 }
 
 
 - (void)editClass:(NSInteger)id :(NSString *)name :(NSInteger)grade {
     connectionType = EDIT_CLASS;
     
-    NSString *url = [NSString stringWithFormat:@"%@/%ld/edit/", EDIT_CLASS_URL, (long)id];
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/edit/", CLASS_URL, (long)id];
 
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"name\":\"%@\", \"grade\":%ld}", name, grade];
     
@@ -137,7 +141,7 @@ static NSInteger connectionType;
 
 
 - (void)deleteClass:(NSInteger)id{
-    NSString *url = [NSString stringWithFormat:@"%@/%ld/delete/", DELETE_CLASS_URL, (long)id];
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/delete/", CLASS_URL, (long)id];
     
     connectionType = DELETE_CLASS;
     
@@ -146,7 +150,7 @@ static NSInteger connectionType;
 
 
 - (void)addReinforcer:(NSInteger)id :(NSString *)name :(NSInteger)value{
-    NSString *url = [NSString stringWithFormat:@"%@/%ld/reinforcer/create/", ADD_REINFORCER_URL, (long)id];
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/reinforcer/create/", CLASS_URL, (long)id];
     connectionType = ADD_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"name\":\"%@\",\"value\":%ld}", name, (long)value];
     
@@ -155,10 +159,12 @@ static NSInteger connectionType;
 
 
 - (void)editReinforcer:(NSInteger)id :(NSString *)name :(NSInteger)value{
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/reinforcer/edit/", CLASS_URL, (long)id];
+
     connectionType = EDIT_REINFORCER;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld,\"name\":\"%@\",\"value\":%ld}", (long)id, name, (long)value];
     
-    [self asynchronousWebCall:jsonRequest :EDIT_REINFORCER_URL :PUT];
+    [self asynchronousWebCall:jsonRequest :url :PUT];
 }
 
 
