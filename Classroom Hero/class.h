@@ -11,7 +11,7 @@
 @interface class : NSObject {
     NSInteger id;
     NSString *name;
-    NSInteger gradeNumber;
+    NSString *gradeNumber;
     NSInteger level;
     NSInteger progress;
     NSInteger nextLevel;
@@ -20,7 +20,7 @@
 
 -(id) init;
 
--(id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_;
+-(id) init:(NSInteger)id_ :(NSString *)name_ :(NSString *)gradeNumber_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_;
 
 // Creation Functions
 
@@ -28,7 +28,7 @@
 
 -(void) setName:(NSString *)name_;
 
--(void) setGradeNumber:(NSInteger)gradeNumber_;
+-(void) setGradeNumber:(NSString *)gradeNumber_;
 
 -(void) setSchoolId:(NSInteger)schoolId_;
 
@@ -41,7 +41,7 @@
 
 -(NSString *) getName;
 
--(NSInteger) getGradeNumber;
+-(NSString *) getGradeNumber;
 
 -(NSInteger) getLevel;
 

@@ -56,7 +56,7 @@ static sqlite3_stmt *statement = nil;
         "DROP TABLE IF EXISTS Transactions;"
         "DROP TABLE IF EXISTS StudentClassMatch;"
         "DROP TABLE IF EXISTS StudentSchoolMatch;"
-        "CREATE TABLE Class (id integer primary key, name text, grade integer, level integer, progress integer, currentday text);"
+        "CREATE TABLE Class (id integer primary key, name text, grade text, level integer, progress integer, currentday text);"
         "CREATE TABLE Student (id integer primary key, firstname text, lastname text, serial text, lvl integer, progress integer, lvlupamount integer, points integer, totalpoints integer, checkedin integer);"
         "CREATE TABLE Reinforcer (id integer primary key, cid integer, name text, value integer);"
         "CREATE TABLE Item (id integer primary key, cid integer, name text, cost integer);"
@@ -95,7 +95,7 @@ static sqlite3_stmt *statement = nil;
         //        "CREATE TABLE Class (id integer primary key, name text, grade integer, level integer, progress integer, currentday text);"
 
         NSString *querySQL = [NSString stringWithFormat:
-                              @"REPLACE INTO Class (id, name, grade, level, progress, currentday) VALUES (%ld, \"%@\", %ld, %ld, %ld, \"%@\")", (long)[cl getId], [cl getName], (long)[cl getGradeNumber], (long)[cl getLevel], (long)[cl getProgress], [cl getCurrentDate]];
+                              @"REPLACE INTO Class (id, name, grade, level, progress, currentday) VALUES (%ld, \"%@\", \"%@\", %ld, %ld, \"%@\")", (long)[cl getId], [cl getName], [cl getGradeNumber], (long)[cl getLevel], (long)[cl getProgress], [cl getCurrentDate]];
         const char *query_stmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(database,
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
@@ -235,7 +235,7 @@ static sqlite3_stmt *statement = nil;
         NSInteger cid = [classDictionary[@"class_id"]integerValue];
         NSString *className = classDictionary[@"name"];
         NSInteger progress = [classDictionary[@"progress"]integerValue];
-        NSInteger grade = [classDictionary[@"grade"]integerValue];
+        NSString *grade = classDictionary[@"grade"];
         NSInteger level = [classDictionary[@"level"]integerValue];
         NSInteger nextLevel = level * 6;
 
@@ -321,7 +321,7 @@ static sqlite3_stmt *statement = nil;
                 
                 NSString *name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
                 
-                NSInteger grade = sqlite3_column_int(statement, 2);
+                NSString *grade = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
                 
                 NSInteger level = sqlite3_column_int(statement, 3);
                 
@@ -362,7 +362,7 @@ static sqlite3_stmt *statement = nil;
 
                 NSString *name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
 
-                NSInteger grade = sqlite3_column_int(statement, 2);
+                NSString *grade = [NSString stringWithUTF8String:(char *)sqlite3_column_int(statement, 2)];
 
                 NSInteger level = sqlite3_column_int(statement, 3);
 

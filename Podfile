@@ -13,6 +13,5 @@ pod 'Google/Analytics'
 end
 
 target 'Classroom HeroTests' do
-
 end
 

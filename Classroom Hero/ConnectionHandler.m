@@ -118,8 +118,12 @@ static NSInteger connectionType;
 
 - (void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade {
     connectionType = ADD_CLASS;
+<<<<<<< HEAD
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"teacher\":%ld,\"name\":\"%@\", \"grade\":\"%@\"}", (long)id, name, grade];
+=======
     NSString *url = [NSString stringWithFormat:@"%@/create", CLASS_URL];
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"teacher\":%ld,\"name\":\"%@\", \"grade\":%ld}", (long)id, name, (long)grade];
+>>>>>>> master
     
     [self asynchronousWebCall:jsonRequest :url :POST];
 }
@@ -130,7 +134,7 @@ static NSInteger connectionType;
     
     NSString *url = [NSString stringWithFormat:@"%@/%ld/edit/", CLASS_URL, (long)id];
 
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"name\":\"%@\", \"grade\":%ld}", name, (long)grade];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"name\":\"%@\", \"grade\":%ld}", name, grade];
     
     [self asynchronousWebCall:jsonRequest :url :PUT];
 }
@@ -442,6 +446,7 @@ static NSInteger connectionType;
 
     if (jsonRequest != nil){
         NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
+        NSLog(@"Check out the sent data -> %@", request);
         [request setHTTPBody: requestData];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
     }

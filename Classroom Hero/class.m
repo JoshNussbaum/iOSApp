@@ -21,7 +21,7 @@
     return self;
 }
 
-- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSInteger)gradeNumber_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_{
+- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSString *)gradeNumber_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_{
     self = [super init];
     if (self)
     {
@@ -50,7 +50,7 @@
 }
 
 
-- (void) setGradeNumber:(NSInteger)gradeNumber_{
+- (void) setGradeNumber:(NSString *)gradeNumber_{
     self->gradeNumber = gradeNumber_;
 }
 
@@ -74,7 +74,7 @@
 }
 
 
-- (NSInteger) getGradeNumber{
+- (NSString *) getGradeNumber{
     return self->gradeNumber;
 }
 
@@ -121,7 +121,7 @@
 
 
 - (void)printClass{
-    NSLog(@"\nClass ID=>%li,\n Name=>%@,\n Grade=>%ld,\n Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n", (long)self->id, self->name, (long)self->gradeNumber, (long)self->level, (long)self->progress, (long)self->nextLevel);
+    NSLog(@"\nClass ID=>%li,\n Name=>%@,\n Grade=>%@,\n Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n", (long)self->id, self->name, self->gradeNumber, (long)self->level, (long)self->progress, (long)self->nextLevel);
     
 }
 
