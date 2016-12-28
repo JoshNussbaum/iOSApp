@@ -122,7 +122,7 @@
         {
             AudioServicesPlaySystemSound([Utilities getTheSoundOfSuccess]);
             
-            NSInteger cid = [[data objectForKey:@"id"] integerValue];
+            NSInteger cid = [[data objectForKey:@"class_id"] integerValue];
             [newClass setId:cid];
             [[DatabaseHandler getSharedInstance]addClass:newClass];
             
