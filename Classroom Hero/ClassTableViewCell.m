@@ -68,7 +68,7 @@
     if ([class_ getProgress] == 0) {
         barProgress = 0.0;
     }
-    self.gradeLabel.text = [NSString stringWithFormat:@"%ld", (long)[class_ getGradeNumber]];
+    self.gradeLabel.text = [class_ getGradeNumber];
     self.levelLabel.text = [NSString stringWithFormat:@"%ld", (long)[class_ getLevel]];
     self.numberOfStudentsLabel.text = [NSString stringWithFormat:@"%ld  Students", (long)classCount];
     

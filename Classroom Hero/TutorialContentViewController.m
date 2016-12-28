@@ -271,7 +271,7 @@ static int screenNumber;
 
         if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"id"] integerValue];
-            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text.integerValue :1 :1 :30 :[Utilities getCurrentDate]];
+            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text :1 :1 :30 :[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             tmpClass = newClass;
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  class  or  swipe  left  to  continue"]];

@@ -68,22 +68,23 @@
         }
     }
     
-    if (![errorMessage isEqualToString:@""]){
+    /*if (![errorMessage isEqualToString:@""]){
         [Utilities disappearingAlertView:@"Error adding class" message:errorMessage otherTitles:nil tag:0 view:self time:2.0];
 
         return;
         
-    }
-    if (self.classGradeTextField.text.length > 3){
+    }*/
+    /*if (self.classGradeTextField.text.length > 3){
         [Utilities disappearingAlertView:@"Error adding class" message:@"Grade must be less than 1000" otherTitles:nil tag:0 view:self time:2.0];
 
         return;
         
-    }
+    }*/
     [self activityStart:@"Adding class..."];
     [self hideKeyboard];
     NSString *className = self.classNameTextField.text;
-    NSInteger classGrade = [self.classGradeTextField.text integerValue];
+    NSString *classGrade = self.classGradeTextField.text;
+    NSLog(@"Here is the grade \n-> %@", classGrade);
     newClass = [[class alloc]init:0 :className :classGrade :1 :1 :30 :[Utilities getCurrentDate]];
     [webHandler addClass:currentUser.id :className :classGrade];
     

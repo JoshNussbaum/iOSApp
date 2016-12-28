@@ -109,7 +109,7 @@ static NSString * const classCell = @"classCell";
         if (!errorMessage){
             NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
             if (!gradeErrorMessage){
-                NSInteger grade = newClassGrade.integerValue;
+                NSString *grade = newClassGrade;
                 class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];
                 [webHandler editClass:[selectedClass getId] :newClassName :grade];
