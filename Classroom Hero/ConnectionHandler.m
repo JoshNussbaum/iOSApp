@@ -119,7 +119,7 @@ static NSInteger connectionType;
 - (void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade {
     connectionType = ADD_CLASS;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"teacher\":%ld,\"name\":\"%@\", \"grade\":\"%@\"}", (long)id, name, grade];
-    NSString *url = [NSString stringWithFormat:@"%@/create", CLASS_URL];
+    NSString *url = [NSString stringWithFormat:@"%@create/", CLASS_URL];
     
     [self asynchronousWebCall:jsonRequest :url :POST];
 }
