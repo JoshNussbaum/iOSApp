@@ -125,19 +125,19 @@ static NSInteger connectionType;
 }
 
 
-- (void)editClass:(NSInteger)id :(NSString *)name :(NSInteger)grade {
+- (void)editClass:(NSInteger)id :(NSString *)name :(NSString *)grade {
     connectionType = EDIT_CLASS;
     
-    NSString *url = [NSString stringWithFormat:@"%@/%ld/edit/", CLASS_URL, (long)id];
+    NSString *url = [NSString stringWithFormat:@"%@%ld/edit/", CLASS_URL, (long)id];
 
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"name\":\"%@\", \"grade\":%ld}", name, grade];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"name\":\"%@\", \"grade\":\"%@\"}", name, grade];
     
     [self asynchronousWebCall:jsonRequest :url :PUT];
 }
 
 
 - (void)deleteClass:(NSInteger)id{
-    NSString *url = [NSString stringWithFormat:@"%@/%ld/delete/", CLASS_URL, (long)id];
+    NSString *url = [NSString stringWithFormat:@"%@%ld/delete/", CLASS_URL, (long)id];
     
     connectionType = DELETE_CLASS;
     

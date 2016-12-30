@@ -38,7 +38,7 @@
 - (void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade;
 
 
-- (void)editClass:(NSInteger)id :(NSString *)name :(NSInteger)grade;
+- (void)editClass:(NSInteger)id :(NSString *)name :(NSString *)grade;
 
 
 - (void)deleteClass:(NSInteger)id;

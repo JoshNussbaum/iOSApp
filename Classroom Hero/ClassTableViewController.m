@@ -107,17 +107,12 @@ static NSString * const classCell = @"classCell";
         NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
 
         if (!errorMessage){
-            NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
-            if (!gradeErrorMessage){
-                NSString *grade = newClassGrade;
-                class *selectedClass = [classes objectAtIndex:index];
-                [self activityStart:@"Editing class..."];
-                [webHandler editClass:[selectedClass getId] :newClassName :grade];
-                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getCurrentDate]];
-            }
-            else {
-                [Utilities alertStatusWithTitle:@"Error editing class" message:gradeErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
-            }
+            NSString *grade = newClassGrade;
+            class *selectedClass = [classes objectAtIndex:index];
+            [self activityStart:@"Editing class..."];
+            [webHandler editClass:[selectedClass getId] :newClassName :grade];
+            tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getCurrentDate]];
+         
         }
         else {
             [Utilities alertStatusWithTitle:@"Error editing class" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
@@ -277,7 +272,7 @@ static NSString * const classCell = @"classCell";
     }
     else {
         class *selectedClass = [self getClassByIndexPath:indexPath];
-        NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
+        NSString *gradeString = [NSString stringWithFormat:@"%@", [selectedClass getGradeNumber]];
         [Utilities editTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
 
     }
