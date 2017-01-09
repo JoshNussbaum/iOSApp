@@ -25,7 +25,6 @@ static NSString * const classCell = @"classCell";
     ConnectionHandler *webHandler;
     class *tmpClass;
     bool addingClass;
-    NSInteger flag;
     bool editingEnabled;
 }
 
@@ -46,7 +45,7 @@ static NSString * const classCell = @"classCell";
     [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
     [self.tableView setBounces:NO];
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     classes = [[DatabaseHandler getSharedInstance] getClasses];
     editingEnabled = NO;
 
@@ -67,20 +66,18 @@ static NSString * const classCell = @"classCell";
         classes = [[DatabaseHandler getSharedInstance]getClasses];
         [self.tableView reloadData];
     }
-    if (flag == 2){
-        currentUser = [user getInstance];
-        classes = [[DatabaseHandler getSharedInstance] getClasses];
-
-        NSMutableArray *classIds = [[NSMutableArray alloc]init];
-        for (class *class_ in classes){
-            NSNumber *classId = [NSNumber numberWithInteger:[class_ getId]];
-            [classIds addObject:classId];
-        }
-
-
-        studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
-        [self.tableView reloadData];
+    currentUser = [user getInstance];
+    classes = [[DatabaseHandler getSharedInstance] getClasses];
+    
+    NSMutableArray *classIds = [[NSMutableArray alloc]init];
+    for (class *class_ in classes){
+        NSNumber *classId = [NSNumber numberWithInteger:[class_ getId]];
+        [classIds addObject:classId];
     }
+    
+    
+    studentNumberCountsByClassIds = [[DatabaseHandler getSharedInstance] getNumberOfStudentsInClasses:classIds];
+    [self.tableView reloadData];
 }
 
 
@@ -133,35 +130,38 @@ static NSString * const classCell = @"classCell";
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-
-    if (data == nil){
+    
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         [Utilities alertStatusNoConnection];
         return;
     }
-
-    NSString *message = [data objectForKey:@"message"];
-
-    if(!message)
-    {
-        if (type == EDIT_CLASS){
-            [[DatabaseHandler getSharedInstance] editClass:tmpClass];
-            [classes replaceObjectAtIndex:index withObject:tmpClass];
-            [self.tableView reloadData];
-        }
-
-        else if (type == DELETE_CLASS){
-            [[DatabaseHandler getSharedInstance]deleteClass:[tmpClass getId]];
-            NSInteger row = index + 1;
-
-            [classes removeObjectAtIndex:index];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            NSArray *indexPaths = @[indexPath];
-            [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-
-        }
+    
+    else if (type == EDIT_CLASS){
+        [[DatabaseHandler getSharedInstance] editClass:tmpClass];
+        [classes replaceObjectAtIndex:index withObject:tmpClass];
+        [self.tableView reloadData];
     }
-    else {
-        [Utilities alertStatusNoConnection];
+    
+    else if (type == DELETE_CLASS){
+        [[DatabaseHandler getSharedInstance]deleteClass:[tmpClass getId]];
+        NSInteger row = index + 1;
+        
+        [classes removeObjectAtIndex:index];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        NSArray *indexPaths = @[indexPath];
+        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        
     }
 
 }
@@ -254,7 +254,6 @@ static NSString * const classCell = @"classCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        flag = 2;
         [self performSegueWithIdentifier:@"class_to_add_class" sender:self];
         return;
     }
@@ -265,20 +264,13 @@ static NSString * const classCell = @"classCell";
             currentUser.currentClass = selectedClass;
             NSMutableArray *studentIds = [[DatabaseHandler getSharedInstance] getStudentIds:[selectedClass getId]];
             currentUser.studentIds = studentIds;
-//            NSMutableArray *students = [[DatabaseHandler getSharedInstance] getStudents:[selectedClass getId] :NO studentIds:studentIds];
-//            NSMutableDictionary *studentsDictionary = [[NSMutableDictionary alloc]init];
-//            for (student *stud in students){
-//                NSNumber *studentId = [NSNumber numberWithInteger:[stud getId]];
-//                studentsDictionary[studentId] = stud;
-//            }
-//            currentUser.students = studentsDictionary;
+            
             [self performSegueWithIdentifier:@"class_to_home" sender:nil];
         }
     }
     else {
         class *selectedClass = [self getClassByIndexPath:indexPath];
-        NSString *gradeString = [NSString stringWithFormat:@"%ld", (long)[selectedClass getGradeNumber]];
-        [Utilities editTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], gradeString] tag:1 view:self];
+        [Utilities editTextWithtitle:@"Edit Class" message:nil cancel:@"Cancel" done:@"Done" delete:NO textfields:@[[selectedClass getName], [selectedClass getGradeNumber]] tag:1 view:self];
 
     }
 }

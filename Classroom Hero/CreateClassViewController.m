@@ -35,7 +35,7 @@
     [super viewDidLoad];
     
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
 
     self.classNameTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
     self.classGradeTextField.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
@@ -84,8 +84,7 @@
     [self hideKeyboard];
     NSString *className = self.classNameTextField.text;
     NSString *classGrade = self.classGradeTextField.text;
-    NSLog(@"Here is the grade \n-> %@", classGrade);
-    newClass = [[class alloc]init:0 :className :classGrade :1 :1 :30 :[Utilities getCurrentDate]];
+    newClass = [[class alloc]init:0 :className :classGrade :1 :0 :30 :[Utilities getCurrentDate]];
     [webHandler addClass:currentUser.id :className :classGrade];
     
 }
@@ -109,13 +108,24 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-
-    if (data == nil){
+    
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:1.5];
+        double delayInSeconds = 1.4;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         [Utilities alertStatusNoConnection];
         return;
     }
-
-    if (type == ADD_CLASS){
+    
+    else if (type == ADD_CLASS){
         NSString *errorMessage = [data objectForKey: @"message"];
 
         if(!errorMessage)

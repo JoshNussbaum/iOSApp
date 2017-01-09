@@ -47,10 +47,6 @@
 
 - (void)addClassJar:(classjar *)cj;
 
-
-- (void)addSchools:(NSMutableArray *)schools;
-
-
 - (void)login:(NSDictionary *)loginInfo;
 
 
@@ -77,9 +73,6 @@
 - (classjar *)getClassJar:(NSInteger)cid;
 
 
-- (student *)getStudentWithSerial:(NSString *)serial;
-
-
 - (student *)getStudentWithID:(NSInteger)sid;
 
 - (NSMutableArray *)getStudentIds:(NSInteger )cid;
@@ -96,12 +89,6 @@
 - (NSMutableDictionary *)getNumberOfStudentsInClasses:(NSMutableArray *)classIds;
 
 
-- (NSMutableArray *)getUnregisteredStudents:(NSInteger)cid;
-
-
-- (NSInteger)getNumberOfUnregisteredStudentsInClass:(NSInteger)cid;
-
-
 - (NSInteger)getNumberOfPointsInSchool:(NSInteger)schoolId;
 
 
@@ -112,23 +99,24 @@
 
 - (void)editClass:(class *)updatedClass;
 
+
 - (void)editReinforcer:(reinforcer *)updatedReinforcer;
+
 
 - (void)editItem:(item *)updatedItem;
 
-- (void)registerStudent:(NSInteger)sid :(NSString *)serial;
-
-- (void)unregisterStudent:(NSInteger)sid;
 
 - (void)updateStudent:(student *)updatedStudent;
 
+
 - (void)updateClassJar:(classjar *)updatedClassJar;
 
-- (void)unregisterAllStudentsInClassWithid:(NSInteger)classId;
 
 - (void)updateStudentCheckedIn:(NSInteger)studentId :(BOOL)checkedIn;
 
+
 - (void)updateAllStudentsCheckedInWithclassId:(NSInteger)classId checkedIn:(BOOL)checkedIn studentIds:(NSMutableArray *)studentIds;
+
 
 // Delete Functions
 
@@ -152,12 +140,6 @@
 
 
 // Misc Functions
-
-- (bool) isValidStamp:(NSString *)serial :(NSInteger)schoolId;
-
-
-- (bool) isSerialRegistered:(NSString *)serial;
-
 
 - (bool) doesClassNameExist:(NSString *)className;
 

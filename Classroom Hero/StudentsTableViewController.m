@@ -49,7 +49,7 @@
     currentUser = [user getInstance];
     
     studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO studentIds:currentUser.studentIds];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     
     [self.tableView setBounces:NO];
 }
@@ -121,44 +121,39 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-
-    if (data == nil){
+    
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         [Utilities alertStatusNoConnection];
         return;
     }
     
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    NSString *message = [data objectForKey:@"message"];
 
-    if (type == ADD_STUDENT){
-        
-        if([successNumber boolValue] == YES)
-        {
-            NSInteger studentId = [[data objectForKey:@"id"] integerValue];
-            student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
-            [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId]];
-            [studentsData addObject:newStudent];
-            [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
-            [self.tableView reloadData];
-        }
-        else {
-            [Utilities disappearingAlertView:@"Error adding student" message:message otherTitles:nil tag:0 view:self time:2.0];
-            return;
-        }
+    else if (type == ADD_STUDENT){
+        NSInteger studentId = [[data objectForKey:@"student_id"] integerValue];
+        student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName  lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
+        [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId]];
+        [studentsData addObject:newStudent];
+        [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
+        [self.tableView reloadData];
     }
     else if (type == DELETE_STUDENT){
-        if([successNumber boolValue] == YES)
-        {
-            [studentsData removeObject:currentStudent];
-            [currentUser.studentIds removeObject:[NSNumber numberWithInteger:[currentStudent getId]]];
+        [studentsData removeObject:currentStudent];
+        [currentUser.studentIds removeObject:[NSNumber numberWithInteger:[currentStudent getId]]];
+        
+        currentStudent = nil;
+        [self.tableView reloadData];
 
-            currentStudent = nil;
-            [self.tableView reloadData];
-        }
-        else {
-            [Utilities disappearingAlertView:@"Error deleting student" message:message otherTitles:nil tag:0 view:self time:2.0];
-            return;
-        }
     }
 }
 
@@ -332,10 +327,7 @@
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:animated];
     editing_ = editing;
-    
-    
-    
-    
+
 }
 
 

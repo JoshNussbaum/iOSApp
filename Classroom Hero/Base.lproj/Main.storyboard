@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="VM1-vP-cnk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="VM1-vP-cnk">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -875,7 +875,7 @@
                                 <rect key="frame" x="0.0" y="22" width="768" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FI5-Kw-U0s" id="csd-9P-cat">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="73.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="73"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Class" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="8Xf-D0-Pvt">
@@ -900,7 +900,7 @@
                                 <rect key="frame" x="0.0" y="96" width="768" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="19w-rb-Agj" id="srO-EL-heQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="149.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="149"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="89 Students" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daW-LK-oq2">
@@ -1135,7 +1135,7 @@
                                         <rect key="frame" x="0.0" y="28" width="391" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ytH-HF-MyZ" id="msq-Qj-m0F">
-                                            <rect key="frame" x="0.0" y="0.0" width="391" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="391" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n4s-60-H8s">
@@ -1277,9 +1277,11 @@
                         <outlet property="studentsPicker" destination="qgd-gm-LyG" id="qPN-3m-CTB"/>
                         <outlet property="studentsTableView" destination="HhE-Pd-HrM" id="SKb-Dk-2Ju"/>
                         <outlet property="titleLabel" destination="lXC-3i-3Sw" id="vYk-F3-wcs"/>
+                        <segue destination="Nhu-aj-7T1" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="1P6-ee-vE8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nuT-B8-7E8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Nhu-aj-7T1" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="jQI-k1-z5V">
                     <connections>
                         <outlet property="delegate" destination="rrA-d8-rIs" id="zhw-fJ-GAf"/>
@@ -1396,6 +1398,7 @@
                         <outlet property="classGradeTextField" destination="quS-gn-ZlD" id="u2P-D1-UMU"/>
                         <outlet property="classNameTextField" destination="z0f-hV-Zs6" id="zvF-Zp-qrT"/>
                         <outlet property="errorLabel" destination="NZ8-Zs-Sxx" id="x48-vU-cHK"/>
+                        <segue destination="gWo-Ff-9fE" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="I2Q-gC-TW3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bu6-15-div" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1421,7 +1424,7 @@
                                 <rect key="frame" x="0.0" y="22" width="768" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="Ol1-p7-Otr" id="8tS-fJ-Cpu">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="49.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="49"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnE-aH-h98">
@@ -1437,7 +1440,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name Label That Is Very Long" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByS-dE-Aab">
                                             <rect key="frame" x="8" y="0.0" width="283" height="49"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="ByS-dE-Aab" secondAttribute="height" multiplier="456:49" constant="-172" id="V8W-Lf-pOb"/>
+                                                <constraint firstAttribute="width" secondItem="ByS-dE-Aab" secondAttribute="height" multiplier="456:49" constant="-173" id="V8W-Lf-pOb"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="20"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1454,10 +1457,10 @@
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHa-2W-DFz">
-                                            <rect key="frame" x="334" y="1" width="65" height="48"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHa-2W-DFz">
+                                            <rect key="frame" x="334" y="4" width="65" height="42"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="QHa-2W-DFz" secondAttribute="height" multiplier="13:8" constant="-16.25" id="yoA-RS-g59"/>
+                                                <constraint firstAttribute="width" secondItem="QHa-2W-DFz" secondAttribute="height" multiplier="13:8" constant="-3.25" id="yoA-RS-g59"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                             <state key="normal" title="+1">
@@ -1468,10 +1471,10 @@
                                                 <action selector="plusOneClicked:" destination="Ol1-p7-Otr" eventType="touchUpInside" id="oIN-ip-gJj"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bh-8v-leC">
-                                            <rect key="frame" x="429" y="1" width="65" height="48"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bh-8v-leC">
+                                            <rect key="frame" x="429" y="4" width="65" height="42"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="7bh-8v-leC" secondAttribute="height" multiplier="13:8" constant="-16.25" id="15W-7W-WbI"/>
+                                                <constraint firstAttribute="width" secondItem="7bh-8v-leC" secondAttribute="height" multiplier="13:8" constant="-3.25" id="15W-7W-WbI"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                             <state key="normal" title="-1 ">
@@ -1530,7 +1533,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dCI-xW-RY9">
-                            <rect key="frame" x="230.5" y="-3" width="307" height="50"/>
+                            <rect key="frame" x="231" y="-3" width="307" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="26"/>
                             <state key="normal" title="Add Student">
@@ -1542,10 +1545,10 @@
                         </button>
                         <barButtonItem key="rightBarButtonItem" id="QK7-1E-9JH">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7MA-zx-tHG">
-                                <rect key="frame" x="578" y="7" width="170" height="30"/>
+                                <rect key="frame" x="578" y="0.0" width="170" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="26"/>
-                                <state key="normal" title="Edit">
+                                <state key="normal" title="Select">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -1559,9 +1562,11 @@
                         <outlet property="backButton" destination="2xO-MT-fwe" id="ro3-KY-okc"/>
                         <outlet property="editButton" destination="7MA-zx-tHG" id="b9h-u2-fvu"/>
                         <segue destination="Xxy-ye-LqB" kind="push" identifier="student_segue" id="Xgu-86-ZF3"/>
+                        <segue destination="prd-If-GNz" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="ZIE-P0-p85"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bg6-AO-vSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="prd-If-GNz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6118" y="2186"/>
         </scene>
@@ -1714,9 +1719,11 @@
                         <outlet property="pointsLabel" destination="Lcs-xr-9EI" id="xHb-VV-RA2"/>
                         <outlet property="progressView" destination="cqC-Ux-j30" id="MNJ-Pj-kAP"/>
                         <outlet property="subtractPointsButton" destination="a3q-2C-Pz2" id="mrK-kW-fed"/>
+                        <segue destination="wEU-ro-c1F" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="AQ5-s8-DjV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfW-Vd-zfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="wEU-ro-c1F" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6118" y="3435"/>
         </scene>
@@ -1935,9 +1942,11 @@
                         <outlet property="resetPasswordButton" destination="9Ud-6f-2Ql" id="7wB-9J-Ur8"/>
                         <outlet property="separatorView" destination="Sye-eY-AYQ" id="rHg-be-aTm"/>
                         <segue destination="sWF-eP-1Ke" kind="push" identifier="settings_to_tutorial" id="0OP-ML-Sf4"/>
+                        <segue destination="hvS-yw-c4c" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="LFe-pB-QrY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hZZ-j0-3gL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="hvS-yw-c4c" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="7Kf-UY-9Z1">
                     <connections>
                         <action selector="backgroundTap:" destination="wCL-Ew-G6Q" id="eM1-bk-cfH"/>
@@ -2744,7 +2753,7 @@
                                         <rect key="frame" x="0.0" y="28" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WhH-Je-Xtm" id="6mA-3P-JGB">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iK9-6I-wGA">
@@ -2863,7 +2872,7 @@
                     <toolbarItems>
                         <barButtonItem style="plain" id="DbR-SB-wuL">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tBs-xK-ab8">
-                                <rect key="frame" x="20" y="-0.5" width="175" height="45"/>
+                                <rect key="frame" x="20" y="-1" width="175" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="27"/>
                                 <state key="normal" title="Student List">
@@ -2953,6 +2962,7 @@
                         <outlet property="sackImage" destination="iwY-KV-Zpj" id="hiy-zl-s6y"/>
                         <outlet property="stampImage" destination="0xe-62-Iap" id="qp9-lp-fdX"/>
                         <outlet property="studentsTableView" destination="ebp-Z3-Goo" id="XhQ-Vi-Wug"/>
+                        <segue destination="wum-BM-i6p" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="hbT-AX-qKF"/>
                     </connections>
                 </viewController>
                 <swipeGestureRecognizer direction="left" id="qeI-AU-sWu">
@@ -3291,6 +3301,7 @@
                         <outlet property="pointsLabel" destination="tS8-qQ-35D" id="cPo-xn-tYq"/>
                         <outlet property="stepper" destination="V12-pn-duu" id="Owr-YH-lZH"/>
                         <segue destination="ZmY-0S-XHe" kind="unwind" identifier="class_jar_to_home" unwindAction="unwindToHome:" id="aOj-Kz-tTR"/>
+                        <segue destination="ZmY-0S-XHe" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="50B-vC-5eo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlV-q2-8NG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3428,7 +3439,7 @@
                                         <rect key="frame" x="0.0" y="28" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ezP-GM-MyV" id="9xq-44-rif">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjP-0U-JFP">
@@ -3620,7 +3631,6 @@
                             <constraint firstItem="bNY-Tl-vWz" firstAttribute="centerX" secondItem="xbq-R1-ZNM" secondAttribute="centerX" id="eOt-KT-Gir"/>
                             <constraint firstItem="ptO-mf-fG9" firstAttribute="top" secondItem="Xq9-Kh-Dgl" secondAttribute="bottom" constant="6" id="eTX-nv-cwf"/>
                             <constraint firstItem="srx-XP-7TZ" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="3:4" id="fT7-tn-6qQ"/>
-                            <constraint firstItem="lAg-59-gSC" firstAttribute="width" secondItem="xbq-R1-ZNM" secondAttribute="height" multiplier="3:4" id="gcS-bM-qYJ"/>
                             <constraint firstItem="Xq9-Kh-Dgl" firstAttribute="top" secondItem="bNY-Tl-vWz" secondAttribute="bottom" constant="37" id="iXe-T1-MmT"/>
                             <constraint firstItem="lAg-59-gSC" firstAttribute="top" secondItem="2eJ-41-5MN" secondAttribute="bottom" id="ibC-Kb-feD"/>
                             <constraint firstAttribute="trailing" secondItem="Ch3-4v-Ksy" secondAttribute="trailing" id="lSl-uK-os3"/>
@@ -3710,6 +3720,7 @@
                         <outlet property="studentsTableView" destination="TKh-UE-yJg" id="1jx-aN-Ejt"/>
                         <segue destination="VH0-Rb-kzW" kind="unwind" identifier="market_to_award" unwindAction="unwindToAward:" id="v4f-G7-obf"/>
                         <segue destination="VH0-Rb-kzW" kind="unwind" identifier="market_to_home" unwindAction="unwindToHome:" id="xCl-aR-7ZO"/>
+                        <segue destination="VH0-Rb-kzW" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="NcG-n7-axs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNw-4P-enm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3749,7 +3760,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ewg-8k-sYO"/>
-        <segue reference="bHb-Tt-ENY"/>
+        <segue reference="7j2-Pv-6iv"/>
+        <segue reference="gYe-ik-tSY"/>
     </inferredMetricsTieBreakers>
 </document>

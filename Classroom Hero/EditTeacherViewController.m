@@ -44,7 +44,7 @@
     self.firstNameTextField.placeholder = currentUser.firstName;
     self.lastNameTextField.placeholder = currentUser.lastName;
     
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     textFields = [[NSMutableArray alloc]initWithObjects:self.editPasswordTextField, self.confirmNewPasswordTextField, self.currentPasswordTextField, self.firstNameTextField, self.lastNameTextField, nil];
     
     for (UITextField *tf in textFields){
@@ -133,7 +133,7 @@
         }
         else {
             [self activityStart:@"Editing password..."];
-            [webHandler editTeacherPasswordWithemail:currentUser.email oldPassword:self.currentPasswordTextField.text newPassword:self.confirmNewPasswordTextField.text];
+            [webHandler editTeacherPasswordWithid:currentUser.id password:self.confirmNewPasswordTextField.text];
             
         }
     }
@@ -190,59 +190,49 @@
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    if (data == nil){
-        [hud hide:YES];
-        [Utilities alertStatusNoConnection];
-        
+    [hud hide:YES];
+    
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
         return;
     }
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    if ([successNumber boolValue] == YES){
-        if (type == EDIT_TEACHER_NAME){
-            currentUser.firstName = self.firstNameTextField.text;
-            currentUser.lastName = self.lastNameTextField.text;
-            [hud hide:YES];
-            self.firstNameTextField.text = @"";
-            self.lastNameTextField.text = @"";
-            [Utilities alertStatusWithTitle:@"Success" message:@"Edited name" cancel:nil otherTitles:nil tag:0 view:nil];
-            self.firstNameTextField.placeholder = currentUser.firstName;
-            self.lastNameTextField.placeholder = currentUser.lastName;
-            
-        }
-        else if (type == EDIT_TEACHER_PASSWORD){
-            currentUser.password = self.editPasswordTextField.text;
-            [hud hide:YES];
-            self.editPasswordTextField.text = @"";
-            self.confirmNewPasswordTextField.text = @"";
-            self.currentPasswordTextField.text = @"";
-            [Utilities alertStatusWithTitle:@"Success" message:@"Edited password" cancel:nil otherTitles:nil tag:0 view:nil];
-        }
-        
-        else if (type == RESET_PASSWORD){
-            [hud hide:YES];
-            [Utilities alertStatusWithTitle:@"Password recovery email sent" message:@"Check your inbox for an email containing instructions to reset your password" cancel:nil otherTitles:nil tag:0 view:nil];
-        }
-        else{
-            [Utilities alertStatusNoConnection];
-        }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
+        [Utilities alertStatusNoConnection];
+        return;
     }
-    else {
-        NSString *message = [data objectForKey:@"message"];
-        NSString *errorMessage;
-        
-        if (type == EDIT_TEACHER_NAME){
-            errorMessage = @"Error editing name";
-        }
-        else if (type == EDIT_TEACHER_PASSWORD){
-            errorMessage = @"Error editing password";
-        }
-        else if (type == RESET_PASSWORD){
-            errorMessage = @"Error resetting password";
-        }
-        [Utilities disappearingAlertView:errorMessage message:message otherTitles:nil tag:0 view:self time:2.0];
-
+    
+    if (type == EDIT_TEACHER_NAME){
+        currentUser.firstName = self.firstNameTextField.text;
+        currentUser.lastName = self.lastNameTextField.text;
         [hud hide:YES];
-
+        self.firstNameTextField.text = @"";
+        self.lastNameTextField.text = @"";
+        [Utilities alertStatusWithTitle:@"Success" message:@"Name edited" cancel:nil otherTitles:nil tag:0 view:nil];
+        self.firstNameTextField.placeholder = currentUser.firstName;
+        self.lastNameTextField.placeholder = currentUser.lastName;
+        
+    }
+    else if (type == EDIT_TEACHER_PASSWORD){
+        currentUser.password = self.editPasswordTextField.text;
+        [hud hide:YES];
+        self.editPasswordTextField.text = @"";
+        self.confirmNewPasswordTextField.text = @"";
+        self.currentPasswordTextField.text = @"";
+        [Utilities alertStatusWithTitle:@"Success" message:@"Password edited" cancel:nil otherTitles:nil tag:0 view:nil];
+    }
+    
+    else if (type == RESET_PASSWORD){
+        [hud hide:YES];
+        [Utilities alertStatusWithTitle:@"Password recovery email sent" message:@"Check your inbox for an email containing instructions to reset your password" cancel:nil otherTitles:nil tag:0 view:nil];
+    }
+    else{
+        [Utilities alertStatusNoConnection];
     }
 
 }

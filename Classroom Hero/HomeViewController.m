@@ -104,8 +104,6 @@
     self.classLevelLabel.text = [NSString stringWithFormat:@"Class  Level:  %ld", [currentUser.currentClass getLevel]];
     [self.classProgressBar setProgress:(float)[currentUser.currentClass getProgress] / (float)[currentUser.currentClass getNextLevel] animated:YES];
 
-    NSInteger unregisteredStudents = [[DatabaseHandler getSharedInstance]getNumberOfUnregisteredStudentsInClass:[currentUser.currentClass getId]];
-
     NSMutableDictionary *classStats = [[DatabaseHandler getSharedInstance]getClassStats:[currentUser.currentClass getId] :currentUser.studentIds];
     NSInteger totalStamps = 0;
     NSInteger partialProgress = 0;

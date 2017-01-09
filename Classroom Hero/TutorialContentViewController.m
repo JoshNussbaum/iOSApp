@@ -38,7 +38,7 @@ static int screenNumber;
     isStamping = NO;
     currentUser = [user getInstance];
     
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     
     [Utilities makeRounded:self.button.layer color:nil borderWidth:0.5f cornerRadius:5];
 
@@ -119,16 +119,10 @@ static int screenNumber;
         NSString *classErrorMessage = [Utilities isInputValid:className :@"Class name"];
         if (!classErrorMessage){
             if (![[DatabaseHandler getSharedInstance] doesClassNameExist:className]){
-                NSString *gradeErrorMessage = [Utilities isNumeric:gradeNumber];
+                NSString *gradeErrorMessage = [Utilities isInputValid:gradeNumber :@"Grade"];
                 if (!gradeErrorMessage) {
-                    if (!(gradeNumber.length > 3)){
-                        [self activityStart:@"Validating class data..."];
-                        [webHandler addClass:currentUser.id :className :gradeNumber.integerValue];
-                    }
-                    else {
-                        [Utilities disappearingAlertView:@"Error adding class" message:@"Grade must be lass than 1000" otherTitles:nil tag:0 view:self time:2.0];
-                    }
-                    
+                    [self activityStart:@"Validating class data..."];
+                    [webHandler addClass:currentUser.id :className :gradeNumber];
                 }
                 else{
                     [Utilities disappearingAlertView:@"Error adding class" message:gradeErrorMessage otherTitles:nil tag:0 view:self time:2.0];
@@ -256,10 +250,20 @@ static int screenNumber;
 
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
-    //NSLog(@"In Tutorial and here is the data =>\n %@ \nand type = %ld", data, (long)type);
     [hud hide:YES];
     
-    if (data == nil){
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         [Utilities alertStatusNoConnection];
         return;
     }
@@ -269,7 +273,7 @@ static int screenNumber;
     if(!message)
     {
         if (type == ADD_CLASS){
-            NSInteger classId = [[data objectForKey:@"id"] integerValue];
+            NSInteger classId = [[data objectForKey:@"class_id"] integerValue];
             class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text :1 :1 :30 :[Utilities getCurrentDate]];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             tmpClass = newClass;
@@ -283,8 +287,8 @@ static int screenNumber;
         }
         
         else if (type == ADD_STUDENT){
-            NSInteger studentId = [[data objectForKey:@"id"] integerValue];
-            student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text serial:@"" lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
+            NSInteger studentId = [[data objectForKey:@"student_id"] integerValue];
+            student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[tmpClass getId]];
             [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
 
@@ -296,7 +300,7 @@ static int screenNumber;
         else if (type == ADD_REINFORCER){
             NSString *reinforcerName = self.textField1.text;
             NSInteger reinforcerValue = self.textField2.text.integerValue;
-            NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
+            NSInteger reinforcerId = [[data objectForKey:@"reinforcer_id"] integerValue];
             reinforcer *newReinforcer = [[reinforcer alloc]init:reinforcerId :[tmpClass getId] :reinforcerName :reinforcerValue];
             [[DatabaseHandler getSharedInstance] addReinforcer:newReinforcer];
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  category  or  swipe  left  to  continue"]];
@@ -305,7 +309,7 @@ static int screenNumber;
         else if (type == ADD_ITEM){
             NSString *itemName = self.textField1.text;
             NSInteger itemCost = self.textField2.text.integerValue;
-            NSInteger itemId = [[data objectForKey:@"id"] integerValue];
+            NSInteger itemId = [[data objectForKey:@"item_id"] integerValue];
             item *newItem = [[item alloc]init:itemId :[tmpClass getId]  :itemName :itemCost];
             [[DatabaseHandler getSharedInstance] addItem:newItem];
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  item  or  swipe  left  to  continue"]];

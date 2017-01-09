@@ -27,7 +27,7 @@
     connectionInProgress = NO;
     currentUser = [user getInstance];
     currentStudent = currentStudent_;
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     [Utilities makeRoundedButton:self.plusOneButton :[UIColor blackColor]];
     [Utilities makeRoundedButton:self.minusOneButton :[UIColor blackColor]];
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
@@ -102,64 +102,57 @@
         return;
     }
     
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    if([successNumber boolValue] == YES){
-
-        if (type == ADD_POINTS || type == SUBTRACT_POINTS){
-            UIColor *backgroundColor;
-            if (type == ADD_POINTS){
-                backgroundColor = [Utilities CHGreenColor];
-            }
-            else {
-                backgroundColor = [UIColor colorWithRed:255.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:0.8];
-            }
-            [UIView animateWithDuration:0.1
-                             animations:^{
-                                 self.backgroundColor = backgroundColor;
-;
-                             }
-                             completion:^(BOOL finished) {
-                                 double delayInSeconds = 0.2;
-                                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-                                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                     self.backgroundColor = [UIColor clearColor];
-
-                                 });
-                             }
-             ];
-            
-            
-            NSDictionary *studentDictionary = [data objectForKey:@"student"];
-            
-            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
-            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
-            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-            NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
-            
-            [currentStudent setPoints:pointsNumber.integerValue];
-            [currentStudent setLevel:levelNumber.integerValue];
-            [currentStudent setProgress:progressNumber.integerValue];
-            [currentStudent setLevelUpAmount:lvlUpAmount];
-            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-            self.pointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
-            
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
-            if (type == ADD_POINTS){
-                // add points - student able view cell
-            }
-            else {
-                // subtract points
-            }
-            connectionInProgress = NO;
-            
+    if (type == ADD_POINTS || type == SUBTRACT_POINTS){
+        UIColor *backgroundColor;
+        if (type == ADD_POINTS){
+            backgroundColor = [Utilities CHGreenColor];
         }
         else {
-            [Utilities alertStatusNoConnection];
-            connectionInProgress = NO;
+            backgroundColor = [UIColor colorWithRed:255.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:0.8];
         }
+        [UIView animateWithDuration:0.1
+                         animations:^{
+                             self.backgroundColor = backgroundColor;
+                             ;
+                         }
+                         completion:^(BOOL finished) {
+                             double delayInSeconds = 0.2;
+                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                 self.backgroundColor = [UIColor clearColor];
+                                 
+                             });
+                         }
+         ];
+        
+        NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
+        NSNumber * idNumber = (NSNumber *)[data objectForKey: @"student_id"];
+        NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];
+        NSNumber * progressNumber = (NSNumber *)[data objectForKey: @"progress"];
+        NSNumber * totalPoints = (NSNumber *)[data objectForKey: @"total_coins"];
+        NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
+        
+        [currentStudent setPoints:pointsNumber.integerValue];
+        [currentStudent setLevel:levelNumber.integerValue];
+        [currentStudent setProgress:progressNumber.integerValue];
+        [currentStudent setLevelUpAmount:lvlUpAmount];
+        [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+        self.pointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
+        
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]],@"Student Name", [NSString stringWithFormat:@"%ld", (long)[currentStudent getId]], @"Student ID", [NSString stringWithFormat:@"%ld", (long)currentUser.id], @"Teacher ID", [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName], @"Teacher Name", [NSString stringWithFormat:@"%ld", (long)[currentUser.currentClass getId]], @"Class ID", nil];
+        if (type == ADD_POINTS){
+            // add points - student able view cell
+        }
+        else {
+            // subtract points
+        }
+        connectionInProgress = NO;
         
     }
+    else {
+        [Utilities alertStatusNoConnection];
+        connectionInProgress = NO;
+    }
+    
 }
 @end

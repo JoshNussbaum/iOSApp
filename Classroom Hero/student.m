@@ -21,7 +21,6 @@
 @synthesize checkedin;
 @synthesize totalpoints;
 @synthesize progress;
-@synthesize serial;
 
 #pragma mark - Constructors
 
@@ -41,7 +40,7 @@
 }
 
 
--(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ serial:(NSString*)serial_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_ checkedin:(BOOL)checkedin_{
+-(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_ checkedin:(BOOL)checkedin_{
     self = [super init];
     if (self) {
         self->id = id_;
@@ -52,7 +51,6 @@
         self->points = points_;
         self->totalpoints = totalpoints_;
         self->progress = progress_;
-        self->serial = serial_;
         self->checkedin = checkedin_;
     }
     return self;
@@ -75,12 +73,6 @@
 - (void) setLastName:(NSString *)lastName_{
     self->lastName = lastName_;
 }
-
-
-- (void)setSerial:(NSString *)serial_{
-    self->serial = serial_;
-}
-
 
 - (void) setPoints:(NSInteger)points_{
     self->points = points_;
@@ -149,10 +141,6 @@
     return self->progress;
 }
 
-- (NSString *)getSerial{
-    return self->serial;
-}
-
 - (BOOL)getCheckedIn{
     return self->checkedin;
 }
@@ -204,7 +192,7 @@
         checkedInString = @"Checked in";
     } else checkedInString = @"Not checked in";
     
-    NSLog(@"\n Student UID => %ld,\n Student First Name => %@,\n Student Last Name => %@,\n Student Serial => %@\n Student Points => %ld,\n Student Progress => %ld,\n Student Level => %ld,\n Student LevelUpAmount => %ld,\n Total Points => %ld,\n %@", (long)self->id, self->firstName, self->lastName, self->serial, (long)self->points,  (long)self->progress, (long)self->lvl,  (long)self->lvlupamount, (long)self->totalpoints, checkedInString);
+    NSLog(@"\n Student UID => %ld,\n Student First Name => %@,\n Student Last Name => %@,\n Student Points => %ld,\n Student Progress => %ld,\n Student Level => %ld,\n Student LevelUpAmount => %ld,\n Total Points => %ld,\n %@", (long)self->id, self->firstName, self->lastName, (long)self->points,  (long)self->progress, (long)self->lvl,  (long)self->lvlupamount, (long)self->totalpoints, checkedInString);
 }
 
 -(NSString *)fullName{
