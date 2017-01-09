@@ -49,7 +49,7 @@
     isStamping = NO;
     self.studentsTableView.delegate = self;
     [self.studentsTableView setBounces:NO];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     checkedOutStudents = [[NSMutableDictionary alloc] init];
     // Check to see if it's a different day.
     if (!([[Utilities getCurrentDate] isEqualToString:[currentUser.currentClass getCurrentDate]])){
@@ -145,7 +145,7 @@
             [Utilities wiggleImage:self.stampImage sound:NO];
             [self setStudentLabels];
             didManuallyCheckIn = NO;
-            [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
+            [webHandler checkInStudentWithstudentId:[currentStudent getId] :YES];
         }
     }
 }
@@ -195,7 +195,7 @@
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         didManuallyCheckIn = YES;
-        [webHandler checkInStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
+        [webHandler checkInStudentWithstudentId:[currentStudent getId] :NO];
     }
 
     else if (alertView.tag == 2){
@@ -206,7 +206,7 @@
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         didManuallyCheckIn = YES;
-        [webHandler checkOutStudentWithstudentId:[currentStudent getId] classId:[currentUser.currentClass getId]];
+        [webHandler checkOutStudentWithstudentId:[currentStudent getId]];
     }
     else if (alertView.tag == 3){
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -217,7 +217,7 @@
                                                                value:@1] build]];
         [self activityStart:@"Checking out all students"];
         
-        [webHandler checkOutAllStudentsWithclassId:[currentUser.currentClass getId]];
+        [webHandler checkOutAllStudents];
     }
     else if (alertView.tag == 4){
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -227,7 +227,7 @@
                                                                label:[currentUser.currentClass getName]
                                                                value:@1] build]];
         [self activityStart:@"Checking in all students"];
-        [webHandler checkInAllStudentsWithclassId:[currentUser.currentClass getId]];
+        [webHandler checkInAllStudents];
     }
 }
 
@@ -246,114 +246,102 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-
-    if (data == nil){
+    
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         isStamping = NO;
         [self hideLabels];
         [self setStudentPreTouchLabel];
         [Utilities alertStatusNoConnection];
         return;
     }
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-
-    if ([successNumber boolValue] == YES){
-        //[self checkNewDay];
-        if (type == STUDENT_CHECK_IN){
-            NSDictionary *studentDictionary = [data objectForKey:@"student"];
-
-            if (!didManuallyCheckIn){
-                NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
-                NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
-                NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-                NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-                NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-                NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
-
-                [currentStudent setPoints:pointsNumber.integerValue];
-                [currentStudent setLevel:levelNumber.integerValue];
-                [currentStudent setProgress:progressNumber.integerValue];
-                [currentStudent setLevelUpAmount:lvlUpAmount];
-                [currentStudent setCheckedIn:YES];
-                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-                [currentUser.currentClass addPoints:1];
-                [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-                [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
-                
-                [self coinAnimation];
-                
-                [self reloadTable];
-                [self.studentsPicker reloadAllComponents];
-            }
-            else {
-                [currentStudent setCheckedIn:YES];
-                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-                [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
-                
-                [self reloadTable];
-                [self.studentsPicker reloadAllComponents];
-                [self setStudentPreTouchLabel];
-            }
-
-        }
-
-        else if (type == STUDENT_CHECK_OUT){
-            [[DatabaseHandler getSharedInstance] updateStudentCheckedIn:[currentStudent getId] :NO];
-            [currentStudent setCheckedIn:NO];
-            isStamping = NO;
-            [checkedOutStudents setObject:currentStudent forKey:[NSNumber numberWithInteger:[currentStudent getId]]];
-            self.studentsPicker.hidden = NO;
-            [self.studentsPicker reloadAllComponents];
-            [self setStudentPreTouchLabel];
-            [self reloadTable];
-        }
-
-        else if (type == ALL_STUDENT_CHECK_IN || type == ALL_STUDENT_CHECK_OUT){
-            BOOL checkedIn = (type == ALL_STUDENT_CHECK_IN ? YES: NO);
-            [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:checkedIn studentIds:currentUser.studentIds];
-
-            [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
-            [[DatabaseHandler getSharedInstance] editClass:currentUser.currentClass];
-            studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
-            [checkedOutStudents removeAllObjects];
-            if (!checkedIn){
-                [self setCheckedOutStudents];
-            }
+    //[self checkNewDay];
+    else if (type == STUDENT_CHECK_IN){
+        
+        if (!didManuallyCheckIn){
+            NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
+            NSNumber * idNumber = (NSNumber *)[data objectForKey: @"student_id"];
+            NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];
+            NSNumber * progressNumber = (NSNumber *)[data objectForKey: @"progress"];
+            NSNumber * totalPoints = (NSNumber *)[data objectForKey: @"total_coins"];
+            NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
             
-            [self.studentsTableView reloadData];
+            [currentStudent setPoints:pointsNumber.integerValue];
+            [currentStudent setLevel:levelNumber.integerValue];
+            [currentStudent setProgress:progressNumber.integerValue];
+            [currentStudent setLevelUpAmount:lvlUpAmount];
+            [currentStudent setCheckedIn:YES];
+            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+            [currentUser.currentClass addPoints:1];
+            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+            [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
+            
+            [self coinAnimation];
+            
+            [self reloadTable];
             [self.studentsPicker reloadAllComponents];
-            self.studentsPicker.hidden = NO;
+        }
+        else {
+            [currentStudent setCheckedIn:YES];
+            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+            [checkedOutStudents removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
+            
+            [self reloadTable];
+            [self.studentsPicker reloadAllComponents];
             [self setStudentPreTouchLabel];
-            NSString *checkedInString;
-            if (checkedIn) {
-                checkedInString = @"in";
-
-            }
-            else {
-                checkedInString = @"out";
-
-            }
-            [Utilities disappearingAlertView:[NSString stringWithFormat:@"Checked %@ all students", checkedInString] message:nil otherTitles:nil tag:0 view:self time:1.0];
-
         }
+        
     }
-    else {
-        NSString *errorMessage = nil;
-        NSString *message = [data objectForKey:@"message"];
-
-        if (type == STUDENT_CHECK_IN){
-            errorMessage = @"Error checking in";
-        }
-        else if (type == STUDENT_CHECK_OUT){
-            errorMessage = @"Error checking out";
-        }
-
-        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
-        self.studentNameLabel.hidden = YES;
-        self.studentPointsLabel.hidden = YES;
-        self.sackImage.hidden = YES;
+    
+    else if (type == STUDENT_CHECK_OUT){
+        [[DatabaseHandler getSharedInstance] updateStudentCheckedIn:[currentStudent getId] :NO];
+        [currentStudent setCheckedIn:NO];
         isStamping = NO;
+        [checkedOutStudents setObject:currentStudent forKey:[NSNumber numberWithInteger:[currentStudent getId]]];
+        self.studentsPicker.hidden = NO;
+        [self.studentsPicker reloadAllComponents];
+        [self setStudentPreTouchLabel];
+        [self reloadTable];
     }
-
+    
+    else if (type == ALL_STUDENT_CHECK_IN || type == ALL_STUDENT_CHECK_OUT){
+        BOOL checkedIn = (type == ALL_STUDENT_CHECK_IN ? YES: NO);
+        [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:checkedIn studentIds:currentUser.studentIds];
+        
+        [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
+        [[DatabaseHandler getSharedInstance] editClass:currentUser.currentClass];
+        studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
+        [checkedOutStudents removeAllObjects];
+        if (!checkedIn){
+            [self setCheckedOutStudents];
+        }
+        
+        [self.studentsTableView reloadData];
+        [self.studentsPicker reloadAllComponents];
+        self.studentsPicker.hidden = NO;
+        [self setStudentPreTouchLabel];
+        NSString *checkedInString;
+        if (checkedIn) {
+            checkedInString = @"in";
+            
+        }
+        else {
+            checkedInString = @"out";
+            
+        }
+        [Utilities disappearingAlertView:[NSString stringWithFormat:@"Checked %@ all students", checkedInString] message:nil otherTitles:nil tag:0 view:self time:1.0];
+        
+    }
 }
 
 
@@ -408,7 +396,7 @@
 
     if ([Utilities isNewDate:[currentUser.currentClass getCurrentDate]]){
         [self activityStart:@"Resetting attendance for new day"];
-        [webHandler checkOutAllStudentsWithclassId:[currentUser.currentClass getId]];
+        [webHandler checkOutAllStudents];
         // Make web call to check out all students here. THen put this stuff in dataReady
 
     }

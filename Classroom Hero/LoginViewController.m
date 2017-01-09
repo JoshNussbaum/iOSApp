@@ -78,7 +78,7 @@
     self.createAccountButton.layer.borderColor = [UIColor whiteColor].CGColor;
     
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:0];
     
     [Utilities makeRoundedButton:self.aboutButton :nil];
     [Utilities makeRoundedButton:self.pricingButton :nil];
@@ -164,6 +164,16 @@
 
 - (void)dataReady:(NSDictionary*)data :(NSInteger)type{
     [hud hide:YES];
+    
+    if ([data objectForKey: @"detail"]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:nil otherTitles:nil tag:10 view:self time:1.5];
+        double delayInSeconds = 1.4;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+    }
+    
     if (data == nil){
         [Utilities alertStatusNoConnection];
         return;

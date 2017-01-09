@@ -16,6 +16,8 @@
     {
         self->id = 0;
         self->name = @"";
+        self->progress = 0;
+        self->level = 1;
         self->nextLevel = 10;
     }
     return self;

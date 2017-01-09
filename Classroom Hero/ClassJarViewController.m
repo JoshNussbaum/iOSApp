@@ -75,7 +75,7 @@
     [super viewDidLoad];
     coinsShowing = NO;
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     currentClassJar = [[DatabaseHandler getSharedInstance] getClassJar:[currentUser.currentClass getId]];
     [Utilities makeRoundedButton:self.addPointsButton :nil];
     
@@ -262,7 +262,7 @@
                                                                        label:[currentClassJar getName]
                                                                        value:@1] build]];
                 isStamping = YES;
-                [webHandler addToClassJar:[currentClassJar getId] :currentPoints :[currentUser.currentClass getId]];
+                [webHandler addToClassJar:[currentClassJar getId] :currentPoints];
             }
         }
     }
@@ -357,82 +357,75 @@
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
     
-    if (data == nil){
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         [Utilities alertStatusNoConnection];
         isStamping = NO;
         return;
     }
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-
-    if([successNumber boolValue] == YES)
-    {
-        if (type == ADD_JAR){
-            NSInteger jarId = [[data objectForKey:@"id"] integerValue];
-            currentClassJar = [[classjar alloc] initWithid:jarId cid:[currentUser.currentClass getId] name:newClassJarName progress:0 total:newClassJarTotal.integerValue];
-            [[DatabaseHandler getSharedInstance] addClassJar:(currentClassJar)];
-            [self displayClassJar];
-            [self.addJarButton setTitle:@"Edit" forState:UIControlStateNormal];
-            self.stepper.enabled = YES;
-            self.stepper.hidden = NO;
-            self.pointsLabel.hidden = NO;
-            self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
-            self.classJarProgressLabel.hidden = NO;
-            
-        }
-        else if (type == EDIT_JAR){
-            self.classJarName.text = newClassJarName;
-            
-            [currentClassJar setName:newClassJarName];
-            [currentClassJar setTotal:newClassJarTotal.integerValue];
-            [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
-            if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
-                [currentClassJar setProgress:0];
-                CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
-                [UIView animateWithDuration:0.5 animations:^{
-                    self.jarCoins.frame = finalFrame;
-                    
-                }];
-            }
-            else {
-                float prog = (float)([currentClassJar getProgress]) / (float)[currentClassJar getTotal];
-                
-                
-                CGRect finalFrame = self.jarCoins.frame;
-                CGFloat newProg;
-                newProg = prog * -(jarCoinsHeight );
-                
-                finalFrame.size.height = newProg;
-                
-                [UIView animateWithDuration:0 animations:^{
-                    self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
-                }];
-            }
-            self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
-
-        }
-        else if (type == ADD_TO_JAR){
-            tmpProgress = [currentClassJar getProgress];
-            [currentClassJar updateJar:currentPoints];
-            [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
-            [self addCoins];
-            [currentUser.currentClass addPoints:1];
-            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-        }
+    
+    
+    else if (type == ADD_JAR){
+        NSInteger jarId = [[data objectForKey:@"jar_id"] integerValue];
+        currentClassJar = [[classjar alloc] initWithid:jarId cid:[currentUser.currentClass getId] name:newClassJarName progress:0 total:newClassJarTotal.integerValue];
+        [[DatabaseHandler getSharedInstance] addClassJar:(currentClassJar)];
+        [self displayClassJar];
+        [self.addJarButton setTitle:@"Edit" forState:UIControlStateNormal];
+        self.stepper.enabled = YES;
+        self.stepper.hidden = NO;
+        self.pointsLabel.hidden = NO;
+        self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
+        self.classJarProgressLabel.hidden = NO;
+        
     }
-    else {
-        NSString *errorMessage;
-        NSString *message = [data objectForKey:@"message"];
-        if (type == ADD_JAR) {
-            errorMessage = @"Error adding jar";
+    else if (type == EDIT_JAR){
+        self.classJarName.text = newClassJarName;
+        
+        [currentClassJar setName:newClassJarName];
+        [currentClassJar setTotal:newClassJarTotal.integerValue];
+        [[DatabaseHandler getSharedInstance] updateClassJar:currentClassJar];
+        if (newClassJarTotal.integerValue <= [currentClassJar getProgress]){
+            [currentClassJar setProgress:0];
+            CGRect finalFrame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, 0);
+            [UIView animateWithDuration:0.5 animations:^{
+                self.jarCoins.frame = finalFrame;
+                
+            }];
         }
-        else if (type == EDIT_JAR){
-            errorMessage = @"Error editing jar";
+        else {
+            float prog = (float)([currentClassJar getProgress]) / (float)[currentClassJar getTotal];
+            
+            
+            CGRect finalFrame = self.jarCoins.frame;
+            CGFloat newProg;
+            newProg = prog * -(jarCoinsHeight );
+            
+            finalFrame.size.height = newProg;
+            
+            [UIView animateWithDuration:0 animations:^{
+                self.jarCoins.frame = CGRectMake(jarCoinsX, jarCoinsY, jarCoinsWidth, newProg);
+            }];
         }
-        else if (type == ADD_TO_JAR){
-            errorMessage = @"Error adding to jar";
-        }
-        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
-        isStamping = NO;
+        self.classJarProgressLabel.text = [NSString stringWithFormat:@"%ld / %ld", (long)[currentClassJar getProgress], (long)[currentClassJar getTotal]];
+        
+    }
+    else if (type == ADD_TO_JAR){
+        tmpProgress = [currentClassJar getProgress];
+        [currentClassJar updateJar:currentPoints];
+        [[DatabaseHandler getSharedInstance]updateClassJar:currentClassJar];
+        [self addCoins];
+        [currentUser.currentClass addPoints:1];
+        [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
     }
 
 }

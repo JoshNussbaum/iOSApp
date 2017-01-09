@@ -14,7 +14,6 @@
 @property(nonatomic)NSInteger id;
 @property(nonatomic)NSString *firstName;
 @property(nonatomic)NSString *lastName;
-@property(nonatomic)NSString *serial;
 @property(nonatomic)NSInteger lvl;
 @property(nonatomic)NSInteger progress;
 @property(nonatomic)NSInteger lvlupamount;
@@ -24,7 +23,7 @@
 
 -(id) init;
 
--(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ serial:(NSString*)serial_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_ checkedin:(BOOL)checkedin_;
+-(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_ checkedin:(BOOL)checkedin_;
 
 // Creation Functions
 
@@ -33,8 +32,6 @@
 -(void) setFirstName:(NSString *)firstName_;
 
 -(void) setLastName:(NSString *)lastName_;
-
--(void) setSerial:(NSString *)serial_;
 
 -(void) setPoints:(NSInteger)points_;
 
@@ -62,8 +59,6 @@
 -(NSInteger)getTotalPoints;
 
 -(NSInteger)getProgress;
-
--(NSString*)getSerial;
 
 -(BOOL)getCheckedIn;
 

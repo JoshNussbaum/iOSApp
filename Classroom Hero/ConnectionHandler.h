@@ -19,11 +19,12 @@
 {
     user *currentUser;
     id delegate_;
+    NSInteger classId_;
     NSString *token_;
     NSMutableData *responseData;
 }
 
-- (id)initWithDelegate:(id<ConnectionHandlerDelegate>)delegate token:(NSString *)token;
+- (id)initWithDelegate:(id<ConnectionHandlerDelegate>)delegate token:(NSString *)token classId:(NSInteger)classId;
 
 
 +(ConnectionHandler *)getSharedInstance;
@@ -35,10 +36,10 @@
 - (void)createAccount:(NSString *)email :(NSString *)password :(NSString *)fname :(NSString *)lname;
 
 
-- (void)addClass:(NSInteger)id :(NSString *)name :(NSInteger)grade;
+- (void)addClass:(NSInteger)id :(NSString *)name :(NSString *)grade;
 
 
-- (void)editClass:(NSInteger)id :(NSString *)name :(NSInteger)grade;
+- (void)editClass:(NSInteger)id :(NSString *)name :(NSString *)grade;
 
 
 - (void)deleteClass:(NSInteger)id;
@@ -80,16 +81,10 @@
 - (void)deleteStudent:(NSInteger)id;
 
 
-- (void)getSchools;
+- (void)rewardStudentWithid:(NSInteger)id reinforcerId:(NSInteger)reinforcerId;
 
 
-- (void)rewardStudentWithid:(NSInteger)id pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId classId:(NSInteger)classId;
-
-
-- (void)rewardStudentsWithids:(NSMutableArray *)ids pointsEarned:(NSInteger)pointsEarned reinforcerId:(NSInteger)reinforcerId classId:(NSInteger)classId;
-
-
-- (void)rewardAllStudentsWithcid:(NSInteger)cid;
+- (void)rewardStudentsWithids:(NSMutableArray *)ids reinforcerId:(NSInteger)reinforcerId;
 
 
 - (void)subtractPointsWithStudentId:(NSInteger)id points:(NSInteger)points;
@@ -98,31 +93,28 @@
 - (void)addPointsWithStudentId:(NSInteger)id points:(NSInteger)points;
 
 
-- (void)addToClassJar:(NSInteger)cjid :(NSInteger)points :(NSInteger)cid;
+- (void)addToClassJar:(NSInteger)cjid :(NSInteger)points;
 
 
-- (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid cost:(NSInteger)cost cid:(NSInteger)cid;
+- (void)studentTransactionWithsid:(NSInteger)sid iid:(NSInteger)iid;
 
 
 - (void)editTeacherNameWithid:(NSInteger)id firstName:(NSString *)firstName lastName:(NSString *)lastName;
 
 
-- (void)editTeacherPasswordWithemail:(NSString *)email oldPassword:(NSString *)oldPassword newPassword:(NSString *)newPassword;
+- (void)editTeacherPasswordWithid:(NSInteger)id password:(NSString *)password;
 
 
-- (void)getClassStatsWithclassId:(NSInteger)classId;
+- (void)checkInStudentWithstudentId:(NSInteger)studentId :(BOOL)manual;
 
 
-- (void)checkInStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId;
+- (void)checkOutStudentWithstudentId:(NSInteger)studentId;
 
 
-- (void)checkOutStudentWithstudentId:(NSInteger)studentId classId:(NSInteger)classId;
+- (void)checkInAllStudents;
 
 
-- (void)checkInAllStudentsWithclassId:(NSInteger)classId;
-
-
-- (void)checkOutAllStudentsWithclassId:(NSInteger)classId;
+- (void)checkOutAllStudents;
 
 
 - (void)resetPasswordWithemail:(NSString *)email;

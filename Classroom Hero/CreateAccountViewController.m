@@ -39,7 +39,7 @@
     [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
 
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc] initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:0];
     
 //    [Utilities setTextFieldPlaceholder:self.firstNameTextField :@"First name" :[UIColor blackColor]];
 //    [Utilities setTextFieldPlaceholder:self.lastNameTextField :@"Last name" :[UIColor blackColor]];
@@ -130,10 +130,7 @@
         if(!errorMessage)
         {
             NSInteger tid = [[data objectForKey:@"id"] integerValue];
-
-            NSMutableArray *schools = data[@"schools"];
             
-            [[DatabaseHandler getSharedInstance] addSchools:schools];
             currentUser.firstName = self.firstNameTextField.text;
             currentUser.lastName = self.lastNameTextField.text;
             currentUser.email = self.emailTextField.text;

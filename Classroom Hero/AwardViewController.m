@@ -103,7 +103,7 @@ static NSInteger coinHeight = 250;
     selectedStudentsWhenGenerateChestClicked = [[NSMutableDictionary alloc]init];
     [self getStudentsData];
     
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     selectedStudents = [[NSMutableDictionary alloc] init];
     self.categoryPicker.delegate = self;
     self.categoryPicker.dataSource = self;
@@ -350,7 +350,8 @@ static NSInteger coinHeight = 250;
                         [selectedStudentIds addObject:studentId];
                     }
                     
-                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:tmpValue.integerValue reinforcerId:0 classId:[currentUser.currentClass getId]];
+                    [webHandler rewardStudentsWithids:selectedStudentIds reinforcerId:0
+                     ];
                 }
                 
                 else {
@@ -361,7 +362,7 @@ static NSInteger coinHeight = 250;
                     currentStudent = selectedStudent;
                     
                     
-                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:tmpValue.integerValue reinforcerId:0 classId:[currentUser.currentClass getId]];
+                    [webHandler rewardStudentWithid:[selectedStudent getId] reinforcerId:0];
                     
                 }
                 
@@ -378,7 +379,19 @@ static NSInteger coinHeight = 250;
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
     [hud hide:YES];
-    if (data == nil){
+    
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         if (chestPoint){
             chestTappable = YES;
         } else {
@@ -391,163 +404,133 @@ static NSInteger coinHeight = 250;
         isStamping = NO;
         return;
     }
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    if([successNumber boolValue] == YES)
-    {
-        if (type == EDIT_REINFORCER){
-            [[DatabaseHandler getSharedInstance] editReinforcer:currentReinforcer];
-            [reinforcerData replaceObjectAtIndex:index withObject:currentReinforcer];
-            [self.categoryPicker reloadAllComponents];
+    else if (type == EDIT_REINFORCER){
+        [[DatabaseHandler getSharedInstance] editReinforcer:currentReinforcer];
+        [reinforcerData replaceObjectAtIndex:index withObject:currentReinforcer];
+        [self.categoryPicker reloadAllComponents];
+        [self setReinforcerName];
+        
+    }
+    else if (type == ADD_REINFORCER){
+        if (chestTappable){
+            [self hideStudent];
             [self setReinforcerName];
-
-        }
-        else if (type == ADD_REINFORCER){
-            if (chestTappable){
-                [self hideStudent];
-                [self setReinforcerName];
-                self.categoryPicker.hidden = NO;
-                chestTappable = NO;
-            }
-            
-            NSInteger reinforcerId = [[data objectForKey:@"id"] integerValue];
-            reinforcer *rr = [[reinforcer alloc] init:reinforcerId :[currentUser.currentClass getId] :tmpName :tmpValue.integerValue];
-
-            [[DatabaseHandler getSharedInstance] addReinforcer:rr];
-            [reinforcerData insertObject:rr atIndex:0];
-            [self.categoryPicker reloadAllComponents];
-
-            [self.categoryPicker selectRow:0 inComponent:0 animated:NO];
-
-            [self setReinforcerName];
-
-            self.editReinforcerButton.hidden = NO;
             self.categoryPicker.hidden = NO;
-
-        }
-        else if (type == DELETE_REINFORCER){
-            [[DatabaseHandler getSharedInstance]deleteReinforcer:[currentReinforcer getId]];
-            [reinforcerData removeObjectAtIndex:index];
-            [self.categoryPicker reloadAllComponents];
-
-            if (!reinforcerData || [reinforcerData count] == 0) {
-                self.categoryPicker.hidden = YES;
-                self.reinforcerLabel.text=@"Add  categories  above";
-                self.reinforcerValue.text = @"";
-                self.editReinforcerButton.hidden = YES;
-
-            }
-            else {
-                [self setReinforcerName];
-            }
-        }
-        else if (type == REWARD_STUDENT){
-            
-            pointsAwarded = [currentReinforcer getValue];
-            NSDictionary *studentDictionary = [data objectForKey:@"student"];
-
-            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
-            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
-            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-            NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
-
-            [currentStudent setPoints:pointsNumber.integerValue];
-            [currentStudent setLevel:levelNumber.integerValue];
-            [currentStudent setProgress:progressNumber.integerValue];
-            [currentStudent setLevelUpAmount:lvlUpAmount];
-            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-
-            [currentUser.currentClass addPoints:1];
-            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-            
-            tmpPoints = ([currentStudent getPoints] - pointsAwarded);
-            
-            [studentsData setObject:currentStudent forKey:idNumber];
-            [selectedStudents setObject:currentStudent forKey:idNumber];
-
-            
-            if (chestPoint){
-                self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
-                [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
-            }
-            
-            else {
-                AudioServicesPlaySystemSound(award);
-                [self manuallyAddPointsSuccess];
-            }
+            chestTappable = NO;
         }
         
-        else if (type == REWARD_STUDENT_BULK){
-            pointsAwarded = [currentReinforcer getValue];
-            NSArray *studentsArray = [data objectForKey:@"students"];
-            NSInteger studentCount = studentsArray.count;
+        NSInteger reinforcerId = [[data objectForKey:@"reinforcer_id"] integerValue];
+        reinforcer *rr = [[reinforcer alloc] init:reinforcerId :[currentUser.currentClass getId] :tmpName :tmpValue.integerValue];
+        
+        [[DatabaseHandler getSharedInstance] addReinforcer:rr];
+        [reinforcerData insertObject:rr atIndex:0];
+        [self.categoryPicker reloadAllComponents];
+        
+        [self.categoryPicker selectRow:0 inComponent:0 animated:NO];
+        
+        [self setReinforcerName];
+        
+        self.editReinforcerButton.hidden = NO;
+        self.categoryPicker.hidden = NO;
+        
+    }
+    else if (type == DELETE_REINFORCER){
+        [[DatabaseHandler getSharedInstance]deleteReinforcer:[currentReinforcer getId]];
+        [reinforcerData removeObjectAtIndex:index];
+        [self.categoryPicker reloadAllComponents];
+        
+        if (!reinforcerData || [reinforcerData count] == 0) {
+            self.categoryPicker.hidden = YES;
+            self.reinforcerLabel.text=@"Add  categories  above";
+            self.reinforcerValue.text = @"";
+            self.editReinforcerButton.hidden = YES;
             
-            for (NSDictionary *studentDictionary in studentsArray){
-                NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
-                NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
-                NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-                NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-                NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-                NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
-                
-                
-                student *tmpStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
-                
-                [tmpStudent setPoints:pointsNumber.integerValue];
-                [tmpStudent setLevel:levelNumber.integerValue];
-                [tmpStudent setProgress:progressNumber.integerValue];
-                [tmpStudent setLevelUpAmount:lvlUpAmount];
-                [[DatabaseHandler getSharedInstance]updateStudent:tmpStudent];
-                
-                [studentsData setObject:tmpStudent forKey:idNumber];
-                [selectedStudents setObject:tmpStudent forKey:idNumber];
-            }
-            
-            [currentUser.currentClass addPoints:studentCount];
-            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-            
-            tmpPoints = ([currentStudent getPoints] - pointsAwarded);
-            
-            if (chestPoint){
-                self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
-                [self addPoints:[currentReinforcer getValue] levelup:NO ];
-            }
-            else {
-                AudioServicesPlaySystemSound(award);
-                [self manuallyAddPointsSuccess];
-            }
+        }
+        else {
+            [self setReinforcerName];
+        }
+    }
+    else if (type == REWARD_STUDENT){
+        
+        pointsAwarded = [currentReinforcer getValue];
+        
+        NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
+        NSNumber * idNumber = (NSNumber *)[data objectForKey: @"student_id"];
+        NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];
+        NSNumber * progressNumber = (NSNumber *)[data objectForKey: @"progress"];
+        NSNumber * totalPoints = (NSNumber *)[data objectForKey: @"total_coins"];
+        NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
+        
+        [currentStudent setPoints:pointsNumber.integerValue];
+        [currentStudent setLevel:levelNumber.integerValue];
+        [currentStudent setProgress:progressNumber.integerValue];
+        [currentStudent setLevelUpAmount:lvlUpAmount];
+        [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+        
+        [currentUser.currentClass addPoints:1];
+        [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+        
+        tmpPoints = ([currentStudent getPoints] - pointsAwarded);
+        
+        [studentsData setObject:currentStudent forKey:idNumber];
+        [selectedStudents setObject:currentStudent forKey:idNumber];
+        
+        
+        if (chestPoint){
+            self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
+            [self addPoints:[currentReinforcer getValue] levelup:(progressNumber.integerValue == 0) ? YES : NO];
         }
         
         else {
-            isStamping = NO;
+            AudioServicesPlaySystemSound(award);
+            [self manuallyAddPointsSuccess];
         }
     }
+    
+    else if (type == REWARD_STUDENT_BULK){
+        pointsAwarded = [currentReinforcer getValue];
+        NSArray *studentsArray = [data objectForKey:@"students"];
+        NSInteger studentCount = studentsArray.count;
+        
+        for (NSDictionary *studentDictionary in studentsArray){
+            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"current_coins"];
+            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"student_id"];
+            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"level"];
+            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"total_coins"];
+            NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
+            
+            
+            student *tmpStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
+            
+            [tmpStudent setPoints:pointsNumber.integerValue];
+            [tmpStudent setLevel:levelNumber.integerValue];
+            [tmpStudent setProgress:progressNumber.integerValue];
+            [tmpStudent setLevelUpAmount:lvlUpAmount];
+            [[DatabaseHandler getSharedInstance]updateStudent:tmpStudent];
+            
+            [studentsData setObject:tmpStudent forKey:idNumber];
+            [selectedStudents setObject:tmpStudent forKey:idNumber];
+        }
+        
+        [currentUser.currentClass addPoints:studentCount];
+        [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+        
+        tmpPoints = ([currentStudent getPoints] - pointsAwarded);
+        
+        if (chestPoint){
+            self.stampImage.image = [UIImage imageNamed:@"treasure_chest.png"];
+            [self addPoints:[currentReinforcer getValue] levelup:NO ];
+        }
+        else {
+            AudioServicesPlaySystemSound(award);
+            [self manuallyAddPointsSuccess];
+        }
+    }
+    
     else {
-        NSString *message = [data objectForKey:@"message"];
-        NSString *errorMessage;
-
-        if (type == ADD_REINFORCER){
-            errorMessage = @"Error adding reinforcer";
-        }
-        else if (type == EDIT_REINFORCER){
-            errorMessage = @"Error editing reinforcer";
-        }
-        else if (type == DELETE_REINFORCER){
-            errorMessage = @"Error deleting reinforcer";
-        }
-        else if (type == REWARD_STUDENT){
-            errorMessage = @"Error rewarding student";
-        }
-        else if (type == REWARD_STUDENT_BULK){
-            errorMessage = @"Error rewarding students";
-        }
-
-        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
         isStamping = NO;
-        return;
     }
-
 }
 
 
@@ -778,10 +761,10 @@ static NSInteger coinHeight = 250;
                 [selectedStudentIds addObject:studentId];
             }
             
-            [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId classId:[currentUser.currentClass getId]];
+            [webHandler rewardStudentsWithids:selectedStudentIds reinforcerId:reinforcerId];
         }
         else {
-            [webHandler rewardStudentWithid:[currentStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId classId:[currentUser.currentClass getId]];
+            [webHandler rewardStudentWithid:[currentStudent getId] reinforcerId:reinforcerId];
             
         }
         
@@ -856,7 +839,6 @@ static NSInteger coinHeight = 250;
                          self.levelView.alpha = 1.0;
 
                      }completion:^(BOOL finished) {
-
                          double delayInSeconds = 1.8;
                          dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                          dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -1364,7 +1346,7 @@ static NSInteger coinHeight = 250;
                         [selectedStudentIds addObject:studentId];
                     }
                     
-                    [webHandler rewardStudentsWithids:selectedStudentIds pointsEarned:pointsEarned reinforcerId:reinforcerId   classId:[currentUser.currentClass getId]];
+                    [webHandler rewardStudentsWithids:selectedStudentIds reinforcerId:reinforcerId];
                 }
                 
                 else {
@@ -1375,7 +1357,7 @@ static NSInteger coinHeight = 250;
                     currentStudent = selectedStudent;
                     
                     
-                    [webHandler rewardStudentWithid:[selectedStudent getId] pointsEarned:pointsEarned reinforcerId:reinforcerId   classId:[currentUser.currentClass getId]];
+                    [webHandler rewardStudentWithid:[selectedStudent getId] reinforcerId:reinforcerId];
                     
                 }
                 

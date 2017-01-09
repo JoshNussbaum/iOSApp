@@ -62,7 +62,7 @@
     isBuying = NO;
     showingStudents = NO;
     studentSelected = NO;
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     [Utilities makeRoundedButton:self.purchaseButton :nil];
     [Utilities makeRoundedButton:self.openTableViewButton :nil];
     
@@ -254,7 +254,7 @@
                                                               action:@"Market Transaction"
                                                                label:[currentItem getName]
                                                                value:@1] build]];
-        [webHandler studentTransactionWithsid:[currentStudent getId] iid:[currentItem getId] cost:[currentItem getCost] cid:[currentUser.currentClass getId]];
+        [webHandler studentTransactionWithsid:[currentStudent getId] iid:[currentItem getId]];
     }
     else if (alertView.tag == 4){
         [webHandler deleteItem:[currentItem getId]];
@@ -263,16 +263,27 @@
 
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type {
-    if (data == nil){
-        [hud hide:YES];
+    [hud hide:YES];
+    
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         [Utilities alertStatusNoConnection];
         return;
     }
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
     
-    if([successNumber boolValue] == YES)
-    {
-        
+    NSString *message = [data objectForKey:@"message"];
+    
+    if(!message){
         if (type == ADD_ITEM){
             NSInteger itemId = [[data objectForKey:@"id"] integerValue];
             
@@ -331,11 +342,9 @@
         }
         else if (type == STUDENT_TRANSACTION){
             
-            NSDictionary *studentDictionary = [data objectForKey:@"student"];
-            
-            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
-            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+            NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
+            NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];
+            NSNumber * progressNumber = (NSNumber *)[data objectForKey: @"progress"];
             
             
             [currentStudent setProgress:progressNumber.integerValue];
@@ -360,48 +369,9 @@
             
         }
 
-        else if (type == GET_STUDENT_BY_STAMP){
-            NSDictionary *studentDictionary = [data objectForKey:@"student"];
-            
-            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
-            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
-            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-            NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
-            
-            currentStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
-            
-            if (currentStudent != nil){
-                [currentStudent setPoints:pointsNumber.integerValue];
-                [currentStudent setLevel:levelNumber.integerValue];
-                [currentStudent setProgress:progressNumber.integerValue];
-                [currentStudent setLevelUpAmount:lvlUpAmount];
-                [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-            }
-            else{
-                NSString *stamp = [studentDictionary objectForKey:@"stamp"];
-                NSString * fname = [studentDictionary objectForKey: @"fname"];
-                NSString * lname = [studentDictionary objectForKey: @"lname"];
-                
-                currentStudent = [[student alloc]initWithid:idNumber.integerValue firstName:fname lastName:lname serial:stamp lvl:levelNumber.integerValue progress:progressNumber.integerValue lvlupamount:lvlUpAmount points:pointsNumber.integerValue totalpoints:totalPoints.integerValue checkedin:NO];
-                
-                [[DatabaseHandler getSharedInstance]addStudent:currentStudent :-1];
-            }
-            [self displayStudent];
-            
-            if (pointsNumber.integerValue >= [currentItem getCost]){
-                [self sellItem];
-            }
-            else {
-                [Utilities alertStatusWithTitle:@"Error selling item" message:@"You must earn more coins first" cancel:nil otherTitles:nil tag:0 view:self];
-            }
-            [hud hide:YES];
-        }
     }
     else {
         NSString *errorMessage;
-        NSString *message = [data objectForKey:@"message"];
         
         if (type == ADD_ITEM){
             errorMessage = @"Error adding item";

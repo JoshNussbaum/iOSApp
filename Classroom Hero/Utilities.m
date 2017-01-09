@@ -810,12 +810,7 @@ NSInteger menuItemFontSize = 26;
 + (id) getStudentWitharray:(NSMutableArray *)searchArray propertyName:(NSString *)propertyName searchString:(NSString *)searchString{
     
     for (student *stud in searchArray){
-        if ([propertyName isEqualToString:@"serial"]){
-            if ([[stud getSerial] isEqualToString:searchString]){
-                return stud;
-            }
-        }
-        else if ([propertyName isEqualToString:@"id"]){
+        if ([propertyName isEqualToString:@"id"]){
             if ([[NSString stringWithFormat:@"%ld",[stud getId]] isEqualToString:searchString]){
                 return stud;
             }

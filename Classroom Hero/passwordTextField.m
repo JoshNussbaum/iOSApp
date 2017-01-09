@@ -11,7 +11,7 @@
 @implementation passwordTextField
 
 - (NSString *)validate{
-    if (self.text.length >= 3){
+    if (self.text.length >= 8){
         NSString *errorMessage = [self isPasswordValid:self.text];
         if (!errorMessage){
             return @"";
@@ -19,7 +19,7 @@
         else return errorMessage;
     }
     else {
-        return @"Password length must be at least three characters long";
+        return @"Password length must be at least eight characters long";
     }
 }
 

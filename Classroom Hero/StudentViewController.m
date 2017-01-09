@@ -43,7 +43,7 @@
     
     isStamping = NO;
     currentUser = [user getInstance];
-    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
     
     [self configureProgressBar];
     [self setStudentLabels];
@@ -134,7 +134,6 @@
                                                                   action:@"Add Points (Student Page)"
                                                                    label:[currentStudent fullName]
                                                                    value:@1] build]];
-            [webHandler resetPasswordWithemail:currentUser.email];
             [webHandler addPointsWithStudentId:[currentStudent getId] points:points];
         }
         else {
@@ -176,75 +175,59 @@
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type {
     [hud hide:YES];
-    if (data == nil){
+    
+    if ([[data objectForKey: @"detail"] isEqualToString:@"Signature has expired."]) {
+        [Utilities disappearingAlertView:@"Your session has expired" message:@"Logging out..." otherTitles:nil tag:10 view:self time:2.0];
+        double delayInSeconds = 1.8;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+        });
+        return;
+        
+    }
+    
+    else if (data == nil || [data objectForKey: @"detail"]){
         [Utilities alertStatusNoConnection];
         return;
     }
     
-    NSNumber * successNumber = (NSNumber *)[data objectForKey: @"success"];
-    if([successNumber boolValue] == YES){
-        if (type == EDIT_STUDENT){
-            [currentStudent setFirstName:newStudentFirstName];
-            [currentStudent setLastName:newStudentLastName];
-            [hud hide:YES];
-            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-            [self setStudentLabels];
-
-        }
-        else if (type == DELETE_STUDENT){
-            [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
-            [currentUser.studentIds removeObject:[NSNumber numberWithInteger:[currentStudent getId]]];
-
-            [hud hide:YES];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        else if (type == ADD_POINTS || type == SUBTRACT_POINTS){
-            NSDictionary *studentDictionary = [data objectForKey:@"student"];
-            
-            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"currentCoins"];
-            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"id"];
-            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"lvl"];
-            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
-            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"totalCoins"];
-            NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
-            
-            [currentStudent setPoints:pointsNumber.integerValue];
-            [currentStudent setLevel:levelNumber.integerValue];
-            [currentStudent setProgress:progressNumber.integerValue];
-            [currentStudent setLevelUpAmount:lvlUpAmount];
-            [currentUser.currentClass addPoints:1];
-            [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
-            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-            
-            [self setStudentLabels];
-
-        }
+    else if (type == EDIT_STUDENT){
+        [currentStudent setFirstName:newStudentFirstName];
+        [currentStudent setLastName:newStudentLastName];
+        [hud hide:YES];
+        [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+        [self setStudentLabels];
         
     }
-    else {
-        NSString *message = [data objectForKey:@"message"];
-        NSString *errorMessage;
+    else if (type == DELETE_STUDENT){
+        [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
+        [currentUser.studentIds removeObject:[NSNumber numberWithInteger:[currentStudent getId]]];
         
-        if (type == EDIT_STUDENT){
-            errorMessage = @"Error editing student";
-        }
-        else if (type == DELETE_STUDENT){
-            errorMessage = @"Error deleting student";
-        }
-        else if (type == REGISTER_STAMP){
-            errorMessage = @"Error registering student";
-        }
-        else if (type == UNREGISTER_STAMP){
-            errorMessage = @"Error unregistering student";
-        }
-        else if (type == ADD_POINTS){
-            errorMessage = @"Error adding points";
-        }
-        else if (type == SUBTRACT_POINTS){
-            errorMessage = @"Error subtracting points";
-        }
-        [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
+        [hud hide:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     }
+    else if (type == ADD_POINTS || type == SUBTRACT_POINTS){
+        NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
+        NSNumber * idNumber = (NSNumber *)[data objectForKey: @"student_id"];
+        NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];
+        NSNumber * progressNumber = (NSNumber *)[data objectForKey: @"progress"];
+        NSNumber * totalPoints = (NSNumber *)[data objectForKey: @"total_coins"];
+        NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
+        
+        [currentStudent setPoints:pointsNumber.integerValue];
+        [currentStudent setLevel:levelNumber.integerValue];
+        [currentStudent setProgress:progressNumber.integerValue];
+        [currentStudent setLevelUpAmount:lvlUpAmount];
+        [currentUser.currentClass addPoints:1];
+        [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+        [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+        
+        [self setStudentLabels];
+        
+    }
+    
+
     isStamping = NO;
 }
 
@@ -253,10 +236,8 @@
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [currentStudent getFirstName], [currentStudent getLastName]];
     self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Points", (long)[currentStudent getPoints]];
-    NSString *name = [currentStudent getSerial];
     [self.progressView setProgress:(float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount] animated:YES];
     
-    isRegistered = ((![currentStudent.getSerial isEqualToString:@""]) || ![currentStudent getSerial]);
 }
 
 

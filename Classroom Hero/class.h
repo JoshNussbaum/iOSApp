@@ -30,8 +30,6 @@
 
 -(void) setGradeNumber:(NSString *)gradeNumber_;
 
--(void) setSchoolId:(NSInteger)schoolId_;
-
 -(void) setCurrentDay:(NSString *)date;
 
 
