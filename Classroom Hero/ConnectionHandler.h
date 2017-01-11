@@ -90,7 +90,13 @@
 - (void)subtractPointsWithStudentId:(NSInteger)id points:(NSInteger)points;
 
 
+- (void)subtractPointsWithStudentIds:(NSMutableArray *)ids points:(NSInteger)points;
+
+
 - (void)addPointsWithStudentId:(NSInteger)id points:(NSInteger)points;
+
+
+- (void)addPointsWithStudentIds:(NSMutableArray *)ids points:(NSInteger)points;
 
 
 - (void)addToClassJar:(NSInteger)cjid :(NSInteger)points;

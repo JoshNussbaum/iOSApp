@@ -9,20 +9,20 @@
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-//http://107.206.158.62:1337/classroom-web-services/
+//http://107.138.44.249:1337/classroom-web-services/
 //http://ehorvat.webfactional.com/apps/ch/
-//http://107.206.158.62:1337/api/
+//http://107.138.44.249:1337/api/
 
 
-static NSString * const CLASS_URL = @"http://107.206.158.62:1337/api/class";
-static NSString * const ADD_CLASS_URL = @"http://107.206.158.62:1337/api/class/create/";
+static NSString * const CLASS_URL = @"http://107.138.44.249:1337/api/class";
+static NSString * const ADD_CLASS_URL = @"http://107.138.44.249:1337/api/class/create/";
 
-static NSString * const LOGIN_URL = @"http://107.206.158.62:1337/api/users/login/";
-static NSString * const CREATE_ACCOUNT_URL = @"http://107.206.158.62:1337/api/users/register/";
+static NSString * const LOGIN_URL = @"http://107.138.44.249:1337/api/users/login/";
+static NSString * const CREATE_ACCOUNT_URL = @"http://107.138.44.249:1337/api/users/register/";
 
-static NSString * const EDIT_TEACHER_NAME_URL = @"http://107.206.158.62:1337/api/users/edit/";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://107.206.158.62:1337/api/users/changePassword/";
-static NSString * const RESET_PASSWORD_URL = @"http://107.206.158.62:1337/api/users/password/reset/";
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://107.138.44.249:1337/api/users/edit/";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://107.138.44.249:1337/api/users/changePassword/";
+static NSString * const RESET_PASSWORD_URL = @"http://107.138.44.249:1337/api/users/password/reset/";
 
 static NSString *POST = @"POST";
 static NSString *PATCH = @"PATCH";
@@ -229,10 +229,9 @@ static NSInteger statusCode;
     NSString *url = [NSString stringWithFormat:@"%@/%ld/student/reward/bulk/", CLASS_URL, classId_];
 
     connectionType = REWARD_STUDENT_BULK;
-    
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:ids
-                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                       options:NSJSONWritingPrettyPrinted
                                                          error:&error];
     NSString *jsonString;
     if (! jsonData) {
@@ -263,6 +262,50 @@ static NSInteger statusCode;
     connectionType = ADD_POINTS;
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"points\":%ld}", (long)points];
 
+    [self asynchronousWebCall:jsonRequest :url :PUT];
+}
+
+- (void)addPointsWithStudentIds:(NSMutableArray *)ids points:(NSInteger)points{
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/student/add/bulk", CLASS_URL, classId_];
+    
+    connectionType = ADD_POINTS_BULK;
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:ids
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
+    NSString *jsonString;
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student_ids\":%@, \"points\":%ld}", jsonString, (long)points];
+    
+    [self asynchronousWebCall:jsonRequest :url :PUT];
+}
+
+
+- (void)subtractPointsWithStudentIds:(NSMutableArray *)ids points:(NSInteger)points{
+    //PATCH /api/class/{class_id}/student/subtract/bulk
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/student/subtract/bulk", CLASS_URL, classId_];
+    
+    connectionType = SUBTRACT_POINTS_BULK;
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:ids
+                                                       options:NSJSONWritingPrettyPrinted                                                       error:&error];
+    NSString *jsonString;
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    
+    
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"student_ids\":%@, \"points\":%ld}", jsonString, (long)points];
+    
     [self asynchronousWebCall:jsonRequest :url :PUT];
 }
 
@@ -313,7 +356,7 @@ static NSInteger statusCode;
 
     connectionType = STUDENT_CHECK_IN;
     
-    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"reward\":\"%@\"}", manual ? @"true" : @"false"];
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"reward\":%@}", manual ? @"true" : @"false"];
 
     [self asynchronousWebCall:jsonRequest :url :PUT];
     
@@ -330,7 +373,7 @@ static NSInteger statusCode;
 }
 
 
-- (void)checkInAllStudentsWithclassId:(NSInteger)classId{
+- (void)checkInAllStudents{
     NSString *url = [NSString stringWithFormat:@"%@/%ld/checkAllIn/", CLASS_URL, classId_];
 
     connectionType = ALL_STUDENT_CHECK_IN;
@@ -341,7 +384,7 @@ static NSInteger statusCode;
 
 
 
-- (void)checkOutAllStudentsWithclassId:(NSInteger)classId{
+- (void)checkOutAllStudents{
     NSString *url = [NSString stringWithFormat:@"%@/%ld/checkAllOut/", CLASS_URL, classId_];
     
     connectionType = ALL_STUDENT_CHECK_OUT;
@@ -356,7 +399,7 @@ static NSInteger statusCode;
     
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"email\":\"%@\"}", email];
     
-    [self asynchronousWebCall:jsonRequest :RESET_PASSWORD_URL :PUT];
+    [self asynchronousWebCall:jsonRequest :RESET_PASSWORD_URL :POST];
 }
 
 
@@ -375,20 +418,13 @@ static NSInteger statusCode;
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *response = nil;
     NSData *urlData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    NSLog(@"Check out the request -> %@", request);
+    NSError *err = nil;
+    NSDictionary *jsonData = [NSJSONSerialization
+                              JSONObjectWithData:urlData
+                              options:NSJSONReadingMutableContainers
+                              error:&err];
+    return jsonData;
 
-    if ([response statusCode] >= 200 && [response statusCode] < 300)
-    {
-        NSError *err = nil;
-        NSDictionary *jsonData = [NSJSONSerialization
-                                  JSONObjectWithData:urlData
-                                  options:NSJSONReadingMutableContainers
-                                  error:&err];
-        return jsonData;
-    }
-    else{
-        return nil;
-    }
 }
 
 - (void)asynchronousWebCall:(NSString *)jsonRequest :(NSString *)urlString :(NSString *)httpMethod{
@@ -442,7 +478,8 @@ static NSInteger statusCode;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    if (200 <= statusCode < 300){
+    NSLog(@"Check out the status code -> %ld", (long)statusCode);
+    if (statusCode >= 200 && statusCode < 400){
         NSError *err = nil;
         NSDictionary *jsonData = [NSJSONSerialization
                                   JSONObjectWithData:responseData
@@ -455,7 +492,6 @@ static NSInteger statusCode;
         [delegate_ dataReady:jsonData :connectionType];
     }
     else {
-        NSLog(@"Status code: %ld", (long)statusCode);
         [delegate_ dataReady:nil :connectionType];
     }
 

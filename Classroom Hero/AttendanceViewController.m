@@ -84,6 +84,9 @@
         self.studentNamePreStampLabel.hidden = YES;
         self.titleLabel.text = @"All students checked in";
     }
+    
+    [self checkNewDay];
+
 }
 
 
@@ -121,7 +124,6 @@
     [self checkNewDay];
 }
 
-// ATTENDANCE CLICKED
 
 - (IBAction)attendanceClicked:(id)sender {
     if (checkedOutStudents.count > 0){
@@ -495,6 +497,7 @@
 }
 
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -557,7 +560,6 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
-
 
 
 - (void)animateTableView:(BOOL)open{
