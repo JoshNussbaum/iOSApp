@@ -17,7 +17,7 @@
 
 @interface StudentsTableViewController (){
     user *currentUser;
-    NSMutableArray *studentsData;
+    NSMutableDictionary *studentsData;
     student *currentStudent;
     ConnectionHandler *webHandler;
     MBProgressHUD *hud;
@@ -26,7 +26,8 @@
     bool editingStudent;
     bool clicked;
     BOOL editing_;
-    NSMutableArray *selectedStudentIds;
+    NSMutableDictionary *selectedStudents;
+    NSString *tmpValue;
 }
 
 @end
@@ -41,15 +42,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    selectedStudentIds = [[NSMutableArray alloc]init];
+    tmpValue = @"";
+    selectedStudents = [[NSMutableDictionary alloc]init];
+    studentsData = [[NSMutableDictionary alloc]init];
     editingStudent = NO;
     editing_ = NO;
     self.view.backgroundColor = [Utilities CHLightBlueColor];
 
     currentUser = [user getInstance];
     
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO studentIds:currentUser.studentIds];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
+    [self getStudentsData];
     
     [self.tableView setBounces:NO];
 }
@@ -57,7 +60,8 @@
 - (void)viewDidAppear:(BOOL)animated{
     clicked = NO;
     if (editingStudent) {
-        studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :NO studentIds:currentUser.studentIds];
+        [self getStudentsData];
+
         [self.tableView reloadData];
         editingStudent = NO;
     }
@@ -65,17 +69,29 @@
 
 }
 
+- (void)getStudentsData{
+    NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
+    
+    for (student *tmpStudent in studentsDataArray){
+        [studentsData setObject:tmpStudent forKey:[NSNumber numberWithInteger:[tmpStudent getId]]];
+    }
+}
+
+
 - (IBAction)addStudentClicked:(id)sender {
     [Utilities editAlertAddStudentWithtitle:@"Add student" message:nil cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
 }
 
+
 - (IBAction)editButtonClicked:(id)sender {
     if (editing_){
         editing_ = NO;
+        [selectedStudents removeAllObjects];
     }else editing_ = YES;
     
     [self setEditing:editing_ animated:YES];
 }
+
 
 - (IBAction)backClicked:(id)sender {
     self.backButton.enabled = NO;
@@ -115,6 +131,49 @@
         [self activityStart:@"Deleting Student..."];
         [webHandler deleteStudent:[currentStudent getId]];
     }
+    else if (alertView.tag == 4){
+        tmpValue = [alertView textFieldAtIndex:0].text;
+        
+        NSString *errorMessage = [Utilities isNumeric:tmpValue];
+        
+        if (!errorMessage) {
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                  action:@"Add Uncategorized Points (Manual)"
+                                                                   label:@"Uncategorized points"
+                                                                   value:@1] build]];
+            
+            NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
+            
+            for (NSNumber *studentId in selectedStudents) {
+                [selectedStudentIds addObject:studentId];
+            }
+
+            [webHandler addPointsWithStudentIds:selectedStudentIds points:tmpValue.integerValue];
+        }
+        
+    }
+    else if (alertView.tag == 5){
+        tmpValue = [alertView textFieldAtIndex:0].text;
+        
+        NSString *errorMessage = [Utilities isNumeric:tmpValue];
+        
+        if (!errorMessage) {
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
+                                                                  action:@"Subtract Points"
+                                                                   label:@"Subtact points"
+                                                                   value:@1] build]];
+            NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
+            
+            for (NSNumber *studentId in selectedStudents) {
+                [selectedStudentIds addObject:studentId];
+            }
+            [webHandler subtractPointsWithStudentIds:selectedStudentIds points:tmpValue.integerValue];
+        }
+    }
 
 }
 
@@ -143,17 +202,55 @@
         NSInteger studentId = [[data objectForKey:@"student_id"] integerValue];
         student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName  lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
         [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId]];
-        [studentsData addObject:newStudent];
+        //[studentsData addObject:newStudent];
+        [studentsData setObject:newStudent forKey:[NSNumber numberWithInteger:[newStudent getId]]];
         [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
         [self.tableView reloadData];
     }
     else if (type == DELETE_STUDENT){
-        [studentsData removeObject:currentStudent];
+        [studentsData removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
+        //[studentsData removeObject:currentStudent];
         [currentUser.studentIds removeObject:[NSNumber numberWithInteger:[currentStudent getId]]];
         
         currentStudent = nil;
         [self.tableView reloadData];
 
+    }
+    else if (type == ADD_POINTS_BULK || SUBTRACT_POINTS_BULK){
+        NSArray *studentsArray = [data objectForKey:@"students"];
+        NSInteger studentCount = studentsArray.count;
+        
+        for (NSDictionary *studentDictionary in studentsArray){
+            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"current_coins"];
+            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"student_id"];
+            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"level"];
+            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"total_coins"];
+            NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
+            
+            
+            student *tmpStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
+            
+            [tmpStudent setPoints:pointsNumber.integerValue];
+            [tmpStudent setLevel:levelNumber.integerValue];
+            [tmpStudent setProgress:progressNumber.integerValue];
+            [tmpStudent setLevelUpAmount:lvlUpAmount];
+            [[DatabaseHandler getSharedInstance]updateStudent:tmpStudent];
+            
+            [studentsData setObject:tmpStudent forKey:idNumber];
+            [selectedStudents setObject:tmpStudent forKey:idNumber];
+            
+        }
+        [self manualPointsSuccessIsSubtract:type == ADD_POINTS_BULK ? NO : YES];
+        NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+
+        [self.tableView reloadData];
+        
+        for (NSIndexPath *row in selectedRows){
+            [self.tableView selectRowAtIndexPath:row animated:NO scrollPosition:UITableViewScrollPositionNone];
+
+        }
+        
     }
 }
 
@@ -168,23 +265,100 @@
 
 
 - (void)subtractPointsClicked{
-    if (editing_ && selectedStudentIds.count > 0){
+    if (editing_ && selectedStudents.count > 0){
         
+        UIAlertView * av = [Utilities editAlertNumberWithtitle:@"Subtract Points" message:nil cancel:nil done:@"Subtract points" input:nil tag:5 view:self];
     }
     else {
-        [Utilities disappearingAlertView:@"Click edit and select students first" message:nil otherTitles:nil tag:0 view:self time:1.8];
+        [Utilities disappearingAlertView:@"Select students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
     }
     
 }
 
 
-- (void)addPointsClicked{
-    NSLog(@"Here is the selected student count %d", selectedStudentIds.count);
-    if (editing_ && selectedStudentIds.count > 0){
+- (void)manualPointsSuccessIsSubtract:(BOOL)subtract{
+    NSString *successString;
+    float time = 0;
+    time = 1.7;
+    successString = [NSString stringWithFormat:@"%@ to %@", [NSString stringWithFormat:@"%@%@", subtract == YES ? @"-" : @"+", tmpValue], [self displayStringForMultipleSelectedStudents]];
+
+    [Utilities disappearingAlertView:successString message:nil otherTitles:nil tag:0 view:self time:time];
+}
+
+
+- (NSString *)displayStringForMultipleSelectedStudents{
+    int max = 55;
+    NSString *displayString = @"";
+    // length of ', and x others'
+    int totalLength = 15;
+    int skippedStudents = 0;
+    for (NSInteger index = 0; index < selectedStudents.count; index++) {
+        NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:index];
+        
+        student *selectedStudent = [studentsData objectForKey:studentId];
+        NSString *firstName = [selectedStudent getFirstName];
+        int len = firstName.length;
+        
+        if ([displayString isEqualToString:@""]){
+            displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@"%@", firstName]];
+        }
+        
+        else if ((len + totalLength) > max){
+            if (index != (selectedStudents.count - 1)){
+                skippedStudents += 1;
+                len = 0;
+                continue;
+            }
+            else {
+                if (skippedStudents > 0) {
+                    if (skippedStudents == 1){
+                        displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", and %i other", skippedStudents]];
+                    }
+                    else if (skippedStudents > 1){
+                        displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", %@ and %i  others", firstName, skippedStudents]];
+                    }
+                    
+                }
+                else {
+                    displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", and %@", firstName]];
+                }
+                return displayString;
+            }
+        }
+        else if (index != (selectedStudents.count - 1)) {
+            len += 4;
+            displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", %@", firstName]];
+        }
+        else {
+            len += 7;
+            if (skippedStudents == 1){
+                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", %@ and %i other", firstName, skippedStudents]];
+            }
+            else if (skippedStudents > 1){
+                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", %@ and %i others", firstName, skippedStudents]];
+            }
+            else {
+                displayString = [displayString stringByAppendingString:[NSString stringWithFormat:@", and %@", firstName]];
+                
+            }
+        }
+        totalLength += len;
         
     }
+    
+    return displayString;
+}
+
+
+
+- (void)addPointsClicked{
+    if (editing_ && selectedStudents.count > 0){
+        UIAlertView * av = [Utilities editAlertNumberWithtitle:@"Add Points" message:nil cancel:nil done:@"Add points" input:nil tag:4 view:self];
+
+        // add points to selected students
+    }
     else {
-        [Utilities disappearingAlertView:@"Click edit and add students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        [Utilities disappearingAlertView:@"Select students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
     }
     
 }
@@ -196,14 +370,17 @@
     return 1;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return studentsData.count;
 }
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 60;
 }
+
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
@@ -273,7 +450,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StudentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentCell" forIndexPath:indexPath];
     if (studentsData.count > 0){
-        student *student_ = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        NSNumber *studentId = [[studentsData allKeys] objectAtIndex:indexPath.row];
+        
+        student *student_ = [studentsData objectForKey:studentId];
         [cell initializeWithStudent:student_];
     }
     
@@ -282,32 +461,41 @@
 
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
-    NSNumber *studentId = [NSNumber numberWithInteger:[currentStudent getId]];
-    if ([selectedStudentIds containsObject:studentId]){
-        [selectedStudentIds removeObject:studentId];
+    
+    
+    NSNumber *studentId = [[studentsData allKeys] objectAtIndex:indexPath.row];
+    
+    currentStudent = [studentsData objectForKey:studentId];
+    
+//    NSNumber *studentId = [NSNumber numberWithInteger:[currentStudent getId]];
+    if ([selectedStudents objectForKey:studentId]){
+        [selectedStudents removeObjectForKey:studentId];
     }
 
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSNumber *studentId = [[studentsData allKeys] objectAtIndex:indexPath.row];
+    student *tmpStudent = [studentsData objectForKey:studentId];
+    currentStudent = tmpStudent;
+
     if (editing_ && studentsData.count > 0){
         NSLog(@"We did select while editing");
-        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
-        NSNumber *studentId = [NSNumber numberWithInteger:[currentStudent getId]];
-        if ([selectedStudentIds containsObject:studentId]){
-            [selectedStudentIds removeObject:studentId];
+        
+        
+        //currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        if ([selectedStudents objectForKey:studentId]){
+            [selectedStudents removeObjectForKey:studentId];
         }
         else {
 
-            [selectedStudentIds addObject:studentId];
+            [selectedStudents setObject:tmpStudent forKey:studentId];
         }
     }
     else if (studentsData.count > 0 && !clicked){
         clicked = YES;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
         [self performSegueWithIdentifier:@"student_segue" sender:self];
     }
 }
@@ -338,7 +526,9 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
+        NSNumber *studentId = [[studentsData allKeys] objectAtIndex:indexPath.row];
+
+        currentStudent = [studentsData objectForKey:studentId];
         
         [Utilities alertStatusWithTitle:@"Confirm Delete" message:[NSString stringWithFormat:@"Are you sure you want to delete %@?", [currentStudent fullName]]  cancel:@"Cancel"  otherTitles:@[@"Delete"] tag:2 view:self];
     }

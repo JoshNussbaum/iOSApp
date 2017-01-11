@@ -312,7 +312,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First  name" textAlignment="center" minimumFontSize="23" translatesAutoresizingMaskIntoConstraints="NO" id="ZTd-pZ-CnD" customClass="nameTextField">
-                                <rect key="frame" x="132" y="191" width="504" height="30"/>
+                                <rect key="frame" x="132" y="196" width="504" height="30"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next"/>
                                 <connections>
@@ -320,7 +320,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm  password" textAlignment="center" minimumFontSize="23" translatesAutoresizingMaskIntoConstraints="NO" id="5eY-qh-v4D" customClass="passwordTextField">
-                                <rect key="frame" x="136" y="511" width="496" height="30"/>
+                                <rect key="frame" x="136" y="516" width="496" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="5eY-qh-v4D" secondAttribute="height" multiplier="248:15" id="R5U-ni-VbG"/>
                                 </constraints>
@@ -331,7 +331,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last  name" textAlignment="center" minimumFontSize="23" translatesAutoresizingMaskIntoConstraints="NO" id="Fam-qW-DzE" customClass="nameTextField">
-                                <rect key="frame" x="136" y="271" width="496" height="30"/>
+                                <rect key="frame" x="136" y="276" width="496" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Fam-qW-DzE" secondAttribute="height" multiplier="248:15" id="FFe-zA-CjI"/>
                                 </constraints>
@@ -342,7 +342,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="23" translatesAutoresizingMaskIntoConstraints="NO" id="cZa-D7-9Dj" customClass="emailTextField">
-                                <rect key="frame" x="136" y="351" width="496" height="30"/>
+                                <rect key="frame" x="136" y="356" width="496" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="cZa-D7-9Dj" secondAttribute="height" multiplier="248:15" id="57o-c1-FeN"/>
                                 </constraints>
@@ -353,7 +353,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="23" translatesAutoresizingMaskIntoConstraints="NO" id="hzI-7q-3nk" customClass="passwordTextField">
-                                <rect key="frame" x="136" y="431" width="496" height="30"/>
+                                <rect key="frame" x="136" y="436" width="496" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="hzI-7q-3nk" secondAttribute="height" multiplier="248:15" id="zZ1-Xo-LKb"/>
                                 </constraints>
@@ -364,7 +364,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uZ9-mA-eYp">
-                                <rect key="frame" x="292" y="591" width="185" height="36"/>
+                                <rect key="frame" x="292" y="599" width="185" height="36"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uZ9-mA-eYp" secondAttribute="height" multiplier="185:36" id="ZOW-JT-Igx"/>
@@ -389,34 +389,46 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="VOJ-YS-urw" secondAttribute="height" multiplier="487:69" id="7ER-ly-qOQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="50"/>
+                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="40"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9e-Lg-Js6">
+                                <rect key="frame" x="0.0" y="165" width="768" height="4"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="c9e-Lg-Js6" secondAttribute="height" multiplier="192:1" id="njA-3Y-imU"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.39215755899999999" green="0.74837622550000005" blue="0.37197944519999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="uZ9-mA-eYp" firstAttribute="width" secondItem="7RX-8X-99L" secondAttribute="height" multiplier="185:1024" id="19f-xk-PFj"/>
+                            <constraint firstItem="c9e-Lg-Js6" firstAttribute="width" secondItem="7RX-8X-99L" secondAttribute="height" multiplier="3:4" id="36V-PB-bzc"/>
                             <constraint firstItem="VOJ-YS-urw" firstAttribute="top" secondItem="C8M-6F-91S" secondAttribute="bottom" constant="24" id="57K-Tw-Zsl"/>
-                            <constraint firstItem="ZTd-pZ-CnD" firstAttribute="top" secondItem="VOJ-YS-urw" secondAttribute="bottom" constant="34" id="5GA-Ib-Nu1"/>
+                            <constraint firstItem="ZTd-pZ-CnD" firstAttribute="top" secondItem="VOJ-YS-urw" secondAttribute="bottom" constant="39" id="5GA-Ib-Nu1"/>
                             <constraint firstItem="VOJ-YS-urw" firstAttribute="width" secondItem="7RX-8X-99L" secondAttribute="height" multiplier="487:1024" id="6kw-i9-DGa"/>
                             <constraint firstItem="cZa-D7-9Dj" firstAttribute="centerX" secondItem="7RX-8X-99L" secondAttribute="centerX" id="EWH-bX-R6j"/>
-                            <constraint firstItem="uZ9-mA-eYp" firstAttribute="top" secondItem="5eY-qh-v4D" secondAttribute="bottom" constant="50" id="Fbn-YO-umc"/>
+                            <constraint firstItem="uZ9-mA-eYp" firstAttribute="top" secondItem="5eY-qh-v4D" secondAttribute="bottom" constant="53" id="Fbn-YO-umc"/>
                             <constraint firstItem="VOJ-YS-urw" firstAttribute="centerX" secondItem="7RX-8X-99L" secondAttribute="centerX" id="H3S-0M-fZc"/>
                             <constraint firstItem="cZa-D7-9Dj" firstAttribute="top" secondItem="Fam-qW-DzE" secondAttribute="bottom" constant="50" id="Hud-xC-8CR"/>
                             <constraint firstItem="Ck7-eD-0Ay" firstAttribute="centerX" secondItem="7RX-8X-99L" secondAttribute="centerX" id="IQW-7d-ydz"/>
+                            <constraint firstItem="c9e-Lg-Js6" firstAttribute="leading" secondItem="7RX-8X-99L" secondAttribute="leading" id="NdQ-Z8-dYB"/>
                             <constraint firstItem="Fam-qW-DzE" firstAttribute="centerX" secondItem="7RX-8X-99L" secondAttribute="centerX" id="RfC-h8-IF0"/>
                             <constraint firstItem="5eY-qh-v4D" firstAttribute="top" secondItem="hzI-7q-3nk" secondAttribute="bottom" constant="50" id="Ysx-Df-IuW"/>
                             <constraint firstItem="hzI-7q-3nk" firstAttribute="top" secondItem="cZa-D7-9Dj" secondAttribute="bottom" constant="50" id="ckQ-nC-yoD"/>
+                            <constraint firstAttribute="trailing" secondItem="c9e-Lg-Js6" secondAttribute="trailing" id="dTn-G9-P9k"/>
                             <constraint firstItem="5eY-qh-v4D" firstAttribute="centerX" secondItem="7RX-8X-99L" secondAttribute="centerX" id="gnI-j4-Mbb"/>
                             <constraint firstItem="lYF-gQ-odN" firstAttribute="top" secondItem="Ck7-eD-0Ay" secondAttribute="bottom" constant="20" id="h1K-PD-yFn"/>
                             <constraint firstItem="Fam-qW-DzE" firstAttribute="top" secondItem="ZTd-pZ-CnD" secondAttribute="bottom" constant="50" id="jFH-eg-6q3"/>
+                            <constraint firstItem="c9e-Lg-Js6" firstAttribute="top" secondItem="VOJ-YS-urw" secondAttribute="bottom" constant="8" id="jpG-UA-po6"/>
                             <constraint firstItem="uZ9-mA-eYp" firstAttribute="centerX" secondItem="7RX-8X-99L" secondAttribute="centerX" id="jxE-Qh-Hns"/>
                             <constraint firstItem="ZTd-pZ-CnD" firstAttribute="width" secondItem="7RX-8X-99L" secondAttribute="height" multiplier="63:128" id="kbV-vb-tco"/>
                             <constraint firstItem="hzI-7q-3nk" firstAttribute="centerX" secondItem="7RX-8X-99L" secondAttribute="centerX" id="lLH-8o-CS1"/>
+                            <constraint firstItem="c9e-Lg-Js6" firstAttribute="centerX" secondItem="VOJ-YS-urw" secondAttribute="centerX" id="mEQ-LW-Z9W"/>
                             <constraint firstItem="Ck7-eD-0Ay" firstAttribute="width" secondItem="7RX-8X-99L" secondAttribute="height" multiplier="75:256" id="nAP-kd-W8P"/>
                             <constraint firstItem="ZTd-pZ-CnD" firstAttribute="centerX" secondItem="7RX-8X-99L" secondAttribute="centerX" id="vDN-IM-xvI"/>
                         </constraints>
@@ -656,10 +668,9 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="EdR-ee-oJI" secondAttribute="height" multiplier="181:13" id="7GK-Nh-rch"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmd-q6-6z0">
                                 <rect key="frame" x="49" y="20" width="670" height="155"/>
@@ -933,15 +944,6 @@
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" red="0.39243233199999999" green="0.77845203880000002" blue="0.95465677979999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jep-8e-JhC">
-                                            <rect key="frame" x="530" y="51" width="79" height="37"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="jep-8e-JhC" secondAttribute="height" multiplier="79:37" id="aXR-Cn-IUt"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
-                                            <nil key="highlightedColor"/>
-                                            <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kq-ha-lvh">
                                             <rect key="frame" x="637" y="51" width="60" height="37"/>
                                             <constraints>
@@ -962,17 +964,26 @@
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jep-8e-JhC">
+                                            <rect key="frame" x="511" y="51" width="118" height="37"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="jep-8e-JhC" secondAttribute="height" multiplier="79:37" constant="39" id="aXR-Cn-IUt"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="27"/>
+                                            <nil key="highlightedColor"/>
+                                            <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="uuz-AJ-wz0" secondAttribute="trailing" constant="58" id="0Uc-WF-KRH"/>
                                         <constraint firstAttribute="trailing" secondItem="9Kq-ha-lvh" secondAttribute="trailing" constant="71" id="143-i6-sFV"/>
-                                        <constraint firstItem="jep-8e-JhC" firstAttribute="width" secondItem="srO-EL-heQ" secondAttribute="height" multiplier="79:149" id="C04-SE-umH"/>
+                                        <constraint firstItem="jep-8e-JhC" firstAttribute="width" secondItem="srO-EL-heQ" secondAttribute="height" multiplier="79:149" constant="39" id="C04-SE-umH"/>
                                         <constraint firstItem="uuz-AJ-wz0" firstAttribute="width" secondItem="srO-EL-heQ" secondAttribute="height" multiplier="85:149" id="CiM-Mm-ngc"/>
                                         <constraint firstItem="9Kq-ha-lvh" firstAttribute="top" secondItem="uuz-AJ-wz0" secondAttribute="bottom" id="FjP-KG-T5d"/>
                                         <constraint firstItem="AZ9-ek-bKM" firstAttribute="centerY" secondItem="srO-EL-heQ" secondAttribute="centerY" id="HQs-35-xpO"/>
                                         <constraint firstItem="KcY-Dl-xZc" firstAttribute="width" secondItem="srO-EL-heQ" secondAttribute="height" multiplier="95:149" id="bOB-KN-KQo"/>
                                         <constraint firstItem="daW-LK-oq2" firstAttribute="width" secondItem="srO-EL-heQ" secondAttribute="height" multiplier="191:149" id="hUU-3f-N0D"/>
-                                        <constraint firstItem="9Kq-ha-lvh" firstAttribute="leading" secondItem="jep-8e-JhC" secondAttribute="trailing" constant="28" id="hfg-f8-Yjd"/>
+                                        <constraint firstItem="9Kq-ha-lvh" firstAttribute="leading" secondItem="jep-8e-JhC" secondAttribute="trailing" constant="8" id="hfg-f8-Yjd"/>
                                         <constraint firstAttribute="bottom" secondItem="daW-LK-oq2" secondAttribute="bottom" constant="20" id="jkZ-ec-m0G"/>
                                         <constraint firstItem="KcY-Dl-xZc" firstAttribute="top" secondItem="srO-EL-heQ" secondAttribute="top" constant="13" id="kbI-Y8-wdD"/>
                                         <constraint firstItem="9Kq-ha-lvh" firstAttribute="width" secondItem="srO-EL-heQ" secondAttribute="height" multiplier="60:149" id="oGe-1m-JCw"/>
@@ -1533,7 +1544,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dCI-xW-RY9">
-                            <rect key="frame" x="231" y="-3" width="307" height="50"/>
+                            <rect key="frame" x="230.5" y="-3" width="307" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="26"/>
                             <state key="normal" title="Add Student">
@@ -3761,6 +3772,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="7j2-Pv-6iv"/>
-        <segue reference="gYe-ik-tSY"/>
+        <segue reference="ewg-8k-sYO"/>
     </inferredMetricsTieBreakers>
 </document>

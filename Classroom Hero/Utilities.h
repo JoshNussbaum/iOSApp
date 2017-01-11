@@ -64,6 +64,8 @@ extern NSInteger GET_USER_BY_STAMP;
 extern NSInteger RESET_PASSWORD;
 extern NSInteger SUBTRACT_POINTS;
 extern NSInteger ADD_POINTS;
+extern NSInteger ADD_POINTS_BULK;
+extern NSInteger SUBTRACT_POINTS_BULK;
 
 extern NSInteger menuItemFontSize;
 

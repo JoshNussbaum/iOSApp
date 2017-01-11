@@ -338,33 +338,16 @@ static NSInteger coinHeight = 250;
                 
                 [tracker send:[[GAIDictionaryBuilder createEventWithCategory:[currentUser fullName]
                                                                       action:@"Add Uncategorized Points (Manual)"
-                                                                       label:[currentReinforcer getName]
+                                                                       label:@"Uncategorized points"
                                                                        value:@1] build]];
                 isStamping = YES;
                 
+                NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
                 
-                if (studentCount > 1){
-                    NSMutableArray *selectedStudentIds = [[NSMutableArray alloc]init];
-                    
-                    for (NSNumber *studentId in selectedStudents) {
-                        [selectedStudentIds addObject:studentId];
-                    }
-                    
-                    [webHandler rewardStudentsWithids:selectedStudentIds reinforcerId:0
-                     ];
+                for (NSNumber *studentId in selectedStudents) {
+                    [selectedStudentIds addObject:studentId];
                 }
-                
-                else {
-                    NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
-                    
-                    student *selectedStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:studentId.integerValue];
-                    
-                    currentStudent = selectedStudent;
-                    
-                    
-                    [webHandler rewardStudentWithid:[selectedStudent getId] reinforcerId:0];
-                    
-                }
+                [webHandler addPointsWithStudentIds:selectedStudentIds points:tmpValue.integerValue];
                 
             }
 
@@ -488,7 +471,7 @@ static NSInteger coinHeight = 250;
     }
     
     else if (type == REWARD_STUDENT_BULK){
-        pointsAwarded = [currentReinforcer getValue];
+        pointsAwarded = tmpValue.integerValue;
         NSArray *studentsArray = [data objectForKey:@"students"];
         NSInteger studentCount = studentsArray.count;
         
@@ -527,47 +510,39 @@ static NSInteger coinHeight = 250;
             [self manuallyAddPointsSuccess];
         }
     }
+    else if (type == ADD_POINTS_BULK){
+        pointsAwarded = tmpValue.integerValue;
+        NSArray *studentsArray = [data objectForKey:@"students"];
+        NSInteger studentCount = studentsArray.count;
+        
+        for (NSDictionary *studentDictionary in studentsArray){
+            NSNumber * pointsNumber = (NSNumber *)[studentDictionary objectForKey: @"current_coins"];
+            NSNumber * idNumber = (NSNumber *)[studentDictionary objectForKey: @"student_id"];
+            NSNumber * levelNumber = (NSNumber *)[studentDictionary objectForKey: @"level"];
+            NSNumber * progressNumber = (NSNumber *)[studentDictionary objectForKey: @"progress"];
+            NSNumber * totalPoints = (NSNumber *)[studentDictionary objectForKey: @"total_coins"];
+            NSInteger lvlUpAmount = 3 + (2*(levelNumber.integerValue - 1));
+            
+            
+            student *tmpStudent = [[DatabaseHandler getSharedInstance] getStudentWithID:idNumber.integerValue];
+            
+            [tmpStudent setPoints:pointsNumber.integerValue];
+            [tmpStudent setLevel:levelNumber.integerValue];
+            [tmpStudent setProgress:progressNumber.integerValue];
+            [tmpStudent setLevelUpAmount:lvlUpAmount];
+            [[DatabaseHandler getSharedInstance]updateStudent:tmpStudent];
+            
+            [studentsData setObject:tmpStudent forKey:idNumber];
+            [selectedStudents setObject:tmpStudent forKey:idNumber];
+        }
+        
+        AudioServicesPlaySystemSound(award);
+        [self manuallyAddPointsSuccess];
+    }
     
     else {
         isStamping = NO;
     }
-}
-
-
-- (void)awardAllStudents{
-    awardRect = CGRectMake(self.stampImage.frame.origin.x, self.stampImage.frame.origin.y, self.stampImage.frame.size.width, self.stampImage .frame.size.height);
-    self.nameLabel.text = @"+1 All Students";
-    self.nameLabel.hidden = NO;
-    double delayInSeconds = .6;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [UIView animateWithDuration:.6
-                         animations:^{
-                             [Utilities wiggleImage:self.stampImage sound:NO];
-                         }
-                         completion:^(BOOL finished) {
-                             double delayInSeconds = .5;
-                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-
-                                 AudioServicesPlaySystemSound([Utilities getAwardAllSound]);
-                                 double delayInSeconds = 1.0;
-                                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-                                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-
-                                     [UIView animateWithDuration:.3
-                                                      animations:^{
-                                                          [self.stampImage setFrame:awardRect];
-                                                      }
-                                      ];
-                                     self.nameLabel.text = @"";
-                                     isStamping = NO;
-
-                                 });
-                             });
-                         }
-         ];
-    });
 }
 
 
@@ -735,6 +710,7 @@ static NSInteger coinHeight = 250;
         self.categoryPicker.hidden = NO;
     }
 }
+
 
 - (IBAction)chestClicked:(id)sender {
     if (chestTappable && !showingStudents){
@@ -1379,7 +1355,7 @@ static NSInteger coinHeight = 250;
     NSInteger studentCount = selectedStudents.count;
     if (studentCount > 0){
         if (!isStamping && !chestPoint){
-            UIAlertView * av = [Utilities editAlertNumberWithtitle:@"Uncategorized Points" message:[self displayStringForMultipleSelectedStudents] cancel:nil done:@"Add points" input:nil tag:4 view:self];
+            [Utilities editAlertNumberWithtitle:@"Add Points" message:nil cancel:nil done:@"Add points" input:nil tag:4 view:self];
             
         }
     }
