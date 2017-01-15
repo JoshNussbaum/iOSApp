@@ -58,6 +58,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
+    currentUser = [user getInstance];
     clicked = NO;
     if (editingStudent) {
         [self getStudentsData];
@@ -70,6 +71,7 @@
 }
 
 - (void)getStudentsData{
+    studentsData = [[NSMutableDictionary alloc]init];
     NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
     
     for (student *tmpStudent in studentsDataArray){
@@ -270,7 +272,12 @@
         UIAlertView * av = [Utilities editAlertNumberWithtitle:@"Subtract Points" message:nil cancel:nil done:@"Subtract points" input:nil tag:5 view:self];
     }
     else {
-        [Utilities disappearingAlertView:@"Select students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        if (studentsData.count == 0){
+            [Utilities disappearingAlertView:@"Add students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        }
+        else {
+            [Utilities disappearingAlertView:@"Select students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        }
     }
     
 }
@@ -358,7 +365,12 @@
         // add points to selected students
     }
     else {
-        [Utilities disappearingAlertView:@"Select students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        if (studentsData.count == 0){
+            [Utilities disappearingAlertView:@"Add students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        }
+        else {
+            [Utilities disappearingAlertView:@"Select students first" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        }
     }
     
 }

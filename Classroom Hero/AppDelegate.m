@@ -9,9 +9,15 @@
 #import "AppDelegate.h"
 #import "Utilities.h"
 #import <Google/Analytics.h>
+#import "FDKeychain.h"
+#import "user.h"
+#import "DatabaseHandler.h"
+#import "ClassTableViewController.h"
 
-
-@interface AppDelegate ()
+@interface AppDelegate (){
+    ConnectionHandler *webHandler;
+    user *currentUser;
+}
 
 @end
 
@@ -27,9 +33,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    // Configure tracker from GoogleService-Info.plist.
-    NSError *configureError;
+    currentUser = [user getInstance];
+    webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:0];    NSError *configureError;
     [[GGLContext sharedInstance] configureWithError:&configureError];
     NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
     
@@ -60,6 +65,37 @@
         [[UINavigationBar appearance] setTintColor:[Utilities CHBlueColor]];
     }
     [[UITextField appearance] setTintColor:[Utilities CHBlueColor]];
+    
+    
+    NSError *passwordError = nil;
+    
+    NSString *password = [FDKeychain itemForKey: @"password"
+                                     forService: @"Classroom Hero"
+                                          error: &passwordError];
+    NSError *emailError = nil;
+    
+    NSString *email = [FDKeychain itemForKey: @"email"
+                                  forService: @"Classroom Hero"
+                                       error: &emailError];
+    NSDictionary *jsonData = [[NSDictionary alloc]init];
+    if (passwordError == nil && emailError == nil){
+        jsonData = [webHandler synchronousLogin:email :password];
+        [[DatabaseHandler getSharedInstance] login:jsonData];
+        currentUser.email = email;
+        currentUser.password = password;
+        currentUser.firstName = [jsonData objectForKey:@"first_name"];
+        currentUser.lastName = [jsonData objectForKey:@"last_name"];
+        currentUser.id = [[jsonData objectForKey:@"id"] integerValue];
+        currentUser.token = [jsonData objectForKey:@"token"];
+        
+        
+        ClassTableViewController *vc = [[ClassTableViewController alloc] init];
+        
+        UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:vc];
+        self.window.rootViewController = nc;
+        [self.window makeKeyAndVisible];
+        
+    }
 
     return YES;
 }

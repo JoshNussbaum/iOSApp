@@ -55,6 +55,13 @@ static NSInteger statusCode;
     return sharedInstance;
 }
 
+- (NSDictionary *)synchronousLogin:(NSString *)email :(NSString *)password{
+    connectionType = LOGIN;
+    NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"email\": \"%@\", \"password\": \"%@\"}", email, password];
+    
+    return [self synchronousWebCall:jsonRequest :LOGIN_URL :POST];
+}
+
 
 - (void)logIn:(NSString *)email :(NSString *)password{
     connectionType = LOGIN;
@@ -266,7 +273,7 @@ static NSInteger statusCode;
 }
 
 - (void)addPointsWithStudentIds:(NSMutableArray *)ids points:(NSInteger)points{
-    NSString *url = [NSString stringWithFormat:@"%@/%ld/student/add/bulk", CLASS_URL, classId_];
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/student/add/bulk/", CLASS_URL, classId_];
     
     connectionType = ADD_POINTS_BULK;
     NSError *error;
@@ -289,7 +296,7 @@ static NSInteger statusCode;
 
 - (void)subtractPointsWithStudentIds:(NSMutableArray *)ids points:(NSInteger)points{
     //PATCH /api/class/{class_id}/student/subtract/bulk
-    NSString *url = [NSString stringWithFormat:@"%@/%ld/student/subtract/bulk", CLASS_URL, classId_];
+    NSString *url = [NSString stringWithFormat:@"%@/%ld/student/subtract/bulk/", CLASS_URL, classId_];
     
     connectionType = SUBTRACT_POINTS_BULK;
     

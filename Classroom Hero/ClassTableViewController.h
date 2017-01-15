@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
 
-
-
 @interface ClassTableViewController : UITableViewController <ConnectionHandlerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *addClassLabel;

@@ -30,6 +30,9 @@
 +(ConnectionHandler *)getSharedInstance;
 
 
+- (NSDictionary *)synchronousLogin:(NSString *)email :(NSString *)password;
+
+
 - (void)logIn:(NSString *)email :(NSString *)password;
 
 
