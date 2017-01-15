@@ -130,7 +130,8 @@
         if(!errorMessage)
         {
             NSInteger tid = [[data objectForKey:@"id"] integerValue];
-            
+            currentUser.token = [data objectForKey:@"token"];
+
             currentUser.firstName = self.firstNameTextField.text;
             currentUser.lastName = self.lastNameTextField.text;
             currentUser.email = self.emailTextField.text;

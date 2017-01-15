@@ -61,11 +61,6 @@ static NSString * const classCell = @"classCell";
 
 
 - (void)viewDidAppear:(BOOL)animated{
-    if (addingClass){
-        addingClass = NO;
-        classes = [[DatabaseHandler getSharedInstance]getClasses];
-        [self.tableView reloadData];
-    }
     currentUser = [user getInstance];
     classes = [[DatabaseHandler getSharedInstance] getClasses];
     

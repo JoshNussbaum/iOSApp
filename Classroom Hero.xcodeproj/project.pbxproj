@@ -703,7 +703,7 @@
 				TargetAttributes = {
 					03AA99E01B6333C300750758 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 5KN826GZ54;
+						DevelopmentTeam = B28Q4692N6;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.OMC = {
@@ -1090,7 +1090,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5KN826GZ54;
+				DEVELOPMENT_TEAM = B28Q4692N6;
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1123,7 +1123,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5KN826GZ54;
+				DEVELOPMENT_TEAM = B28Q4692N6;
 				INFOPLIST_FILE = "Classroom Hero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

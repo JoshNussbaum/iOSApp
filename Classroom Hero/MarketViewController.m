@@ -355,8 +355,8 @@
             
             
             NSMutableArray *scores = [NSMutableArray array];
-            NSInteger score = [currentStudent getPoints];
-            NSInteger newScore = [currentStudent getPoints] - [currentItem getCost];
+            NSInteger score = [currentStudent getPoints] + [currentItem getCost];
+            NSInteger newScore = [currentStudent getPoints];
             [scores addObject:[NSNumber numberWithInteger:score]];
             [scores addObject:[NSNumber numberWithInteger:newScore]];
             [currentStudent setPoints:newScore];
