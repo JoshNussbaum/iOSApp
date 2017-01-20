@@ -154,13 +154,27 @@
 
             [webHandler addPointsWithStudentIds:selectedStudentIds points:tmpValue.integerValue];
         }
+        else {
+            [Utilities editAlertNumberWithtitle:@"Error adding points" message:errorMessage cancel:nil done:@"Add Points" input:nil tag:4 view:self];
+
+        }
         
     }
     else if (alertView.tag == 5){
         tmpValue = [alertView textFieldAtIndex:0].text;
         
         NSString *errorMessage = [Utilities isNumeric:tmpValue];
-        
+        for (NSNumber *studentId in selectedStudents) {
+            student *stud = [selectedStudents objectForKey:studentId];
+            if ([stud getPoints] < tmpValue.integerValue){
+                if (!errorMessage){
+                    errorMessage = [NSString stringWithFormat:@"%@ only has %ld points", [stud getFirstName], (long)[stud getPoints]];
+                }
+                else {
+                    errorMessage = [errorMessage stringByAppendingString:[NSString stringWithFormat:@" and %@ only has %ld points", [stud getFirstName], (long)[stud getPoints]]];
+                }
+            }
+        }
         if (!errorMessage) {
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             
@@ -174,6 +188,9 @@
                 [selectedStudentIds addObject:studentId];
             }
             [webHandler subtractPointsWithStudentIds:selectedStudentIds points:tmpValue.integerValue];
+        }
+        else {
+            [Utilities editAlertNumberWithtitle:@"Error subtracting points" message:errorMessage cancel:nil done:@"Subtract Points" input:nil tag:5 view:self];
         }
     }
 
@@ -435,7 +452,6 @@
     
     for (UILabel *label in labels){
         label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
-        label.shadowColor = [UIColor blackColor];
         label.textColor = [UIColor blackColor];
         label.numberOfLines = 2;
         label.textAlignment = NSTextAlignmentCenter;

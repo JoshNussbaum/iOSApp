@@ -32,7 +32,7 @@
         self->firstName = @"";
         self->lastName = @"";
         self->lvl = 0;
-        self->lvlupamount = 5;
+        self->lvlupamount = 3;
         self->points = 0;
         self->checkedin = NO;
     }
@@ -182,7 +182,7 @@
 - (void) levelUp{
     self->lvl += 1;
     self->progress = 0;
-    self->lvlupamount += 2;
+    self->lvlupamount += 3;
 }
 
 

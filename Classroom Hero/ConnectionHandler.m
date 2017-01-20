@@ -1,4 +1,4 @@
-//
+ //
 //  ConnectionHandler.m
 //  Classroom Hero
 //
@@ -411,7 +411,9 @@ static NSInteger statusCode;
 
 
 - (NSDictionary *) synchronousWebCall:(NSString *)jsonRequest :(NSURL *)url :(NSString *)httpMethod{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+    NSURL *url_ = [NSURL URLWithString:url];
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url_
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:10];
     NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];

@@ -268,6 +268,8 @@ static NSInteger coinHeight = 250;
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self.view endEditing:YES];
+
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
@@ -291,7 +293,7 @@ static NSInteger coinHeight = 250;
                 }
             }
             else {
-                [Utilities editTextWithtitle:@"Error edting category" message:errorMessage cancel:nil done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
+                [Utilities editTextWithtitle:@"Error edting category" message:errorMessage cancel:nil done:@"Add Category" delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
             }
         }
         else if (buttonIndex == 2){
@@ -313,13 +315,13 @@ static NSInteger coinHeight = 250;
                 [webHandler addReinforcer:[currentUser.currentClass getId] :tmpName :tmpValue.integerValue];
             }
             else {
-                [Utilities editAlertTextWithtitle:@"Error adding category" message:valueErrorMessage cancel:@"Cancel"  done:nil delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
+                [Utilities editAlertTextWithtitle:@"Error adding category" message:valueErrorMessage cancel:@"Cancel"  done:@"Add Category" delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
 
             }
 
         }
         else {
-            [Utilities editAlertTextWithtitle:@"Error adding category" message:errorMessage cancel:@"Cancel"  done:nil delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
+            [Utilities editAlertTextWithtitle:@"Error adding category" message:errorMessage cancel:@"Cancel"  done:@"Add Category" delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
         }
     }
     else if (alertView.tag == 3){
@@ -347,13 +349,16 @@ static NSInteger coinHeight = 250;
                 for (NSNumber *studentId in selectedStudents) {
                     [selectedStudentIds addObject:studentId];
                 }
+                [[alertView textFieldAtIndex:0] resignFirstResponder];
+
                 [webHandler addPointsWithStudentIds:selectedStudentIds points:tmpValue.integerValue];
+                return;
                 
             }
 
         }
         else {
-            [Utilities editAlertNumberWithtitle:@"Error adding points" message:errorMessage cancel:nil done:@"Add points" input:nil tag:4 view:self];
+            [Utilities editAlertNumberWithtitle:@"Error adding points" message:errorMessage cancel:nil done:@"Add Points" input:nil tag:4 view:self];
         }
     }
 
@@ -1445,7 +1450,6 @@ static NSInteger coinHeight = 250;
     
     for (UILabel *label in labels){
         label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
-        label.shadowColor = [UIColor blackColor];
         label.textColor = [UIColor blackColor];
         label.numberOfLines = 2;
         label.textAlignment = NSTextAlignmentCenter;
@@ -1458,27 +1462,6 @@ static NSInteger coinHeight = 250;
     [chestSection addSubview:generateChestLabel];
     [selectAllSection addSubview:selectAllLabel];
     [deselectAllSection addSubview:deselectAllLabel];
-    
-    /*
-    UIImageView *addPointsImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x,0,60,60)];
-    addPointsImageView.image=[UIImage imageNamed:@"coin.png"];
-    [addPointsSection addSubview:addPointsImageView];
-    
-    UIImageView *generateChestImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x,0,60,60)];
-    generateChestImageView.image=[UIImage imageNamed:@"treasure_chest.png"];
-    [chestSection addSubview:generateChestImageView];
-    
-    UIImageView *selectAllImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x + 5,5,50,50)];
-    selectAllImageView.image=[UIImage imageNamed:@"selectAll.png"];
-    [selectAllSection addSubview:selectAllImageView];
-    
-    
-    UIImageView *deselectAllImageView =[[UIImageView alloc] initWithFrame:CGRectMake(x + 5,5,50,50)];
-    deselectAllImageView.image=[UIImage imageNamed:@"deselectAll.png"];
-    [deselectAllSection addSubview:deselectAllImageView];
-    */
-    
-    // Add sections to the section view
     
     NSArray *sections = @[addPointsSection, manualPointsSection, chestSection, selectAllSection, deselectAllSection];
     for (UIView *view in sections){

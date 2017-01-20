@@ -231,7 +231,7 @@ static sqlite3_stmt *statement = nil;
 
             NSInteger currentCoins = [[studentDictionary objectForKey:@"current_coins"]integerValue];
             NSInteger lvl = [[studentDictionary objectForKey:@"level"]integerValue];
-            NSInteger lvlUpAmount = 3 + (2*(lvl-1));
+            NSInteger lvlUpAmount = 3 * lvl;
             NSInteger progress = [[studentDictionary objectForKey:@"progress"]integerValue];
             NSInteger totalCoins = [[studentDictionary objectForKey:@"total_coins"]integerValue];
 

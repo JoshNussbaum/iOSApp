@@ -27,6 +27,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Login"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
@@ -218,14 +219,7 @@
                   forKey: @"password"
               forService: @"Classroom Hero"
                    error: &error];
-    
-    
-//    KeychainWrapper *keychain = [[KeychainWrapper alloc]init];
-//    [keychain mySetObject:self.emailTextField.text forKey:@"email"];
-//    [keychain mySetObject:self.passwordTextField.text forKey:@"password"];
-//    
-//    [keychain writeToKeychain];
-//    
+
 
     [self performSegueWithIdentifier:@"login_to_class" sender:nil];
     [hud hide:YES];
