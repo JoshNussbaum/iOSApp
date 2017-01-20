@@ -157,13 +157,14 @@
                 [webHandler subtractPointsWithStudentId:[currentStudent getId] points:points];
             }
             else {
-                [Utilities editAlertNumberWithtitle:@"Error subtracting points" message:[NSString stringWithFormat:@"Student only has %ld points"] cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
+                
+                [Utilities editAlertNumberWithtitle:@"Error subtracting points" message:[NSString stringWithFormat:@"%@ only has %ld points", [currentStudent getFirstName], [currentStudent getPoints]] cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
 
             }
             
         }
         else {
-            [Utilities editAlertNumberWithtitle:@"Error subtracting points" message:errorMessage cancel:nil done:@"Subtract points" input:nil tag:3 view:self];
+            [Utilities editAlertNumberWithtitle:@"Error subtracting points" message:errorMessage cancel:nil done:nil input:nil tag:3 view:self];
         }
     }
     if (alertView.tag == 4){

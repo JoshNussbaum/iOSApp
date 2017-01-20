@@ -33,6 +33,7 @@ static NSString * const classCell = @"classCell";
 @implementation ClassTableViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Classes"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
@@ -41,8 +42,8 @@ static NSString * const classCell = @"classCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self.tableView setSeparatorColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
+    self.navigationController.navigationBar.translucent = YES;
     [self.tableView setBounces:NO];
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
@@ -131,7 +132,7 @@ static NSString * const classCell = @"classCell";
         double delayInSeconds = 1.8;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+            [self performSegueWithIdentifier:@"  _to_login" sender:self];
         });
         return;
         

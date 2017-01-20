@@ -122,7 +122,7 @@
 
 
 - (IBAction)classesClicked:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

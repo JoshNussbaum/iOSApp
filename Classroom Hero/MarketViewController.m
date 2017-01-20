@@ -108,7 +108,6 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     self.awardButton.enabled = YES;
-    self.awardIconButton.enabled = YES;
     self.jarButton.enabled = YES;
     self.classJarIconButton.enabled = YES;
     self.homeButton.enabled = YES;
@@ -343,16 +342,8 @@
         else if (type == STUDENT_TRANSACTION){
             
             NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
-            NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];
-            NSNumber * progressNumber = (NSNumber *)[data objectForKey: @"progress"];
-            
-            
-            [currentStudent setProgress:progressNumber.integerValue];
-            [currentStudent setLevel:levelNumber.integerValue];
+
             [currentStudent setPoints:pointsNumber.integerValue];
-            NSInteger lvlUpAmount = 2 + (2*(levelNumber.integerValue - 1));
-            [currentStudent setLevelUpAmount:lvlUpAmount];
-            
             
             NSMutableArray *scores = [NSMutableArray array];
             NSInteger score = [currentStudent getPoints] + [currentItem getCost];

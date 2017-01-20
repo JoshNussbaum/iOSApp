@@ -57,6 +57,7 @@
 		0369CF8D1BE082EC00E8857D /* StudentAttendanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		036E4ED41B9832EA00A06B25 /* MarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E4ED31B9832EA00A06B25 /* MarketViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		037CAA661DFA02FA003EB05C /* showList.png in Resources */ = {isa = PBXBuildFile; fileRef = 037CAA651DFA02FA003EB05C /* showList.png */; };
+		03827CFC1E2F5E8300BEDFD4 /* ClassNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03827CFB1E2F5E8300BEDFD4 /* ClassNavigationController.m */; };
 		038545261B6359DD0053C169 /* emailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545251B6359DD0053C169 /* emailTextField.m */; };
 		038545291B6359E90053C169 /* passwordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545281B6359E90053C169 /* passwordTextField.m */; };
 		038545321B635B1F0053C169 /* baseTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 038545311B635B1F0053C169 /* baseTextField.m */; };
@@ -190,6 +191,8 @@
 		036E4ED21B9832EA00A06B25 /* MarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarketViewController.h; sourceTree = "<group>"; };
 		036E4ED31B9832EA00A06B25 /* MarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarketViewController.m; sourceTree = "<group>"; };
 		037CAA651DFA02FA003EB05C /* showList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = showList.png; sourceTree = "<group>"; };
+		03827CFA1E2F5E8300BEDFD4 /* ClassNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassNavigationController.h; sourceTree = "<group>"; };
+		03827CFB1E2F5E8300BEDFD4 /* ClassNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassNavigationController.m; sourceTree = "<group>"; };
 		038545241B6359DD0053C169 /* emailTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emailTextField.h; sourceTree = "<group>"; };
 		038545251B6359DD0053C169 /* emailTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = emailTextField.m; sourceTree = "<group>"; };
 		038545271B6359E90053C169 /* passwordTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = passwordTextField.h; sourceTree = "<group>"; };
@@ -352,6 +355,8 @@
 		0338C8F01C1936FD0081F5F5 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				03827CFA1E2F5E8300BEDFD4 /* ClassNavigationController.h */,
+				03827CFB1E2F5E8300BEDFD4 /* ClassNavigationController.m */,
 				0399AAF01B846C6500972F21 /* ClassTableViewController.h */,
 				0399AAF11B846C6500972F21 /* ClassTableViewController.m */,
 				0338556F1B8996D400173600 /* CreateClassViewController.h */,
@@ -946,6 +951,7 @@
 				03F46FBB1B6B54C200A695B2 /* student.m in Sources */,
 				03B3A02E1B71D0A800B42E09 /* Utilities.m in Sources */,
 				03F18BF21DE3D91B00389248 /* AwardMenuOptionTableViewCell.m in Sources */,
+				03827CFC1E2F5E8300BEDFD4 /* ClassNavigationController.m in Sources */,
 				03AA99E71B6333C300750758 /* main.m in Sources */,
 				038898371BB3AC4A00D12468 /* StudentsTableViewController.m in Sources */,
 				03BD41211BCAE5AE00879B46 /* AttendanceViewController.m in Sources */,

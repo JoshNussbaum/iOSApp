@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ConnectionHandler.h"
 
-@interface MarketViewController : UIViewController <ConnectionHandlerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface MarketViewController : UIViewController <ConnectionHandlerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *itemNameLabel;
 
@@ -34,7 +34,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *marketButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *classJarIconButton;
-@property (strong, nonatomic) IBOutlet UIButton *awardIconButton;
 @property (strong, nonatomic) IBOutlet UIButton *homeIconButton;
 
 @property (strong, nonatomic) IBOutlet UITableView *studentsTableView;

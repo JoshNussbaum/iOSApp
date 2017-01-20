@@ -1,4 +1,4 @@
-//
+  //
 //  AppDelegate.m
 //  Classroom Hero
 //
@@ -13,6 +13,8 @@
 #import "user.h"
 #import "DatabaseHandler.h"
 #import "ClassTableViewController.h"
+#import "ClassNavigationController.h"
+#import "LoginViewController.h"
 
 @interface AppDelegate (){
     ConnectionHandler *webHandler;
@@ -78,6 +80,9 @@
                                   forService: @"Classroom Hero"
                                        error: &emailError];
     NSDictionary *jsonData = [[NSDictionary alloc]init];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+
     if (passwordError == nil && emailError == nil){
         jsonData = [webHandler synchronousLogin:email :password];
         [[DatabaseHandler getSharedInstance] login:jsonData];
@@ -89,12 +94,22 @@
         currentUser.token = [jsonData objectForKey:@"token"];
         
         
-        ClassTableViewController *vc = [[ClassTableViewController alloc] init];
+        LoginViewController *loginVc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+
+        ClassTableViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"ClassTableViewController"];
+
+        ClassNavigationController *nc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+        [nc pushViewController:vc animated:NO];
         
-        UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:vc];
         self.window.rootViewController = nc;
         [self.window makeKeyAndVisible];
         
+
+    }
+    else {
+        LoginViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        self.window.rootViewController = vc;
+        [self.window makeKeyAndVisible];
     }
 
     return YES;
