@@ -33,7 +33,7 @@ static int screenNumber;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    titles = @[@"Swipe  left  to  get started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Assign  point  values  to  categories", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Thank  you  for  using  Classroom  Hero!"];
+    titles = @[@"Swipe  left  to  get started", @"Create  a  class", @"Add  students  to  your  selected  class", @"Add  categories  with  point  values", @"Add  items  for  students  to  spend  points  on", @"Add  a  jar  for  a  class-wide  reward", @"Thank  you  for  using  Classroom  Hero!"];
     screenNumber = 0;
     isStamping = NO;
     currentUser = [user getInstance];
@@ -68,13 +68,13 @@ static int screenNumber;
             [self onPage:nil :nil :nil :NO :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 1:
-            [self onPage:@"Class name" :@"Grade number" :@"Add  class" :NO :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"e.g. Third grade class" :@"e.g. 3" :@"Add  class" :NO :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 2:
-            [self onPage:@"Student first name" :@"Student last name" :@"Add  student" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
+            [self onPage:@"e.g. John" :@"e.g. Anderson" :@"Add  student" :YES :UIKeyboardTypeDefault :UIKeyboardTypeDefault];
             break;
         case 3:
-            [self onPage:@"e.g. Participation points" :@"e.g. 3" :@"Add  category" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
+            [self onPage:@"e.g. Participation points" :@"e.g. 2" :@"Add  category" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
             break;
         case 4:
             [self onPage:@"e.g. Day late homework pass" :@"e.g. 30" :@"Add  item" :YES :UIKeyboardTypeDefault :UIKeyboardTypeNumberPad];
@@ -274,7 +274,8 @@ static int screenNumber;
     {
         if (type == ADD_CLASS){
             NSInteger classId = [[data objectForKey:@"class_id"] integerValue];
-            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text :1 :1 :30 :[Utilities getCurrentDate]];
+            NSString *classHash = [data objectForKey:@"class_hash"];
+            class *newClass = [[class alloc]init:classId :self.textField1.text :self.textField2.text :1 :0 :6 :[Utilities getCurrentDate] :classHash];
             [[DatabaseHandler getSharedInstance] addClass:newClass];
             tmpClass = newClass;
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  class  or  swipe  left  to  continue"]];
@@ -288,7 +289,8 @@ static int screenNumber;
         
         else if (type == ADD_STUDENT){
             NSInteger studentId = [[data objectForKey:@"student_id"] integerValue];
-            student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
+            NSString *studentHash = [data objectForKey:@"student_hash"];
+            student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO hash:studentHash];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[tmpClass getId]];
             [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
 
@@ -469,6 +471,8 @@ static int screenNumber;
 
 
 - (void)hideKeyboard{
+    [self.textField1 endEditing:YES];
+    [self.textField2 endEditing:YES];
     [self.view endEditing:YES];
 }
 

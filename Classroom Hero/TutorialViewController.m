@@ -23,6 +23,7 @@
 
 @implementation TutorialViewController
 
+
 - (void)viewWillAppear:(BOOL)animated{
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Tutorial"];

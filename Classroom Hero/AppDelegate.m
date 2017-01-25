@@ -85,25 +85,31 @@
 
     if (passwordError == nil && emailError == nil){
         jsonData = [webHandler synchronousLogin:email :password];
-        [[DatabaseHandler getSharedInstance] login:jsonData];
-        currentUser.email = email;
-        currentUser.password = password;
-        currentUser.firstName = [jsonData objectForKey:@"first_name"];
-        currentUser.lastName = [jsonData objectForKey:@"last_name"];
-        currentUser.id = [[jsonData objectForKey:@"id"] integerValue];
-        currentUser.token = [jsonData objectForKey:@"token"];
-        
-        
-        LoginViewController *loginVc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-
-        ClassTableViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"ClassTableViewController"];
-
-        ClassNavigationController *nc = [[UINavigationController alloc]initWithRootViewController:loginVc];
-        [nc pushViewController:vc animated:NO];
-        
-        self.window.rootViewController = nc;
-        [self.window makeKeyAndVisible];
-        
+        if (!jsonData){
+            LoginViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            self.window.rootViewController = vc;
+            [self.window makeKeyAndVisible];
+        }
+        else {
+            [[DatabaseHandler getSharedInstance] login:jsonData];
+            currentUser.email = email;
+            currentUser.password = password;
+            currentUser.firstName = [jsonData objectForKey:@"first_name"];
+            currentUser.lastName = [jsonData objectForKey:@"last_name"];
+            currentUser.id = [[jsonData objectForKey:@"id"] integerValue];
+            currentUser.token = [jsonData objectForKey:@"token"];
+            
+            
+            LoginViewController *loginVc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            
+            ClassTableViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"ClassTableViewController"];
+            
+            ClassNavigationController *nc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+            [nc pushViewController:vc animated:NO];
+            
+            self.window.rootViewController = nc;
+            [self.window makeKeyAndVisible];
+        }
 
     }
     else {

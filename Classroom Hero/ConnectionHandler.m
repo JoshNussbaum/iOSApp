@@ -428,10 +428,16 @@ static NSInteger statusCode;
     NSHTTPURLResponse *response = nil;
     NSData *urlData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     NSError *err = nil;
-    NSDictionary *jsonData = [NSJSONSerialization
-                              JSONObjectWithData:urlData
-                              options:NSJSONReadingMutableContainers
-                              error:&err];
+    NSDictionary *jsonData;
+    @try{
+        jsonData = [NSJSONSerialization
+                    JSONObjectWithData:urlData
+                    options:NSJSONReadingMutableContainers
+                    error:&err];
+    }
+    @catch (NSException *exception){
+        return nil;
+    }
     return jsonData;
 
 }
@@ -444,18 +450,15 @@ static NSInteger statusCode;
                                                        timeoutInterval:10];
     
     [request setHTTPMethod:httpMethod];
-    NSLog(@"Here is the token %@", token_);
     if (token_){
         [request addValue:[NSString stringWithFormat:@"JWT %@", token_] forHTTPHeaderField:@"Authorization"];
     }
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setTimeoutInterval:8];
-    NSLog(@"Check out the request -> %@", request);
 
     if (jsonRequest != nil){
         NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
-        NSLog(@"Check out the sent data -> %@", request);
         [request setHTTPBody: requestData];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
     }
@@ -467,8 +470,6 @@ static NSInteger statusCode;
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response
 {
-    NSLog([NSString stringWithFormat:@"Here is the response %d",[response statusCode]]);
-    
     statusCode = [response statusCode];
     
     responseData = [[NSMutableData alloc] init];
@@ -481,27 +482,29 @@ static NSInteger statusCode;
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"In connection did fail");
     [delegate_ dataReady:nil :connectionType];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"Check out the status code -> %ld", (long)statusCode);
     if (statusCode >= 200 && statusCode < 400){
         NSError *err = nil;
         NSDictionary *jsonData = [NSJSONSerialization
                                   JSONObjectWithData:responseData
                                   options:NSJSONReadingMutableContainers
                                   error:&err];
-        NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
+        //NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
         if (!jsonData){
             jsonData = [NSDictionary dictionaryWithObject:@"1" forKey:@"success"];
         }
         [delegate_ dataReady:jsonData :connectionType];
     }
     else {
-        [delegate_ dataReady:nil :connectionType];
+        NSDictionary *jsonData = nil;
+        if (statusCode == 403){
+            jsonData = [NSDictionary dictionaryWithObject:@"Signature has expired." forKey:@"detail"];
+        }
+        [delegate_ dataReady:jsonData :connectionType];
     }
 
 }

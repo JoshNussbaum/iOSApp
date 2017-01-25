@@ -110,7 +110,6 @@
 		03DCFFD81B6C67F300C451CC /* item.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFD71B6C67F300C451CC /* item.m */; };
 		03DCFFDB1B6C6C8A00C451CC /* classjar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFDA1B6C6C8A00C451CC /* classjar.m */; };
 		03DCFFDE1B6C6FDA00C451CC /* school.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DCFFDD1B6C6FDA00C451CC /* school.m */; };
-		03ED99BC1CDC75D000A8545A /* redapple.png in Resources */ = {isa = PBXBuildFile; fileRef = 03ED99BB1CDC75D000A8545A /* redapple.png */; };
 		03F18BF21DE3D91B00389248 /* AwardMenuOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F18BF11DE3D91B00389248 /* AwardMenuOptionTableViewCell.m */; };
 		03F46FB51B69CBAD00A695B2 /* DatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03F46FB81B69CC2700A695B2 /* class.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F46FB71B69CC2700A695B2 /* class.m */; };
@@ -273,7 +272,6 @@
 		03DCFFDA1B6C6C8A00C451CC /* classjar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = classjar.m; sourceTree = "<group>"; };
 		03DCFFDC1B6C6FDA00C451CC /* school.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = school.h; sourceTree = "<group>"; };
 		03DCFFDD1B6C6FDA00C451CC /* school.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = school.m; sourceTree = "<group>"; };
-		03ED99BB1CDC75D000A8545A /* redapple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redapple.png; sourceTree = "<group>"; };
 		03F18BF01DE3D91B00389248 /* AwardMenuOptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwardMenuOptionTableViewCell.h; sourceTree = "<group>"; };
 		03F18BF11DE3D91B00389248 /* AwardMenuOptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwardMenuOptionTableViewCell.m; sourceTree = "<group>"; };
 		03F46FB31B69CBAD00A695B2 /* DatabaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseHandler.h; sourceTree = "<group>"; };
@@ -589,7 +587,6 @@
 				033AD09A1DF00F0C00027405 /* selectAll.png */,
 				0300D5F41DE2D05000E29E83 /* glowing_chest.png */,
 				03FC7E251DDDB32300C2ABFD /* jar_body.png */,
-				03ED99BB1CDC75D000A8545A /* redapple.png */,
 				0324E7EE1C4B51690079A441 /* coin.png */,
 				039567C31BCE141100AFF48A /* coinsack.png */,
 				039567C41BCE141100AFF48A /* jar_coin.png */,
@@ -799,7 +796,6 @@
 				035BA0A81DDFC7DC003A9160 /* Icon-App-29x29@2x.png in Resources */,
 				035BA0B21DDFC7DC003A9160 /* Icon-App-72x72@1x.png in Resources */,
 				03AA99F21B6333C300750758 /* Images.xcassets in Resources */,
-				03ED99BC1CDC75D000A8545A /* redapple.png in Resources */,
 				03AA9A431B63399D00750758 /* intact_jar.png in Resources */,
 				035BA0B11DDFC7DC003A9160 /* Icon-App-60x60@3x.png in Resources */,
 				035BA0A31DDFC7DC003A9160 /* Contents.json in Resources */,

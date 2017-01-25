@@ -6,16 +6,6 @@
 //  Copyright (c) 2015 Josh Nussbaum. All rights reserved.
 //
 
-
-
-
-// Set up jar Coins right below the jar, and
-// and just do the negative multiply thing with it starting at
-// 0 and just alter the height and have everything else adjust dyanmically
-// with autolayout
-
-
-
 #import "ClassJarViewController.h"
 #import "DatabaseHandler.h"
 #import "Utilities.h"
@@ -113,6 +103,7 @@
     isJarFull = NO;
 
 }
+
 
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
@@ -243,7 +234,7 @@
 
 - (IBAction)addJarClicked:(id)sender {
     if (!currentClassJar){
-        [Utilities editAlertTextWithtitle:@"Add Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
+        [Utilities editAlertTextWithtitle:@"Add Class Jar" message:nil cancel:nil done:nil delete:NO textfields:@[@"e.g. Pizza party", @"e.g. 100"] tag:1 view:self];
     }
     else {
         [Utilities editTextWithtitle:@"Edit Class Jar" message:nil cancel:@"Cancel" done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
@@ -290,7 +281,8 @@
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
+    [[alertView textFieldAtIndex:0] resignFirstResponder];
+    [[alertView textFieldAtIndex:1] resignFirstResponder];
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
     }
@@ -312,13 +304,13 @@
                 
             }
             else {
-                [Utilities editAlertTextWithtitle:@"Error adding class jar" message:errorMessage cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
+                [Utilities editTextWithtitle:@"Error adding class jar" message:errorMessage cancel:nil done:nil delete:NO textfields:@[newClassJarName, newClassJarTotal] tag:1 view:self];
                 
             }
             
         }
         else {
-            [Utilities editAlertTextWithtitle:@"Error adding class jar" message:errorMessage cancel:nil done:nil delete:NO textfields:@[@"Class jar name", @"Class jar total"] tag:1 view:self];
+            [Utilities editTextWithtitle:@"Error adding class jar" message:errorMessage cancel:nil done:nil delete:NO textfields:@[newClassJarName, newClassJarTotal] tag:1 view:self];
         }
 
         
@@ -337,12 +329,12 @@
             }
             
             else {
-                [Utilities editTextWithtitle:@"Edit Class Jar" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
+                [Utilities editTextWithtitle:@"Edit Class Jar" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[newClassJarName, newClassJarTotal] tag:2 view:self];
                 
             }
         }
         else {
-            [Utilities editTextWithtitle:@"Edit Class Jar" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[[currentClassJar getName], [NSString stringWithFormat:@"%ld", (long)[currentClassJar getTotal]]] tag:2 view:self];
+            [Utilities editTextWithtitle:@"Edit Class Jar" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[newClassJarName, newClassJarTotal] tag:2 view:self];
 
         }
     }
@@ -427,7 +419,6 @@
         [currentUser.currentClass addPoints:1];
         [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
     }
-
 }
 
 

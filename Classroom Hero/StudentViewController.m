@@ -85,13 +85,6 @@
 }
 
 
-- (IBAction)studentButtonClicked:(id)sender {
-    if (isRegistered){
-        [Utilities alertStatusWithTitle:@"Unregister student stamp" message:[NSString stringWithFormat:@"Really unregister %@?", [currentStudent getFirstName]] cancel:@"Cancel" otherTitles:@[@"Unregister"] tag:2 view:self];
-    }
-}
-
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
@@ -110,12 +103,12 @@
                     [webHandler editStudent:[currentStudent getId] :newStudentFirstName :newStudentLastName];
                 }
                 else {
-                    [Utilities alertStatusWithTitle:@"Error adding student" message:costErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                    [Utilities editAlertAddStudentWithtitle:@"Error editing student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[newStudentLastName, newStudentLastName] tag:1 view:self];
                     return;
                 }
             }
             else {
-                [Utilities alertStatusWithTitle:@"Error adding student" message:errorMessage cancel:nil otherTitles:nil tag:0 view:nil];
+                [Utilities editAlertAddStudentWithtitle:@"Error editing student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[newStudentLastName, newStudentLastName] tag:1 view:self];
             }
         }
         else if (buttonIndex == 2){
@@ -134,6 +127,7 @@
                                                                   action:@"Add Points (Student Page)"
                                                                    label:[currentStudent fullName]
                                                                    value:@1] build]];
+            [[alertView textFieldAtIndex:0] resignFirstResponder];
             [webHandler addPointsWithStudentId:[currentStudent getId] points:points];
         }
         else {
@@ -154,6 +148,8 @@
                                                                       action:@"Subtract Points (Student Page)"
                                                                        label:[currentStudent fullName]
                                                                        value:@1] build]];
+                [[alertView textFieldAtIndex:0] resignFirstResponder];
+
                 [webHandler subtractPointsWithStudentId:[currentStudent getId] points:points];
             }
             else {
@@ -209,6 +205,12 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
     else if (type == ADD_POINTS || type == SUBTRACT_POINTS){
+        if (type == ADD_POINTS){
+            [Utilities disappearingAlertView:@"Successfully added points" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        }
+        else {
+            [Utilities disappearingAlertView:@"Successfully subtracted points" message:nil otherTitles:nil tag:0 view:self time:1.0];
+        }
         NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
         NSNumber * idNumber = (NSNumber *)[data objectForKey: @"student_id"];
         NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];
@@ -238,7 +240,8 @@
     self.levelLabel.text = [NSString stringWithFormat:@"Level %ld", (long)[currentStudent getLvl]];
     self.pointsLabel.text = [NSString stringWithFormat:@"%ld  Points", (long)[currentStudent getPoints]];
     [self.progressView setProgress:(float)[currentStudent getProgress] / (float)[currentStudent getLvlUpAmount] animated:YES];
-    
+    self.classHashLabel.text = [NSString stringWithFormat:@"Class ID: %@", [currentUser.currentClass getHash]];
+    self.studentHashLabel.text = [NSString stringWithFormat:@"Student ID: %@", [currentStudent getHash]];
 }
 
 

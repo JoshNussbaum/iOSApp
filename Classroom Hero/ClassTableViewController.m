@@ -100,13 +100,13 @@ static NSString * const classCell = @"classCell";
         NSString *errorMessage = [Utilities isInputValid:newClassName :@"Class Name"];
 
         if (!errorMessage){
-            NSString *gradeErrorMessage = [Utilities isNumeric:newClassGrade];
+            NSString *gradeErrorMessage = [Utilities isInputValid:newClassGrade :@"Grade"];
             if (!gradeErrorMessage){
                 NSString *grade = newClassGrade;
                 class *selectedClass = [classes objectAtIndex:index];
                 [self activityStart:@"Editing class..."];
                 [webHandler editClass:[selectedClass getId] :newClassName :grade];
-                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getCurrentDate]];
+                tmpClass = [[class alloc]init:[selectedClass getId] :newClassName :grade :[selectedClass getLevel] :[selectedClass getProgress] :[selectedClass getNextLevel] :[selectedClass getCurrentDate] :[selectedClass getHash]];
             }
             else {
                 [Utilities alertStatusWithTitle:@"Error editing class" message:gradeErrorMessage cancel:nil otherTitles:nil tag:0 view:nil];

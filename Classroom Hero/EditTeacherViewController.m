@@ -213,7 +213,6 @@
         [hud hide:YES];
         self.firstNameTextField.text = @"";
         self.lastNameTextField.text = @"";
-        [Utilities alertStatusWithTitle:@"Success" message:@"Name edited" cancel:nil otherTitles:nil tag:0 view:nil];
         self.firstNameTextField.placeholder = currentUser.firstName;
         self.lastNameTextField.placeholder = currentUser.lastName;
         
@@ -224,7 +223,6 @@
         self.editPasswordTextField.text = @"";
         self.confirmNewPasswordTextField.text = @"";
         self.currentPasswordTextField.text = @"";
-        [Utilities alertStatusWithTitle:@"Success" message:@"Password edited" cancel:nil otherTitles:nil tag:0 view:nil];
     }
     
     else if (type == RESET_PASSWORD){

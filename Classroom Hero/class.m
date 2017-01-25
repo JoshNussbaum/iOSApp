@@ -18,12 +18,12 @@
         self->name = @"";
         self->progress = 0;
         self->level = 1;
-        self->nextLevel = 10;
+        self->nextLevel = 6;
     }
     return self;
 }
 
-- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSString *)gradeNumber_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_{
+- (id) init:(NSInteger)id_ :(NSString *)name_ :(NSString *)gradeNumber_ :(NSInteger)level_ :(NSInteger)progress_ :(NSInteger)nextLevel_ :(NSString *)currentDay_ :(NSString *)hash_{
     self = [super init];
     if (self)
     {
@@ -34,6 +34,7 @@
         self->progress = progress_;
         self->nextLevel = nextLevel_;
         self->currentDay = currentDay_;
+        self->hash = hash_;
     }
     return self;
 }
@@ -61,6 +62,9 @@
     self->currentDay = date;
 }
 
+- (void) setHash:(NSString *)hash_{
+    self->hash = hash_;
+}
 
 
 #pragma mark - Read
@@ -99,6 +103,10 @@
     return self->currentDay;
 }
 
+- (NSString *)getHash{
+    return self->hash;
+}
+
 
 
 
@@ -123,7 +131,7 @@
 
 
 - (void)printClass{
-    NSLog(@"\nClass ID=>%li,\n Name=>%@,\n Grade=>%@,\n Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n", (long)self->id, self->name, self->gradeNumber, (long)self->level, (long)self->progress, (long)self->nextLevel);
+    NSLog(@"\nClass ID=>%li,\n Name=>%@,\n Grade=>%@,\n Level=>%ld,\n Progress=>%ld,\n Next Level=>%ld,\n Hash=>%@\n", (long)self->id, self->name, self->gradeNumber, (long)self->level, (long)self->progress, (long)self->nextLevel, self->hash);
     
 }
 
