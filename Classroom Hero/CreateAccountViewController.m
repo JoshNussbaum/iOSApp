@@ -27,6 +27,7 @@
 
 @implementation CreateAccountViewController
 
+
 - (void)viewWillAppear:(BOOL)animated{
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Create Account"];
@@ -40,12 +41,7 @@
 
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:0];
-    
-//    [Utilities setTextFieldPlaceholder:self.firstNameTextField :@"First name" :[UIColor blackColor]];
-//    [Utilities setTextFieldPlaceholder:self.lastNameTextField :@"Last name" :[UIColor blackColor]];
-//    [Utilities setTextFieldPlaceholder:self.emailTextField :@"Email" :[UIColor blackColor]];
-//    [Utilities setTextFieldPlaceholder:self.passwordTextField :@"Password" :[UIColor blackColor]];
-//    [Utilities setTextFieldPlaceholder:self.confirmPasswordTextField :@"Confirm password" :[UIColor blackColor]];
+
     [Utilities makeRounded:self.createAccountButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
     
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.passwordTextField, self.confirmPasswordTextField, nil];
@@ -55,6 +51,7 @@
     }
     
 }
+
 
 - (void)viewDidLayoutSubviews{
     if (IS_IPAD_PRO){

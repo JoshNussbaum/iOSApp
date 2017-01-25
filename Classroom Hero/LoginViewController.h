@@ -30,7 +30,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *logInButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
+
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 
 - (IBAction)backgroundTap:(id)sender;

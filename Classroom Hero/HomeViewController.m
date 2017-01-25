@@ -39,6 +39,8 @@
     currentUser = [user getInstance];
     NSString *name = [NSString stringWithFormat:@"%@ %@", currentUser.firstName, currentUser.lastName];
     self.teacherNameLabel.text = name;
+    [self.classHashButton setTitle:[NSString stringWithFormat:@"Class ID: %@", [currentUser.currentClass getHash]] forState:UIControlStateNormal];
+    
     self.classNameLabel.text = [currentUser.currentClass getName];
     [self configureProgressBars];
 
@@ -59,6 +61,7 @@
         [view.layer setCornerRadius:30.0f];
     }
 }
+
 
 - (void)viewDidLayoutSubviews{
     if (IS_IPAD_PRO) {
@@ -87,6 +90,7 @@
         self.attendanceButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:32.0];
     }
 }
+
 
 - (void)viewDidAppear:(BOOL)animated{
     currentUser = [user getInstance];
@@ -139,11 +143,6 @@
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     StudentsTableViewController *stvc = [storyboard instantiateViewControllerWithIdentifier:@"StudentsTableViewController"];
     [self.navigationController pushViewController:stvc animated:NO];
-}
-
-
-- (IBAction)attendanceClicked:(id)sender {
-    [self performSegueWithIdentifier:@"home_to_attendance" sender:self];
 }
 
 
@@ -226,4 +225,7 @@
 
 
 
+- (IBAction)clashHashButtonClicked:(id)sender {
+    [Utilities alertStatusWithTitle:@"Link Student Accounts" message:@"Visit student's profile pages from the Student List and give them their Student ID along with the Class ID so they can access their account online" cancel:nil otherTitles:nil tag:0 view:self];
+}
 @end

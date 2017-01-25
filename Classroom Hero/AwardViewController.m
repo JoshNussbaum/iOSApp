@@ -252,7 +252,7 @@ static NSInteger coinHeight = 250;
 
 - (IBAction)addReinforcerClicked:(id)sender {
     if (!chestTappable && !isStamping){
-        [Utilities editAlertTextWithtitle:@"Add category" message:nil cancel:@"Cancel"  done:nil delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
+        [Utilities editAlertTextWithtitle:@"Add category" message:nil cancel:@"Cancel"  done:nil delete:NO textfields:@[@"e.g. Participation points", @"e.g. 2"] tag:2 view:self];
     }
 }
 
@@ -269,6 +269,8 @@ static NSInteger coinHeight = 250;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self.view endEditing:YES];
+    [[alertView textFieldAtIndex:0] resignFirstResponder];
+    [[alertView textFieldAtIndex:1] resignFirstResponder];
 
     if (buttonIndex == [alertView cancelButtonIndex]) {
         return;
@@ -289,11 +291,11 @@ static NSInteger coinHeight = 250;
                     [webHandler editReinforcer:[currentReinforcer getId] :newReinforcerName :newReinforcerValue.integerValue];
                 }
                 else {
-                    [Utilities editTextWithtitle:@"Error edting category" message:valueErrorMessage cancel:nil done:nil delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
+                    [Utilities editTextWithtitle:@"Error edting category" message:valueErrorMessage cancel:nil done:nil delete:YES textfields:@[newReinforcerName, newReinforcerValue] tag:1 view:self];
                 }
             }
             else {
-                [Utilities editTextWithtitle:@"Error edting category" message:errorMessage cancel:nil done:@"Add Category" delete:YES textfields:@[[currentReinforcer getName], [NSString stringWithFormat:@"%ld", (long)[currentReinforcer getValue]]] tag:1 view:self];
+                [Utilities editTextWithtitle:@"Error edting category" message:errorMessage cancel:nil done:@"Add Category" delete:YES textfields:@[newReinforcerValue, newReinforcerValue] tag:1 view:self];
             }
         }
         else if (buttonIndex == 2){
@@ -315,13 +317,13 @@ static NSInteger coinHeight = 250;
                 [webHandler addReinforcer:[currentUser.currentClass getId] :tmpName :tmpValue.integerValue];
             }
             else {
-                [Utilities editAlertTextWithtitle:@"Error adding category" message:valueErrorMessage cancel:@"Cancel"  done:@"Add Category" delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
+                [Utilities editTextWithtitle:@"Error adding category" message:valueErrorMessage cancel:@"Cancel"  done:@"Add Category" delete:NO textfields:@[tmpName, tmpValue] tag:2 view:self];
 
             }
 
         }
         else {
-            [Utilities editAlertTextWithtitle:@"Error adding category" message:errorMessage cancel:@"Cancel"  done:@"Add Category" delete:NO textfields:@[@"Category name", @"Category value"] tag:2 view:self];
+            [Utilities editTextWithtitle:@"Error adding category" message:errorMessage cancel:@"Cancel"  done:@"Add Category" delete:NO textfields:@[tmpName, tmpValue] tag:2 view:self];
         }
     }
     else if (alertView.tag == 3){
@@ -501,7 +503,7 @@ static NSInteger coinHeight = 250;
             [selectedStudents setObject:tmpStudent forKey:idNumber];
         }
         
-        [currentUser.currentClass addPoints:studentCount];
+        [currentUser.currentClass addPoints:1];
         [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
         
         tmpPoints = ([currentStudent getPoints] - pointsAwarded);
@@ -648,7 +650,7 @@ static NSInteger coinHeight = 250;
         }
         else {
             level = [currentStudent getLvl];
-            self.progressView.progress = (float)(([selectedStudent getProgress]-1) / (float)[selectedStudent getLvlUpAmount]);
+            self.progressView.progress = (float)(([selectedStudent getProgress]) / (float)[selectedStudent getLvlUpAmount]);
             
         }
         self.progressView.hidden = NO;
@@ -1595,10 +1597,6 @@ static NSInteger coinHeight = 250;
 }
 
 
-- (IBAction)unwindToAward:(UIStoryboardSegue *)unwindSegue {
-
-}
-
 - (IBAction)studentListClicked:(id)sender {
     UIStoryboard *storyboard = self.storyboard;
     CATransition *transition = [CATransition animation];
@@ -1610,7 +1608,6 @@ static NSInteger coinHeight = 250;
 }
 
 
-
 -(void)printSelectedStudents{
     NSString *students = @"";
     for (NSNumber *index in selectedStudents){
@@ -1618,5 +1615,10 @@ static NSInteger coinHeight = 250;
         students = [students stringByAppendingString:[NSString stringWithFormat:@"Student -> %@, %@. Index -> %ld.\n", [stud getFirstName], [stud getLastName], (long)index.integerValue]];
     }
 }
+
+
+- (IBAction)unwindToAward:(UIStoryboardSegue *)unwindSegue {
+}
+
 
 @end

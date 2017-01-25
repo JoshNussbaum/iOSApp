@@ -23,6 +23,9 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *attendanceButton;
 
+
+@property (strong, nonatomic) IBOutlet UIButton *classHashButton;
+
 @property (weak, nonatomic) IBOutlet CircleProgressBar *classProgressBar;
 
 @property (strong, nonatomic) IBOutlet UILabel *jarProgressLabel;
@@ -67,5 +70,7 @@
 - (IBAction)studentListClicked:(id)sender;
 
 - (IBAction)attendanceClicked:(id)sender;
+
+- (IBAction)clashHashButtonClicked:(id)sender;
 
 @end

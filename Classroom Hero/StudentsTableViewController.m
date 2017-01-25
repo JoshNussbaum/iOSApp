@@ -40,6 +40,7 @@
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     tmpValue = @"";
@@ -57,6 +58,7 @@
     [self.tableView setBounces:NO];
 }
 
+
 - (void)viewDidAppear:(BOOL)animated{
     currentUser = [user getInstance];
     clicked = NO;
@@ -70,6 +72,7 @@
 
 }
 
+
 - (void)getStudentsData{
     studentsData = [[NSMutableDictionary alloc]init];
     NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
@@ -81,7 +84,7 @@
 
 
 - (IBAction)addStudentClicked:(id)sender {
-    [Utilities editAlertAddStudentWithtitle:@"Add student" message:nil cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
+    [Utilities editAlertAddStudentWithtitle:@"Add student" message:nil cancel:@"Cancel" done:nil delete:NO textfields:@[@"e.g. John", @"e.g. Anderson"] tag:1 view:self];
 }
 
 
@@ -99,6 +102,7 @@
     self.backButton.enabled = NO;
     [self.navigationController popViewControllerAnimated:NO];
 }
+
 
 - (void)alertView: (UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == [alertView cancelButtonIndex]){
@@ -121,12 +125,12 @@
                 [webHandler addStudent:[currentUser.currentClass getId] :studentFirstName :studentLastName];
             }
             else {
-                [Utilities editAlertAddStudentWithtitle:@"Error adding student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
+                [Utilities editAlertAddStudentWithtitle:@"Error adding student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[studentFirstName, studentLastName] tag:1 view:self];
 
             }
         }
         else {
-            [Utilities editAlertAddStudentWithtitle:@"Error adding student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[@"First name", @"Last name"] tag:1 view:self];
+            [Utilities editAlertAddStudentWithtitle:@"Error adding student" message:errorMessage cancel:@"Cancel" done:nil delete:NO textfields:@[studentFirstName, studentLastName] tag:1 view:self];
         }
     }
     else if (alertView.tag == 2){
@@ -151,6 +155,7 @@
             for (NSNumber *studentId in selectedStudents) {
                 [selectedStudentIds addObject:studentId];
             }
+            [[alertView textFieldAtIndex:0] resignFirstResponder];
 
             [webHandler addPointsWithStudentIds:selectedStudentIds points:tmpValue.integerValue];
         }
@@ -187,6 +192,8 @@
             for (NSNumber *studentId in selectedStudents) {
                 [selectedStudentIds addObject:studentId];
             }
+            [[alertView textFieldAtIndex:0] resignFirstResponder];
+
             [webHandler subtractPointsWithStudentIds:selectedStudentIds points:tmpValue.integerValue];
         }
         else {
@@ -219,7 +226,8 @@
 
     else if (type == ADD_STUDENT){
         NSInteger studentId = [[data objectForKey:@"student_id"] integerValue];
-        student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName  lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO];
+        NSString *studentHash = [data objectForKey:@"student_hash"];
+        student *newStudent = [[student alloc]initWithid:studentId firstName:studentFirstName lastName:studentLastName  lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO hash:studentHash];
         [[DatabaseHandler getSharedInstance]addStudent:newStudent :[currentUser.currentClass getId]];
         //[studentsData addObject:newStudent];
         [studentsData setObject:newStudent forKey:[NSNumber numberWithInteger:[newStudent getId]]];
@@ -374,7 +382,6 @@
 }
 
 
-
 - (void)addPointsClicked{
     if (editing_ && selectedStudents.count > 0){
         UIAlertView * av = [Utilities editAlertNumberWithtitle:@"Add Points" message:nil cancel:nil done:@"Add points" input:nil tag:4 view:self];
@@ -416,10 +423,6 @@
     // Section View
     
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 60)];
-//    sectionView.layer.borderWidth = 1.5;
-//    sectionView.layer.borderColor = [UIColor blackColor].CGColor;
-    
-    // Make the sections
     
     float width = tableView.frame.size.width / 2;
     
@@ -441,22 +444,24 @@
     
     float x = (width / 2) - 43;
     
-    UILabel *addPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    UILabel *addPointsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, 60)];
     addPointsLabel.text = @"Add Points";
     
-    UILabel *subtractPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,8,86,44)];
+    UILabel *subtractPointsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, 60)];
     subtractPointsLabel.text = @"Subtract Points";
     
     
     NSArray *labels = @[addPointsLabel, subtractPointsLabel];
     
     for (UILabel *label in labels){
-        label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
+        label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:23];
         label.textColor = [UIColor blackColor];
         label.numberOfLines = 2;
         label.textAlignment = NSTextAlignmentCenter;
-        label.backgroundColor = [UIColor whiteColor];
-        [Utilities makeRoundedLabel:label :nil];
+        label.backgroundColor = [Utilities CHGreenColor];
+        label.layer.borderColor = [UIColor blackColor].CGColor;
+        label.layer.borderWidth = 0.8;
+        [Utilities makeRoundedLabel:label :[UIColor blackColor]];
     }
     
     [addPointsSection addSubview:addPointsLabel];
@@ -495,7 +500,6 @@
     
     currentStudent = [studentsData objectForKey:studentId];
     
-//    NSNumber *studentId = [NSNumber numberWithInteger:[currentStudent getId]];
     if ([selectedStudents objectForKey:studentId]){
         [selectedStudents removeObjectForKey:studentId];
     }
@@ -509,10 +513,6 @@
     currentStudent = tmpStudent;
 
     if (editing_ && studentsData.count > 0){
-        NSLog(@"We did select while editing");
-        
-        
-        //currentStudent = [studentsData objectAtIndex:studentsData.count - indexPath.row - 1];
         if ([selectedStudents objectForKey:studentId]){
             [selectedStudents removeObjectForKey:studentId];
         }
@@ -561,7 +561,6 @@
         [Utilities alertStatusWithTitle:@"Confirm Delete" message:[NSString stringWithFormat:@"Are you sure you want to delete %@?", [currentStudent fullName]]  cancel:@"Cancel"  otherTitles:@[@"Delete"] tag:2 view:self];
     }
 }
-
 
 
 - (void)viewDidLayoutSubviews{

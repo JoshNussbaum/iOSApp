@@ -20,10 +20,11 @@
 @property(nonatomic)NSInteger points;
 @property(nonatomic)NSInteger totalpoints;
 @property(nonatomic)BOOL checkedin;
+@property(nonatomic)NSString *hash;
 
 -(id) init;
 
--(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_ checkedin:(BOOL)checkedin_;
+-(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_ checkedin:(BOOL)checkedin_ hash:(NSString *)hash_;
 
 // Creation Functions
 
@@ -59,6 +60,8 @@
 -(NSInteger)getTotalPoints;
 
 -(NSInteger)getProgress;
+
+-(NSString *)getHash;
 
 -(BOOL)getCheckedIn;
 

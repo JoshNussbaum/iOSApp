@@ -19,6 +19,10 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 
+@property (strong, nonatomic) IBOutlet UILabel *classHashLabel;
+
+@property (strong, nonatomic) IBOutlet UILabel *studentHashLabel;
+
 @property (weak, nonatomic) IBOutlet CircleProgressBar *progressView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *heroImage;

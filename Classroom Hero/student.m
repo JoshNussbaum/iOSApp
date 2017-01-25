@@ -21,6 +21,7 @@
 @synthesize checkedin;
 @synthesize totalpoints;
 @synthesize progress;
+@synthesize hash;
 
 #pragma mark - Constructors
 
@@ -40,7 +41,7 @@
 }
 
 
--(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_ checkedin:(BOOL)checkedin_{
+-(id) initWithid:(NSInteger)id_ firstName:(NSString*)firstName_ lastName:(NSString*)lastName_ lvl:(NSInteger)lvl_ progress:(NSInteger)progress_ lvlupamount:(NSInteger)lvlupamount_ points:(NSInteger)points_  totalpoints:(NSInteger)totalpoints_ checkedin:(BOOL)checkedin_ hash:(NSString *)hash_{
     self = [super init];
     if (self) {
         self->id = id_;
@@ -52,6 +53,7 @@
         self->totalpoints = totalpoints_;
         self->progress = progress_;
         self->checkedin = checkedin_;
+        self->hash = hash_;
     }
     return self;
 }
@@ -145,6 +147,9 @@
     return self->checkedin;
 }
 
+- (NSString *)getHash{
+    return self->hash;
+}
 
 
 #pragma mark - Update
@@ -192,7 +197,7 @@
         checkedInString = @"Checked in";
     } else checkedInString = @"Not checked in";
     
-    NSLog(@"\n Student UID => %ld,\n Student First Name => %@,\n Student Last Name => %@,\n Student Points => %ld,\n Student Progress => %ld,\n Student Level => %ld,\n Student LevelUpAmount => %ld,\n Total Points => %ld,\n %@", (long)self->id, self->firstName, self->lastName, (long)self->points,  (long)self->progress, (long)self->lvl,  (long)self->lvlupamount, (long)self->totalpoints, checkedInString);
+    NSLog(@"\n Student UID => %ld,\n Student First Name => %@,\n Student Last Name => %@,\n Student Points => %ld,\n Student Progress => %ld,\n Student Level => %ld,\n Student LevelUpAmount => %ld,\n Total Points => %ld,\n %@,\n Hash -> %@", (long)self->id, self->firstName, self->lastName, (long)self->points,  (long)self->progress, (long)self->lvl,  (long)self->lvlupamount, (long)self->totalpoints, checkedInString, self->hash);
 }
 
 -(NSString *)fullName{

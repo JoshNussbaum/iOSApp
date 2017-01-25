@@ -141,6 +141,7 @@
     }
 }
 
+
 - (IBAction)homeClicked:(id)sender {
     self.homeButton.enabled = NO;
     [self performSegueWithIdentifier:@"market_to_home" sender:nil];
@@ -176,7 +177,7 @@
 
 - (IBAction)addItemClicked:(id)sender {
     if (!isBuying){
-        [Utilities editAlertTextWithtitle:@"Add item" message:nil cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
+        [Utilities editAlertTextWithtitle:@"Add item" message:nil cancel:nil done:nil delete:NO textfields:@[@"e.g. Day late homework pass", @"e.g. 30"] tag:1 view:self];
     }
 }
 
@@ -189,7 +190,8 @@
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+    [[alertView textFieldAtIndex:0] resignFirstResponder];
+    [[alertView textFieldAtIndex:1] resignFirstResponder];
     if (buttonIndex == [alertView cancelButtonIndex]) {
         isBuying = NO;
         return;
@@ -208,13 +210,13 @@
                 [webHandler addItem:[currentUser.currentClass getId] :newItemName :newItemCost.integerValue];
             }
             else {
-                [Utilities editAlertTextWithtitle:@"Error adding item" message:costErrorMessage cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
+                [Utilities editTextWithtitle:@"Error adding item" message:costErrorMessage cancel:nil done:nil delete:NO textfields:@[newItemName, newItemCost] tag:1 view:self];
 
                 return;
             }
         }
         else {
-            [Utilities editAlertTextWithtitle:@"Error adding item" message:errorMessage cancel:nil done:nil delete:NO textfields:@[@"Item name", @"Item cost"] tag:1 view:self];
+            [Utilities editTextWithtitle:@"Error adding item" message:errorMessage cancel:nil done:nil delete:NO textfields:@[newItemName, newItemCost] tag:1 view:self];
         }
         
     }
@@ -230,13 +232,13 @@
                     [webHandler editItem:[currentItem getId] :newItemName :newItemCost.integerValue];
                 }
                 else {
-                    [Utilities editTextWithtitle:@"Error editing item" message:costErrorMessage cancel:@"Cancel" done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
+                    [Utilities editTextWithtitle:@"Error adding item" message:costErrorMessage cancel:nil done:nil delete:NO textfields:@[newItemName, newItemCost] tag:1 view:self];
 
                     return;
                 }
             }
             else {
-                [Utilities editTextWithtitle:@"Error editing item" message:errorMessage cancel:@"Cancel" done:nil delete:YES textfields:@[[currentItem getName], [NSString stringWithFormat:@"%ld", (long)[currentItem getCost]]] tag:2 view:self];
+                [Utilities editTextWithtitle:@"Error adding item" message:errorMessage cancel:nil done:nil delete:NO textfields:@[newItemName, newItemCost] tag:1 view:self];
             }
         }
         else if (buttonIndex == 2){
@@ -280,90 +282,86 @@
         return;
     }
     
-    NSString *message = [data objectForKey:@"message"];
-    
-    if(!message){
-        if (type == ADD_ITEM){
-            NSInteger itemId = [[data objectForKey:@"id"] integerValue];
+ 
+    if (type == ADD_ITEM){
+        NSInteger itemId = [[data objectForKey:@"item_id"] integerValue];
+        
+        item *newItem = [[item alloc]init:itemId :[currentUser.currentClass getId] :newItemName :newItemCost.integerValue];
+        self.picker.hidden = NO;
+        self.editItemButton.hidden = NO;
+        
+        [[DatabaseHandler getSharedInstance] addItem:newItem];
+        [itemsData insertObject:newItem atIndex:0];
+        [self.picker reloadAllComponents];
+        [self.picker selectRow:0 inComponent:0 animated:NO];
+        [hud hide:YES];
+        [self setItemLabel];
+        
+    }
+    else if (type == EDIT_ITEM){
+        [currentItem setName:newItemName];
+        [currentItem setCost:newItemCost.integerValue];
+        [[DatabaseHandler getSharedInstance] editItem:currentItem];
+        
+        [itemsData replaceObjectAtIndex:index withObject:currentItem];
+        [self.picker reloadAllComponents];
+        
+        self.itemNameLabel.text = newItemName;
+        self.pointsLabel.text = [NSString stringWithFormat:@"Cost: %@", newItemCost];
+        [self setScore];
+        [hud hide:YES];
+        
+    }
+    else if (type == DELETE_ITEM){
+        [[DatabaseHandler getSharedInstance]deleteItem:[currentItem getId]];
+        [itemsData removeObjectAtIndex:index];
+        [self.picker reloadAllComponents];
+        
+        if (!itemsData || [itemsData count] == 0) {
+            currentStudent = nil;
+            currentItem = nil;
+            self.picker.hidden = YES;
+            self.itemNameLabel.text=@"Add  items  above";
+            self.pointsLabel.text = @"";
+            self.editItemButton.enabled = NO;
+            [self hideStudent];
+            [self showNoItems];
+            for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
+                NSInteger index = indexPath.row;
+                [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
+            }
             
-            item *newItem = [[item alloc]init:itemId :[currentUser.currentClass getId] :newItemName :newItemCost.integerValue];
-            self.picker.hidden = NO;
-            self.editItemButton.hidden = NO;
-            
-            [[DatabaseHandler getSharedInstance] addItem:newItem];
-            [itemsData insertObject:newItem atIndex:0];
-            [self.picker reloadAllComponents];
-            [self.picker selectRow:0 inComponent:0 animated:NO];
-            [hud hide:YES];
+        }
+        else {
             [self setItemLabel];
-
         }
-        else if (type == EDIT_ITEM){
-            [currentItem setName:newItemName];
-            [currentItem setCost:newItemCost.integerValue];
-            [[DatabaseHandler getSharedInstance] editItem:currentItem];
-            
-            [itemsData replaceObjectAtIndex:index withObject:currentItem];
-            [self.picker reloadAllComponents];
-            
-            self.itemNameLabel.text = newItemName;
-            self.pointsLabel.text = [NSString stringWithFormat:@"%@ points", newItemCost];
-            [self setScore];
-            [hud hide:YES];
-
-        }
-        else if (type == DELETE_ITEM){
-            [[DatabaseHandler getSharedInstance]deleteItem:[currentItem getId]];
-            [itemsData removeObjectAtIndex:index];
-            [self.picker reloadAllComponents];
-            
-            if (!itemsData || [itemsData count] == 0) {
-                currentStudent = nil;
-                currentItem = nil;
-                self.picker.hidden = YES;
-                self.itemNameLabel.text=@"Add  items  above";
-                self.pointsLabel.text = @"";
-                self.editItemButton.enabled = NO;
-                [self hideStudent];
-                [self showNoItems];
-                for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
-                    NSInteger index = indexPath.row;
-                    [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
-                }
-                
-            }
-            else {
-                [self setItemLabel];
-            }
-            [hud hide:YES];
-
-
-        }
-        else if (type == STUDENT_TRANSACTION){
-            
-            NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
-
-            [currentStudent setPoints:pointsNumber.integerValue];
-            
-            NSMutableArray *scores = [NSMutableArray array];
-            NSInteger score = [currentStudent getPoints] + [currentItem getCost];
-            NSInteger newScore = [currentStudent getPoints];
-            [scores addObject:[NSNumber numberWithInteger:score]];
-            [scores addObject:[NSNumber numberWithInteger:newScore]];
-            [currentStudent setPoints:newScore];
-            
-            [[DatabaseHandler getSharedInstance] updateStudent:currentStudent];
-            [self sellItemAnimation:scores];
-            [currentUser.currentClass addPoints:1];
-            [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-            [Utilities wiggleImage:self.sackImage sound:NO];
-            
-        }
-
+        [hud hide:YES];
+        
+        
+    }
+    else if (type == STUDENT_TRANSACTION){
+        
+        NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
+        
+        [currentStudent setPoints:pointsNumber.integerValue];
+        
+        NSMutableArray *scores = [NSMutableArray array];
+        NSInteger score = [currentStudent getPoints] + [currentItem getCost];
+        NSInteger newScore = [currentStudent getPoints];
+        [scores addObject:[NSNumber numberWithInteger:score]];
+        [scores addObject:[NSNumber numberWithInteger:newScore]];
+        [currentStudent setPoints:newScore];
+        
+        [[DatabaseHandler getSharedInstance] updateStudent:currentStudent];
+        [self sellItemAnimation:scores];
+        [currentUser.currentClass addPoints:1];
+        [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
+        [Utilities wiggleImage:self.sackImage sound:NO];
+        
     }
     else {
         NSString *errorMessage;
-        
+        NSString *message = [data objectForKey:@"message"];
         if (type == ADD_ITEM){
             errorMessage = @"Error adding item";
         }
@@ -382,7 +380,8 @@
         [Utilities alertStatusWithTitle:errorMessage message:message cancel:nil otherTitles:nil tag:0 view:self];
         [hud hide:YES];
     }
-    
+
+
 }
 
 
@@ -392,14 +391,7 @@
     [self.picker selectRow:index inComponent:0 animated:YES];
     currentItem = [itemsData objectAtIndex:0];
     self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
-    NSString *points = @"";
-    if ([currentItem getCost] > 1){
-        points = @"points";
-    }
-    else {
-        points = @"point";
-    }
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld %@", (long)[currentItem getCost], points];
+    self.pointsLabel.text = [NSString stringWithFormat:@"Cost: %ld", (long)[currentItem getCost]];
 }
 
 
@@ -521,14 +513,7 @@
         [self setScore];
     }
     self.itemNameLabel.text= [NSString stringWithFormat:@"%@", [currentItem getName]];
-    NSString *points;
-    if ([currentItem getCost] > 1){
-        points = @"points";
-    }
-    else {
-        points = @"point";
-    }
-    self.pointsLabel.text=[NSString stringWithFormat:@"%li %@", (long)[currentItem getCost], points];
+    self.pointsLabel.text=[NSString stringWithFormat:@"Cost: %li", (long)[currentItem getCost]];
 }
 
 

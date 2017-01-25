@@ -126,11 +126,6 @@
 }
 
 
-- (IBAction)pricingClicked:(id)sender{
-    [self performSegueWithIdentifier:@"login_to_pricing" sender:self];
-}
-
-
 - (IBAction)forgotPasswordClicked:(id)sender {
     UIAlertView *av = [Utilities editAlertTextWithtitle:@"Password Reset" message:@"Enter your email below and we'll email you a link to reset your password" cancel:@"Cancel" done:@"Send email" delete:NO input:@"Email" tag:1 view:self capitalizationType:UITextAutocapitalizationTypeNone];
     if (self.emailTextField.text){
@@ -157,6 +152,8 @@
                                                               action:@"Reset Password"
                                                                label:@"Login"
                                                                value:@1] build]];
+        [self activityStart:@"Recovering password..."];
+
         [webHandler resetPasswordWithemail:email];
     }
 

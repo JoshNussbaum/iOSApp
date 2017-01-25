@@ -78,6 +78,7 @@
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         connectionInProgress = YES;
+        [self animateTableView:SUBTRACT_POINTS];
         [webHandler subtractPointsWithStudentId:[currentStudent getId] points:1];
     }
 }
@@ -91,8 +92,35 @@
                                                                label:[currentStudent fullName]
                                                                value:@1] build]];
         connectionInProgress = YES;
+        [self animateTableView:ADD_POINTS];
         [webHandler addPointsWithStudentId:[currentStudent getId] points:1];
     }
+}
+
+
+- (void)animateTableView:(NSInteger)type{
+    UIColor *backgroundColor;
+    if (type == ADD_POINTS){
+        backgroundColor = [Utilities CHGreenColor];
+    }
+    else {
+        backgroundColor = [UIColor colorWithRed:255.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:0.8];
+    }
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         self.backgroundColor = backgroundColor;
+                         ;
+                     }
+                     completion:^(BOOL finished) {
+                         double delayInSeconds = 0.2;
+                         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                             self.backgroundColor = [UIColor clearColor];
+                             
+                         });
+                     }
+     ];
+    
 }
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type {
@@ -103,28 +131,6 @@
     }
     
     if (type == ADD_POINTS || type == SUBTRACT_POINTS){
-        UIColor *backgroundColor;
-        if (type == ADD_POINTS){
-            backgroundColor = [Utilities CHGreenColor];
-        }
-        else {
-            backgroundColor = [UIColor colorWithRed:255.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:0.8];
-        }
-        [UIView animateWithDuration:0.1
-                         animations:^{
-                             self.backgroundColor = backgroundColor;
-                             ;
-                         }
-                         completion:^(BOOL finished) {
-                             double delayInSeconds = 0.2;
-                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                 self.backgroundColor = [UIColor clearColor];
-                                 
-                             });
-                         }
-         ];
-        
         NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
         NSNumber * idNumber = (NSNumber *)[data objectForKey: @"student_id"];
         NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];
