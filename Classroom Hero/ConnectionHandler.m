@@ -9,20 +9,20 @@
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-//http://107.138.44.249:1337/classroom-web-services/
+//www.classroom-hero.com/classroom-web-services/
 //http://ehorvat.webfactional.com/apps/ch/
-//http://107.138.44.249:1337/api/
+//http://107.138.44.249:1337
 
 
-static NSString * const CLASS_URL = @"http://107.138.44.249:1337/api/class";
-static NSString * const ADD_CLASS_URL = @"http://107.138.44.249:1337/api/class/create/";
+static NSString * const CLASS_URL = @"www.classroom-hero.com/api/class";
+static NSString * const ADD_CLASS_URL = @"www.classroom-hero.com/api/class/create/";
 
-static NSString * const LOGIN_URL = @"http://107.138.44.249:1337/api/users/login/";
-static NSString * const CREATE_ACCOUNT_URL = @"http://107.138.44.249:1337/api/users/register/";
+static NSString * const LOGIN_URL = @"www.classroom-hero.com/api/users/login/";
+static NSString * const CREATE_ACCOUNT_URL = @"www.classroom-hero.com/api/users/register/";
 
-static NSString * const EDIT_TEACHER_NAME_URL = @"http://107.138.44.249:1337/api/users/edit/";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://107.138.44.249:1337/api/users/changePassword/";
-static NSString * const RESET_PASSWORD_URL = @"http://107.138.44.249:1337/api/users/password/reset/";
+static NSString * const EDIT_TEACHER_NAME_URL = @"www.classroom-hero.com/api/users/edit/";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"www.classroom-hero.com/api/users/changePassword/";
+static NSString * const RESET_PASSWORD_URL = @"www.classroom-hero.com/api/users/password/reset/";
 
 static NSString *POST = @"POST";
 static NSString *PATCH = @"PATCH";
