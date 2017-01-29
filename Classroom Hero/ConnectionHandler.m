@@ -446,7 +446,7 @@ static NSInteger statusCode;
 
 - (void)asynchronousWebCall:(NSString *)jsonRequest :(NSString *)urlString :(NSString *)httpMethod{
     NSURL *url = [NSURL URLWithString:urlString];
-    NSLog(@"Here is the URL -> %@", url);
+    //NSLog(@"Here is the URL -> %@", url);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:10];
@@ -489,13 +489,15 @@ static NSInteger statusCode;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    NSError *err = nil;
+    NSDictionary *jsonData = [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingMutableContainers
+                              error:&err];
     //NSLog(@"Here is the status code -> %ld", (long)statusCode);
+    //NSLog(@"Here is the data -> %@", jsonData);
     if (statusCode >= 200 && statusCode < 400){
-        NSError *err = nil;
-        NSDictionary *jsonData = [NSJSONSerialization
-                                  JSONObjectWithData:responseData
-                                  options:NSJSONReadingMutableContainers
-                                  error:&err];
+
         //NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
         if (!jsonData){
             jsonData = [NSDictionary dictionaryWithObject:@"1" forKey:@"success"];
@@ -503,7 +505,6 @@ static NSInteger statusCode;
         [delegate_ dataReady:jsonData :connectionType];
     }
     else {
-        NSDictionary *jsonData = nil;
         if (statusCode == 403){
             jsonData = [NSDictionary dictionaryWithObject:@"Signature has expired." forKey:@"detail"];
         }
