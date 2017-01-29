@@ -132,7 +132,7 @@ static NSString * const classCell = @"classCell";
         double delayInSeconds = 1.8;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self performSegueWithIdentifier:@"  _to_login" sender:self];
+            [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
         });
         return;
         

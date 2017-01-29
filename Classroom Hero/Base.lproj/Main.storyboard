@@ -426,7 +426,7 @@
                         <outlet property="lastNameTextField" destination="Fam-qW-DzE" id="rgs-bY-2GU"/>
                         <outlet property="passwordTextField" destination="hzI-7q-3nk" id="edx-ad-Dce"/>
                         <segue destination="sWF-eP-1Ke" kind="modal" identifier="create_account_to_tutorial" id="7j2-Pv-6iv"/>
-                        <segue destination="Dvj-R6-EU7" kind="unwind" identifier="account_creation_to_login" unwindAction="unwindToLogin:" id="kwy-Qa-TRa"/>
+                        <segue destination="Dvj-R6-EU7" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="kwy-Qa-TRa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qxa-Jr-a5p" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -537,7 +537,7 @@
                         <outlet property="backButton" destination="fW2-eL-Mws" id="b7l-Tp-t4U"/>
                         <outlet property="skipButton" destination="KFS-2M-czO" id="XMY-Qm-9Ul"/>
                         <outlet property="startOverButton" destination="yvR-Nx-iYh" id="LKj-lh-luE"/>
-                        <segue destination="cWe-vQ-rBv" kind="unwind" identifier="tutorial_to_login" unwindAction="unwindToLogin:" id="pBB-Km-uHj"/>
+                        <segue destination="cWe-vQ-rBv" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="pBB-Km-uHj"/>
                         <segue destination="FrP-gK-jVA" kind="modal" identifier="tutorial_skip_to_class" id="gYe-ik-tSY"/>
                     </connections>
                 </viewController>
@@ -698,7 +698,7 @@
                         <outlet property="textField1" destination="hiN-uu-7lr" id="uJa-ZM-cmP"/>
                         <outlet property="textField2" destination="2MK-f8-T6z" id="vHd-z5-oFh"/>
                         <outlet property="titleLabel" destination="Hmd-q6-6z0" id="oFg-kg-q1A"/>
-                        <segue destination="plT-2p-ixw" kind="unwind" identifier="tutorial_content_to_login" unwindAction="unwindToLogin:" id="IqV-yc-ykR"/>
+                        <segue destination="plT-2p-ixw" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="IqV-yc-ykR"/>
                         <segue destination="FrP-gK-jVA" kind="modal" identifier="tutorial_to_class" id="ewg-8k-sYO"/>
                     </connections>
                 </viewController>
@@ -974,7 +974,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="0YL-8o-P28" kind="unwind" unwindAction="unwindToLogin:" id="Phy-OB-zkL"/>
+                                    <segue destination="0YL-8o-P28" kind="unwind" identifier="unwind_to_login" unwindAction="unwindToLogin:" id="Phy-OB-zkL"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -2588,6 +2588,19 @@
                                     <constraint firstAttribute="width" secondItem="0xe-62-Iap" secondAttribute="height" multiplier="1:1" id="dDJ-Ot-MEh"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2u-7t-4hZ">
+                                <rect key="frame" x="678" y="467" width="90" height="90"/>
+                                <color key="backgroundColor" red="0.99357201530000006" green="1" blue="0.91139571919999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="N2u-7t-4hZ" secondAttribute="height" multiplier="1:1" id="BtK-oa-bW6"/>
+                                </constraints>
+                                <state key="normal" image="showList.png"/>
+                                <connections>
+                                    <action selector="openStudentTableViewClicked:" destination="gqC-DY-3f5" eventType="touchUpInside" id="rW1-6W-lcw"/>
+                                    <action selector="openTableViewClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="LsM-fA-jSV"/>
+                                    <action selector="studentListClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="0c5-ZJ-ZbV"/>
+                                </connections>
+                            </button>
                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin.png" translatesAutoresizingMaskIntoConstraints="NO" id="HQm-Fh-Xba">
                                 <rect key="frame" x="35" y="371" width="280" height="280"/>
                                 <constraints>
@@ -2656,19 +2669,6 @@
                                 <rect key="frame" x="204" y="331" width="360" height="360"/>
                                 <connections>
                                     <action selector="chestClicked:" destination="gqC-DY-3f5" eventType="touchUpInside" id="Xb7-h0-fi0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2u-7t-4hZ">
-                                <rect key="frame" x="678" y="467" width="90" height="90"/>
-                                <color key="backgroundColor" red="0.99357201530000006" green="1" blue="0.91139571919999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="N2u-7t-4hZ" secondAttribute="height" multiplier="1:1" id="BtK-oa-bW6"/>
-                                </constraints>
-                                <state key="normal" image="showList.png"/>
-                                <connections>
-                                    <action selector="openStudentTableViewClicked:" destination="gqC-DY-3f5" eventType="touchUpInside" id="rW1-6W-lcw"/>
-                                    <action selector="openTableViewClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="LsM-fA-jSV"/>
-                                    <action selector="studentListClicked:" destination="Kyg-8S-AT0" eventType="touchUpInside" id="0c5-ZJ-ZbV"/>
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PQS-1i-Ntj">
@@ -3703,7 +3703,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SR2-9x-ZVn"/>
-        <segue reference="0OP-ML-Sf4"/>
+        <segue reference="7j2-Pv-6iv"/>
+        <segue reference="gYe-ik-tSY"/>
     </inferredMetricsTieBreakers>
 </document>

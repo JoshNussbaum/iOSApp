@@ -85,7 +85,7 @@
 
     if (passwordError == nil && emailError == nil){
         jsonData = [webHandler synchronousLogin:email :password];
-        if (!jsonData){
+        if (!jsonData || [jsonData objectForKey:@"message"] || [jsonData objectForKey:@"detail"] ){
             LoginViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
             self.window.rootViewController = vc;
             [self.window makeKeyAndVisible];
