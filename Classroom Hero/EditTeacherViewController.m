@@ -223,6 +223,7 @@
         self.editPasswordTextField.text = @"";
         self.confirmNewPasswordTextField.text = @"";
         self.currentPasswordTextField.text = @"";
+        [Utilities disappearingAlertView:@"Successfully edited password" message:nil otherTitles:nil tag:0 view:self time:1.0];
     }
     
     else if (type == RESET_PASSWORD){
