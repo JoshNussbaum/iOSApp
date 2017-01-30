@@ -25,6 +25,8 @@
 @implementation HomeCollectionViewController
 
 static NSString * const reuseIdentifier = @"StudentCollectionViewCell";
+static NSString * const reuseIdentifier2 = @"HeaderCollectionViewCell";
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,7 +38,13 @@ static NSString * const reuseIdentifier = @"StudentCollectionViewCell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    //[self.collectionView registerClass:[StudentCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.sectionHeadersPinToVisibleBounds = YES;
+    [flowLayout setItemSize:CGSizeMake(190, 190)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    
+    self.collectionView.collectionViewLayout = flowLayout;
     
     // Do any additional setup after loading the view.
 }
@@ -69,7 +77,7 @@ static NSString * const reuseIdentifier = @"StudentCollectionViewCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return studentsData.count-1;
+    return studentsData.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,11 +86,28 @@ static NSString * const reuseIdentifier = @"StudentCollectionViewCell";
     StudentCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     cell.levelLabel.text = [NSString stringWithFormat:@"%ld", (long)[student_ getLvl]];
     cell.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[student_ getPoints]];
-    
+    cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [student_ getFirstName], [student_ getLastName]];
     return cell;
 }
 
 #pragma mark <UICollectionViewDelegate>
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return CGSizeMake(0., 50.);
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView* cell = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                        withReuseIdentifier:reuseIdentifier2
+                                                                               forIndexPath:indexPath];
+    
+    //set up all the buttons actions here
+
+    
+    return cell;
+}
 
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -126,5 +151,10 @@ static NSString * const reuseIdentifier = @"StudentCollectionViewCell";
 }
 
 - (IBAction)subtractPointsClicked:(id)sender {
+}
+- (IBAction)profileClicked:(id)sender {
+}
+
+- (IBAction)classListClicked:(id)sender {
 }
 @end

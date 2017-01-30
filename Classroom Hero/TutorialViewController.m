@@ -115,7 +115,7 @@
 
 - (IBAction)backClicked:(id)sender {
     if (flag == 1){
-        [self performSegueWithIdentifier:@"tutorial_to_login" sender:self];
+        [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
     }
     if (flag ==2){
         [self.navigationController setNavigationBarHidden:NO animated:YES];

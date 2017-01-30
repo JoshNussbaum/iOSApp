@@ -102,6 +102,7 @@
 		03AA9A4A1B63399D00750758 /* login button.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A281B63399D00750758 /* login button.png */; };
 		03AA9A581B63399D00750758 /* treasure_chest.png in Resources */ = {isa = PBXBuildFile; fileRef = 03AA9A361B63399D00750758 /* treasure_chest.png */; };
 		03AA9A5B1B633B8100750758 /* ConnectionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA9A5A1B633B8100750758 /* ConnectionHandler.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		03B074431E3F16CC0058F4C0 /* HeaderCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B074421E3F16CC0058F4C0 /* HeaderCollectionViewCell.m */; };
 		03B206C61E3C76DD007E7BA7 /* StudentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B206C51E3C76DD007E7BA7 /* StudentCollectionViewCell.m */; };
 		03B2B0F91BBA3AA900191B54 /* EditTeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B2B0F81BBA3AA900191B54 /* EditTeacherViewController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		03B3A02E1B71D0A800B42E09 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3A02D1B71D0A800B42E09 /* Utilities.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -260,6 +261,8 @@
 		03AA9A361B63399D00750758 /* treasure_chest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = treasure_chest.png; sourceTree = "<group>"; };
 		03AA9A591B633B8100750758 /* ConnectionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionHandler.h; sourceTree = "<group>"; };
 		03AA9A5A1B633B8100750758 /* ConnectionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionHandler.m; sourceTree = "<group>"; };
+		03B074411E3F16CC0058F4C0 /* HeaderCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCollectionViewCell.h; sourceTree = "<group>"; };
+		03B074421E3F16CC0058F4C0 /* HeaderCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCollectionViewCell.m; sourceTree = "<group>"; };
 		03B206C41E3C76DD007E7BA7 /* StudentCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudentCollectionViewCell.h; path = ../StudentCollectionViewCell.h; sourceTree = "<group>"; };
 		03B206C51E3C76DD007E7BA7 /* StudentCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudentCollectionViewCell.m; path = ../StudentCollectionViewCell.m; sourceTree = "<group>"; };
 		03B2B0F71BBA3AA900191B54 /* EditTeacherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTeacherViewController.h; sourceTree = "<group>"; };
@@ -624,6 +627,8 @@
 			children = (
 				03B206C41E3C76DD007E7BA7 /* StudentCollectionViewCell.h */,
 				03B206C51E3C76DD007E7BA7 /* StudentCollectionViewCell.m */,
+				03B074411E3F16CC0058F4C0 /* HeaderCollectionViewCell.h */,
+				03B074421E3F16CC0058F4C0 /* HeaderCollectionViewCell.m */,
 			);
 			name = CollectionViewCells;
 			sourceTree = "<group>";
@@ -948,6 +953,7 @@
 				034075DA1B980CBB008E14B2 /* ClassJarViewController.m in Sources */,
 				034B2F2C1E3D4CF1007D6ED3 /* HomeCollectionViewController.m in Sources */,
 				03AA9A5B1B633B8100750758 /* ConnectionHandler.m in Sources */,
+				03B074431E3F16CC0058F4C0 /* HeaderCollectionViewCell.m in Sources */,
 				03F46FB81B69CC2700A695B2 /* class.m in Sources */,
 				03492CF21B8863DB0015CD78 /* HomeViewController.m in Sources */,
 				038545321B635B1F0053C169 /* baseTextField.m in Sources */,

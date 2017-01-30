@@ -9,20 +9,20 @@
 #import "ConnectionHandler.h"
 #import "Utilities.h"
 
-//www.classroom-hero.com/classroom-web-services/
+//http://www.classroom-hero.com/classroom-web-services/
 //http://ehorvat.webfactional.com/apps/ch/
-//http://107.138.44.249:1337
+//107.138.44.249:1337
 
 
-static NSString * const CLASS_URL = @"www.classroom-hero.com/api/class";
-static NSString * const ADD_CLASS_URL = @"www.classroom-hero.com/api/class/create/";
+static NSString * const CLASS_URL = @"http://www.classroom-hero.com/api/class";
+static NSString * const ADD_CLASS_URL = @"http://www.classroom-hero.com/api/class/create/";
 
-static NSString * const LOGIN_URL = @"www.classroom-hero.com/api/users/login/";
-static NSString * const CREATE_ACCOUNT_URL = @"www.classroom-hero.com/api/users/register/";
+static NSString * const LOGIN_URL = @"http://www.classroom-hero.com/api/users/login/";
+static NSString * const CREATE_ACCOUNT_URL = @"http://www.classroom-hero.com/api/users/register/";
 
-static NSString * const EDIT_TEACHER_NAME_URL = @"www.classroom-hero.com/api/users/edit/";
-static NSString * const EDIT_TEACHER_PASSWORD_URL = @"www.classroom-hero.com/api/users/changePassword/";
-static NSString * const RESET_PASSWORD_URL = @"www.classroom-hero.com/api/users/password/reset/";
+static NSString * const EDIT_TEACHER_NAME_URL = @"http://www.classroom-hero.com/api/users/edit/";
+static NSString * const EDIT_TEACHER_PASSWORD_URL = @"http://www.classroom-hero.com/api/users/changePassword/";
+static NSString * const RESET_PASSWORD_URL = @"http://www.classroom-hero.com/api/users/password/reset/";
 
 static NSString *POST = @"POST";
 static NSString *PATCH = @"PATCH";
@@ -354,7 +354,7 @@ static NSInteger statusCode;
     
     NSString *jsonRequest = [[NSString alloc] initWithFormat:@"{\"id\":%ld, \"password\":\"%@\"}", id, password];
     
-    [self asynchronousWebCall:jsonRequest :EDIT_TEACHER_PASSWORD_URL :PATCH];
+    [self asynchronousWebCall:jsonRequest :EDIT_TEACHER_PASSWORD_URL :PUT];
 }
 
 
@@ -438,13 +438,15 @@ static NSInteger statusCode;
     @catch (NSException *exception){
         return nil;
     }
+    //NSLog(@"Synchronous login - Here is the data \n-> %@", jsonData);
+
     return jsonData;
 
 }
 
 - (void)asynchronousWebCall:(NSString *)jsonRequest :(NSString *)urlString :(NSString *)httpMethod{
     NSURL *url = [NSURL URLWithString:urlString];
-    
+    //NSLog(@"Here is the URL -> %@", url);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:10];
@@ -471,7 +473,7 @@ static NSInteger statusCode;
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response
 {
     statusCode = [response statusCode];
-    
+    //NSLog(@"Here is the status code -> %ld", (long)statusCode);
     responseData = [[NSMutableData alloc] init];
 }
 
@@ -487,12 +489,15 @@ static NSInteger statusCode;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    NSError *err = nil;
+    NSDictionary *jsonData = [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingMutableContainers
+                              error:&err];
+    //NSLog(@"Here is the status code -> %ld", (long)statusCode);
+    //NSLog(@"Here is the data -> %@", jsonData);
     if (statusCode >= 200 && statusCode < 400){
-        NSError *err = nil;
-        NSDictionary *jsonData = [NSJSONSerialization
-                                  JSONObjectWithData:responseData
-                                  options:NSJSONReadingMutableContainers
-                                  error:&err];
+
         //NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);
         if (!jsonData){
             jsonData = [NSDictionary dictionaryWithObject:@"1" forKey:@"success"];
@@ -500,7 +505,6 @@ static NSInteger statusCode;
         [delegate_ dataReady:jsonData :connectionType];
     }
     else {
-        NSDictionary *jsonData = nil;
         if (statusCode == 403){
             jsonData = [NSDictionary dictionaryWithObject:@"Signature has expired." forKey:@"detail"];
         }
