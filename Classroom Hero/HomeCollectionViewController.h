@@ -11,15 +11,6 @@
 
 @interface HomeCollectionViewController : UICollectionViewController <ConnectionHandlerDelegate>
 
-
-
-
-- (IBAction)selectClicked:(id)sender;
-- (IBAction)attendanceClicked:(id)sender;
-- (IBAction)marketClicked:(id)sender;
-- (IBAction)jarClicked:(id)sender;
-- (IBAction)addPointsClicked:(id)sender;
-- (IBAction)subtractPointsClicked:(id)sender;
 - (IBAction)profileClicked:(id)sender;
 - (IBAction)classListClicked:(id)sender;
 

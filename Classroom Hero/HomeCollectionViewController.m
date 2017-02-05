@@ -25,7 +25,8 @@
 @implementation HomeCollectionViewController
 
 static NSString * const reuseIdentifier = @"StudentCollectionViewCell";
-static NSString * const reuseIdentifier2 = @"HeaderCollectionViewCell";
+static NSString * const reuseIdentifierHeader = @"HeaderCollectionViewCell";
+static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 
 
 - (void)viewDidLoad {
@@ -41,6 +42,7 @@ static NSString * const reuseIdentifier2 = @"HeaderCollectionViewCell";
     //[self.collectionView registerClass:[StudentCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionHeadersPinToVisibleBounds = YES;
+    flowLayout.sectionFootersPinToVisibleBounds = YES;
     [flowLayout setItemSize:CGSizeMake(190, 190)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
@@ -87,24 +89,179 @@ static NSString * const reuseIdentifier2 = @"HeaderCollectionViewCell";
     cell.levelLabel.text = [NSString stringWithFormat:@"%ld", (long)[student_ getLvl]];
     cell.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[student_ getPoints]];
     cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [student_ getFirstName], [student_ getLastName]];
+    if (cell.selected){
+        cell.backgroundColor = [UIColor blueColor];
+    }
+    else {
+        cell.backgroundColor = [UIColor redColor];
+    }
     return cell;
 }
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
+    
+    StudentCollectionViewCell *datasetCell = (StudentCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    datasetCell.backgroundColor = [UIColor blueColor]; // highlight selection
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    StudentCollectionViewCell *datasetCell =(StudentCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    datasetCell.backgroundColor = [UIColor redColor]; // Default color
+}
+
 
 #pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(0., 50.);
+    return CGSizeMake(0., 60.);
 }
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    return CGSizeMake(0., 60.);
+}
+
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionReusableView* cell = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                        withReuseIdentifier:reuseIdentifier2
-                                                                               forIndexPath:indexPath];
-    
-    //set up all the buttons actions here
+    UICollectionReusableView *cell = nil;
 
+    if (kind == UICollectionElementKindSectionHeader){
+        cell = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                  withReuseIdentifier:reuseIdentifierHeader
+                                                         forIndexPath:indexPath];
+        //UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, collectionView.frame.size.width, 60)];
+
+        float width = collectionView.frame.size.width / 3;
+
+        UIView *attendanceSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 60)];
+        UIView *classJarSection = [[UIView alloc] initWithFrame:CGRectMake(width, 0, width, 60)];
+        UIView *marketSection = [[UIView alloc] initWithFrame:CGRectMake(width * 2, 0, width, 60)];
+        
+        // Add gestures to the sections
+        UITapGestureRecognizer *attendanceGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(attendanceClicked)];
+        [attendanceSection addGestureRecognizer:attendanceGesture];
+        
+        UITapGestureRecognizer *jarGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(jarClicked)];
+        [classJarSection addGestureRecognizer:jarGesture];
+        
+        
+        UITapGestureRecognizer *marketGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(marketClicked)];
+        [marketSection addGestureRecognizer:marketGesture];
+        
+        
+        UILabel *attendanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(8,8,width-16,44)];
+        attendanceLabel.text = @"Attendance";
+        
+        UILabel *classJarLabel = [[UILabel alloc]initWithFrame:CGRectMake(8,8,width-16,44)];
+        classJarLabel.text = @"Class Jar";
+        
+        UILabel *marketLabel = [[UILabel alloc]initWithFrame:CGRectMake(8,8,width-16,44)];
+        marketLabel.text = @"Market";
+        
+        NSArray *labels = @[attendanceLabel, classJarLabel, marketLabel];
+        
+        for (UILabel *label in labels){
+            label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
+            label.textColor = [UIColor blackColor];
+            label.numberOfLines = 2;
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor whiteColor];
+            [Utilities makeRoundedLabel:label :nil];
+        }
+        
+        [attendanceSection addSubview:attendanceLabel];
+        [classJarSection addSubview:classJarLabel];
+        [marketSection addSubview:marketLabel];
+        
+        NSArray *sections = @[attendanceSection, classJarSection, marketSection];
+        for (UIView *view in sections){
+            [view setBackgroundColor:[Utilities CHBlueColor]];
+            
+            [cell addSubview:view];
+        }
+        
+        
+    }
+    else if (kind == UICollectionElementKindSectionFooter){
+        cell = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                  withReuseIdentifier:reuseIdentifierFooter
+                                                         forIndexPath:indexPath];
+        float width = collectionView.frame.size.width / 4;
+
+        UIView *addPointsSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 60)];
+        UIView *subtractPointsSection = [[UIView alloc] initWithFrame:CGRectMake(width, 0, width, 60)];
+        UIView *chestSection = [[UIView alloc] initWithFrame:CGRectMake(width * 2, 0, width, 60)];
+        UIView *selectSection = [[UIView alloc] initWithFrame:CGRectMake(width * 3, 0, width, 60)];
+        
+        // Add gestures to the sections
+        UITapGestureRecognizer *addPointsGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(addPointsClicked)];
+        [addPointsSection addGestureRecognizer:addPointsGesture];
+        
+        UITapGestureRecognizer *generateChestGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(generateChestClicked)];
+        [chestSection addGestureRecognizer:generateChestGesture];
+        
+        UITapGestureRecognizer *subtractPointsGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(subtractPointsClicked)];
+        [subtractPointsSection addGestureRecognizer:subtractPointsGesture];
+        
+        UITapGestureRecognizer *selectGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(selectClicked)];
+        [selectSection addGestureRecognizer:selectGesture];
+        
+        
+        
+        UILabel *addPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(8,8,width-16,44)];
+        addPointsLabel.text = @"Add Points";
+        
+        UILabel *generateChestLabel = [[UILabel alloc]initWithFrame:CGRectMake(8,8,width-16,44)];
+        generateChestLabel.text = @"Generate Chest";
+        
+        UILabel *subtractPointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(8,8,width-16,44)];
+        subtractPointsLabel.text = @"Subtract";
+        
+        UILabel *selectLabel = [[UILabel alloc]initWithFrame:CGRectMake(8,8,width-16,44)];
+        selectLabel.text = @"Select";
+        
+        NSArray *labels = @[addPointsLabel, generateChestLabel, subtractPointsLabel, selectLabel];
+        
+        for (UILabel *label in labels){
+            label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:18];
+            label.textColor = [UIColor blackColor];
+            label.numberOfLines = 2;
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor whiteColor];
+            [Utilities makeRoundedLabel:label :nil];
+        }
+        
+        [addPointsSection addSubview:addPointsLabel];
+        [chestSection addSubview:generateChestLabel];
+        [subtractPointsSection addSubview:subtractPointsLabel];
+        [selectSection addSubview:selectLabel];
+        
+        NSArray *sections = @[addPointsSection, chestSection, subtractPointsSection, selectSection];
+        
+        for (UIView *view in sections){
+            [view setBackgroundColor:[Utilities CHBlueColor]];
+            
+            [cell addSubview:view];
+        }
+    }
     
     return cell;
 }
@@ -135,26 +292,42 @@ static NSString * const reuseIdentifier2 = @"HeaderCollectionViewCell";
 }
 */
 
-- (IBAction)selectClicked:(id)sender {
+
+- (void)selectClicked{
+    NSLog(@"Select Clicked");
 }
 
-- (IBAction)attendanceClicked:(id)sender {
+- (void)attendanceClicked{
+    [self performSegueWithIdentifier:@"home_to_attendance" sender:self];
 }
 
-- (IBAction)marketClicked:(id)sender {
+- (void)marketClicked{
+    [self performSegueWithIdentifier:@"home_to_market" sender:self];
 }
 
-- (IBAction)jarClicked:(id)sender {
+- (void)jarClicked{
+    [self performSegueWithIdentifier:@"home_to_jar" sender:self];
 }
 
-- (IBAction)addPointsClicked:(id)sender {
+- (void)addPointsClicked{
+    
 }
 
-- (IBAction)subtractPointsClicked:(id)sender {
+- (void)generateChestClicked{
+    NSLog(@"Generate Chest Clicked");
 }
+
+- (void)subtractPointsClicked{
+    NSLog(@"Subtract Clicked");
+}
+
 - (IBAction)profileClicked:(id)sender {
+    [self performSegueWithIdentifier:@"home_to_profile" sender:self];
 }
 
 - (IBAction)classListClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 @end
