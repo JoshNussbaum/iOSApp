@@ -12,6 +12,7 @@
 #import "Utilities.h"
 #import "MBProgressHUD.h"
 #import "HomeViewController.h"
+#import "AddStudentViewController.h"
 #import <Google/Analytics.h>
 
 static NSString * const classCell = @"classCell";
@@ -228,8 +229,14 @@ static NSString * const classCell = @"classCell";
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0 ) return 74;
-    else return 150;
+    if ([Utilities isIPhone]){
+        if (indexPath.row == 0 ) return 44;
+        else return 75;    }
+    else {
+        if (indexPath.row == 0 ) return 74;
+        else return 150;
+    }
+
 }
 
 
@@ -258,9 +265,7 @@ static NSString * const classCell = @"classCell";
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             class *selectedClass = [self getClassByIndexPath:indexPath];
             currentUser.currentClass = selectedClass;
-            NSMutableArray *studentIds = [[DatabaseHandler getSharedInstance] getStudentIds:[selectedClass getId]];
-            currentUser.studentIds = studentIds;
-            
+
             [self performSegueWithIdentifier:@"class_to_home" sender:nil];
         }
     }
@@ -287,5 +292,17 @@ static NSString * const classCell = @"classCell";
 
 }
 
+
+- (IBAction)backClicked:(id)sender {
+    [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"class_to_add_student"]){
+        AddStudentViewController *vc = [segue destinationViewController];
+        [vc setFlag:0];
+    }
+}
 
 @end

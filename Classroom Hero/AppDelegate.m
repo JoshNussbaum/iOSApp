@@ -12,9 +12,11 @@
 #import "FDKeychain.h"
 #import "user.h"
 #import "DatabaseHandler.h"
-#import "ClassTableViewController.h"
-#import "ClassNavigationController.h"
+#import "HomeTabBarViewController.h"
+#import "HomeNavigationViewController.h"
 #import "LoginViewController.h"
+#import "RootViewController.h"
+#import "HomeMainViewController.h"
 
 @interface AppDelegate (){
     ConnectionHandler *webHandler;
@@ -22,7 +24,36 @@
 }
 
 @end
-
+/***
+ 
+ YO Listen,
+ 
+ Everythings gonna be OK
+ Youre just gonna have to instantiate that root VC / nav controller
+ and implement an initializer function for the root VC
+ Like this:
+ 
+ UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"StoryboardiPhone" bundle:nil];
+ UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"NavigationController"];
+ 
+ [navigationController setViewControllers:@[[storyboard instantiateViewControllerWithIdentifier:@"ViewController"]]];
+ 
+ 
+ MainViewController *mainViewController = [storyboard instantiateInitialViewController];
+ mainViewController.rootViewController = navigationController;
+ [mainViewController initialize];
+ 
+ UIWindow *window = UIApplication.sharedApplication.delegate.window;
+ window.rootViewController = mainViewController;
+ 
+ [UIView transitionWithView:window
+ duration:0.3
+ options:UIViewAnimationOptionTransitionCrossDissolve
+ animations:nil
+ completion:nil];
+ 
+ 
+ **////
 
 @implementation AppDelegate
 
@@ -48,18 +79,34 @@
     
     NSShadow* shadow = [NSShadow new];
     shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    UIStoryboard *storyboard;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    } else {
+        storyboard = [UIStoryboard storyboardWithName:@"StoryboardiPhone" bundle:nil];
+        
+    }
     if ([self checkOSVersion] >= 7) {
-        if ([Utilities isIPadPro]){
-            [[UINavigationBar appearance] setTitleTextAttributes: @{
-                                                                    NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                    NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:44.0f],
-                                                                    NSShadowAttributeName: shadow
-                                                                    }];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            if ([Utilities isIPadPro]){
+                [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                                        NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                                        NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:44.0f],
+                                                                        NSShadowAttributeName: shadow
+                                                                        }];
+            }
+            else{
+                [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                                        NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                                        NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:32.0f],
+                                                                        NSShadowAttributeName: shadow
+                                                                        }];
+            }
         }
-        else{
+        else {
             [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                                     NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                    NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:32.0f],
+                                                                    NSFontAttributeName: [UIFont fontWithName:@"GillSans-Bold" size:22.0f],
                                                                     NSShadowAttributeName: shadow
                                                                     }];
         }
@@ -80,7 +127,7 @@
                                   forService: @"Classroom Hero"
                                        error: &emailError];
     NSDictionary *jsonData = [[NSDictionary alloc]init];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
 
     if (passwordError == nil && emailError == nil){
@@ -100,15 +147,24 @@
             currentUser.token = [jsonData objectForKey:@"token"];
             
             
-            LoginViewController *loginVc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"StoryboardiPhone" bundle:nil];
+            UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
             
-            ClassTableViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"ClassTableViewController"];
+            [navigationController setViewControllers:@[[storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"]]];
             
-            ClassNavigationController *nc = [[UINavigationController alloc]initWithRootViewController:loginVc];
-            [nc pushViewController:vc animated:NO];
             
-            self.window.rootViewController = nc;
-            [self.window makeKeyAndVisible];
+            RootViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
+            rootVC.rootViewController = navigationController;
+            [rootVC initialize];
+            
+            UIWindow *window = UIApplication.sharedApplication.delegate.window;
+            window.rootViewController = rootVC;
+            
+            [UIView transitionWithView:window
+                              duration:0.3
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:nil
+                            completion:nil];
         }
 
     }

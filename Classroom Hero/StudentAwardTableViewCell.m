@@ -11,11 +11,24 @@
 
 @implementation StudentAwardTableViewCell
 
+//- (void)layoutSubviews{
+//    [super layoutSubviews];
+//    [self.contentView layoutSubviews];
+//
+//}
+//
+//- (void)didMoveToSuperview{
+//    [super didMoveToSuperview];
+//    [super layoutSubviews];
+//    [self.contentView layoutSubviews];
+//
+//}
+
 - (void)initializeWithStudent:(student *)student selected:(BOOL)selected{
     self.studentNameLabel.text = [NSString stringWithFormat:@"%@ %@", [student getFirstName], [student getLastName]];
     if (selected){
         self.backgroundColor = [Utilities CHGreenColor];
-    }else self.backgroundColor = [UIColor clearColor];
+    }else self.backgroundColor = [UIColor whiteColor];
 }
 
 

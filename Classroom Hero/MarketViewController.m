@@ -19,7 +19,6 @@
     user *currentUser;
     
     ConnectionHandler *webHandler;
-    NSMutableArray *studentsData;
     NSMutableArray *itemsData;
     NSInteger index;
     item *currentItem;
@@ -48,7 +47,7 @@
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Market"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
+    
 }
 
 
@@ -68,7 +67,6 @@
     
     
     itemsData = [[DatabaseHandler getSharedInstance ] getItems:[currentUser.currentClass getId]];
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
     
     self.picker.dataSource = self;
     self.picker.delegate = self;
@@ -356,7 +354,7 @@
         [self sellItemAnimation:scores];
         [currentUser.currentClass addPoints:1];
         [[DatabaseHandler getSharedInstance]editClass:currentUser.currentClass];
-        [Utilities wiggleImage:self.sackImage sound:NO];
+        [Utilities wiggleImage:self.sackImage sound:NO vertically:NO];
         
     }
     else {
@@ -458,7 +456,7 @@
 
 - (void)sellItemAnimation:(NSMutableArray *)scores{
     self.sackImage.hidden = NO;
-    [Utilities wiggleImage:self.stampImage sound:NO];
+    [Utilities wiggleImage:self.stampImage sound:NO vertically:NO];
     NSInteger score = [[scores objectAtIndex:0]integerValue];
     self.studentPointsLabel.layer.zPosition = 2;
     self.stampImage.layer.zPosition = 1;
@@ -544,14 +542,14 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return studentsData.count;
+    return currentUser.students.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StudentAwardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StudentAwardTableViewCell" forIndexPath:indexPath];
-    student *student_ = [studentsData objectAtIndex:indexPath.row];
-    NSNumber *studentId = [NSNumber numberWithInteger:[student_ getId]];
+    NSNumber *key = [[currentUser.students allKeys]objectAtIndex:indexPath.row];
+    student *student_ = [currentUser.students objectForKey:key];
     [cell initializeWithStudent:student_ selected:NO];
     return cell;
 }
@@ -566,8 +564,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (itemsData.count > 0){
         
-        studentIndex = indexPath.row;
-        student *selectedStudent = [studentsData objectAtIndex:studentIndex];
+        NSNumber *key = [[currentUser.students allKeys]objectAtIndex:indexPath.row];
+        student *selectedStudent = [currentUser.students objectForKey:key];
+        
         StudentAwardTableViewCell *cell = (StudentAwardTableViewCell *)[self.studentsTableView cellForRowAtIndexPath:indexPath];
         cell.backgroundColor = [Utilities CHGreenColor];
         if (selectedStudent == currentStudent){

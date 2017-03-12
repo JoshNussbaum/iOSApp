@@ -43,6 +43,9 @@
 
     [Utilities makeRoundedButton:self.addClassButton :[Utilities CHBlueColor]];
     
+    [self.navigationController.navigationBar setBarTintColor:[Utilities CHBlueColor]];
+    self.navigationController.navigationBar.translucent = YES;
+    
 }
 
 
@@ -78,6 +81,10 @@
     [newClass setGradeNumber:classGrade];
     [webHandler addClass:currentUser.id :className :classGrade];
     
+}
+
+- (IBAction)backClicked:(id)sender {
+    [self performSegueWithIdentifier:@"unwind_to_login" sender:self];
 }
 
 
@@ -120,18 +127,17 @@
         NSString *errorMessage = [data objectForKey: @"message"];
 
         if(!errorMessage)
-        {
-            AudioServicesPlaySystemSound([Utilities getTheSoundOfSuccess]);
-            
+        {            
             NSInteger cid = [[data objectForKey:@"class_id"] integerValue];
             NSString *classHash = [data objectForKey:@"class_hash"];
             [newClass setId:cid];
             [newClass setHash:classHash];
             [[DatabaseHandler getSharedInstance]addClass:newClass];
-            
+            currentUser.currentClass = newClass;
             self.classNameTextField.text = @"";
             self.classGradeTextField.text = @"";
             [self.navigationController popViewControllerAnimated:YES];
+            [self performSegueWithIdentifier:@"create_class_to_add_students" sender:self];
             
         } else {
             [Utilities disappearingAlertView:@"Error adding class" message:errorMessage otherTitles:nil tag:0 view:self time:2.0];

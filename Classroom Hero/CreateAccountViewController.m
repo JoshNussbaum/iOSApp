@@ -42,7 +42,7 @@
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:0];
 
-    [Utilities makeRounded:self.createAccountButton.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    [Utilities makeRounded:self.createAccountButton.layer color:nil borderWidth:0.5f cornerRadius:5];
     
     textFields = [[NSMutableArray alloc]initWithObjects:self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.passwordTextField, self.confirmPasswordTextField, nil];
     
@@ -147,8 +147,14 @@
                       forService: @"Classroom Hero"
                            error: &error];
             
-            
-            [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+
+                [self performSegueWithIdentifier:@"create_account_to_tutorial" sender:self];
+                
+            }
+            else {
+                [self performSegueWithIdentifier:@"account_creation_to_class" sender:self];
+            }
 
             
         }

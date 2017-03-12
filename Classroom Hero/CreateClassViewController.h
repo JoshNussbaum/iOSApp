@@ -26,7 +26,6 @@
 
 - (IBAction)addClassClicked:(id)sender;
 
-- (IBAction)helpClicked:(id)sender;
-
+- (IBAction)backClicked:(id)sender;
 
 @end

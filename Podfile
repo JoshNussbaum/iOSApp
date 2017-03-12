@@ -10,6 +10,7 @@ pod 'CircleProgressBar', '~> 0.21'
 pod 'YLProgressBar', '~> 3.8.0'
 pod 'FDKeychain', '~> 1.3'
 pod 'Google/Analytics'
+pod 'SideMenu'
 end
 
 target 'Classroom HeroTests' do

@@ -47,6 +47,7 @@
 
 - (void)addClassJar:(classjar *)cj;
 
+
 - (void)login:(NSDictionary *)loginInfo;
 
 
@@ -75,7 +76,9 @@
 
 - (student *)getStudentWithID:(NSInteger)sid;
 
+
 - (NSMutableArray *)getStudentIds:(NSInteger )cid;
+
 
 - (NSMutableArray *)getSchools;
 
@@ -92,7 +95,7 @@
 - (NSInteger)getNumberOfPointsInSchool:(NSInteger)schoolId;
 
 
-- (NSMutableDictionary *)getClassStats:(NSInteger)classId :(NSMutableArray *)studentIds;
+- (NSMutableDictionary *)getClassStats:(NSInteger)classId :(NSMutableDictionary *)students;
 
 
 // Update Functions

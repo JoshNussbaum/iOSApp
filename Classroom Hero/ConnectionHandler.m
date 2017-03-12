@@ -438,7 +438,7 @@ static NSInteger statusCode;
     @catch (NSException *exception){
         return nil;
     }
-    //NSLog(@"Synchronous login - Here is the data \n-> %@", jsonData);
+    NSLog(@"Synchronous login - Here is the data \n-> %@", jsonData);
 
     return jsonData;
 
@@ -495,7 +495,7 @@ static NSInteger statusCode;
                               options:NSJSONReadingMutableContainers
                               error:&err];
     //NSLog(@"Here is the status code -> %ld", (long)statusCode);
-    //NSLog(@"Here is the data -> %@", jsonData);
+    NSLog(@"Here is the data -> %@", jsonData);
     if (statusCode >= 200 && statusCode < 400){
 
         //NSLog(@"%@ connection finished\nHere is the data \n-> %@", [Utilities getConnectionTypeString:connectionType], jsonData);

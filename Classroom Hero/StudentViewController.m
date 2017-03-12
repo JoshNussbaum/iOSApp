@@ -194,23 +194,24 @@
         [currentStudent setLastName:newStudentLastName];
         [hud hide:YES];
         [[DatabaseHandler getSharedInstance]updateStudent:currentStudent];
+        [currentUser.students setObject:currentStudent forKey:[NSNumber numberWithInteger:[currentStudent getId]]];
         [self setStudentLabels];
         
     }
     else if (type == DELETE_STUDENT){
         [[DatabaseHandler getSharedInstance]deleteStudent:[currentStudent getId]];
-        [currentUser.studentIds removeObject:[NSNumber numberWithInteger:[currentStudent getId]]];
+        [currentUser.students removeObjectForKey:[NSNumber numberWithInteger:[currentStudent getId]]];
         
         [hud hide:YES];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else if (type == ADD_POINTS || type == SUBTRACT_POINTS){
-        if (type == ADD_POINTS){
-            [Utilities disappearingAlertView:@"Successfully added points" message:nil otherTitles:nil tag:0 view:self time:1.0];
-        }
-        else {
-            [Utilities disappearingAlertView:@"Successfully subtracted points" message:nil otherTitles:nil tag:0 view:self time:1.0];
-        }
+//        if (type == ADD_POINTS){
+//            [Utilities disappearingAlertView:@"Successfully added points" message:nil otherTitles:nil tag:0 view:self time:1.0];
+//        }
+//        else {
+//            [Utilities disappearingAlertView:@"Successfully subtracted points" message:nil otherTitles:nil tag:0 view:self time:1.0];
+//        }
         NSNumber * pointsNumber = (NSNumber *)[data objectForKey: @"current_coins"];
         NSNumber * idNumber = (NSNumber *)[data objectForKey: @"student_id"];
         NSNumber * levelNumber = (NSNumber *)[data objectForKey: @"level"];

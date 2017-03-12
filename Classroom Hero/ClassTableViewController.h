@@ -18,5 +18,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *classTableView;
 
 - (IBAction)editClicked:(id)sender;
+- (IBAction)backClicked:(id)sender;
 
 @end

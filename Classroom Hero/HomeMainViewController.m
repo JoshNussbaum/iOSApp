@@ -1,22 +1,27 @@
 //
-//  ClassNavigationController.m
+//  HomeMainViewController.m
 //  Classroom Hero
 //
-//  Created by Josh Nussbaum on 1/18/17.
+//  Created by Josh Nussbaum on 2/28/17.
 //  Copyright © 2017 Josh Nussbaum. All rights reserved.
 //
 
-#import "ClassNavigationController.h"
+#import "HomeMainViewController.h"
 
-@interface ClassNavigationController ()
+@interface HomeMainViewController ()
 
 @end
 
-@implementation ClassNavigationController
+@implementation HomeMainViewController
+
+
+- (void) test{
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
 }
 
 - (void)didReceiveMemoryWarning {

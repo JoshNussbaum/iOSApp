@@ -14,10 +14,8 @@
 #define IS_IPAD_PRO ([[UIScreen mainScreen] bounds].size.height == 1366)
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 
-static NSString * const merchant_id = @"merchant.com.classroom-hero";
 
 @interface Utilities : NSObject
-
 
 extern NSInteger LOGIN;
 extern NSInteger CREATE_ACCOUNT;
@@ -70,7 +68,105 @@ extern NSInteger SUBTRACT_POINTS_BULK;
 extern NSInteger menuItemFontSize;
 
 
+/*                                                          Alert Views                           */
+
+
+// Let's turn all of these into ONE
+
++ (UIAlertView *) alertViewWithTitle:(NSString *)title message:(NSString *)message cancel:(NSDictionary *)cancelButtonDictionary other:(NSArray *)otherButtonArray delete:(NSDictionary *)deleteButtonDictionary textfields:(NSDictionary *)textFieldsDictionary tag:(NSInteger)tag view:(UIViewController *)view;
+
++ (void) alertStatusNoConnection;
+
+
++ (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view;
+
+
++ (void) disappearingAlertView:(NSString *)title message:(NSString *)message otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view time:(double)delayInSeconds;
+
+
++ (void) editAlertEditStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
+
+
++ (UIAlertView *) editAlertNumberWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
+
+
++ (UIAlertView *) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type;
+
+
++ (void) editTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
+
+
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
+
+
++ (void) editAlertAddStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
+
+
+/*                                                          Validation                           */
+
++ (BOOL)isNewDate:(NSString *)oldDate;
+
+
++ (NSString *) isNumeric:(NSString *)input;
+
+
++ (NSString *)isInputValid:(NSString *)input :(NSString *)inputName;
+
+
+/*                                                          Animations                           */
+
++ (void) wiggleImage:(UIImageView *)image sound:(bool)sound vertically:(bool)vertically;
+
+
++ (void) failAnimation:(UIImageView *)image;
+
+
+
+/*                                                          Setters                           */
+
++ (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color;
+
+
+// LETS SEE ALL THESE MAKE ROUNDED LABELS TO ONE 
+
+
++ (void) makeRoundedButton:(UIButton *)button :(UIColor *)color;
+
+
++ (void) makeRoundedLabel:(UILabel *)label :(UIColor *)color;
+
+
++ (void) makeRounded:(CALayer *)layer color:(UIColor *)color borderWidth:(float)borderWidth cornerRadius:(float)cornerRadius;
+
+
++ (void) setFontSizeWithbuttons:(NSArray *)buttons font:(NSString *)font size:(float)size;
+
+
+
+/*                                                          Getters                           */
+
+//+ (NSMutableDictionary *)getStudentsDataDictionaryWithClassId:(NSInteger)classId studentIds:(NSMutableArray *)studentIds;
+
+
++ (NSString *) getCurrentDate;
+
+
++ (NSString *) getDate;
+
+
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType;
+
+
++ (BOOL)isIPadPro;
+
+
++ (BOOL) isIPhone;
+
+
++ (long) getNavigationBarButtonSize;
+
+
++ (NSString *) getRandomCompliment;
 
 
 + (UIColor *)CHLightBlueColor;
@@ -89,71 +185,6 @@ extern NSInteger menuItemFontSize;
 
 
 + (UIColor *) CHGoldColor;
-
-
-+ (NSString *) getDate;
-
-
-+ (NSString *) isNumeric:(NSString *)input;
-
-
-+ (NSString *)isInputValid:(NSString *)input :(NSString *)inputName;
-
-
-+ (bool)isValidClassroomHeroStamp:(NSString *)serial;
-
-
-+ (void) disappearingAlertView:(NSString *)title message:(NSString *)message otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view time:(double)delayInSeconds;
-
-
-+ (UIAlertView *) editAlertNumberWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view;
-
-
-+ (UIAlertView *) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type;
-
-
-+ (void) editTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
-
-
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
-
-
-+ (void) editAlertAddStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
-
-
-+ (void) editAlertEditStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view;
-
-
-+ (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color;
-
-
-+ (void) makeRoundedButton:(UIButton *)button :(UIColor *)color;
-
-
-+ (void) makeRoundedLabel:(UILabel *)label :(UIColor *)color;
-
-
-+ (void) makeRounded:(CALayer *)layer color:(UIColor *)color borderWidth:(float)borderWidth cornerRadius:(float)cornerRadius;
-
-+ (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view;
-
-
-+ (void) alertStatusNoConnection;
-
-
-+ (NSString *) getRandomCompliment;
-
-
-+ (NSString *) getRandomLoadingMessage;
-
-
-+ (void) wiggleImage:(UIImageView *)image sound:(bool)sound;
-
-
-+ (void) sackWiggle:(UIImageView *)sack;
-
-
-+ (void) failAnimation:(UIImageView *)image;
 
 
 + (SystemSoundID) getFailSound;
@@ -185,25 +216,5 @@ extern NSInteger menuItemFontSize;
 
 + (SystemSoundID) getAchievementSound;
 
-
-+ (NSInteger) getRewardNumber;
-
-
-+ (NSString *)getCurrentDate;
-
-
-+ (BOOL)isNewDate:(NSString *)oldDate;
-
-
-+ (BOOL)isIPadPro;
-
-
-+ (id) getStudentWitharray:(NSMutableArray *)searchArray propertyName:(NSString *)propertyName searchString:(NSString *)searchString;
-
-+ (NSString *)getPackageDescriptionWithpackageId:(NSInteger)packageId stamps:(NSInteger)stamps;
-
-+ (long) getNavigationBarButtonSize;
-
-+ (void) setFontSizeWithbuttons:(NSArray *)buttons font:(NSString *)font size:(float)size;
 
 @end

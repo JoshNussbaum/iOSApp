@@ -224,6 +224,7 @@ static sqlite3_stmt *statement = nil;
 
 
         NSMutableArray *students = [classDictionary objectForKey:@"students"];
+        currentUser.students = [[NSMutableDictionary alloc]init];
         for (NSDictionary *studentDictionary in students){
             NSInteger sid = [[studentDictionary objectForKey:@"student_id"]integerValue];
             NSString *fname = [studentDictionary objectForKey:@"first_name"];
@@ -237,6 +238,7 @@ static sqlite3_stmt *statement = nil;
             NSInteger totalCoins = [[studentDictionary objectForKey:@"total_coins"]integerValue];
 
             student *newStudent = [[student alloc] initWithid:sid firstName:fname lastName:lname lvl:lvl progress:progress lvlupamount:lvlUpAmount points:currentCoins totalpoints:totalCoins checkedin:checkedIn hash:studentHash];
+            [currentUser.students setObject:newStudent forKey:[NSNumber numberWithInteger:[newStudent getId]]];
             [self addStudent:newStudent :cid];
 
         }
@@ -725,9 +727,9 @@ static sqlite3_stmt *statement = nil;
         {
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-                NSInteger studentCount = sqlite3_column_int(statement, 0);
-                NSNumber *studentCountNumber = [NSNumber numberWithInteger:studentCount];
-                [studentIds addObject:studentCountNumber];
+                NSInteger studentId = sqlite3_column_int(statement, 0);
+                NSNumber *studentIdNumber = [NSNumber numberWithInteger:studentId];
+                [studentIds addObject:studentIdNumber];
 
             }
         }
@@ -943,9 +945,20 @@ static sqlite3_stmt *statement = nil;
                                query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
             sqlite3_step(statement);
+            sqlite3_finalize(statement);
         }
+        NSString *deleteStudentClassMatch = [NSString stringWithFormat:
+                                             @"DELETE FROM StudentClassMatch where sid=%ld", (long)sid];
+        const char *delete_stmt6 = [deleteStudentClassMatch UTF8String];
+        
+        if (sqlite3_prepare_v2(database,
+                               delete_stmt6, -1, &statement, NULL) == SQLITE_OK)
+        {
+            sqlite3_step(statement);
+            sqlite3_finalize(statement);
+        }
+
     }
-    sqlite3_reset(statement);
     sqlite3_close(database);
 }
 

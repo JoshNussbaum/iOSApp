@@ -23,10 +23,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
-@property (strong, nonatomic) IBOutlet UIButton *aboutButton;
-
-@property (strong, nonatomic) IBOutlet UIButton *pricingButton;
-
 @property (weak, nonatomic) IBOutlet UIButton *logInButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
@@ -40,10 +36,6 @@
 - (IBAction)loginClicked:(id)sender;
 
 - (IBAction)createAccountClicked:(id)sender;
-
-- (IBAction)aboutClicked:(id)sender;
-
-- (IBAction)pricingClicked:(id)sender;
 
 - (IBAction)forgotPasswordClicked:(id)sender;
 

@@ -45,6 +45,8 @@
     [super viewDidLoad];
     self.studentsTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
     currentUser = [user getInstance];
+    studentsData = [[NSMutableArray alloc]init];
+    studentsData = currentUser.students;
     showingStudents = NO;
     isStamping = NO;
     self.studentsTableView.delegate = self;
@@ -53,11 +55,10 @@
     checkedOutStudents = [[NSMutableDictionary alloc] init];
     // Check to see if it's a different day.
     if (!([[Utilities getCurrentDate] isEqualToString:[currentUser.currentClass getCurrentDate]])){
-        [[DatabaseHandler getSharedInstance]updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:NO studentIds:currentUser.studentIds];
+        [[DatabaseHandler getSharedInstance]updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:NO studentIds:[currentUser.students allKeys]];
         [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
     }
 
-    studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
     [self setCheckedOutStudents];
 
     if ([checkedOutStudents count] > 0){
@@ -144,7 +145,7 @@
                                                                    value:@1] build]];
             isStamping = YES;
             self.studentsPicker.hidden = YES;
-            [Utilities wiggleImage:self.stampImage sound:NO];
+            [Utilities wiggleImage:self.stampImage sound:NO vertically:NO];
             [self setStudentLabels];
             didManuallyCheckIn = NO;
             [webHandler checkInStudentWithstudentId:[currentStudent getId] :YES];
@@ -318,11 +319,11 @@
     
     else if (type == ALL_STUDENT_CHECK_IN || type == ALL_STUDENT_CHECK_OUT){
         BOOL checkedIn = (type == ALL_STUDENT_CHECK_IN ? YES: NO);
-        [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:checkedIn studentIds:currentUser.studentIds];
+        [[DatabaseHandler getSharedInstance] updateAllStudentsCheckedInWithclassId:[currentUser.currentClass getId] checkedIn:checkedIn studentIds:[currentUser.students allKeys]];
         
         [currentUser.currentClass setCurrentDay:[Utilities getCurrentDate]];
         [[DatabaseHandler getSharedInstance] editClass:currentUser.currentClass];
-        studentsData = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
+        
         [checkedOutStudents removeAllObjects];
         if (!checkedIn){
             [self setCheckedOutStudents];
@@ -450,7 +451,7 @@
                                               }
                                               completion:^(BOOL finished) {
                                                   self.studentPointsLabel.text = [NSString stringWithFormat:@"%ld points", (long)[currentStudent getPoints]];
-                                                  [Utilities sackWiggle:self.sackImage];
+                                                  [Utilities wiggleImage:self.sackImage sound:NO vertically:YES];
                                                   AudioServicesPlaySystemSound(coins);
 
                                                   [UIView animateWithDuration:.3

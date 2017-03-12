@@ -7,6 +7,7 @@
 //
 
 #import "Utilities.h"
+#import "DatabaseHandler.h"
 
 @implementation Utilities
 
@@ -60,6 +61,468 @@ NSInteger SUBTRACT_POINTS_BULK = 46;
 
 NSInteger menuItemFontSize = 26;
 
+
+#pragma mark Alert Views
+/*                                                          Alert Views                           */
+
+// this is the beastly one
+// text field placeholder or text
++ (UIAlertView *) alertViewWithTitle:(NSString *)title message:(NSString *)message cancel:(NSDictionary *)cancelButtonDictionary other:(NSArray *)otherButtonArray delete:(NSDictionary *)deleteButtonDictionary textfields:(NSDictionary *)textFieldsDictionary tag:(NSInteger)tag view:(UIViewController *)view{
+    return nil;
+    /*
+     
+     Button dictionary
+     {
+        'Text': 'Edit student',
+        'Hidden': NO,
+     
+     }
+     
+     From the button dictionary
+     Create an array of Other Button Titles @['Title', 'Poop']
+     
+     
+     textFieldsDictionary = {
+        
+        1: 
+           {
+            'Textfield Type': UIKeyboardTypeNumberPad,
+            'Secure Text Entry': NO,
+            'Return Key Type': UIReturnKeyDone //UIReturnKeyNext,
+            'Placeholder': 'Placeholder oop',
+            'Autocapitalization Type': UITextAutocapitalizationTypeWords,
+            'Keyboard Type': UIKeyboardTypeDefault,
+            'Text': 'OOOPS'
+           },
+     }
+     
+     
+     Text field dictionary has to be
+     {
+        'Textfield Type': UIKeyboardTypeNumberPad,
+        'Secure Text Entry': NO,
+        'Return Key Type': UIReturnKeyDone //UIReturnKeyNext,
+        'Placeholder': 'Placeholder oop',
+        'Autocapitalization Type': UITextAutocapitalizationTypeWords,
+        'Keyboard Type': UIKeyboardTypeDefault,
+     
+     }
+     
+     
+     */
+    
+
+}
+
++ (UIAlertView *) editAlertNumberWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, nil];
+    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [[alertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:0]setPlaceholder:input];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setPlaceholder:@"Points"];
+    
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    alertView.tag = tag;
+    [alertView show];
+    return alertView;
+}
+
+
++ (UIAlertView *) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
+    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [[alertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeEmailAddress];
+    [alertView textFieldAtIndex:0].autocapitalizationType = type;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:0]setPlaceholder:input];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyDone];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    alertView.tag = tag;
+    [alertView show];
+    return alertView;
+}
+
+
++ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
+    
+    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
+    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
+    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    
+    for (NSInteger i = 0; i < textfields.count; i++){
+        NSString *placeholder = [textfields objectAtIndex:i];
+        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
+        [alertView textFieldAtIndex:i].userInteractionEnabled = YES;;
+
+        
+    }
+    alertView.tag = tag;
+    [alertView show];
+}
+
+
++ (void) editTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
+    
+    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
+    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
+    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    
+    for (NSInteger i = 0; i < textfields.count; i++){
+        NSString *placeholder = [textfields objectAtIndex:i];
+        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
+        [[alertView textFieldAtIndex:i] setText:placeholder];
+        [alertView textFieldAtIndex:i].userInteractionEnabled = YES;
+    }
+    
+    alertView.tag = tag;
+    [alertView show];
+}
+
+
++ (void) editAlertAddStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
+    
+    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeDefault];
+    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
+    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [alertView textFieldAtIndex:1].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    
+    for (NSInteger i = 0; i < textfields.count; i++){
+        NSString *placeholder = [textfields objectAtIndex:i];
+        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
+        [alertView textFieldAtIndex:i].userInteractionEnabled = YES;
+        
+    }
+    alertView.tag = tag;
+    [alertView show];
+}
+
+
++ (void) editAlertEditStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
+    if (!cancel) cancel = @"Close";
+    if (!done) done = @"Done";
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
+    
+    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeDefault];
+    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
+    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
+    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [alertView textFieldAtIndex:1].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
+    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    
+    for (NSInteger i = 0; i < textfields.count; i++){
+        NSString *placeholder = [textfields objectAtIndex:i];
+        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
+        [[alertView textFieldAtIndex:i] setText:placeholder];
+    }
+    alertView.tag = tag;
+    [alertView show];
+}
+
++ (void) disappearingAlertView:(NSString *)title message:(NSString *)message otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view time:(double)delayInSeconds{
+    
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:nil];
+    for (NSString *title in otherTitles){
+        [alertView addButtonWithTitle:title];
+    }
+    alertView.tag = tag;
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    [alertView show];
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [alertView dismissWithClickedButtonIndex:0 animated:YES];
+    });
+    
+}
+
+
++ (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view{
+    if (cancel == nil){
+        cancel = @"Close";
+    }
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:view
+                                             cancelButtonTitle:cancel
+                                             otherButtonTitles:nil];
+    for (NSString *title in otherTitles){
+        [alertView addButtonWithTitle:title];
+    }
+    alertView.tag = tag;
+    [alertView setTintColor:[Utilities CHBlueColor]];
+    
+    [alertView show];
+}
+
+
++ (void) alertStatusNoConnection{
+    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"Connection Error"
+                                                       message:@"Please check your internet connection and try again"
+                                                      delegate:nil
+                                             cancelButtonTitle:@"Close"
+                                             otherButtonTitles:nil];
+    alertView.tag = 0;
+    [alertView show];
+}
+
+
+
+#pragma mark Animations
+/*                                                          Animations                           */
+
+
++ (void) wiggleImage:(UIImageView *)image sound:(bool)sound vertically:(bool)vertically{
+    if (sound){
+        AudioServicesPlaySystemSound([self getTheSoundOfSuccess]);
+    }
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.05];
+    [animation setRepeatCount:3];
+    [animation setAutoreverses:YES];
+    if (vertically){
+        [animation setFromValue:[NSValue valueWithCGPoint:
+                                 CGPointMake([image center].x , [image center].y - 3)]];
+        [animation setToValue:[NSValue valueWithCGPoint:
+                               CGPointMake([image center].x , [image center].y + 3)]];
+    }
+    else {
+        [animation setFromValue:[NSValue valueWithCGPoint:
+                                 CGPointMake([image center].x, [image center].y+5)]];
+        [animation setToValue:[NSValue valueWithCGPoint:
+                               CGPointMake([image center].x, [image center].y-5)]];
+    }
+
+    [[image layer] addAnimation:animation forKey:@"position"];
+}
+
+
++ (void) failAnimation:(UIImageView *)image{
+    AudioServicesPlaySystemSound([self getFailSound]);
+
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.05];
+    [animation setRepeatCount:8];
+    [animation setAutoreverses:YES];
+    [animation setFromValue:[NSValue valueWithCGPoint:
+                             CGPointMake([image center].x - 15, [image center].y)]];
+    [animation setToValue:[NSValue valueWithCGPoint:
+                           CGPointMake([image center].x + 15, [image center].y)]];
+    [[image layer] addAnimation:animation forKey:@"position"];
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+}
+
+
+
+#pragma mark Validation
+/*                                                          Validation                           */
+
++ (BOOL)isNewDate:(NSString *)oldDate{
+    NSString *newDate = [self getCurrentDate];
+    
+    if ([newDate isEqualToString:oldDate]){
+        return NO;
+    }
+    else {
+        return YES;
+    }
+}
+
+
++ (NSString *) isNumeric:(NSString *)input{
+    if (input.length == 0){
+        return @"All fields are required";
+    }
+    NSScanner *sc = [NSScanner scannerWithString: input];
+    
+    if ( [sc scanFloat:NULL] && input.integerValue >= 0)
+    {
+        if (input.integerValue > 999){
+            return @"Number must be less than 1000";
+        }
+        bool numeric = [sc isAtEnd];
+        if (!numeric){
+            return [NSString stringWithFormat:@"\"%@\" is not a positive number", input];
+        }
+        else return nil;
+    }
+    else{
+        return [NSString stringWithFormat:@"\"%@\" is not a positive number", input];
+    }
+    
+}
+
+
++ (NSString *)isInputValid:(NSString *)input :(NSString *)inputName{
+    NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+    if (input.length == 0){
+        return @"All fields are required";
+    }
+    if ([[input stringByTrimmingCharactersInSet: set] length] == 0)
+    {
+        return [NSString stringWithFormat:@"%@ may not contain only white spaces", inputName];
+    }
+    NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~] "];
+    for (NSUInteger i = 0; i < [input length]; ++i) {
+        unichar uchar = [input characterAtIndex:i] ;
+        if (![characterSet characterIsMember:uchar]) {
+            return [NSString stringWithFormat:@"%@ may not contain the character \"%c\"", inputName, uchar];
+        }
+    }
+    if (input.length < 1){
+        return [NSString stringWithFormat:@"%@ must contain at least 1 character", inputName];
+    }
+    if (input.length >= 45){
+        return [NSString stringWithFormat:@"%@ may not exceed 45 characters", inputName];
+    }
+    return nil;
+}
+
+
+
+#pragma mark Setters 
+/*                                                          Setters                           */
+
+
++ (void) setFontSizeWithbuttons:(NSArray *)buttons font:(NSString *)font size:(float)size{
+    for (UIButton *button in buttons) {
+        button.titleLabel.font =[UIFont fontWithName:font size:size];
+    }
+}
+
+
++ (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color{
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
+                                                                                                  NSForegroundColorAttributeName : color,
+                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
+                                                                                                  }];
+    
+    textField.attributedPlaceholder = str;
+}
+
+
++ (void) makeRoundedButton:(UIButton *)button :(UIColor *)color{
+    button.layer.cornerRadius = 5;
+    button.layer.borderWidth = 1.0;
+    button.clipsToBounds = YES;
+    if (color != nil){
+        button.layer.borderColor = color.CGColor;
+    }
+    else {
+        button.layer.borderColor = [UIColor clearColor].CGColor;
+        
+    }
+}
+
+
++ (void) makeRoundedLabel:(UILabel *)label :(UIColor *)color{
+    label.layer.cornerRadius = 5;
+    label.layer.borderWidth = .8;
+    label.clipsToBounds = YES;
+    if (color != nil){
+        label.layer.borderColor = color.CGColor;
+    }
+    else {
+        label.layer.borderColor = [UIColor clearColor].CGColor;
+        
+    }
+}
+
+
++ (void) makeRounded:(CALayer *)layer color:(UIColor *)color borderWidth:(float)borderWidth cornerRadius:(float)cornerRadius{
+    layer.cornerRadius = cornerRadius;
+    layer.borderWidth = borderWidth;
+    if (color != nil){
+        layer.borderColor = color.CGColor;
+    }
+    else {
+        layer.borderColor = [UIColor clearColor].CGColor;
+        
+    }
+}
+
+
+#pragma mark Getters
+/*                                                          Getters                           */
 
 + (NSString *) getConnectionTypeString:(NSInteger)connectionType{
     switch (connectionType) {
@@ -192,7 +655,7 @@ NSInteger menuItemFontSize = 26;
         case 43:
             return @"REWARD_STUDENT_BULK";
             break;
- 
+            
         default:
             return @"Connection result";
             break;
@@ -200,11 +663,104 @@ NSInteger menuItemFontSize = 26;
 }
 
 
+//+ (NSMutableDictionary *)getStudentsDataDictionaryWithClassId:(NSInteger)classId studentIds:(NSMutableArray *)studentIds{
+//    // the cache is good just gotta manage the IDs in the proper places, like where you can add and edit
+//    
+//    if (studentIds.count == 0){
+//        studentIds = [[DatabaseHandler getSharedInstance]getStudentIds:classId];
+//    }
+//    
+//    
+//    NSMutableDictionary *studentsDataDictionary = [[NSMutableDictionary alloc]init];
+//    
+//    NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:classId :YES studentIds:studentIds];
+//    
+//    if (!studentsDataArray){
+//        return nil;
+//    }
+//    
+//    for (student *tmpStudent in studentsDataArray){
+//        [studentsDataDictionary setObject:tmpStudent forKey:[NSNumber numberWithInteger:[tmpStudent getId]]];
+//    }
+//    
+//    return studentsDataDictionary;
+//}
+
+
++ (BOOL)isIPadPro{
+    UIScreen *mainScreen = [UIScreen mainScreen];
+    CGFloat width = mainScreen.nativeBounds.size.width / mainScreen.nativeScale;
+    CGFloat height = mainScreen.nativeBounds.size.height / mainScreen.nativeScale;
+    BOOL isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+    BOOL hasIPadProWidth = fabs(width - 1024.f) < DBL_EPSILON;
+    BOOL hasIPadProHeight = fabs(height - 1366.f) < DBL_EPSILON;
+    return isIpad && hasIPadProHeight && hasIPadProWidth;
+}
+
+
++ (BOOL) isIPhone{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return NO;
+    } else return YES;
+}
+
+
++ (long) getNavigationBarButtonSize{
+    if ([self isIPhone]){
+        return 22.0f;
+    }
+    else {
+        if ([self isIPadPro]){
+            return 55.0f;
+        }
+        else {
+            return 30.0f;
+        }
+        
+    }
+}
+
+
++ (NSString *) getRandomCompliment{
+    NSArray *compliments = @[@"Outstanding! ",@"Splendid! ",@"Marvelous! ",@"Amazing! ",@"Impressive! ",@"Great work!", @"Fine  job!",@"Magnificent! ",@"Brilliant!",@"Exquisite!", @"Incredible!", @"Wonderful!", @"Awesome!", @"Fantastic!", @"Tremendous!" ,@"Excellent!", @"Remarkable!", @"Astonishing! ", @"Phenomenal! ", @"Terrific! ", @"Stupendous!",];
+    
+    NSInteger randomInteger = arc4random() % (compliments.count-1);
+    
+    return compliments[randomInteger];
+}
+
+
++ (NSString *) getDate{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"GMT"]];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateAsString = [formatter stringFromDate:[NSDate date]];
+    return dateAsString;
+}
+
+
++ (NSString *)getCurrentDate{
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setDay:(0)];
+    
+    NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
+    
+    NSDateFormatter *dateformater=[[NSDateFormatter alloc]init];
+    
+    NSString *formatString = @"MM/dd";
+    [dateformater setDateFormat:formatString];
+    
+    NSString *dateString=[dateformater stringFromDate:date];
+    
+    return dateString;
+}
+
+
 + (UIColor *)CHLightGreenColor{
     UIColor *CHBlueColor = [UIColor colorWithRed:245.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0] ;
     
     return CHBlueColor;
-
+    
 }
 
 
@@ -217,7 +773,7 @@ NSInteger menuItemFontSize = 26;
 
 + (UIColor *)CHBlueColor{
     UIColor *CHBlueColor = [UIColor colorWithRed:116.0/255.0 green:209.0/255.0 blue:246.0/255.0 alpha:1.0] ;
-
+    
     return CHBlueColor;
 }
 
@@ -238,415 +794,8 @@ NSInteger menuItemFontSize = 26;
 
 + (UIColor *) CHGoldColor{
     UIColor *CHGoldColor = [UIColor colorWithRed:233.0/255.0 green:195/255.0 blue:56.0/255.0 alpha:1.0];
-
+    
     return CHGoldColor;
-}
-
-
-+ (NSString *) getDate{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *dateAsString = [formatter stringFromDate:[NSDate date]];
-    return dateAsString;
-}
-
-
-+ (NSString *) isNumeric:(NSString *)input{
-    if (input.length == 0){
-        return @"All fields are required";
-    }
-    NSScanner *sc = [NSScanner scannerWithString: input];
-    
-    if ( [sc scanFloat:NULL] && input.integerValue >= 0)
-    {
-        if (input.integerValue > 999){
-            return @"Number must be less than 1000";
-        }
-        bool numeric = [sc isAtEnd];
-        if (!numeric){
-            return [NSString stringWithFormat:@"\"%@\" is not a positive number", input];
-        }
-        else return nil;
-    }
-    else{
-        return [NSString stringWithFormat:@"\"%@\" is not a positive number", input];
-    }
-
-}
-
-
-+ (NSString *)isInputValid:(NSString *)input :(NSString *)inputName{
-    NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
-    if (input.length == 0){
-        return @"All fields are required";
-    }
-    if ([[input stringByTrimmingCharactersInSet: set] length] == 0)
-    {
-        return [NSString stringWithFormat:@"%@ may not contain only white spaces", inputName];
-    }
-    NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~] "];
-    for (NSUInteger i = 0; i < [input length]; ++i) {
-        unichar uchar = [input characterAtIndex:i] ;
-        if (![characterSet characterIsMember:uchar]) {
-            return [NSString stringWithFormat:@"%@ may not contain the character \"%c\"", inputName, uchar];
-        }
-    }
-    if (input.length < 1){
-        return [NSString stringWithFormat:@"%@ must contain at least 1 character", inputName];
-    }
-    if (input.length >= 45){
-        return [NSString stringWithFormat:@"%@ may not exceed 45 characters", inputName];
-    }
-    return nil;
-}
-
-
-+ (bool)isValidClassroomHeroStamp:(NSString *)serial{
-    return YES;
-}
-
-
-+ (UIAlertView *) editAlertNumberWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view{
-    if (!cancel) cancel = @"Close";
-    if (!done) done = @"Done";
-    
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:view
-                                             cancelButtonTitle:cancel
-                                             otherButtonTitles:done, nil];
-    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [[alertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
-    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
-    [[alertView textFieldAtIndex:0]setPlaceholder:input];
-    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyDone];
-    [[alertView textFieldAtIndex:0]setPlaceholder:@"Points"];
-
-    [alertView setTintColor:[Utilities CHBlueColor]];
-    
-    alertView.tag = tag;
-    [alertView show];
-    return alertView;
-}
-
-
-+ (UIAlertView *) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete input:(NSString *)input tag:(NSInteger)tag view:(UIViewController *)view capitalizationType:(UITextAutocapitalizationType)type{
-    if (!cancel) cancel = @"Close";
-    if (!done) done = @"Done";
-    
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:view
-                                             cancelButtonTitle:cancel
-                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
-    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [[alertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeEmailAddress];
-    [alertView textFieldAtIndex:0].autocapitalizationType = type;
-    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
-    [[alertView textFieldAtIndex:0]setPlaceholder:input];
-    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyDone];
-    [alertView setTintColor:[Utilities CHBlueColor]];
-
-    alertView.tag = tag;
-    [alertView show];
-    return alertView;
-}
-
-
-+ (void) editAlertTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
-    if (!cancel) cancel = @"Close";
-    if (!done) done = @"Done";
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:view
-                                             cancelButtonTitle:cancel
-                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
-    
-    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
-    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
-    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
-    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
-    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
-    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
-    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
-    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
-    [alertView setTintColor:[Utilities CHBlueColor]];
-
-
-    for (NSInteger i = 0; i < textfields.count; i++){
-        NSString *placeholder = [textfields objectAtIndex:i];
-        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
-        
-    }
-    alertView.tag = tag;
-    [alertView show];
-}
-
-
-+ (void) editTextWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
-    if (!cancel) cancel = @"Close";
-    if (!done) done = @"Done";
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:view
-                                             cancelButtonTitle:cancel
-                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
-    
-    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
-    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeNumberPad];
-    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
-    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
-    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
-    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
-    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
-    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
-    [alertView setTintColor:[Utilities CHBlueColor]];
-
-    
-    for (NSInteger i = 0; i < textfields.count; i++){
-        NSString *placeholder = [textfields objectAtIndex:i];
-        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
-        [[alertView textFieldAtIndex:i] setText:placeholder];
-        
-    }
-    
-    alertView.tag = tag;
-    [alertView show];
-}
-
-
-+ (void) editAlertAddStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
-    if (!cancel) cancel = @"Close";
-    if (!done) done = @"Done";
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:view
-                                             cancelButtonTitle:cancel
-                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
-    
-    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
-    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeDefault];
-    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
-    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
-    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
-    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
-    [alertView textFieldAtIndex:1].autocapitalizationType = UITextAutocapitalizationTypeSentences;
-    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
-    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
-    [alertView setTintColor:[Utilities CHBlueColor]];
-
-    
-    for (NSInteger i = 0; i < textfields.count; i++){
-        NSString *placeholder = [textfields objectAtIndex:i];
-        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
-
-    }
-    alertView.tag = tag;
-    [alertView show];
-}
-
-
-+ (void) editAlertEditStudentWithtitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel done:(NSString *)done delete:(bool)delete textfields:(NSArray *)textfields tag:(NSInteger)tag view:(UIViewController *)view{
-    if (!cancel) cancel = @"Close";
-    if (!done) done = @"Done";
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:view
-                                             cancelButtonTitle:cancel
-                                             otherButtonTitles:done, delete ? @"Delete" : nil, nil];
-    
-    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
-    [[alertView textFieldAtIndex:1] setKeyboardType:UIKeyboardTypeDefault];
-    [[alertView textFieldAtIndex:1] setSecureTextEntry:NO];
-    [[alertView textFieldAtIndex:1]setReturnKeyType:UIReturnKeyDone];
-    [[alertView textFieldAtIndex:0]setReturnKeyType:UIReturnKeyNext];
-    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
-    [alertView textFieldAtIndex:1].autocapitalizationType = UITextAutocapitalizationTypeSentences;
-    [[alertView textFieldAtIndex:0] setDelegate:(id)view];
-    [[alertView textFieldAtIndex:1] setDelegate:(id)view];
-    [alertView setTintColor:[Utilities CHBlueColor]];
-
-    
-    for (NSInteger i = 0; i < textfields.count; i++){
-        NSString *placeholder = [textfields objectAtIndex:i];
-        [[alertView textFieldAtIndex:i] setPlaceholder:placeholder];
-        [[alertView textFieldAtIndex:i] setText:placeholder];
-    }
-    alertView.tag = tag;
-    [alertView show];
-}
-
-
-+ (void) setTextFieldPlaceholder:(UITextField *)textField :(NSString *)placeholder :(UIColor *)color{
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:placeholder attributes:@{
-                                                                                                  NSForegroundColorAttributeName : color,
-                                                                                                  NSFontAttributeName : [UIFont fontWithName:@"Gill Sans" size:23.0]
-                                                                                                  }];
-    
-    textField.attributedPlaceholder = str;
-}
-
-
-+ (void) makeRoundedButton:(UIButton *)button :(UIColor *)color{
-    button.layer.cornerRadius = 5;
-    button.layer.borderWidth = 1.0;
-    button.clipsToBounds = YES;
-    if (color != nil){
-        button.layer.borderColor = color.CGColor;
-    }
-    else {
-        button.layer.borderColor = [UIColor clearColor].CGColor;
-
-    }
-}
-
-
-+ (void) makeRoundedLabel:(UILabel *)label :(UIColor *)color{
-    label.layer.cornerRadius = 5;
-    label.layer.borderWidth = .8;
-    label.clipsToBounds = YES;
-    if (color != nil){
-        label.layer.borderColor = color.CGColor;
-    }
-    else {
-        label.layer.borderColor = [UIColor clearColor].CGColor;
-        
-    }
-}
-
-
-+ (void) makeRounded:(CALayer *)layer color:(UIColor *)color borderWidth:(float)borderWidth cornerRadius:(float)cornerRadius{
-    layer.cornerRadius = cornerRadius;
-    layer.borderWidth = borderWidth;
-    if (color != nil){
-        layer.borderColor = color.CGColor;
-    }
-    else {
-        layer.borderColor = [UIColor clearColor].CGColor;
-        
-    }
-}
-
-
-+ (void) disappearingAlertView:(NSString *)title message:(NSString *)message otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view time:(double)delayInSeconds{
-
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:view
-                                             cancelButtonTitle:nil
-                                             otherButtonTitles:nil];
-    for (NSString *title in otherTitles){
-        [alertView addButtonWithTitle:title];
-    }
-    alertView.tag = tag;
-    [alertView setTintColor:[Utilities CHBlueColor]];
-    
-    [alertView show];
-    
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [alertView dismissWithClickedButtonIndex:0 animated:YES];
-    });
-
-}
-
-
-+ (void) alertStatusWithTitle:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel otherTitles:(NSArray *)otherTitles tag:(NSInteger)tag view:(UIViewController *)view{
-    if (cancel == nil){
-        cancel = @"Close";
-    }
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:view
-                                             cancelButtonTitle:cancel
-                                             otherButtonTitles:nil];
-    for (NSString *title in otherTitles){
-        [alertView addButtonWithTitle:title];
-    }
-    alertView.tag = tag;
-    [alertView setTintColor:[Utilities CHBlueColor]];
-
-    [alertView show];
-}
-
-
-+ (void) alertStatusNoConnection{
-    UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"Connection Error"
-                                                       message:@"Please check your internet connection and try again"
-                                                      delegate:nil
-                                             cancelButtonTitle:@"Close"
-                                             otherButtonTitles:nil];
-    alertView.tag = 0;
-    [alertView show];
-}
-
-
-+ (NSString *) getRandomCompliment{
-    NSArray *compliments = @[@"Outstanding! ",@"Splendid! ",@"Marvelous! ",@"Amazing! ",@"Impressive! ",@"Great work!", @"Fine  job!",@"Magnificent! ",@"Brilliant!",@"Exquisite!", @"Incredible!", @"Wonderful!", @"Awesome!", @"Fantastic!", @"Tremendous!" ,@"Excellent!", @"Remarkable!", @"Astonishing! ", @"Phenomenal! ", @"Terrific! ", @"Stupendous!",];
-    
-    NSInteger randomInteger = arc4random() % (compliments.count-1);
-    
-    return compliments[randomInteger];
-}
-
-
-+ (NSString *) getRandomLoadingMessage{
-    return @"poop";
-}
-
-
-+ (void) wiggleImage:(UIImageView *)image sound:(bool)sound{
-    if (sound){
-        AudioServicesPlaySystemSound([self getTheSoundOfSuccess]);
-    }
-    CABasicAnimation *animation =
-    [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setDuration:0.05];
-    [animation setRepeatCount:3];
-    [animation setAutoreverses:YES];
-    [animation setFromValue:[NSValue valueWithCGPoint:
-                             CGPointMake([image center].x , [image center].y - 3)]];
-    [animation setToValue:[NSValue valueWithCGPoint:
-                           CGPointMake([image center].x , [image center].y + 3)]];
-    [[image layer] addAnimation:animation forKey:@"position"];
-}
-
-
-
-+ (void) sackWiggle:(UIImageView *)sack{
-    CABasicAnimation *animation =
-    [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setDuration:0.07];
-    [animation setBeginTime:CACurrentMediaTime()];
-    [animation setRepeatCount:2];
-    [animation setAutoreverses:YES];
-    [animation setFromValue:[NSValue valueWithCGPoint:
-                             CGPointMake([sack center].x, [sack center].y+5)]];
-    [animation setToValue:[NSValue valueWithCGPoint:
-                           CGPointMake([sack center].x, [sack center].y-5)]];
-    [[sack layer] addAnimation:animation forKey:@"position"];
-}
-
-
-+ (void) failAnimation:(UIImageView *)image{
-    AudioServicesPlaySystemSound([self getFailSound]);
-
-    CABasicAnimation *animation =
-    [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setDuration:0.05];
-    [animation setRepeatCount:8];
-    [animation setAutoreverses:YES];
-    [animation setFromValue:[NSValue valueWithCGPoint:
-                             CGPointMake([image center].x - 15, [image center].y)]];
-    [animation setToValue:[NSValue valueWithCGPoint:
-                           CGPointMake([image center].x + 15, [image center].y)]];
-    [[image layer] addAnimation:animation forKey:@"position"];
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        
-    });
 }
 
 
@@ -747,120 +896,8 @@ NSInteger menuItemFontSize = 26;
     NSURL *pathURL = [NSURL fileURLWithPath:path];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)pathURL, &achievementSound);
     return achievementSound;
-
-}
-
-
-+ (NSInteger) getRewardNumber{
-    NSInteger random = arc4random() % 100;
-    
-    if (random >= 95){
-        return 3;
-    }
-    else if (random > 70){
-        return 2;
-    }
-    else {
-        return 1;
-    }
     
 }
-
-
-+ (NSString *)getCurrentDate{
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setDay:(0)];
-    
-    NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
-    
-    NSDateFormatter *dateformater=[[NSDateFormatter alloc]init];
-    
-    NSString *formatString = @"MM/dd";
-    [dateformater setDateFormat:formatString];
-    
-    NSString *dateString=[dateformater stringFromDate:date];
-    
-    return dateString;
-}
-
-
-+ (BOOL)isNewDate:(NSString *)oldDate{
-    NSString *newDate = [self getCurrentDate];
-    
-    if ([newDate isEqualToString:oldDate]){
-        return NO;
-    }
-    else {
-        return YES;
-    }
-}
-
-
-+ (BOOL)isIPadPro
-{
-    UIScreen *mainScreen = [UIScreen mainScreen];
-    CGFloat width = mainScreen.nativeBounds.size.width / mainScreen.nativeScale;
-    CGFloat height = mainScreen.nativeBounds.size.height / mainScreen.nativeScale;
-    BOOL isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-    BOOL hasIPadProWidth = fabs(width - 1024.f) < DBL_EPSILON;
-    BOOL hasIPadProHeight = fabs(height - 1366.f) < DBL_EPSILON;
-    return isIpad && hasIPadProHeight && hasIPadProWidth;
-}
-
-
-+ (id) getStudentWitharray:(NSMutableArray *)searchArray propertyName:(NSString *)propertyName searchString:(NSString *)searchString{
-    
-    for (student *stud in searchArray){
-        if ([propertyName isEqualToString:@"id"]){
-            if ([[NSString stringWithFormat:@"%ld",[stud getId]] isEqualToString:searchString]){
-                return stud;
-            }
-        }
-       
-    }
-    return nil;
-    
-}
-
-
-+ (NSString *)getPackageDescriptionWithpackageId:(NSInteger)packageId stamps:(NSInteger)stamps{
-    NSString *description;
-    switch (packageId) {
-        case 0:
-            description = [NSString stringWithFormat:@"Hero package with %ld stamps", (long)stamps];
-            break;
-        case 1:
-            description = [NSString stringWithFormat:@"Recruit package with 40 stamps"];
-            break;
-        case 2:
-            description = [NSString stringWithFormat:@"Epic package with 120 stamps"];
-            break;
-        case 3:
-            description = [NSString stringWithFormat:@"Legendary package with 500 stamps"];
-            break;
-        default:
-            break;
-    }
-    
-    return description;
-}
-
-
-+ (long) getNavigationBarButtonSize{
-    if ([self isIPadPro]){
-        return 55.0f;
-    }
-    else {
-        return 27.0f;
-    }
-}
-
-+ (void) setFontSizeWithbuttons:(NSArray *)buttons font:(NSString *)font size:(float)size{
-    for (UIButton *button in buttons) {
-        button.titleLabel.font =[UIFont fontWithName:font size:size];
-    }
-}
-
 
 
 @end

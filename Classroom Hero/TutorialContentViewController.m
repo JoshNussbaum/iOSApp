@@ -292,8 +292,8 @@ static int screenNumber;
             NSString *studentHash = [data objectForKey:@"student_hash"];
             student *newStudent = [[student alloc]initWithid:studentId firstName:self.textField1.text lastName:self.textField2.text lvl:1 progress:0 lvlupamount:3 points:0 totalpoints:0 checkedin:NO hash:studentHash];
             [[DatabaseHandler getSharedInstance] addStudent:newStudent :[tmpClass getId]];
-            [currentUser.studentIds addObject:[NSNumber numberWithInteger:studentId]];
-
+            
+            [currentUser.students setObject:newStudent forKey:[NSNumber numberWithInteger:studentId]];
             [self setTitleAndClear:[NSString stringWithFormat:@"Add  another  student  or  swipe  left  to  continue"]];
             [self.textField1 becomeFirstResponder];
 

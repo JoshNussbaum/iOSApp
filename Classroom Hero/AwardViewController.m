@@ -215,7 +215,7 @@ static NSInteger coinHeight = 250;
 
 
 - (void)getStudentsData{
-    NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:currentUser.studentIds];
+    NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:[currentUser.students allKeys]];
     
     for (student *tmpStudent in studentsDataArray){
         [studentsData setObject:tmpStudent forKey:[NSNumber numberWithInteger:[tmpStudent getId]]];
@@ -730,7 +730,7 @@ static NSInteger coinHeight = 250;
         chestTappable = NO;
         chestPoint = YES;
         isStamping = YES;
-        [Utilities wiggleImage:self.stampImage sound:NO];
+        [Utilities wiggleImage:self.stampImage sound:NO vertically:YES];
         // add the points now and do all the cool animations brah
         NSInteger reinforcerId = [currentReinforcer getId];
         NSInteger pointsEarned = [currentReinforcer getValue];
@@ -881,7 +881,7 @@ static NSInteger coinHeight = 250;
 
              }
                               completion:^(BOOL finished) {
-                                  [Utilities sackWiggle:self.sackImage];
+                                  [Utilities wiggleImage:self.sackImage sound:NO vertically:YES];
                                   AudioServicesPlaySystemSound(coins);
                                   float t = .15;
                                   if (levelup) {
@@ -969,7 +969,7 @@ static NSInteger coinHeight = 250;
 
                                               }
                                               completion:^(BOOL finished) {
-                                                  [Utilities sackWiggle:self.sackImage];
+                                                  [Utilities wiggleImage:self.sackImage sound:NO vertically:YES];
                                                   AudioServicesPlaySystemSound(coins);
                                                   float t = .15;
                                                   if (levelup){
@@ -1031,13 +1031,13 @@ static NSInteger coinHeight = 250;
                                                   [self animateCoinToSack:self.bOne :NO];
                                               }
                                               completion:^(BOOL finished) {
-                                                  [Utilities sackWiggle:self.sackImage];
+                                                  [Utilities wiggleImage:self.sackImage sound:NO vertically:YES];
                                                   [UIView animateWithDuration:.2
                                                                    animations:^{
                                                                        [self animateCoinToSack:self.bTwo :NO];
                                                                    }
                                                                    completion:^(BOOL finished) {
-                                                                       [Utilities sackWiggle:self.sackImage];
+                                                                       [Utilities wiggleImage:self.sackImage sound:NO vertically:YES];
                                                                        AudioServicesPlaySystemSound(coins);
                                                                        float t = pointsAwarded * .15;
                                                                        if (levelup) {
@@ -1105,7 +1105,7 @@ static NSInteger coinHeight = 250;
                                                   [self animateCoinToSack:self.aOne :NO];
                                               }
                                               completion:^(BOOL finished) {
-                                                  [Utilities sackWiggle:self.sackImage];
+                                                  [Utilities wiggleImage:self.sackImage sound:NO vertically:YES];
                                                   [UIView animateWithDuration:.2
                                                                    animations:^{
                                                                        [self animateCoinToSack:self.aTwo :NO];
@@ -1116,7 +1116,7 @@ static NSInteger coinHeight = 250;
                                                                                             [self animateCoinToSack:self.aThree :NO];
                                                                                         }
                                                                                         completion:^(BOOL finished) {
-                                                                                            [Utilities sackWiggle:self.sackImage];
+                                                                                            [Utilities wiggleImage:self.sackImage sound:NO vertically:YES];
                                                                                             AudioServicesPlaySystemSound(coins);
                                                                                             float t = pointsAwarded * .15;
                                                                                             if (levelup) {

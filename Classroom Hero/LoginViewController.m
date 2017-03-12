@@ -11,6 +11,11 @@
 #import "MBProgressHUD.h"
 #import "FDKeychain.h"
 #import <Google/Analytics.h>
+#import "RootViewController.h"
+#import "HomeLeftViewController.h"
+#import "HomeRightViewController.h"
+#import "HomeMainViewController.h"
+#import "HomeNavigationController.h"
 
 
 @interface LoginViewController (){
@@ -31,10 +36,7 @@
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Login"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-}
-
-
-- (void)viewDidAppear:(BOOL)animated{
+    
     [currentUser reset];
     isStamping = NO;
     
@@ -43,11 +45,13 @@
     NSString *password = [FDKeychain itemForKey: @"password"
                                      forService: @"Classroom Hero"
                                           error: &passwordError];
+    NSLog(@"Password -> %@", password);
     NSError *emailError = nil;
     
     NSString *email = [FDKeychain itemForKey: @"email"
-                                     forService: @"Classroom Hero"
-                                          error: &emailError];
+                                  forService: @"Classroom Hero"
+                                       error: &emailError];
+    NSLog(@"Email -> %@", email);
     if (passwordError == nil && emailError == nil){
         self.emailTextField.text = email;
         self.passwordTextField.text = password;
@@ -62,29 +66,23 @@
         self.logInButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:46];
         self.createAccountButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:46];
         self.forgotPasswordButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:30];
-        self.aboutButton.titleLabel.font = [UIFont fontWithName:@"GillSans-Bold" size:30];
     }
 }
 
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
-
-
-    [Utilities makeRoundedButton:self.forgotPasswordButton :nil];
-    self.logInButton.layer.borderWidth = .6;
-    self.logInButton.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.createAccountButton.layer.borderWidth = .6;
-    self.createAccountButton.layer.borderColor = [UIColor whiteColor].CGColor;
-    
     currentUser = [user getInstance];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:0];
     
-    [Utilities makeRoundedButton:self.aboutButton :nil];
-    [Utilities makeRoundedButton:self.pricingButton :nil];
-    [Utilities makeRounded:self.emailTextField.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
-    [Utilities makeRounded:self.passwordTextField.layer color:[UIColor blackColor] borderWidth:0.5f cornerRadius:5];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundImg1"]];
+    
+    NSArray *layers = @[self.titleLabel.layer, self.logInButton.layer, self.createAccountButton.layer, self.forgotPasswordButton.layer, self.emailTextField.layer, self.passwordTextField.layer];
+    
+    for (CALayer *layer in layers){
+        [Utilities makeRounded:layer color:nil borderWidth:0.5f cornerRadius:5];
+
+    }
     
 }
 
@@ -181,7 +179,7 @@
     if (!errorMessage){
         if (type == LOGIN){
             
-            [Utilities wiggleImage:self.stampImage sound:NO];
+            [Utilities wiggleImage:self.stampImage sound:NO vertically:NO];
             [self loginSuccess:data];
         }
         else if (type == RESET_PASSWORD){
@@ -216,10 +214,34 @@
                   forKey: @"password"
               forService: @"Classroom Hero"
                    error: &error];
-
-
-    [self performSegueWithIdentifier:@"login_to_class" sender:nil];
+    
     [hud hide:YES];
+    if ([currentUser.currentClass getId] == 0){
+        [self performSegueWithIdentifier:@"login_to_create_class" sender:self];
+    }
+    else {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"StoryboardiPhone" bundle:nil];
+        UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+        
+        UITabBarController *tbc = [storyboard instantiateViewControllerWithIdentifier:@"HomeTabBarController"];
+        
+        [navigationController setViewControllers:@[[storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"]]];
+        
+        [tbc setViewControllers:@[navigationController]];
+        
+        RootViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
+        rootVC.rootViewController = tbc;
+        [rootVC initialize];
+        
+        UIWindow *window = UIApplication.sharedApplication.delegate.window;
+        window.rootViewController = rootVC;
+        
+        [UIView transitionWithView:window
+                          duration:0.3
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:nil
+                        completion:nil];
+    }
 }
 
 
