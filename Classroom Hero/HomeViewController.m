@@ -25,7 +25,6 @@
     
     UIVisualEffectView *blurEffectView;
     
-    NSMutableDictionary *studentsData;
     NSMutableDictionary *selectedStudents;
     NSMutableDictionary *categories;
     
@@ -47,7 +46,6 @@
 
 static NSString * const reuseIdentifier = @"StudentCollectionViewCell";
 static NSString * const reuseIdentifierHeader = @"HeaderCollectionViewCell";
-static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 
 
 - (void)viewDidLoad {
@@ -64,55 +62,43 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
     currentUser = [user getInstance];
     selectedStudents = [[NSMutableDictionary alloc]init];
     webHandler = [[ConnectionHandler alloc]initWithDelegate:self token:currentUser.token classId:[currentUser.currentClass getId]];
-    [self getStudentsData];
     [self getCategoryData];
-//    
-//    if (categories.count > 0){
-//        [self.categoryPicker selectRow:0 inComponent:0 animated:YES];
-//        selectedCategory = [categories objectForKey:[[categories allKeys]objectAtIndex:0] ];
-//
-//    }
-//    else {
-//        selectedCategory = nil;
-//    }
-//    [self setCategoryLabels];
-//    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-//    flowLayout.sectionHeadersPinToVisibleBounds = YES;
-//    flowLayout.sectionFootersPinToVisibleBounds = YES;
-//    CGRect screenRect = [[UIScreen mainScreen] bounds];
-//    CGFloat screenWidth = screenRect.size.width;
-//    float cellWidth = screenWidth / 3.0; //Replace the divisor with the column count requirement. Make sure to have it in float.
-//    CGSize size = CGSizeMake(cellWidth, cellWidth);
-//    flowLayout.minimumLineSpacing = 10.0f;
-//    flowLayout.minimumInteritemSpacing = 10.0f;
-//    if ([Utilities isIPhone]){
-//        [flowLayout setItemSize:CGSizeMake(80, 80)];
-//    }
-//    else {
-//        [flowLayout setItemSize:CGSizeMake(145, 145)];
-//    }
-//    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-//    
-//    self.studentCollectionView.collectionViewLayout = flowLayout;
-//    self.studentCollectionView.allowsSelection = YES;
-//    self.studentCollectionView.allowsMultipleSelection= YES;
-//    
-//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-//    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//    blurEffectView.frame = self.view.bounds;
-//    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//    
-//    NSArray *categoryButtons = @[self.categoryAddButton, self.categoryBackButton, self.categoryAddPointsButton, self.categoryEditCategoryButton];
-//    [Utilities makeRounded:self.categoryAddButton.layer color:nil borderWidth:.8 cornerRadius:.5];
-//
-//    for (UIButton *button in categoryButtons){
-//        [Utilities makeRounded:button.layer color:nil borderWidth:.8 cornerRadius:.5];
-//        button.clipsToBounds = YES;
-//    }
-//    
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-//    
-//    self.categoryView.hidden = YES;
+    
+    if (categories.count > 0){
+        [self.categoryPicker selectRow:0 inComponent:0 animated:YES];
+        selectedCategory = [categories objectForKey:[[categories allKeys]objectAtIndex:0] ];
+
+    }
+    else {
+        selectedCategory = nil;
+    }
+    [self setCategoryLabels];
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.sectionHeadersPinToVisibleBounds = YES;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    float cellWidth = screenWidth / 3.0; //Replace the divisor with the column count requirement. Make sure to have it in float.
+    CGSize size = CGSizeMake(cellWidth, cellWidth);
+    flowLayout.minimumLineSpacing = 10.0f;
+    flowLayout.minimumInteritemSpacing = 10.0f;
+    if ([Utilities isIPhone]){
+        [flowLayout setItemSize:CGSizeMake(80, 80)];
+    }
+    else {
+        [flowLayout setItemSize:CGSizeMake(145, 145)];
+    }
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    self.studentCollectionView.delegate = self;
+    self.studentCollectionView.dataSource = self;
+    self.studentCollectionView.collectionViewLayout = flowLayout;
+    self.studentCollectionView.allowsSelection = YES;
+    self.studentCollectionView.allowsMultipleSelection= YES;
+
+    [self.studentCollectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    
+    self.categoryView.hidden = YES;
     
 }
 
@@ -167,13 +153,13 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return studentsData.count;
+    return currentUser.students.count;
 }
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSNumber *studentId = [[studentsData allKeys] objectAtIndex:indexPath.row];
-    student *student_ = [studentsData objectForKey:studentId];
+    NSNumber *studentId = [[currentUser.students allKeys] objectAtIndex:indexPath.row];
+    student *student_ = [currentUser.students objectForKey:studentId];
     StudentCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     cell.levelLabel.text = [NSString stringWithFormat:@"%ld", (long)[student_ getLvl]];
     cell.pointsLabel.text = [NSString stringWithFormat:@"%ld", (long)[student_ getPoints]];
@@ -209,21 +195,10 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     if ([Utilities isIPhone]){
-        return CGSizeMake(0., 40.);
+        return CGSizeMake(0., 60.);
     }
     else {
         return CGSizeMake(0., 60.);
-    }
-}
-
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    if ([Utilities isIPhone]){
-        return CGSizeMake(0., 60);
-    }
-    else {
-        return CGSizeMake(0., 150);
     }
 }
 
@@ -235,87 +210,9 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 {
     UICollectionReusableView *cell = nil;
 
-    
     if (kind == UICollectionElementKindSectionHeader){
         cell = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                   withReuseIdentifier:reuseIdentifierHeader
-                                                         forIndexPath:indexPath];
-        
-        float width = collectionView.frame.size.width / 3;
-        float height;
-        
-        if ([Utilities isIPhone]){
-            height = 40;
-        }
-        else {
-            height = 60;
-        }
-        
-        UIView *attendanceSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-        UIView *classJarSection = [[UIView alloc] initWithFrame:CGRectMake(width, 0, width, height)];
-        UIView *marketSection = [[UIView alloc] initWithFrame:CGRectMake(width * 2, 0, width, height)];
-        
-        // Add gestures to the sections
-        UITapGestureRecognizer *attendanceGesture =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(attendanceClicked)];
-        [attendanceSection addGestureRecognizer:attendanceGesture];
-        
-        UITapGestureRecognizer *jarGesture =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(jarClicked)];
-        [classJarSection addGestureRecognizer:jarGesture];
-        
-        
-        UITapGestureRecognizer *marketGesture =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(marketClicked)];
-        [marketSection addGestureRecognizer:marketGesture];
-        
-
-        
-        UILabel *attendanceLabel = [[UILabel alloc]init];
-        attendanceLabel.text = @"Attendance";
-        
-        UILabel *classJarLabel = [[UILabel alloc]init];
-        classJarLabel.text = @"Class Jar";
-        
-        UILabel *marketLabel = [[UILabel alloc]init];
-        marketLabel.text = @"Market";
-        
-        NSArray *labels = @[attendanceLabel, classJarLabel, marketLabel];
-        
-        for (UILabel *label in labels){
-            if ([Utilities isIPhone]){
-                label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:16];
-            }
-            else {
-                label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:22];
-            }
-            [label setFrame:CGRectMake(4,4,width-8, height-8)];
-            label.textColor = [UIColor blackColor];
-            label.numberOfLines = 2;
-            label.textAlignment = NSTextAlignmentCenter;
-            label.backgroundColor = [UIColor whiteColor];
-            [Utilities makeRoundedLabel:label :nil];
-        }
-        
-        [attendanceSection addSubview:attendanceLabel];
-        [classJarSection addSubview:classJarLabel];
-        [marketSection addSubview:marketLabel];
-        
-        NSArray *sections = @[attendanceSection, classJarSection, marketSection];
-        for (UIView *view in sections){
-            [view setBackgroundColor:[Utilities CHGreenColor]];
-            
-            [cell addSubview:view];
-        }
-        
-        
-    }
-    else if (kind == UICollectionElementKindSectionFooter){
-        cell = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                  withReuseIdentifier:reuseIdentifierFooter
                                                          forIndexPath:indexPath];
         for(UIView *view in cell.subviews)
         {
@@ -435,14 +332,11 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 
         }
         
-        NSArray *footerLabels = @[addPointsLabel, subtractPointsLabel, plusOneLabel, subtractOneLabel, selectLabel, selectAllLabel, deselectAllLabel];
+        NSArray *headerLabels = @[addPointsLabel, subtractPointsLabel, plusOneLabel, subtractOneLabel, selectLabel, selectAllLabel, deselectAllLabel];
         
-        for (UILabel *label in footerLabels){
+        for (UILabel *label in headerLabels){
             if ([Utilities isIPhone]){
                 int size = 16;
-//                if (label == selectLabel || label == deselectAllLabel || label == selectAllLabel){
-//                    size = 20;
-//                }
                 label.font = [UIFont fontWithName:@"GillSans-SemiBold" size:size];
             }
             else {
@@ -592,8 +486,8 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
     CGPoint touchPoint = [recognizer locationInView:self.studentCollectionView];
     NSIndexPath *indexPath = [self.studentCollectionView indexPathForItemAtPoint:touchPoint];
     
-    NSNumber *studentId = [[studentsData allKeys] objectAtIndex:indexPath.row];
-    student *ss = [studentsData objectForKey:studentId];
+    NSNumber *studentId = [[currentUser.students allKeys] objectAtIndex:indexPath.row];
+    student *ss = [currentUser.students objectForKey:studentId];
     
     // add the the dictionaries here.
     if (selecting){
@@ -637,11 +531,11 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 
 
 - (void)selectAllClicked{
-    if (selectedStudents.count != studentsData.count){
-        for (NSInteger index = 0; index < studentsData.count; index++) {
-            NSNumber *studentId = [[studentsData allKeys] objectAtIndex:index];
+    if (selectedStudents.count != currentUser.students.count){
+        for (NSInteger index = 0; index < currentUser.students.count; index++) {
+            NSNumber *studentId = [[currentUser.students allKeys] objectAtIndex:index];
             
-            student *ss = [studentsData objectForKey:studentId];
+            student *ss = [currentUser.students objectForKey:studentId];
             [selectedStudents setObject:ss forKey:studentId];
         }
         
@@ -738,47 +632,6 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
         }
     }
 
-    /*
-    if (!isStamping && !chestPoint){
-        NSInteger studentCount = selectedStudents.count;
-        
-        if (chestTappable && [selectedStudents isEqualToDictionary:selectedStudentsWhenGenerateChestClicked]) {
-            
-            [selectedStudents removeAllObjects];
-            
-            for (NSIndexPath *indexPath in self.studentsTableView.indexPathsForSelectedRows) {
-                NSInteger index = indexPath.row;
-                [self.studentsTableView deselectRowAtIndexPath:indexPath animated:NO];
-            }
-            uncategorizedPoint = NO;
-            chestTappable = NO;
-            chestPoint = NO;
-            [self hideStudent];
-            self.categoryPicker.hidden = NO;
-            [self setCategoryLabels];
-            return;
-        }
-        else {
-            if (studentCount > 0){
-                [self animateTableView:YES];
-                
-                selectedStudentsWhenGenerateChestClicked = [NSMutableDictionary dictionaryWithDictionary:selectedStudents];
-                chestTappable = YES;
-                
-                
-                NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:0];
-                student *selectedStudent = [selectedStudents objectForKey:studentId];
-                selectedStudent = selectedStudent;
-                
-                [self displayStudent:YES];
-                
-                // get all the student IDs and make the web call
-                
-            }
-        }
-        
-    }
-     */
 
 }
 
@@ -890,38 +743,6 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 }
 
 
-#pragma mark <SlideMenuDelegate>
-
-- (void)leftViewWillLayoutSubviewsWithSize:(CGSize)size {
-    [super leftViewWillLayoutSubviewsWithSize:size];
-    
-    if (!self.isLeftViewStatusBarHidden) {
-        self.leftView.frame = CGRectMake(0.0, 20.0, size.width, size.height-20.0);
-    }
-}
-
-- (void)rightViewWillLayoutSubviewsWithSize:(CGSize)size {
-    [super rightViewWillLayoutSubviewsWithSize:size];
-    
-    if (!self.isRightViewStatusBarHidden ||
-        (self.rightViewAlwaysVisibleOptions & LGSideMenuAlwaysVisibleOnPadLandscape &&
-         UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
-         UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation))) {
-            self.rightView.frame = CGRectMake(0.0, 20.0, size.width, size.height-20.0);
-        }
-}
-
-- (BOOL)isLeftViewStatusBarHidden {
-    
-    return super.isLeftViewStatusBarHidden;
-}
-
-- (BOOL)isRightViewStatusBarHidden {
-    return super.isRightViewStatusBarHidden;
-}
-
-
-
 #pragma mark <ConnectionHandlerDelegate>
 
 - (void)dataReady:(NSDictionary *)data :(NSInteger)type{
@@ -1016,7 +837,7 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
             [tmpStudent setLevelUpAmount:lvlUpAmount];
             [[DatabaseHandler getSharedInstance]updateStudent:tmpStudent];
             
-            [studentsData setObject:tmpStudent forKey:idNumber];
+            [currentUser.students setObject:tmpStudent forKey:idNumber];
             [selectedStudents setObject:tmpStudent forKey:idNumber];
         }
         
@@ -1055,7 +876,7 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
             [tmpStudent setLevelUpAmount:lvlUpAmount];
             [[DatabaseHandler getSharedInstance]updateStudent:tmpStudent];
             
-            [studentsData setObject:tmpStudent forKey:idNumber];
+            [currentUser.students setObject:tmpStudent forKey:idNumber];
             [selectedStudents setObject:tmpStudent forKey:idNumber];
         }
         
@@ -1107,14 +928,6 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
 }
 
 
-- (void)getStudentsData{
-    studentsData = [[NSMutableDictionary alloc]init];
-    NSMutableArray *studentsDataArray = [[DatabaseHandler getSharedInstance]getStudents:[currentUser.currentClass getId] :YES studentIds:[currentUser.students allKeys]];
-    
-    for (student *tmpStudent in studentsDataArray){
-        [studentsData setObject:tmpStudent forKey:[NSNumber numberWithInteger:[tmpStudent getId]]];
-    }
-}
 
 
 - (void)getCategoryData{
@@ -1148,7 +961,7 @@ static NSString * const reuseIdentifierFooter = @"FooterCollectionViewCell";
     for (NSInteger index = 0; index < selectedStudents.count; index++) {
         NSNumber *studentId = [[selectedStudents allKeys] objectAtIndex:index];
         
-        student *selectedStudent = [studentsData objectForKey:studentId];
+        student *selectedStudent = [currentUser.students objectForKey:studentId];
         NSString *firstName = [selectedStudent getFirstName];
         int len = firstName.length;
         

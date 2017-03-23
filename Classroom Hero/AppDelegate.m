@@ -14,6 +14,7 @@
 #import "DatabaseHandler.h"
 #import "HomeTabBarViewController.h"
 #import "HomeNavigationViewController.h"
+#import "HomeViewController.h"
 #import "LoginViewController.h"
 #import "RootViewController.h"
 #import "HomeMainViewController.h"
@@ -150,11 +151,14 @@
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"StoryboardiPhone" bundle:nil];
             UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
             
+            UITabBarController *tbc = [storyboard instantiateViewControllerWithIdentifier:@"HomeTabBarController"];
+            
             [navigationController setViewControllers:@[[storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"]]];
             
+            [tbc setViewControllers:@[navigationController]];
             
             RootViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
-            rootVC.rootViewController = navigationController;
+            rootVC.rootViewController = tbc;
             [rootVC initialize];
             
             UIWindow *window = UIApplication.sharedApplication.delegate.window;

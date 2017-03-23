@@ -14,7 +14,7 @@
 #import "YLProgressBar.h"
 
 
-@interface HomeViewController : LGSideMenuController <ConnectionHandlerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate>
+@interface HomeViewController : UIViewController <ConnectionHandlerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIView *levelView;
@@ -51,6 +51,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *categoryEditCategoryButton;
 @property (strong, nonatomic) IBOutlet UIButton *categoryGenerateChestButton;
 @property (strong, nonatomic) IBOutlet UIButton *categoryAddPointsButton;
+
+
+- (void)initialize;
 
 
 - (IBAction)categoryAddPointsClicked:(id)sender;
