@@ -136,17 +136,17 @@
 		033855701B8996D400173600 /* CreateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateClassViewController.m; sourceTree = "<group>"; };
 		033855721B89984500173600 /* numberTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = numberTextField.h; sourceTree = "<group>"; };
 		033855731B89984500173600 /* numberTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = numberTextField.m; sourceTree = "<group>"; };
-		033A4D9B1B75B25B006E90D6 /* achievement.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = achievement.wav; path = "Classroom Hero/sounds/achievement.wav"; sourceTree = SOURCE_ROOT; };
-		033A4D9C1B75B25B006E90D6 /* award.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = award.mp3; path = "Classroom Hero/sounds/award.mp3"; sourceTree = SOURCE_ROOT; };
-		033A4D9D1B75B25B006E90D6 /* bloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = bloop.wav; path = "Classroom Hero/sounds/bloop.wav"; sourceTree = SOURCE_ROOT; };
-		033A4D9E1B75B25B006E90D6 /* coin_shake.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = coin_shake.wav; path = "Classroom Hero/sounds/coin_shake.wav"; sourceTree = SOURCE_ROOT; };
-		033A4D9F1B75B25B006E90D6 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = correct.wav; path = "Classroom Hero/sounds/correct.wav"; sourceTree = SOURCE_ROOT; };
-		033A4DA01B75B25B006E90D6 /* jarsuccess.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = jarsuccess.wav; path = "Classroom Hero/sounds/jarsuccess.wav"; sourceTree = SOURCE_ROOT; };
-		033A4DA11B75B25B006E90D6 /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pop.wav; path = "Classroom Hero/sounds/pop.wav"; sourceTree = SOURCE_ROOT; };
-		033A4DA21B75B25B006E90D6 /* positive.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = positive.wav; path = "Classroom Hero/sounds/positive.wav"; sourceTree = SOURCE_ROOT; };
-		033A4DA31B75B25B006E90D6 /* register_fail.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = register_fail.wav; path = "Classroom Hero/sounds/register_fail.wav"; sourceTree = SOURCE_ROOT; };
-		033A4DA41B75B25B006E90D6 /* sale.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sale.mp3; path = "Classroom Hero/sounds/sale.mp3"; sourceTree = SOURCE_ROOT; };
-		033A4DA51B75B25B006E90D6 /* teacherstamp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = teacherstamp.wav; path = "Classroom Hero/sounds/teacherstamp.wav"; sourceTree = SOURCE_ROOT; };
+		033A4D9B1B75B25B006E90D6 /* achievement.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = achievement.wav; path = achievement.wav; sourceTree = "<group>"; };
+		033A4D9C1B75B25B006E90D6 /* award.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = award.mp3; path = award.mp3; sourceTree = "<group>"; };
+		033A4D9D1B75B25B006E90D6 /* bloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = bloop.wav; path = bloop.wav; sourceTree = "<group>"; };
+		033A4D9E1B75B25B006E90D6 /* coin_shake.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = coin_shake.wav; path = coin_shake.wav; sourceTree = "<group>"; };
+		033A4D9F1B75B25B006E90D6 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = correct.wav; path = correct.wav; sourceTree = "<group>"; };
+		033A4DA01B75B25B006E90D6 /* jarsuccess.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = jarsuccess.wav; path = jarsuccess.wav; sourceTree = "<group>"; };
+		033A4DA11B75B25B006E90D6 /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pop.wav; path = pop.wav; sourceTree = "<group>"; };
+		033A4DA21B75B25B006E90D6 /* positive.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = positive.wav; path = positive.wav; sourceTree = "<group>"; };
+		033A4DA31B75B25B006E90D6 /* register_fail.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = register_fail.wav; path = register_fail.wav; sourceTree = "<group>"; };
+		033A4DA41B75B25B006E90D6 /* sale.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sale.mp3; path = sale.mp3; sourceTree = "<group>"; };
+		033A4DA51B75B25B006E90D6 /* teacherstamp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = teacherstamp.wav; path = teacherstamp.wav; sourceTree = "<group>"; };
 		033AD0991DF00F0C00027405 /* deselectAll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deselectAll.png; sourceTree = "<group>"; };
 		033AD09A1DF00F0C00027405 /* selectAll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectAll.png; sourceTree = "<group>"; };
 		033AD09D1DF103CC00027405 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -317,7 +317,7 @@
 				035BA08B1DDFC7DC003A9160 /* AppIcon.appiconset */,
 			);
 			path = icons;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		0338C8EE1C19366A0081F5F5 /* Views */ = {
 			isa = PBXGroup;
@@ -326,28 +326,30 @@
 				038545201B6359A30053C169 /* Textfields */,
 			);
 			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		0338C8EF1C1936870081F5F5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				036811531B8C498700690294 /* Sign in/ Sign up */,
-				0399AAEF1B845E9F00972F21 /* Tutorial */,
 				03A2C1D61BB8FFFD0073EBF8 /* Administrative */,
 				0338C8F01C1936FD0081F5F5 /* Class */,
+				036811531B8C498700690294 /* Login */,
 				0338C8F11C19370D0081F5F5 /* Student */,
-				03492CF01B8863DB0015CD78 /* HomeViewController.h */,
-				03492CF11B8863DB0015CD78 /* HomeViewController.m */,
+				0399AAEF1B845E9F00972F21 /* Tutorial */,
 				03BD411F1BCAE5AE00879B46 /* AttendanceViewController.h */,
 				03BD41201BCAE5AE00879B46 /* AttendanceViewController.m */,
 				034075D51B980A60008E14B2 /* AwardViewController.h */,
 				034075D61B980A60008E14B2 /* AwardViewController.m */,
 				034075D81B980CBA008E14B2 /* ClassJarViewController.h */,
 				034075D91B980CBA008E14B2 /* ClassJarViewController.m */,
+				03492CF01B8863DB0015CD78 /* HomeViewController.h */,
+				03492CF11B8863DB0015CD78 /* HomeViewController.m */,
 				036E4ED21B9832EA00A06B25 /* MarketViewController.h */,
 				036E4ED31B9832EA00A06B25 /* MarketViewController.m */,
 			);
 			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		0338C8F01C1936FD0081F5F5 /* Class */ = {
@@ -361,17 +363,19 @@
 				033855701B8996D400173600 /* CreateClassViewController.m */,
 			);
 			name = Class;
+			path = Class;
 			sourceTree = "<group>";
 		};
 		0338C8F11C19370D0081F5F5 /* Student */ = {
 			isa = PBXGroup;
 			children = (
-				038898351BB3AC4A00D12468 /* StudentsTableViewController.h */,
-				038898361BB3AC4A00D12468 /* StudentsTableViewController.m */,
 				0388983B1BB3CCDA00D12468 /* StudentViewController.h */,
 				0388983C1BB3CCDA00D12468 /* StudentViewController.m */,
+				038898351BB3AC4A00D12468 /* StudentsTableViewController.h */,
+				038898361BB3AC4A00D12468 /* StudentsTableViewController.m */,
 			);
 			name = Student;
+			path = Student;
 			sourceTree = "<group>";
 		};
 		035BA08B1DDFC7DC003A9160 /* AppIcon.appiconset */ = {
@@ -404,17 +408,18 @@
 			path = AppIcon.appiconset;
 			sourceTree = "<group>";
 		};
-		036811531B8C498700690294 /* Sign in/ Sign up */ = {
+		036811531B8C498700690294 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				03AA9A0A1B6336FE00750758 /* LoginViewController.h */,
-				03AA9A0B1B6336FE00750758 /* LoginViewController.m */,
 				036811541B8C49B400690294 /* AboutViewController.h */,
 				036811551B8C49B400690294 /* AboutViewController.m */,
 				038545361B636BB20053C169 /* CreateAccountViewController.h */,
 				038545371B636BB20053C169 /* CreateAccountViewController.m */,
+				03AA9A0A1B6336FE00750758 /* LoginViewController.h */,
+				03AA9A0B1B6336FE00750758 /* LoginViewController.m */,
 			);
-			name = "Sign in/ Sign up";
+			name = Login;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		038545201B6359A30053C169 /* Textfields */ = {
@@ -424,63 +429,67 @@
 				038545311B635B1F0053C169 /* baseTextField.m */,
 				038545241B6359DD0053C169 /* emailTextField.h */,
 				038545251B6359DD0053C169 /* emailTextField.m */,
-				038545271B6359E90053C169 /* passwordTextField.h */,
-				038545281B6359E90053C169 /* passwordTextField.m */,
 				038545391B636BFF0053C169 /* nameTextField.h */,
 				0385453A1B636BFF0053C169 /* nameTextField.m */,
 				033855721B89984500173600 /* numberTextField.h */,
 				033855731B89984500173600 /* numberTextField.m */,
+				038545271B6359E90053C169 /* passwordTextField.h */,
+				038545281B6359E90053C169 /* passwordTextField.m */,
 			);
 			name = Textfields;
+			path = Textfields;
 			sourceTree = "<group>";
 		};
 		038F7B311B643FCC0026F679 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				03DCFFDC1B6C6FDA00C451CC /* school.h */,
-				03DCFFDD1B6C6FDA00C451CC /* school.m */,
-				038F7B321B643FE30026F679 /* user.h */,
-				038F7B331B643FE30026F679 /* user.m */,
 				03F46FB61B69CC2700A695B2 /* class.h */,
 				03F46FB71B69CC2700A695B2 /* class.m */,
-				03F46FB91B6B54C200A695B2 /* student.h */,
-				03F46FBA1B6B54C200A695B2 /* student.m */,
-				03DCFFD11B6C5A1900C451CC /* reinforcer.h */,
-				03DCFFD21B6C5A1900C451CC /* reinforcer.m */,
-				03DCFFD61B6C67F300C451CC /* item.h */,
-				03DCFFD71B6C67F300C451CC /* item.m */,
 				03DCFFD91B6C6C8A00C451CC /* classjar.h */,
 				03DCFFDA1B6C6C8A00C451CC /* classjar.m */,
+				03DCFFD61B6C67F300C451CC /* item.h */,
+				03DCFFD71B6C67F300C451CC /* item.m */,
+				03DCFFD11B6C5A1900C451CC /* reinforcer.h */,
+				03DCFFD21B6C5A1900C451CC /* reinforcer.m */,
+				03DCFFDC1B6C6FDA00C451CC /* school.h */,
+				03DCFFDD1B6C6FDA00C451CC /* school.m */,
+				03F46FB91B6B54C200A695B2 /* student.h */,
+				03F46FBA1B6B54C200A695B2 /* student.m */,
+				038F7B321B643FE30026F679 /* user.h */,
+				038F7B331B643FE30026F679 /* user.m */,
 			);
 			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		0399AAEF1B845E9F00972F21 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				03A01ED51B68A33F0037110E /* TutorialViewController.h */,
-				03A01ED61B68A33F0037110E /* TutorialViewController.m */,
 				03A01ED81B68A8C20037110E /* TutorialContentViewController.h */,
 				03A01ED91B68A8C20037110E /* TutorialContentViewController.m */,
+				03A01ED51B68A33F0037110E /* TutorialViewController.h */,
+				03A01ED61B68A33F0037110E /* TutorialViewController.m */,
 			);
 			name = Tutorial;
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		0399AAF31B8472EA00972F21 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				039926CE1DBDC34F0008B8F7 /* StudentAwardTableViewCell.h */,
-				039926CF1DBDC34F0008B8F7 /* StudentAwardTableViewCell.m */,
-				0399AAF41B84731E00972F21 /* ClassTableViewCell.h */,
-				0399AAF51B84731E00972F21 /* ClassTableViewCell.m */,
-				038898381BB3B6ED00D12468 /* StudentTableViewCell.h */,
-				038898391BB3B6ED00D12468 /* StudentTableViewCell.m */,
-				0369CF8B1BE082EC00E8857D /* StudentAttendanceTableViewCell.h */,
-				0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */,
 				03F18BF01DE3D91B00389248 /* AwardMenuOptionTableViewCell.h */,
 				03F18BF11DE3D91B00389248 /* AwardMenuOptionTableViewCell.m */,
+				0399AAF41B84731E00972F21 /* ClassTableViewCell.h */,
+				0399AAF51B84731E00972F21 /* ClassTableViewCell.m */,
+				0369CF8B1BE082EC00E8857D /* StudentAttendanceTableViewCell.h */,
+				0369CF8C1BE082EC00E8857D /* StudentAttendanceTableViewCell.m */,
+				039926CE1DBDC34F0008B8F7 /* StudentAwardTableViewCell.h */,
+				039926CF1DBDC34F0008B8F7 /* StudentAwardTableViewCell.m */,
+				038898381BB3B6ED00D12468 /* StudentTableViewCell.h */,
+				038898391BB3B6ED00D12468 /* StudentTableViewCell.m */,
 			);
 			name = TableViewCells;
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 		03A2C1D61BB8FFFD0073EBF8 /* Administrative */ = {
@@ -490,6 +499,7 @@
 				03B2B0F81BBA3AA900191B54 /* EditTeacherViewController.m */,
 			);
 			name = Administrative;
+			path = Administrative;
 			sourceTree = "<group>";
 		};
 		03AA99D81B6333C300750758 = {
@@ -497,9 +507,9 @@
 			children = (
 				03AA99E31B6333C300750758 /* Classroom Hero */,
 				03AA99FD1B6333C400750758 /* Classroom HeroTests */,
-				03AA99E21B6333C300750758 /* Products */,
 				884D67DE316D649C30B9C4A3 /* Frameworks */,
 				22D4C911B7FD1BD5227B3E4B /* Pods */,
+				03AA99E21B6333C300750758 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -515,22 +525,22 @@
 		03AA99E31B6333C300750758 /* Classroom Hero */ = {
 			isa = PBXGroup;
 			children = (
-				036AAD631BBF917C007AF0A8 /* Classroom Hero.entitlements */,
-				03DC9D981B7334F6005C7562 /* Notes */,
+				0338C8EF1C1936870081F5F5 /* Controllers */,
+				038F7B311B643FCC0026F679 /* Models */,
+				03AA99E41B6333C300750758 /* Supporting Files */,
+				0338C8EE1C19366A0081F5F5 /* Views */,
 				03AA99E81B6333C300750758 /* AppDelegate.h */,
 				03AA99E91B6333C300750758 /* AppDelegate.m */,
-				03AA99EE1B6333C300750758 /* Main.storyboard */,
-				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
-				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
+				036AAD631BBF917C007AF0A8 /* Classroom Hero.entitlements */,
 				03AA9A591B633B8100750758 /* ConnectionHandler.h */,
 				03AA9A5A1B633B8100750758 /* ConnectionHandler.m */,
 				03F46FB31B69CBAD00A695B2 /* DatabaseHandler.h */,
 				03F46FB41B69CBAD00A695B2 /* DatabaseHandler.m */,
-				0338C8EF1C1936870081F5F5 /* Controllers */,
-				0338C8EE1C19366A0081F5F5 /* Views */,
-				038F7B311B643FCC0026F679 /* Models */,
 				03AA99F11B6333C300750758 /* Images.xcassets */,
-				03AA99E41B6333C300750758 /* Supporting Files */,
+				03AA99EE1B6333C300750758 /* Main.storyboard */,
+				03DC9D981B7334F6005C7562 /* Notes */,
+				03B3A02C1B71D0A800B42E09 /* Utilities.h */,
+				03B3A02D1B71D0A800B42E09 /* Utilities.m */,
 			);
 			path = "Classroom Hero";
 			sourceTree = "<group>";
@@ -538,25 +548,26 @@
 		03AA99E41B6333C300750758 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				03AA99E51B6333C300750758 /* Info.plist */,
-				035DF79C1DF4B07200C74F6C /* GoogleService-Info.plist */,
-				034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */,
-				034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */,
-				03AA99F31B6333C400750758 /* LaunchScreen.xib */,
-				03AA99E61B6333C300750758 /* main.m */,
-				03DC9D811B732C7F005C7562 /* sounds */,
+				03AA9A0D1B63381B00750758 /* fonts */,
 				033855751B89C97D00173600 /* icons */,
 				03AA9A141B63399D00750758 /* img */,
-				03AA9A0D1B63381B00750758 /* fonts */,
+				03DC9D811B732C7F005C7562 /* sounds */,
+				035DF79C1DF4B07200C74F6C /* GoogleService-Info.plist */,
+				03AA99E51B6333C300750758 /* Info.plist */,
+				03AA99F31B6333C400750758 /* LaunchScreen.xib */,
+				034C92B61BF19A7B0090667C /* NSString+FontAwesome.h */,
+				034C92B71BF19A7B0090667C /* NSString+FontAwesome.m */,
+				03AA99E61B6333C300750758 /* main.m */,
 			);
 			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		03AA99FD1B6333C400750758 /* Classroom HeroTests */ = {
 			isa = PBXGroup;
 			children = (
-				03AA9A001B6333C400750758 /* Classroom_HeroTests.m */,
 				03AA99FE1B6333C400750758 /* Supporting Files */,
+				03AA9A001B6333C400750758 /* Classroom_HeroTests.m */,
 			);
 			path = "Classroom HeroTests";
 			sourceTree = "<group>";
@@ -567,6 +578,7 @@
 				03AA99FF1B6333C400750758 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		03AA9A0D1B63381B00750758 /* fonts */ = {
@@ -582,29 +594,29 @@
 		03AA9A141B63399D00750758 /* img */ = {
 			isa = PBXGroup;
 			children = (
-				037CAA651DFA02FA003EB05C /* showList.png */,
-				033AD0991DF00F0C00027405 /* deselectAll.png */,
-				033AD09A1DF00F0C00027405 /* selectAll.png */,
-				0300D5F41DE2D05000E29E83 /* glowing_chest.png */,
-				03FC7E251DDDB32300C2ABFD /* jar_body.png */,
-				0324E7EE1C4B51690079A441 /* coin.png */,
-				039567C31BCE141100AFF48A /* coinsack.png */,
-				039567C41BCE141100AFF48A /* jar_coin.png */,
 				03AA9A151B63399D00750758 /* app icon.png */,
 				03AA9A161B63399D00750758 /* apple hero.png */,
-				03AA9A171B63399D00750758 /* backgroundImg1.png */,
 				03AA9A181B63399D00750758 /* backLid.png */,
+				03AA9A171B63399D00750758 /* backgroundImg1.png */,
 				03AA9A191B63399D00750758 /* ch-logo.png */,
 				03AA9A1D1B63399D00750758 /* classroom_hero_text.png */,
+				0324E7EE1C4B51690079A441 /* coin.png */,
+				039567C31BCE141100AFF48A /* coinsack.png */,
 				03AA9A1E1B63399D00750758 /* cork.png */,
+				033AD0991DF00F0C00027405 /* deselectAll.png */,
+				0300D5F41DE2D05000E29E83 /* glowing_chest.png */,
 				03AA9A1F1B63399D00750758 /* homeIcon.png */,
 				03AA9A201B63399D00750758 /* homeIconPressed.png */,
 				03AA9A211B63399D00750758 /* intact_jar.png */,
 				03AA9A221B63399D00750758 /* itemsIcon.png */,
 				03AA9A231B63399D00750758 /* jar.png */,
+				03FC7E251DDDB32300C2ABFD /* jar_body.png */,
+				039567C41BCE141100AFF48A /* jar_coin.png */,
 				03AA9A251B63399D00750758 /* jar_progress_coins.png */,
 				03AA9A271B63399D00750758 /* lid.png */,
 				03AA9A281B63399D00750758 /* login button.png */,
+				033AD09A1DF00F0C00027405 /* selectAll.png */,
+				037CAA651DFA02FA003EB05C /* showList.png */,
 				03AA9A361B63399D00750758 /* treasure_chest.png */,
 			);
 			path = img;
@@ -626,7 +638,7 @@
 				033A4DA51B75B25B006E90D6 /* teacherstamp.wav */,
 			);
 			path = sounds;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		22D4C911B7FD1BD5227B3E4B /* Pods */ = {
 			isa = PBXGroup;
@@ -986,6 +998,7 @@
 				03AA99EF1B6333C300750758 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		03AA99F31B6333C400750758 /* LaunchScreen.xib */ = {
@@ -994,6 +1007,7 @@
 				03AA99F41B6333C400750758 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1093,22 +1107,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = B28Q4692N6;
-				INFOPLIST_FILE = "Classroom Hero/Info.plist";
+				INFOPLIST_FILE = "Classroom Hero/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				"OTHER_LDFLAGS[arch=*]" = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					"\"CircleProgressBar\"",
-					"-framework",
-					"\"JSBadgeView\"",
-					"-framework",
-					"\"MBProgressHUD\"",
-					"-framework",
-					"\"YLProgressBar\"",
-				);
+				"OTHER_LDFLAGS[arch=*]" = "$(inherited) -ObjC -framework \"CircleProgressBar\" -framework \"JSBadgeView\" -framework \"MBProgressHUD\" -framework \"YLProgressBar\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "Classroomhero.Classroom-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1126,7 +1129,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = B28Q4692N6;
-				INFOPLIST_FILE = "Classroom Hero/Info.plist";
+				INFOPLIST_FILE = "Classroom Hero/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -1151,7 +1154,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Classroom HeroTests/Info.plist";
+				INFOPLIST_FILE = "Classroom HeroTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joshnussbaum.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1168,7 +1171,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Classroom HeroTests/Info.plist";
+				INFOPLIST_FILE = "Classroom HeroTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joshnussbaum.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
