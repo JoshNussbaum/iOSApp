@@ -8,5 +8,5 @@ Installation Insructions
 - Install dependencies
   > pod install
 
-- Code sign1
+- Code sign
 
